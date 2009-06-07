@@ -1,0 +1,614 @@
+/* иешники отсосите!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+из-за вашего ебучего браузера в ксске появилась всякая хуйня!
+так что засуньте себе во все отверстия паяльники и танцуйте в кастьрюле сцуки!
+ */
+body {
+	font-family: dejavu-serif, Verdana;
+	font-size: 12px;
+	color: #000000;
+	margin: 0px;
+	background-color: #fff;
+}
+div,td,span {
+	//font-size:12px;	
+}
+a,.outb,a:ACTIVE ,a:HOVER,  a:VISITED, #outb {
+	color: 	#2669A6;
+}
+table * {
+	vertical-align: top;	
+}
+img {
+	border: none;	
+}
+input {
+	font-size: 12px;	
+}
+#h1 { 
+	margin-left: 20px;
+	margin-right: 20px;
+}
+#h1 h1 a, #h1 h1 a:ACTIVE, #h1 h1 a:HOVER, #h1 h1 a:VISITED {
+	text-decoration: none;
+	color: #000000;
+}
+.amenuel a , .menuel a, .lmenuel a {
+	padding-top: 6px;
+	vertical-align: middle;
+	display:inline-block;
+	height: 12px;
+	text-decoration: none;	
+}
+.menuel, .amenuel, .lmenuel {
+	float: left;
+	height:30px;
+	overflow: hidden;
+	padding-left: 5px;
+	padding-right: 9px;	
+	display: inline-block;
+	margin-bottom: 8px;
+}
+.amenuel a, .amenuel a:ACTIVE , .amenuel a:HOVER, .amenuel a:VISITED, .menuel a, .menuel a:ACTIVE , .menuel a:HOVER, .menuel a:VISITED, .lmenuel a, .lmenuel a:ACTIVE , .lmenuel a:HOVER, .lmenuel a:VISITED {
+	color: #464646;
+}
+.amenuel {
+	background: #edeff0 url('img/rgt.png') no-repeat right; 
+}
+.menuel {
+	background: #fdfdfd url('img/rwt.png') no-repeat right; 
+}
+.lmenuel {
+	background: #fdfdfd url('img/lrwt.png') no-repeat right;
+}
+.add {
+	color: #73BF60;
+	padding-left:2px;
+}
+.mf {
+	overflow: hidden;
+	border-top: #a6a6a6 1px solid;
+	display: block;
+	margin-bottom:0px;
+	background: url('img/sb.png') repeat-x bottom;
+	//height:38px; 
+}
+.usln a {
+	text-decoration: underline;	
+}
+.usln{
+	margin-bottom: 8px;
+	overflow: hidden;
+	float:right;	
+	height: 30px;
+	padding-left: 9px;
+	display: inline-block;
+	vertical-align: middle;
+	/*background: url('img/lgt.png') no-repeat left;*/
+}
+#inout *, .usrd{
+	padding-top: 6px;
+	vertical-align: middle;
+	display:inline-block;
+	height: 12px;
+}
+.usrd {
+	//display: inline;
+	padding-right:6px;
+	//padding-top:0px;
+	//margin-top:-12px;
+}
+#inout {
+	background-color: #eceeef;
+	padding-right:6px;
+	padding-left: 6px;
+	height: 30px;
+	width: 80px;
+	border-left: #a6a6a6 1px solid;
+	display:inline-block;
+	//display: inline;
+}
+*+html #lgin, *+html #out {
+	height:30px;
+}
+*+html .usrd {
+	padding-bottom: -20px;
+}
+*+html #inout img {
+	padding-bottom:10px;	
+}
+a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
+	color: #000000;
+	font-weight: bold;
+}
+#tb5 {
+	width: 320px;	
+	padding-left: 30px;
+	padding-right: 0px;
+}
+
+.lsd {
+	height:34px;
+	padding: 7px;
+	height: 23px;
+	margin-right: 0px;
+	border-rigth:0px;
+	border-left: #a6a6a6 1px solid;
+}
+.rsd {
+	padding: 7px;
+	padding-left: 6px;
+	padding-right: 3px;
+	height: 30px;
+	background: #eceeef url('img/ergt.png') no-repeat left top;	
+	width: 20px;
+}
+
+*+html .lsd, *+html .rsd  {
+	margin: 0px;
+	height: 23px;
+	padding-bottom: 0px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.rsd, .lsd {
+		margin: 0px;
+		height: 23px;
+		padding-bottom: 3px;	
+	}
+}
+.rsd * {
+	margin: 5px;	
+}
+.rsdno {
+	padding: 7px;
+	padding-left: 0px;
+	padding-right: 0px;
+	height: 30px;
+	background: #eceeef;	
+	width: 30px;
+	border-left: 1px solid #D8D8D8;
+}
+.rtbl {
+	white-space: none;
+	border-spacing: 0px;
+	width: 100%;
+}
+
+.rtblb {
+	border-top: #a6a6a6 1px solid;
+	margin-bottom: 9px;
+	background: url('img/sb.png') repeat-x bottom;
+	padding-bottom:8px;
+}
+#plist,#clist,#alist, #blist,.ulist , #eblist{
+	padding-left: 25px;
+	margin-top: 0px;
+	margin-bottom: 4px;	
+}
+#plist,#clist, #blist,.ulist , #eblist {
+	margin-top:8px;
+}
+#plist li,#clist li,#alist li, #blist li,.ulist li , #eblist{
+	padding-bottom: 4px;	
+}
+#plist {
+	list-style-image: url('img/document.gif');
+}
+#blist {
+	list-style-image: url('img/documents.gif');
+	text-align: left;
+}
+#clist {
+	list-style-image: url('img/speech_bubble.gif');
+}
+
+.ulist {
+	list-style-image: url('img/figure.gif');
+	text-align: left;
+	margin-top:8px;
+}
+#fnd {
+	vertical-align: middle;
+	width:12px;
+	font-size: 12px;
+	border:1px solid #a6a6a6;
+	width: 100%;
+	margin-bottom: 0px;
+	border-spacing:0px;
+	padding-bottom: 0px;
+}
+.rsd * {
+	padding-bottom: 0px;	
+	margin-bottom: 0px;
+	border-spacing:0px;
+	//margin: 0px;
+	//padding: 0px;
+}
+#fuck {
+margin:0px;
+padding:0px;
+}
+.lsd input {
+	_height:16px;
+	_paddin-bottom:0px;
+}
+#tags, .tagsa {
+	border-left:1px solid #a6a6a6;
+	padding: 7px;
+}
+#tags {
+	text-align: center;	
+}
+#tags a, #tags a:ACTIVE, #tags a:VISITED {
+	text-decoration: none;
+	padding:6px;
+	margin:-6px;
+	text-align: center;
+	white-space: nowrap;
+}
+#tags a:HOVER {
+	background-color: #2669A6;
+	color: #ffffff;
+}
+.fst_top {
+	overflow: hidden;
+	//height:14px;
+}
+.top {
+	overflow: hidden;
+	//height:14px;
+	margin-top: 15px;
+	padding-top: 10px;
+	border-top:	#2669A6 1px solid;
+}
+.auth {
+	float: right;	
+}
+.date {
+	float: left;	
+}
+.mtxt {
+	padding-left:10px;	
+	padding-right:10px;	
+	margin-bottom: 10px;
+}
+.title {
+	font-family: dejavu-sans, Trebuchet MS;
+	padding-bottom: 2px;
+	font-size: 26px;	
+	font-weight: normal;
+	margin-top: 4px;
+}
+.title a,.title a:HOVER, .title a:ACTIVE, .title a:VISITED {
+	color: #000000;
+	text-decoration: none;
+}
+.bottom {
+	overflow: hidden;
+	//height: 14px;
+}
+.full {
+	float: left;	
+}
+.rate {
+	float: right;	
+}
+.rate a {
+	text-decoration: none;	
+}
+a.ratep , a.ratep:ACTIVE, a.ratep:VISITED, a.ratem , a.ratem:ACTIVE, a.ratem:VISITED, .pcl, .mcl {
+	display: inline-block;
+	width:12px;
+	margin-left:2px;
+	margin-right: 2px;
+	text-align: center;
+	vertical-align: center;
+	text-decoration: none;
+	vertical-align: text-top;
+}
+a.ratep , a.ratep:ACTIVE, a.ratep:VISITED, .pcl {
+	color: #73BF60;
+}
+a.ratep:HOVER {
+	color: #ffffff;
+	background: #73BF60;
+}
+a.ratem , a.ratem:ACTIVE, a.ratem:VISITED, .mcl {
+	color: #C36A5A;
+}
+a.ratem:HOVER {
+	color: #ffffff;
+	background: #C36A5A;
+}
+#list {
+	margin-top:60px;
+	text-align: center;
+}
+.nmn {
+	font-size:18px;	
+}
+.nomnm {
+	text-decoration: none;	
+}
+#btop {
+	overflow: hidden;
+}
+.bnm a, .bnm a:ACTIVE, .bnm a:VISITED, .bnm a:HOVER, .bnm{
+	color: #000000;
+	text-decoration: none;
+	font-size: 26px;	
+}
+.bbnm{
+	float: left;	
+}
+.tdx {
+	display: inline-block;
+	border: #a6a6a6 1px solid;
+}
+ a.tdx,  a.tdx:ACTIVE,  a.tdx:VISITED,  a.tdx:HOVER{
+	color: #000000;
+	text-decoration: none;
+}
+.inpt select {
+	height: 20px;
+	vertical-align: middle;
+}
+#top {
+	margin-bottom: 7px;
+}
+.ctop, .cntop {
+	overflow: hidden;
+	margin-top:12px;
+	margin-bottom: 6px;
+}
+.ctop {
+	background: #edeff0;	
+}
+.cntop{
+	background: #BEF8A1;	
+}
+.unr {
+	background: #81d769;	
+}
+.scb {
+	color: #464646;
+}
+.rp {
+	color: #73BF60;
+}
+.rm {
+	color: #C36A5A;
+}
+#bs {
+	background-image: url('wbg.png');
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+	z-index:2;
+	_position: absolute;
+ 	_left: expression( ( 20 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+ 	_top: expression( ( 10 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+	_background-image: none;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='wbg.png'); 
+}
+#wd {
+	margin: 0px;
+	margin-top: 10%;
+	display: inline-block;
+	postiton: fixed;
+	//width: 300px;
+}
+#mn {
+	margin: 0px;
+	padding: 20px;
+	display: inline-block;
+	//width: 300px;
+	background-color: #D9D7D6;
+	text-align: left;
+}
+#lgn {
+	padding:40px;
+}
+#golog {
+	padding-left:50px;
+}
+#main {
+	margin-left: 10px;
+}
+.pav {
+	float:left;
+	height: 30px;
+	padding-right: 8px;
+}
+.cauth, .clnk {
+	height: 20px;
+	padding-right: 5px;
+	float: left;
+}
+.clnk {
+	padding-left: 5px;	
+}
+.crate {
+	float: right;
+}
+.cnoauth {
+	float: left;
+	padding:5px;
+}
+#out {
+	padding: 0px;
+	margin: 0px;
+	display: inline-block;
+	//display: inline;
+	text-align: left;
+}
+.outb, #outb {
+	padding: 0px;
+	margin: 0px;
+	width: 60px;
+	height:20px;
+	border: none;
+	text-align: left;
+	font-family:Verdana;
+	text-decoration: underline;
+	background: #ECEEEF;
+	cursor: hand;
+}
+.ans {
+	background: #2669A6;
+	display:inline-block;
+	height: 12px;
+	//display: inline;
+}
+.tdans {
+	vertical-align: middle;
+	width: 400px;
+}
+.ln {
+	text-align: right;
+	color:#2669A6;
+	padding-right: 8px;
+}
+.err {
+	color: #C36A5A;
+	font-size: 24px;
+}
+#m-com {
+	font-size: 24px;
+	text-decoration: none;
+	border-bottom: 1px dashed;
+}
+.quote {
+	border-left: dashed 1px #2669A6;
+	border-bottom: dashed 1px #2669A6;
+	padding-left: 5px;
+	margin:5px;
+}
+.ctext, .ctop, .cbottom {
+	display:block;
+}
+.ctop, .cbottom {
+	//height:15px;
+}
+.err_bbl {
+	position: fixed;
+	height:80px;
+	width: 25%;
+	right:0px;top:0px;
+	z-index: 2;
+	text-align: center;
+	color:#ECEEEF;
+	font-size: 120%;vertical-align:middle;
+	padding-left: 25px;
+	background:  #C36A5A url('img/er.png') left no-repeat;
+}
+#users {
+	width: 100%;
+	border-spacing: 0;
+	border: none;
+}
+.avl {
+	width: 40px;
+	text-align: center;
+}
+.ulp {
+	text-align: left;
+}
+#pmtop {
+	background: #ECEEEF;
+	text-align: center;
+}
+#pmls td {
+	padding-right: 20px;
+}
+.jst {
+color:#2669A6;
+}
+.text img {
+		max-width: 550px;
+/* Пользователи ie6 у которых расхерачило страницу - идите в пизду! */
+}
+@media all and (device-width: 1280px) {
+	.text img {
+		max-width: 800px !important;
+	}
+}
+@media all and (device-width: 1024px) {
+	.text img {
+		max-width: 550px !important;
+	}
+}
+#tbll {
+	border-spacing: 0;
+	width: 100%;
+	border: none;
+}
+.pmn {
+	width: 120px;
+}
+.pmcl {
+	width: 10px;
+}
+.bbls {
+	display:block;
+	text-align: center;
+	margin-bottom: 3px;
+}
+.ttl {
+	font-size: 14px;
+}
+#btmf {
+	margin-top: 60px;
+}
+.celis {
+	list-style-image: url('img/speech_bubble.gif');
+}
+.pelis {
+	list-style-image: url('img/document.gif');
+}
+#eblist {
+	list-style-image:url('n_img/eye.gif');
+}
+#pf,#cf,#ef {
+	display:none;
+}
+#shuser,#shblog {
+	display: none;
+}
+.lrte {
+	text-align: center;
+	width: 15%;
+}
+.mettm {
+	overflow: visible;
+	width: auto;
+}
+#ebaa {
+position: fixed;
+right: 0px;
+top:50%;
+width: 30px;
+padding-top:7px;
+height: 42px;
+vertical-align: middle;
+text-align: center;
+background: url('n_img/bg.png');
+_position: absolute;
+_left: expression( ( 20 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+_top: expression( ( 10 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+_background-image: none;
+_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='n_img/bg.png'); 
+}
+#ebaa *{
+vertical-align: middle;
+text-align: center;
+}
+#ln_doe {
+text-decoration: none;
+}
+.prv, #prwb-1 {
+	display: none;
+}
