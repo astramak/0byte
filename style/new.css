@@ -612,3 +612,13 @@ text-decoration: none;
 .prv, #prwb-1 {
 	display: none;
 }
+textarea.post-body {
+	width:100%
+}
+table.fullwidth {
+	width:100%;
+}
+input.post-title,
+input.post-tags {
+	width:500px;
+}

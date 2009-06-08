@@ -23,10 +23,10 @@
 <form name="new" id='new' method="post"
 	action="twork.php?wt=newpost&tp=<?php echo $tp; ?>">
 <div id='prv'></div>
-<table border="0">
+<table border="0" class="fullwidth">
 	<tr>
 		<td>Заголовок</td>
-		<td><input type="text" name="title" /></td>
+		<td><input type="text" name="title" class="post-title" /></td>
 	</tr>
 	<tr>
 		<td>Блог</td>
@@ -47,7 +47,7 @@
 	<?php if (!isset($_GET['tp']) || $_GET['tp']=='tr' || $_GET['tp']=='lnk') {
 		echo "<tr><td id='otxt'>Текст</td><td>
 		<div id='mq' class='inpt'></div>
-		<textarea onkeypress='do_key(this.form,\"new\",event);' onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"new\",event);}' name='text' rows='15' cols='70'></textarea>
+		<textarea onkeypress='do_key(this.form,\"new\",event);' onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"new\",event);}' name='text' rows='15' cols='70' class='post-body'></textarea>
 		
 		</td></tr>";
 	}  else {
@@ -73,7 +73,7 @@
 	?>
 	<tr>
 		<td>Тэги</td>
-		<td><input type="text" name="tag" style="width: 500px;" /></td>
+		<td><input type="text" name="tag" class="post-tags" /></td>
 	</tr>
 </table>
 <input type="checkbox" name="lock" /> Только для друзей/собложников<br />

@@ -40,8 +40,8 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 		echo '
 		<form name="new" id="new" method="post" action="twork.php?wt=editpost&post='.$_GET['post'].'">
 			<div id="prv"></div>
-		<table border="0" >
-		<tr><td>Заголовок</td><td><input type="text" name="title" value="'.utext($row['title']).'" /></td></tr>
+		<table border="0" class="fullwidth">
+		<tr><td>Заголовок</td><td><input type="text" name="title" class="post-title" value="'.utext($row['title']).'" /></td></tr>
 		<tr><td>Блог</td><td><select name="blog">
 		<option value="own">Персональный</option>';
 
@@ -58,9 +58,9 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 
 		echo '</select> </td></tr>
 		<tr><td id="otxt">Текст</td><td><div id="mq" class="inpt"></div>
-		<textarea  onkeypress="do_key(this.form,\'new\',event);" onkeydown="if(\'\v\'==\'v\') {do_key(this.form,\'new\',event);}" name="text" rows="15" cols="70">'.utext($zz).'</textarea>
+		<textarea class="post-body" onkeypress="do_key(this.form,\'new\',event);" onkeydown="if(\'\v\'==\'v\') {do_key(this.form,\'new\',event);}" name="text" rows="15" cols="70">'.utext($zz).'</textarea>
 		</td></tr>
-		<tr><td>Тэги</td><td><input type="text" name="tag" style="width: 500px;" value="'.$row['tag'].'"/>
+		<tr><td>Тэги</td><td><input type="text" name="tag" class="post-tags" value="'.$row['tag'].'"/>
 		</td></tr>';
 		if  ($row['tp']==2) {
 			echo "<tr><td>Оригинал</td><td><input type='text' name='lnk' value='".$row['lnk']."' /></td></tr>";
