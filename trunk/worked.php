@@ -22,7 +22,7 @@ include("inc/top.php");
 
 <div id="main"><?php
 if ($loged==1) {
-	include("inc/worked/".$_GET['wt'].".inc"); } else {
+	include("inc/worked/".sfin($_GET['wt']).".inc"); } else {
 		echo_err("У вас нет прав на посещение данной страницы!");
 	}
 	?></div>

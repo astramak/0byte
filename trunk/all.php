@@ -21,7 +21,7 @@ include("inc/top.php");
 
 
 <div id="main"><?php
-include("inc/all/".$_GET['wt'].".inc");
+include("inc/all/".sfin($_GET['wt']).".inc");
 ?></div>
 
 

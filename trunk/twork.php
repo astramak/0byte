@@ -30,6 +30,6 @@ if ($json==1) die;
 	header("Content-Location: login.php");
 	header("Location: login.php"); 
 } else {
-	include("inc/twork/".$_GET['wt'].".inc");
+	include("inc/twork/".sfin($_GET['wt']).".inc");
 }
 ?>

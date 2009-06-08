@@ -45,7 +45,7 @@ if ($l==1) {
 } else if ($mk->chcur()==1) {
 	$cur=" class='amenuel' ";
 }
-echo "<div ".$cur."><a href='".$mk->url."'><img src='style/img/tv.gif' />".$mk->name."<span class='add'>".$mk->new."</span></a></div>";
+echo "<div ".$cur."><a href='".$mk->url."'><img src='style/img/tv.gif' alt='' />".$mk->name."<span class='add'>".$mk->new."</span></a></div>";
 
 for ($i=1;$i<$ma->menu_c;$i++) {
 	echo $stc[$i];
@@ -85,9 +85,9 @@ if ($loged==1) {
 	} else if ($usr->rate()<0) {
 		$rtt="(<span class='rm'>".$usr->rate()."</span>)";
 	}
-	$la=", у вас <img src='style/img/".$kml.".gif' /> <a href='work/pmls'>$aid / $ida ЛС</a>";
+	$la=", у вас <img src='style/img/".$kml.".gif' alt='' /> <a href='work/pmls'>$aid / $ida ЛС</a>";
 	echo $_SESSION['login']."</a> ".$rtt." ".$la.". <a href='work/newpost'>Новый пост</a> / $new</div>
-							<div id='inout'><img src='style/img/figure.gif' />
+							<div id='inout'><img src='style/img/figure.gif' alt='' />
 							<form id='out' method='post' action='http://".$_SERVER['HTTP_HOST'].$dir."'><input type='hidden' name='un' value='1' /> <input id='outb' type='submit' value='Выйти' /></form></div>";
 } else  {
 	echo "<a href='register'>Зарегистрироваться</a></div><div id='inout'><a id='lgin' href='login/$cur'>Войти</a></div>";

@@ -97,7 +97,7 @@ if ($row['blck']==1 && $usr->lvl<$blvl) {
 	}
 	echo "<a id='cm'></a><div id='cmn'>";
 	if ($id=mysql_num_rows($result)==0) {
-		echo "<span id='nocom'>Коментариев нет</span>";
+		echo "<span id='nocom'>Комментариев нет</span>";
 	} else {
 		$com=new com;
 		while($row = mysql_fetch_assoc($result)) {

@@ -118,7 +118,7 @@ if ($err==1) {
 <tr><td>jabber</td><td><input type="text" name="jabber" value='<?php if (isset($_POST['jabber'])) {echo $_POST['jabber'];} ?>' /></td></tr>
 <tr><td>Сайт</td><td><input type="text" name="site" value='<?php if (isset($_POST['site'])) {echo $_POST['site'];} ?>' /></td></tr>
 <tr><td>О себе</td><td><textarea name="about" rows="5" cols="30"><?php if (isset($_POST['about'])) {echo $_POST['about'];} ?></textarea></td></tr>
-<tr><td><img src="cap/kap.php?rand=<?php echo rand(); ?>" alt="капча" onClick="this.src='cap/kap.php?rand='+Math.random()" /></td><td><input type="text" name="kap" onkeyup="chka(this,'cap')" /></td><td><b id='ccap'>*</b></td></tr>
+<tr><td><img src="cap/kap.php?rand=<?php echo rand(); ?>" alt="капча" onClick="this.src='cap/kap.php?rand='+Math.random()" alt="" /></td><td><input type="text" name="kap" onkeyup="chka(this,'cap')" /></td><td><b id='ccap'>*</b></td></tr>
 <tr><td></td><td><input type="submit" value="Регистрироваться!" /></td></tr>
 </table>
 </form><br />
