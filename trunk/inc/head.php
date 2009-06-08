@@ -29,7 +29,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
 <head>
-<base href="<?php echo "http://".$_SERVER['HTTP_HOST'].$dir; ?>" />
+<base href="<?php echo $site; ?>" />
 <title><?php 
 if (isset($_GET['post']) && !isset($_GET['wt'])) {
 	$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['post'])."'   ";

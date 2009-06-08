@@ -123,10 +123,10 @@ function post_echo($row,$t) {
 				
 			if ($lnk==1) {
 				$ttp="checkbox";
-				echo "<script>var a_type=1;</script>";
+				echo "<script type='text/javascript'>var a_type=1;</script>";
 			} else {
 				$ttp="radio";
-				echo "<script>var a_type=2;</script>";
+				echo "<script type='text/javascript'>var a_type=2;</script>";
 			}
 			while ($ro = mysql_fetch_assoc($res)) {
 				if ($lnk==1) {
