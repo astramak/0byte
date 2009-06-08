@@ -78,7 +78,7 @@
 </table>
 <input type="checkbox" name="lock" /> Только для друзей/собложников<br />
 <input type="submit" value="Запостить!" /></form>
-<script>mk('mq','new');
+<script type="text/javascript">mk('mq','new');
 		document.getElementById("otxt").innerHTML+="<br /><a href='javascript:prv()'>Предпросмотр</a>";
 		document.getElementById("mq").innerHTML+="<a class='tdx' href='javascript:insert(\"[cut]\",\"\",\"new\",\"text\")'>cut</a>"+
 		"<a class='tdx' href='javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")'>fcut</a>";

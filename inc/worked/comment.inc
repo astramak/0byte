@@ -26,7 +26,7 @@ if (!isset($_GET['js'])) {
 	action='twork.php?wt=newcom&lvl=<?php echo($lvl."&id=".$_GET['id']."&from=".$_GET['cur']); ?>'>
 <textarea name='text' rows='10' cols='80'></textarea><br />
 <input type='submit' value='Отправить' /></form>
-<script> mk('mq','new'); </script>
+<script type="text/javascript"> mk('mq','new'); </script>
 	<?php
 	if (isset($_GET['js'])) {
 		echo '"

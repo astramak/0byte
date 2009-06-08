@@ -88,7 +88,7 @@
 			<ul id='plist'>
 			</ul>
 			</td>
-			<td class='rsdno' id='ced'><a class="bbls"
+			<td class='rsdno'><a class="bbls"
 				style="background: #B6B6B6;" href='javascript:hplist()'><img
 				src="style/img/document.gif" alt="Посты" /></a> <a class="bbls"
 				href='javascript:g_plist("com")'><img
@@ -100,7 +100,7 @@
 			<ul id='clist'>
 			</ul>
 			</td>
-			<td class='rsdno' id='ced'><a class="bbls"
+			<td class='rsdno'><a class="bbls"
 				href='javascript:g_plist("post")'><img src="style/img/document.gif"
 				alt="Посты" /></a> <a class="bbls" style="background: #B6B6B6;"
 				href='javascript:hplist()'><img src="style/img/speech_bubble.gif"
@@ -113,7 +113,7 @@
 			<ul id='eblist'>
 			</ul>
 			</td>
-			<td class='rsdno' id='ced'><a class="bbls"
+			<td class='rsdno'><a class="bbls"
 				href='javascript:g_plist("post")'><img src="style/img/document.gif"
 				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
 				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
@@ -137,7 +137,7 @@
 
 
 			<?php
-			echo "<script>
+			echo "<script type='text/javascript'>
 var pd=document.getElementById('ped').innerHTML;
 var cd=document.getElementById('ced').innerHTML;
 </script>" ;
@@ -241,7 +241,7 @@ var cd=document.getElementById('ced').innerHTML;
 <div id='shuser'><a style='background:#B6B6B6;' class='bbls'  href='javascript:hgptop()'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
 <a class='bbls' href='javascript:g_plist(\"top_blog\")'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
 
-</td></tr></table></div><div class='rtblb'><div class='tagsa'>";
+</td></tr></tbody></table></div><div class='rtblb'><div class='tagsa'>";
 			$sql_get="SELECT * FROM `users` WHERE `online` >= '".(time()-300)."'  ORDER BY `online` DESC";
 			$result=mysql_query($sql_get,$sql);
 			$onl=mysql_num_rows($result);
@@ -267,7 +267,7 @@ var cd=document.getElementById('ced').innerHTML;
 
 			echo "</div></div>";
 			?>
-<script>var ulist=document.getElementById("ulister").innerHTML;
+<script type="text/javascript">var ulist=document.getElementById("ulister").innerHTML;
 var blist=document.getElementById("blist").innerHTML;
 <?php 
 $e=0;

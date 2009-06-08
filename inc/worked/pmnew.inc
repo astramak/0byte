@@ -27,4 +27,4 @@ if (isset($_GET['name'])) {
 	</tr>
 </table>
 <input type="submit" value="Отправить!" /></form>
-<script>mk("rd","pm");</script>
+<script type="text/javascript">mk("rd","pm");</script>

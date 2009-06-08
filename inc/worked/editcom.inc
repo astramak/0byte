@@ -19,4 +19,4 @@ $cm->make($row);
 	onkeydown="if('\v'=='v') {do_key(this.form,'new',event);}" name='text'
 	rows='10' cols='80'><?php echo utext($cm->text); ?></textarea><br />
 <input type='submit' value='Редактировать' /></form>
-<script> mk('mq','new'); </script>
+<script type="text/javascript"> mk('mq','new'); </script>

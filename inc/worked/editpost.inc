@@ -75,7 +75,7 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 	echo "<h3>Это не ваш пост!</h3>";
 }
 ?>
-<script>mk('mq','new');
+<script type="text/javascript">mk('mq','new');
 document.getElementById("otxt").innerHTML+="<br /><a href='javascript:prv()'>Предпросмотр</a>";
 		document.getElementById("mq").innerHTML+="<a class='tdx' href='javascript:insert(\"[cut]\",\"\",\"new\",\"text\")'>cut</a>"+
 		"<a class='tdx' href='javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")'>fcut</a>";

@@ -114,7 +114,7 @@ if ($row['blck']==1 && $usr->lvl<$blvl) {
 		<textarea onkeypress='if (ce(event)) {s_c(this.form,\"$post->id\"); klcprv(-1);} do_key(this.form,\"com\",event);' 
 onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"com\",event); }' name='text'  rows='10' cols='80'></textarea><br />
 <input type='submit' value='Отправить' /><input type='button' id='prwb-1' onClick='prw_com(this.form.text.value,-1)' value='Предпросмотр' />
-</form><script>document.getElementById('prwb-1').style.display='inline'; mk('mkt','com');</script>";
+</form><script type='text/javascript'>document.getElementById('prwb-1').style.display='inline'; mk('mkt','com');</script>";
 	}
 }
 
@@ -131,6 +131,6 @@ if ($loged==1) {
 ///spy
 if ($num_com==0) {$nam="&#8212;";} else {$nam=$num_com;}
 echo "<div id='ebaa'><img onClick='upd_com()' src='style/n_img/refr.gif' /><br /><a href='javascript:upd_ls()' id='ln_doe'>".$nam."</a></div>";
-echo "<script> var last_com_id=".$last_com_id."; var post_id_com=".gint($_GET['post'])."; ".$jstocom." var num_com=".$num_com."</script>";
+echo "<script type='text/javascript'> var last_com_id=".$last_com_id."; var post_id_com=".gint($_GET['post'])."; ".$jstocom." var num_com=".$num_com."</script>";
 ?>
 
