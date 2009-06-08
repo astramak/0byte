@@ -17,8 +17,7 @@
 ?>
 <div id="top">
 <div id="h1">
-<h1><a href="<?php echo $site; ?>"><img src='style/img/source.png'
-	alt="<?php echo $ls_name; ?>" /></a></h1>
+<h1><a href="<?php echo $site; ?>"><?php echo $ls_name; ?></a></h1>
 <div id="banner"></div>
 </div>
 <div class="mf"><?php
