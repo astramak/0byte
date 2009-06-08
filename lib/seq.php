@@ -36,4 +36,7 @@ function chml($mail_address) {
 function chud($ud) {
 	if (preg_match("/[^(\w)|(\x7F-\xFF)|(\s)]/", $ud)) {return(0);} else {return(1);}
 }
+function sfin($a) {
+	return str_replace("/","",$a);
+}
 ?>
