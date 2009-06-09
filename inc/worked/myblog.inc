@@ -10,7 +10,7 @@ while ( $row = mysql_fetch_assoc($result)) {
 	if (strlen($row['av'])>0) {
 		echo "<img style='float:right' src='res.php?t=bl&img=".$row['av']."' alt='' />"; }
 		echo "<h4 class='elt'>Участники:</h4><ul>";
-		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".gint($row['id'])."'   ";
+		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($row['id'])."'   ";
 		$resul=mysql_query($sql_get,$sql);
 		if (!$result) {
 			echo  mysql_error();

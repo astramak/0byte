@@ -9,7 +9,7 @@ if(!isset($_POST['title']) || (!isset($_POST['text']) && !isset($_POST['len']) )
 	$blog="own";
 }
 else {
-	$sql_get="SELECT * FROM `blogs` WHERE id = '".gint($_POST['blog'])."'  ";
+	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_POST['blog'])."'  ";
 	$result=mysql_query($sql_get,$sql);
 	if (!$result) {
 		echo  mysql_error();
@@ -32,8 +32,8 @@ $time=time();
 if ($_GET['tp']==0) {
 	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' ,'".mysql_escape_string(gtext($txt))."'
-, '".mysql_escape_string(gtext($text))."', '".$blog."', '".gint($_POST['blog'])."','".mysql_escape_string($tag)."' ,
-'".gint($lock)."' )";
+, '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."' ,
+'".intval($lock)."' )";
 } else if ($_GET['tp']==1) {
 	if (!isset($_POST['lnk'])) {
 		header("Request-URI: index.php");
@@ -43,8 +43,8 @@ VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$us
 	}
 	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk` )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' ,'".mysql_escape_string(gtext($txt))."'
-, '".mysql_escape_string(gtext($text))."', '".$blog."', '".gint($_POST['blog'])."','".mysql_escape_string($tag)."'
- ,'".gint($lock)."' ,'1' , '".mysql_escape_string(gtext($_POST['lnk']))."' )";
+, '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."'
+ ,'".intval($lock)."' ,'1' , '".mysql_escape_string(gtext($_POST['lnk']))."' )";
 
 } else if ($_GET['tp']==2) {
 	if (!isset($_POST['org'])) {
@@ -56,8 +56,8 @@ VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$us
 	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk` )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' 
 ,'".mysql_escape_string(gtext($txt))."'
-, '".mysql_escape_string(gtext($text))."', '".$blog."', '".gint($_POST['blog'])."','".mysql_escape_string($tag)."' 
-,'".gint($lock)."' ,'2' , '".mysql_escape_string(gtext($_POST['org']))."' )";
+, '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."' 
+,'".intval($lock)."' ,'2' , '".mysql_escape_string(gtext($_POST['org']))."' )";
 
 } else if ($_GET['tp']==3) {
 	if (!isset($_POST['len'])) {
@@ -74,7 +74,7 @@ VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$us
 	}
 	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk`  )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' , '".$blog."', 
-'".gint($_POST['blog'])."','".mysql_escape_string($tag)."' ,'".gint($lock)."' ,'3' , '".$nm."' )";
+'".intval($_POST['blog'])."','".mysql_escape_string($tag)."' ,'".intval($lock)."' ,'3' , '".$nm."' )";
 	//	echo $sl;die;
 }
 //die;

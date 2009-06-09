@@ -14,11 +14,6 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-function gint($int) {
-	$int = trim($int);
-	$int = preg_match("/^[0-9]+$/i", $int) ? $int : 0;
-	return($int);
-}
 function chml($mail_address) {
 	$pattern = "/^[\w-]+(\.[\w-]+)*@";
 	$pattern .= "([0-9a-z][0-9a-z-]*[0-9a-z]\.)+([a-z]{2,4})$/i";

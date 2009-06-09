@@ -6,7 +6,7 @@
 		$frm=0;
 		$inser="list/user/";
 		if (isset($_GET['from'])) {
-			$frm=gint($_GET['from']);
+			$frm=intval($_GET['from']);
 		}
 		$order="name";
 		$fst="<td class='mettm'><a href='list/user/namedesc'>&#8593; Ник</a> &#8595;</td>";

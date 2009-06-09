@@ -16,7 +16,7 @@
  */
 include 'cfg.php';
 if (isset($_GET['name']) && isset($_GET['id'])) {
-	$sql_get="SELECT * FROM `users` WHERE id = ".gint($_GET['id'])."   ";
+	$sql_get="SELECT * FROM `users` WHERE id = ".intval($_GET['id'])."   ";
 	$result=mysql_query($sql_get,$sql);
 	if (!$result) {
 		echo  mysql_error();

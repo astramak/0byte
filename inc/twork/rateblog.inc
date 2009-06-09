@@ -13,7 +13,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 	header("Content-Location: $lst");
 	header("Location: $lst");
 } else {
-	$sql_get="SELECT * FROM `blogs` WHERE id = '".gint($_GET['id'])."'   ";
+	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['id'])."'   ";
 	$result=mysql_query($sql_get,$sql);
 	if (!$result) {
 		echo  mysql_error();
@@ -28,7 +28,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 	} else {
 			
 		$sl="UPDATE `$sql_db`.`blogs` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `blogs`.`id`
-				 = '".gint($_GET['id'])."'";
+				 = '".intval($_GET['id'])."'";
 		$result=mysql_query($sl,$sql);
 
 		if ($_GET['rate'][0]=='p') {
@@ -41,7 +41,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 
 		$result=mysql_query($sl,$sql);
 		$sql_get="SELECT * FROM `urate`";
-		$sl="INSERT INTO `$sql_db`.`brate` (`who` ,`pid`) VALUES ('".$usr->login."', '".gint($_GET['id'])."')";
+		$sl="INSERT INTO `$sql_db`.`brate` (`who` ,`pid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 		$result=mysql_query($sl,$sql);
 		if ($json==1) {
 			if ($_GET['rate']=='p') {

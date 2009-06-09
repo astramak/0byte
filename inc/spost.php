@@ -17,7 +17,7 @@
 $last_com_id=0;
 $jstocom="var com_arr=new Array();";
 $num_com=0;
-$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['post'])."'   ";
+$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
 	echo  mysql_error();
@@ -28,12 +28,12 @@ $cur=str_replace("?","*qw",$cur);
 $row = mysql_fetch_assoc($result);
 if ($row['blck']==1 && $usr->lvl<$blvl) {
 	echo "<h2>У вас недостаточно прав для просмотра данной страницы!</h2>";
-} else if ($row['id']!=gint($_GET['post'])) {
+} else if ($row['id']!=intval($_GET['post'])) {
 	echo "<h2>Пост не существует</h2>";
 } else {
 	//spy
 	if ($loged==1) {
-		$sql_get="SELECT * FROM `hist` WHERE `pid` = '".gint($_GET['post'])."' && `who`='".$usr->login."'  ";
+		$sql_get="SELECT * FROM `hist` WHERE `pid` = '".intval($_GET['post'])."' && `who`='".$usr->login."'  ";
 		$result=mysql_query($sql_get,$sql);
 		$rw = mysql_fetch_assoc($result);
 		$v_date=$rw['date'];
@@ -48,16 +48,16 @@ if ($row['blck']==1 && $usr->lvl<$blvl) {
 	}
 	$bls="";
 	if ($usr->lvl>=$rlvl) {
-		$bls="(<a  href='twork.php?wt=bpost&id=".gint($_GET['post'])."&unb=".$row['blck']."'>".$unb."блокировать</a>) (<a href='work/rmpost/".gint($_GET['post'])."'>Удалить</a>) ";
+		$bls="(<a  href='twork.php?wt=bpost&id=".intval($_GET['post'])."&unb=".$row['blck']."'>".$unb."блокировать</a>) (<a href='work/rmpost/".intval($_GET['post'])."'>Удалить</a>) ";
 	}
 	if ($usr->login==$row['auth'] || $usr->lvl>=$elvl) {
-		$ed='(<a  href="work/editpost/'.gint($_GET['post']).'">Править</a>) '.$bls;
+		$ed='(<a  href="work/editpost/'.intval($_GET['post']).'">Править</a>) '.$bls;
 	}
 	if ($usr->login!=$row['auth'] && $loged==1) {
 		if (strpos($post->flw,$usr->login)===false) {
-			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".gint($_GET['post'])."'>Отслеживать</a>)";
+			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".intval($_GET['post'])."'>Отслеживать</a>)";
 		} else {
-			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".gint($_GET['post'])."&un=1'>Перестать отслеживать</a>)";
+			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".intval($_GET['post'])."&un=1'>Перестать отслеживать</a>)";
 		}
 	}
 	$rt="";$rate=$post->rate();
@@ -90,7 +90,7 @@ if ($row['blck']==1 && $usr->lvl<$blvl) {
 
 
 
-	$sql_get="SELECT * FROM `comment` WHERE cid = '".gint($_GET['post'])."' && lvl='0'  ORDER BY  id   ";
+	$sql_get="SELECT * FROM `comment` WHERE cid = '".intval($_GET['post'])."' && lvl='0'  ORDER BY  id   ";
 	$result=mysql_query($sql_get,$sql);
 	if (!$result) {
 		echo  mysql_error();
@@ -121,7 +121,7 @@ onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"com\",event); }' name='text'  r
 //spy
 if ($loged==1) {
 	if ($v_id==0) {
-		$sql_get="INSERT INTO `hist` (`pid`, `who`, `date`) VALUES (".gint($_GET['post']).",'".$usr->login."','".time()."')";
+		$sql_get="INSERT INTO `hist` (`pid`, `who`, `date`) VALUES (".intval($_GET['post']).",'".$usr->login."','".time()."')";
 		$result=mysql_query($sql_get,$sql);
 	} else {
 		$sql_get="UPDATE `hist` SET `date` = '".time()."' WHERE `hist`.`id` =".$v_id." LIMIT 1";
@@ -131,6 +131,6 @@ if ($loged==1) {
 ///spy
 if ($num_com==0) {$nam="&#8212;";} else {$nam=$num_com;}
 echo "<div id='ebaa'><img onClick='upd_com()' src='style/n_img/refr.gif' /><br /><a href='javascript:upd_ls()' id='ln_doe'>".$nam."</a></div>";
-echo "<script type='text/javascript'> var last_com_id=".$last_com_id."; var post_id_com=".gint($_GET['post'])."; ".$jstocom." var num_com=".$num_com."</script>";
+echo "<script type='text/javascript'> var last_com_id=".$last_com_id."; var post_id_com=".intval($_GET['post'])."; ".$jstocom." var num_com=".$num_com."</script>";
 ?>
 

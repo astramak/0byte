@@ -3,7 +3,7 @@ $lst=$_GET['cur'];
 $lst=str_replace("*amp","&",$lst);
 $lst=str_replace("*qw","?",$lst);
 if (isset($_POST['nox'])) {
-	$sl="SELECT * FROM `wansw` WHERE who = '".$usr->login."' && cid = '".gint($_GET['id'])."'";
+	$sl="SELECT * FROM `wansw` WHERE who = '".$usr->login."' && cid = '".intval($_GET['id'])."'";
 	$result=mysql_query($sl,$sql);
 	$row = mysql_fetch_assoc($result);
 	#echo $sl;
@@ -14,7 +14,7 @@ if (isset($_POST['nox'])) {
 		header("Location: $lst");
 		die;
 	}
-	$sl="INSERT INTO `$sql_db`.`wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".gint($_GET['id'])."')";
+	$sl="INSERT INTO `$sql_db`.`wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 	$result=mysql_query($sl,$sql);
 	if ($json==1) {
 		echo answ_echo($_GET['id']);
@@ -26,7 +26,7 @@ if (isset($_POST['nox'])) {
 		die; }
 }
 
-$sl="SELECT * FROM `post` WHERE id = '".gint($_GET['id'])."'";
+$sl="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'";
 $result=mysql_query($sl,$sql);
 $row = mysql_fetch_assoc($result);
 if (!isset($_POST['answ']) && $row['lnk']==0) {
@@ -37,7 +37,7 @@ if (!isset($_POST['answ']) && $row['lnk']==0) {
 	die;
 }
 if ($row['lnk']==1) {
-	$sl="SELECT * FROM `answ` WHERE cid = '".gint($_GET['id'])."'";
+	$sl="SELECT * FROM `answ` WHERE cid = '".intval($_GET['id'])."'";
 	$result=mysql_query($sl,$sql);
 	while ($raw = mysql_fetch_assoc($result)) {
 		if (isset($_POST[$raw['id']]) && $_POST[$raw['id']]=="on") {
@@ -54,11 +54,11 @@ if ($row['lnk']==1) {
 		header("Location: $lst");
 		die;
 	}
-	$sl="UPDATE `$sql_db`.`answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".gint($_POST['answ'])."'";
+	$sl="UPDATE `$sql_db`.`answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".intval($_POST['answ'])."'";
 	$result=mysql_query($sl,$sql);
 
 }
-$sl="INSERT INTO `$sql_db`.`wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".gint($_GET['id'])."')";
+$sl="INSERT INTO `$sql_db`.`wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 $result=mysql_query($sl,$sql);
 if ($json==1) {
 	echo answ_echo($_GET['id']);

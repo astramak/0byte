@@ -1,5 +1,5 @@
 <?php
-$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['post'])."'   ";
+$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
 	echo  mysql_error();
@@ -15,7 +15,7 @@ if ($_POST['blog']==0) {
 	$blog="own";
 }
 else {
-	$sql_get="SELECT * FROM `blogs` WHERE id = '".gint($_POST['blog'])."'  ";
+	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_POST['blog'])."'  ";
 	$res=mysql_query($sql_get,$sql);
 	$row = mysql_fetch_assoc($res);
 	$blog=$row['name'];
@@ -33,21 +33,21 @@ if ( ( $usr->lvl>$elvl || $usr->login==$row['auth'] ) && ((isset($_POST['title']
 
 
 	if ($row['tp']==3) {
-		$sql_get="UPDATE `$sql_db`.`post` SET `lock` = '".gint($lock)."', `tag` = '".mysql_escape_string(gtext($tag))."', `blog` = '".$blog."',
-		`blogid` = '".gint($_POST['blog']);
+		$sql_get="UPDATE `$sql_db`.`post` SET `lock` = '".intval($lock)."', `tag` = '".mysql_escape_string(gtext($tag))."', `blog` = '".$blog."',
+		`blogid` = '".intval($_POST['blog']);
 
 	} else {
 		$sql_get="UPDATE `$sql_db`.`post` SET `title` = '".mysql_escape_string(gtext($_POST['title']))."' ,
 		`text` = '".mysql_escape_string(gtext($txt))."' ,`ftext` = '".mysql_escape_string(gtext($text))."',
-		`lock` = '".gint($lock)."',
+		`lock` = '".intval($lock)."',
 		`blog` = '".$blog."', 
-		`blogid` = '".gint($_POST['blog'])."',
+		`blogid` = '".intval($_POST['blog'])."',
 		`tag` = '".mysql_escape_string(gtext($tag)); }
 		if (isset($_POST['lnk'])) {
 			$sql_get.="' ,`lnk` = '".mysql_escape_string(gtext($_POST['lnk']))." ";
 		}
 
-		$sql_get.="' WHERE `post`.`id` =".gint($_GET['post']);
+		$sql_get.="' WHERE `post`.`id` =".intval($_GET['post']);
 		$result=mysql_query($sql_get,$sql);
 		$lst="post/".$_GET['post'];
 		header("Request-URI: $lst");
