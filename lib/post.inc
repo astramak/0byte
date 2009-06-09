@@ -15,7 +15,8 @@
  *
  */
 $fst_post=1;
-class post{
+
+class post {
 	var $title;
 	var $date;
 	var $auth;
@@ -29,6 +30,11 @@ class post{
 	var $blck;
 	var $tp;
 	var $flw;
+
+	function post($row = null) {
+		if ($row) $this->make($row);
+	}
+
 	function make($a) {
 		$this->title=$a['title'];
 		$this->date=$a['date'];
@@ -47,6 +53,7 @@ class post{
 			$this->lnk=$a['lnk'];
 		}
 	}
+
 	function havecut() {
 		if (strstr($this->text,"[cut]")===false && strstr($this->text,"[fcut]")===false) {
 			return 0;
@@ -54,23 +61,30 @@ class post{
 			return 1;
 		}
 	}
+
 	function rate() {
 		$a=$this->ratep-$this->ratem;
 		return($a);
 	}
+
+	function is_voting() {
+		return ($this->tp == 3);
+	}
 }
+
 function post_echo($row,$t) {
 	global $sql,$usr,$cur,$fst_post,$loged;
-	$alien=new user;
-	$a=new post;
-	$a->make($row);
+
+	$alien=new user();
+	$a=new post($row);
+
 	if ($t==1) {
 		$txt=$a->ftext;
 	} else {
 		$txt=$a->text;
 	}
 	$txt=code($txt);
-		
+
 	$bls="";
 	if($a->blck==1) {
 		$bls="style='color:red'";
@@ -100,15 +114,15 @@ function post_echo($row,$t) {
 		$blog="<a href='".$a->lnk."' rel='nofollow' class='blog'><img class='auth' src='style/lnk.gif' style='height: 20px;' /></a>
 		".$blog."<a href='".$a->lnk."' rel='nofollow' class='blog'>".$a->title."</a>";
 	} else if ($a->tp==2) {
-		$blog="<img class='auth' src='style/tr.gif' style='height: 20px;' />
+			$blog="<img class='auth' src='style/tr.gif' style='height: 20px;' />
 		".$blog."<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
-		$txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
-	}
-	else {
-		$blog.="<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
-	}
+			$txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
+		}
+		else {
+			$blog.="<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
+		}
 	$answ="";
-	if ($a->tp==3) {
+	if ($a->is_voting()) {
 		$lnk=$row['lnk'];
 		$sl="SELECT * FROM `wansw` WHERE who = '".$usr->login."' && cid = '".$a->id."'";
 		$result=mysql_query($sl,$sql);
@@ -120,7 +134,7 @@ function post_echo($row,$t) {
 			$sql_get="SELECT * FROM `answ` WHERE cid = '".$a->id."'";
 			$answ.="<div id='a_".$a->id."'><form method='post' action='twork.php?wt=answ&cur=".$cur."&id=".$a->id."' />";
 			$res=mysql_query($sql_get,$sql);
-				
+
 			if ($lnk==1) {
 				$ttp="checkbox";
 				echo "<script type='text/javascript'>var a_type=1;</script>";
@@ -157,33 +171,33 @@ function chkin($a) {
 	if ($a['lock']==0) {
 		return(1);
 	} else if ($loged==0) {
-		return (0);
-	}
-	else
-	if ($a['auth']==$usr->login) {
-		return(1);
-	} else
-	if ($a['blogid']==0) {
-		$sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && frnd LIKE  '%".$a['auth']."%' ORDER BY  id DESC ";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
+			return (0);
 		}
-		$row = mysql_fetch_assoc($result);
-		if ($row['name']==$usr->login) {
-			return(1);
-		} else {return(0);}
-	} else {
-		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."' && blogid = '".$a['blogid']."' ORDER BY  id DESC ";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-		$row = mysql_fetch_assoc($result);
-		if ($row['name']==$usr->login) {
-			return(1);
-		} else {return(0);}
-	}
+		else
+			if ($a['auth']==$usr->login) {
+				return(1);
+			} else
+				if ($a['blogid']==0) {
+					$sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && frnd LIKE  '%".$a['auth']."%' ORDER BY  id DESC ";
+					$result=mysql_query($sql_get,$sql);
+					if (!$result) {
+						echo  mysql_error();
+					}
+					$row = mysql_fetch_assoc($result);
+					if ($row['name']==$usr->login) {
+						return(1);
+					} else {return(0);}
+				} else {
+					$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."' && blogid = '".$a['blogid']."' ORDER BY  id DESC ";
+					$result=mysql_query($sql_get,$sql);
+					if (!$result) {
+						echo  mysql_error();
+					}
+					$row = mysql_fetch_assoc($result);
+					if ($row['name']==$usr->login) {
+						return(1);
+					} else {return(0);}
+				}
 }
 
 
