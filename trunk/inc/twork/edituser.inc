@@ -12,7 +12,7 @@ $sql_get="UPDATE `$sql_db`.`users` SET `icq` = '".mysql_escape_string(gtext($_PO
 	`postre` = '".$pr."' ,
 	`comre` = '".$cr."' ,
 	`pmre` = '".$pmr."' ,
-	`juse` = '".gint($_POST['juse'])."' ,
+	`juse` = '".intval($_POST['juse'])."' ,
 	`jname` = '".mysql_escape_string(gtext($_POST['jname']))."' ,
 	`jdate` = '',
 	`city` = '".mysql_escape_string(gtext($_POST['city']))."'

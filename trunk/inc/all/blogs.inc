@@ -6,7 +6,7 @@
 		$frm=0;
 		$inser="list/blog/";
 		if (isset($_GET['from'])) {
-			$frm=gint($_GET['from']);
+			$frm=intval($_GET['from']);
 		}	$order="name";
 		$fst="<td class='mettm'><a href='list/blog/namedesc'>&#8593; Название</a> &#8595;</td>";
 		$scn="<td class='mettm'><a href='list/blog/ratedesc'>&#8593; Рейтинг</a> <a href='list/blog/rate'>&#8595;</a></td>";

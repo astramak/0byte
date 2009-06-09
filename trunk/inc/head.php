@@ -22,7 +22,7 @@ if ($loged==1) {
 	$result=mysql_query($sql_get,$sql);
 }
 if (isset($_GET['post'])) {
-	$post11=gint($_GET['post']);
+	$post11=intval($_GET['post']);
 }
 echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -32,7 +32,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
 <base href="<?php echo $site; ?>" />
 <title><?php 
 if (isset($_GET['post']) && !isset($_GET['wt'])) {
-	$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['post'])."'   ";
+	$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
 	$result=mysql_query($sql_get,$sql);
 	$row = mysql_fetch_assoc($result);
 	if ($row['blog']=="own") {
@@ -59,7 +59,7 @@ if (isset($_GET['post']) && !isset($_GET['wt'])) {
  			ob_end_clean();
  			echo $kwd;
 		} {
-			$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['post'])."'   ";
+			$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
 			$result=mysql_query($sql_get,$sql);
 			$row = mysql_fetch_assoc($result);
 			echo str_replace(',',', ',$row['tag']);
@@ -80,7 +80,7 @@ if (isset($_GET['post']) && !isset($_GET['wt'])) {
 				echo "rss/".gtext($_GET['pg']);
 			}
 		} else if (isset($_GET['blog'])) {
-			echo "rss/blog/".gint($_GET['blog']);
+			echo "rss/blog/".intval($_GET['blog']);
 		} else if (isset($_GET['auth'])) {
 			echo "rss/auth/".gtext($_GET['auth']);
 		} else {

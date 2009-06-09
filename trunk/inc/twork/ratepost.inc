@@ -10,7 +10,7 @@ if ($lstw!=false) {
 } else {
 	$lst.="?hl=".$_GET['id']."#hl";
 }
-$sl="SELECT * FROM `rate` WHERE who = '".$usr->login."' && pid = ".gint($_GET['id']);
+$sl="SELECT * FROM `rate` WHERE who = '".$usr->login."' && pid = ".intval($_GET['id']);
 $result=mysql_query($sl,$sql);
 $row = mysql_fetch_assoc($result);
 if (strcmp($row['pid'],$_GET['id'])==0) {
@@ -22,7 +22,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 	header("Content-Location: $lst");
 	header("Location: $lst");
 } else {
-	$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['id'])."'   ";
+	$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'   ";
 	$result=mysql_query($sql_get,$sql);
 	if (!$result) {
 		echo  mysql_error();
@@ -38,7 +38,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 		header("Location: $lst");
 	} else {
 			
-		$sl="UPDATE `$sql_db`.`post` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `post`.`id` = ".gint($_GET['id']);
+		$sl="UPDATE `$sql_db`.`post` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `post`.`id` = ".intval($_GET['id']);
 		$result=mysql_query($sl,$sql);
 
 		if ($_GET['rate'][0]=='p') {
@@ -49,7 +49,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 				 = '".$row['auth']."'";
 		}
 		$result=mysql_query($sl,$sql);
-		$sl="INSERT INTO `$sql_db`.`rate` (`who` ,`pid`) VALUES ( '".$usr->login."', '".gint($_GET['id'])."')";
+		$sl="INSERT INTO `$sql_db`.`rate` (`who` ,`pid`) VALUES ( '".$usr->login."', '".intval($_GET['id'])."')";
 		$result=mysql_query($sl,$sql);
 		if ($json==1) {
 			if ($_GET['rate']=='p') {

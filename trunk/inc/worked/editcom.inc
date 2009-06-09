@@ -1,6 +1,6 @@
 <h3>Редактирование комментария</h3>
 <?php
-$sql_get = "SELECT * FROM `comment` WHERE id = '".gint($_GET['id'])."'";
+$sql_get = "SELECT * FROM `comment` WHERE id = '".intval($_GET['id'])."'";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
 	echo  mysql_error();

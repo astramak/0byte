@@ -27,9 +27,9 @@ if (isset($_GET['pg'])) {
 		$lnk=$site."pers";
 	}
 } else if (isset($_GET['blog'])) {
-	$sql_get="SELECT * FROM `post` WHERE `blogid`= ".gint($_GET['blog'])." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-	$lnk=$site."blog/".gint($_GET['blog']);
-	$sqlg="SELECT * FROM `blogs` WHERE `id`= ".gint($_GET['blog']);
+	$sql_get="SELECT * FROM `post` WHERE `blogid`= ".intval($_GET['blog'])." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+	$lnk=$site."blog/".intval($_GET['blog']);
+	$sqlg="SELECT * FROM `blogs` WHERE `id`= ".intval($_GET['blog']);
 	$result=mysql_query($sqlg,$sql);
 	$row = mysql_fetch_assoc($result);
 	$title=$ls_name." Блог ".$row['name'];

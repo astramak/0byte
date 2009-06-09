@@ -1,5 +1,5 @@
 <?php
-$sl="UPDATE `".$sql_db."`.`blogs` SET `about`= '".gtext($_POST['text'])."' WHERE `owner` = '".$usr->login."' && `id` = '".gint($_GET['bid'])."'";
+$sl="UPDATE `".$sql_db."`.`blogs` SET `about`= '".gtext($_POST['text'])."' WHERE `owner` = '".$usr->login."' && `id` = '".intval($_GET['bid'])."'";
 $result=mysql_query($sl,$sql);
 //echo $sl; die;
 $lst="work/myblog";

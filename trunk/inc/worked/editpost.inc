@@ -1,5 +1,5 @@
 <?php
-$sql_get="SELECT * FROM `post` WHERE id = '".gint($_GET['post'])."'   ";
+$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
 	echo  mysql_error();
@@ -16,7 +16,7 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 	}
 	echo '
 		<h3>Редактирование сообщения</h3>';
-	echo '<form id="new" name="new" method="post" action="twork.php?wt=editpost&post='.gint($_GET['post']).'">';
+	echo '<form id="new" name="new" method="post" action="twork.php?wt=editpost&post='.intval($_GET['post']).'">';
 	if ($row['tp']==3) {
 		echo '<b>В опросах запрещено изменять вопрос и ответы, для редактирования доступны только теги и доступ!</b>
 			<br />

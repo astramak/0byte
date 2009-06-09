@@ -12,13 +12,13 @@ if (isset($_GET['com'])) {
 	$tp="`comment`.";
 }
 if (isset($_GET['aft'])) {
-	$aft=" && ".$tp."`id` > ".gint($_GET['aft']);
+	$aft=" && ".$tp."`id` > ".intval($_GET['aft']);
 } else if (isset($_GET['bef'])) {
-	$aft=" && ".$tp."`id` < ".gint($_GET['bef']);
+	$aft=" && ".$tp."`id` < ".intval($_GET['bef']);
 }
 $limit=8;
 if (isset($_GET['lm'])) {
-	$limit=gint($_GET['lm']);
+	$limit=intval($_GET['lm']);
 }
 $i=0;
 if (isset ($_GET['noo'])) {
@@ -112,8 +112,8 @@ else if (isset($_GET['pst'])) {
 		} }
 }
 else if (isset($_GET['last_com_id']) && isset($_GET['pid'])) {
-	$post11=gint($_GET['pid']);
-	$sql_get="SELECT * FROM `comment` WHERE `id`>'".gint($_GET['last_com_id'])."' && `krnl`='".gint($_GET['pid'])."' ORDER by `id`";
+	$post11=intval($_GET['pid']);
+	$sql_get="SELECT * FROM `comment` WHERE `id`>'".intval($_GET['last_com_id'])."' && `krnl`='".intval($_GET['pid'])."' ORDER by `id`";
 	$result=mysql_query($sql_get,$GLOBALS['sql']);
 	while ($row = mysql_fetch_assoc($result)) {
 		$arr[$i]['id']=$row['id'];
@@ -125,7 +125,7 @@ else if (isset($_GET['last_com_id']) && isset($_GET['pid'])) {
 		$i++;
 	}
 	if ($loged==1) {
-		$sql_get="SELECT * FROM `hist` WHERE `pid` = '".gint($_GET['pid'])."' && `who`='".$usr->login."'  ";
+		$sql_get="SELECT * FROM `hist` WHERE `pid` = '".intval($_GET['pid'])."' && `who`='".$usr->login."'  ";
 		$result=mysql_query($sql_get,$sql);
 		$rw = mysql_fetch_assoc($result);
 		$sql_get="UPDATE `hist` SET `date` = '".time()."' WHERE `hist`.`id` =".$rw['id']." LIMIT 1";

@@ -56,7 +56,7 @@ if (isset($_GET['tag'])) {
 	} else
 	if (isset($_GET['blog'])) {
 			
-		$sql_get="SELECT * FROM `post` WHERE blogid = '".gint($_GET['blog'])."' $blck ORDER BY  id DESC ";
+		$sql_get="SELECT * FROM `post` WHERE blogid = '".intval($_GET['blog'])."' $blck ORDER BY  id DESC ";
 		$bl=1;
 	}
 
@@ -106,12 +106,12 @@ if ($kol<1) {
 	if (isset($_GET['fnd'])) {
 		echo "<h3 class='not'>Ничего не найдено!";
 	} else if (isset($_GET['blog'])) {
-		$sql_get="SELECT * FROM `blogs` WHERE id = '".gint($_GET['blog'])."' ";
+		$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
 		$resul=mysql_query($sql_get,$sql);
 		$rowa = mysql_fetch_assoc($resul);
 		$blg=new blog;
 		$blg->make($rowa);
-		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".gint($_GET['blog'])."' && name =
+		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($_GET['blog'])."' && name =
 			'".$usr->login."'";
 		$res=mysql_query($sql_get,$sql);
 		$ro = mysql_fetch_assoc($res);
@@ -143,12 +143,12 @@ if ($kol<1) {
 	}
 } else {
 	if ($bl==1) {
-		$sql_get="SELECT * FROM `blogs` WHERE id = '".gint($_GET['blog'])."' ";
+		$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
 		$resul=mysql_query($sql_get,$sql);
 		$rowa = mysql_fetch_assoc($resul);
 		$blg=new blog;
 		$blg->make($rowa);
-		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".gint($_GET['blog'])."' && name =
+		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($_GET['blog'])."' && name =
 			'".$usr->login."'";
 		$res=mysql_query($sql_get,$sql);
 		$ro = mysql_fetch_assoc($res);

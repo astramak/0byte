@@ -16,7 +16,7 @@ if ($json==1 && strlen($_POST['text'])<3) {
 }
 if (isset($_GET['lvl'])) {
 	$lvl=$_GET['lvl'];
-	$sql_get="SELECT * FROM `comment` WHERE `id` = '".gint($_GET['id'])."'   ";
+	$sql_get="SELECT * FROM `comment` WHERE `id` = '".intval($_GET['id'])."'   ";
 	$result=mysql_query($sql_get,$sql);
 	$rw = mysql_fetch_assoc($result);
 	$krnl=$rw['krnl'];
@@ -24,7 +24,7 @@ if (isset($_GET['lvl'])) {
 
 } else {
 	$lvl=0;
-	$krnl=gint($_GET['id']);
+	$krnl=intval($_GET['id']);
 	$ceauth="";
 }
 $sql_get="SELECT * FROM `post` WHERE `id` = '".$krnl."'   ";
@@ -47,9 +47,9 @@ $listp=$raw['flw'];
 $text=mysql_escape_string(gtext($_POST['text']));
 $date=time();
 $sl="INSERT INTO `$sql_db`.`comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
-VALUES ( '".$date."', '".$text."' , '".$usr->login."' ,".gint($_GET['id'])." , ".$lvl." , '".$krnl."')";
+VALUES ( '".$date."', '".$text."' , '".$usr->login."' ,".intval($_GET['id'])." , ".$lvl." , '".$krnl."')";
 $result=mysql_query($sl,$sql);
-$sql_get="SELECT * FROM `comment` WHERE `cid` = '".gint($_GET['id'])."' && `date`= '".$date."'   ";
+$sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($_GET['id'])."' && `date`= '".$date."'   ";
 $result=mysql_query($sql_get,$sql);
 $rw = mysql_fetch_assoc($result);
 $cm=new com;
@@ -100,7 +100,7 @@ if ($json==1)
 	$post11=$pid;
 	$v_date=0;
 	$out['id']=$pid;
-	$out['cid']=gint($_GET['id']);
+	$out['cid']=intval($_GET['id']);
 	$out['txt']=com_echo($cm,1);
 	echo json_encode($out);
 	jkill();
