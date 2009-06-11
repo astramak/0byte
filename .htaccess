@@ -1,4 +1,3 @@
-
 RewriteEngine On
 
 RewriteRule ^looz/([^\/]*) all.php?wt=looz&nick=$1 [L]
@@ -13,7 +12,7 @@ RewriteRule ^list/blog/([^\/]*)/from/([0-9]*) all.php?wt=blogs&order=$1&from=$2 
 RewriteRule ^list/blog/([^\/]*) all.php?wt=blogs&order=$1 [L]
 RewriteRule ^list/blog all.php?wt=blogs [L]
 
-RewriteRule ^comment/([^\/]*) comment.php?who=$1 [L]
+RewriteRule ^comment/([^\/]*) comments.php?who=$1 [L]
 RewriteRule ^work/newpost/answ/([0-9]*) worked.php?wt=newpost&tp=answ&len=$1 [L]
 RewriteRule ^work/editpost/([0-9]*) worked.php?wt=editpost&post=$1 [L]
 RewriteRule ^work/editcom/([0-9]*) worked.php?wt=editcom&id=$1 [L]
@@ -61,4 +60,3 @@ RewriteRule ^rss/lenta/(.*) rss.php?lenta=$1 [L]
 RewriteRule ^rss/pers rss.php?pg=pers [L]
 RewriteRule ^rss/main rss.php?pg=main [L]
 RewriteRule ^rss rss.php [L]
-

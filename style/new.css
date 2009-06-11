@@ -1,7 +1,7 @@
 /* иешники отсосите!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 из-за вашего ебучего браузера в ксске появилась всякая хуйня!
 так что засуньте себе во все отверстия паяльники и танцуйте в кастьрюле сцуки!
- */
+*/
 body {
 	font-family: dejavu-serif, Verdana;
 	font-size: 12px;
@@ -10,19 +10,19 @@ body {
 	background-color: #fff;
 }
 div,td,span {
-	//font-size:12px;	
+	//font-size:12px;
 }
 a,.outb,a:ACTIVE ,a:HOVER,  a:VISITED, #outb {
 	color: 	#2669A6;
 }
 table * {
-	vertical-align: top;	
+	vertical-align: top;
 }
 img {
-	border: none;	
+	border: none;
 }
 input {
-	font-size: 12px;	
+	font-size: 12px;
 }
 #h1 { 
 	margin-left: 20px;
@@ -37,14 +37,14 @@ input {
 	vertical-align: middle;
 	display:inline-block;
 	height: 12px;
-	text-decoration: none;	
+	text-decoration: none;
 }
 .menuel, .amenuel, .lmenuel {
 	float: left;
 	height:30px;
 	overflow: hidden;
 	padding-left: 5px;
-	padding-right: 9px;	
+	padding-right: 9px;
 	display: inline-block;
 	margin-bottom: 8px;
 }
@@ -52,10 +52,10 @@ input {
 	color: #464646;
 }
 .amenuel {
-	background: #edeff0 url('img/rgt.png') no-repeat right; 
+	background: #edeff0 url('img/rgt.png') no-repeat right;
 }
 .menuel {
-	background: #fdfdfd url('img/rwt.png') no-repeat right; 
+	background: #fdfdfd url('img/rwt.png') no-repeat right;
 }
 .lmenuel {
 	background: #fdfdfd url('img/lrwt.png') no-repeat right;
@@ -70,15 +70,15 @@ input {
 	display: block;
 	margin-bottom:0px;
 	background: url('img/sb.png') repeat-x bottom;
-	//height:38px; 
+	//height:38px;
 }
 .usln a {
-	text-decoration: underline;	
+	text-decoration: underline;
 }
 .usln{
 	margin-bottom: 8px;
 	overflow: hidden;
-	float:right;	
+	float:right;
 	height: 30px;
 	padding-left: 9px;
 	display: inline-block;
@@ -114,14 +114,14 @@ input {
 	padding-bottom: -20px;
 }
 *+html #inout img {
-	padding-bottom:10px;	
+	padding-bottom:10px;
 }
 a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 	color: #000000;
 	font-weight: bold;
 }
 #tb5 {
-	width: 320px;	
+	width: 320px;
 	padding-left: 30px;
 	padding-right: 0px;
 }
@@ -139,7 +139,7 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 	padding-left: 6px;
 	padding-right: 3px;
 	height: 30px;
-	background: #eceeef url('img/ergt.png') no-repeat left top;	
+	background: #eceeef url('img/ergt.png') no-repeat left top;
 	width: 20px;
 }
 
@@ -152,18 +152,18 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 	.rsd, .lsd {
 		margin: 0px;
 		height: 23px;
-		padding-bottom: 3px;	
+		padding-bottom: 3px;
 	}
 }
 .rsd * {
-	margin: 5px;	
+	margin: 5px;
 }
 .rsdno {
 	padding: 7px;
 	padding-left: 0px;
 	padding-right: 0px;
 	height: 30px;
-	background: #eceeef;	
+	background: #eceeef;
 	width: 30px;
 	border-left: 1px solid #D8D8D8;
 }
@@ -182,13 +182,13 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 #plist,#clist,#alist, #blist,.ulist , #eblist{
 	padding-left: 25px;
 	margin-top: 0px;
-	margin-bottom: 4px;	
+	margin-bottom: 4px;
 }
 #plist,#clist, #blist,.ulist , #eblist {
 	margin-top:8px;
 }
 #plist li,#clist li,#alist li, #blist li,.ulist li , #eblist{
-	padding-bottom: 4px;	
+	padding-bottom: 4px;
 }
 #plist {
 	list-style-image: url('img/document.gif');
@@ -217,15 +217,15 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 	padding-bottom: 0px;
 }
 .rsd * {
-	padding-bottom: 0px;	
+	padding-bottom: 0px;
 	margin-bottom: 0px;
 	border-spacing:0px;
 	//margin: 0px;
 	//padding: 0px;
 }
 #fuck {
-margin:0px;
-padding:0px;
+	margin:0px;
+	padding:0px;
 }
 .lsd input {
 	_height:16px;
@@ -236,7 +236,7 @@ padding:0px;
 	padding: 7px;
 }
 #tags {
-	text-align: center;	
+	text-align: center;
 }
 #tags a, #tags a:ACTIVE, #tags a:VISITED {
 	text-decoration: none;
@@ -261,20 +261,20 @@ padding:0px;
 	border-top:	#2669A6 1px solid;
 }
 .auth {
-	float: right;	
+	float: right;
 }
 .date {
-	float: left;	
+	float: left;
 }
 .mtxt {
-	padding-left:10px;	
-	padding-right:10px;	
+	padding-left:10px;
+	padding-right:10px;
 	margin-bottom: 10px;
 }
 .title {
 	font-family: dejavu-sans, Trebuchet MS;
 	padding-bottom: 2px;
-	font-size: 26px;	
+	font-size: 26px;
 	font-weight: normal;
 	margin-top: 4px;
 }
@@ -287,13 +287,13 @@ padding:0px;
 	//height: 14px;
 }
 .full {
-	float: left;	
+	float: left;
 }
 .rate {
-	float: right;	
+	float: right;
 }
 .rate a {
-	text-decoration: none;	
+	text-decoration: none;
 }
 a.ratep , a.ratep:ACTIVE, a.ratep:VISITED, a.ratem , a.ratem:ACTIVE, a.ratem:VISITED, .pcl, .mcl {
 	display: inline-block;
@@ -324,10 +324,10 @@ a.ratem:HOVER {
 	text-align: center;
 }
 .nmn {
-	font-size:18px;	
+	font-size:18px;
 }
 .nomnm {
-	text-decoration: none;	
+	text-decoration: none;
 }
 #btop {
 	overflow: hidden;
@@ -335,16 +335,16 @@ a.ratem:HOVER {
 .bnm a, .bnm a:ACTIVE, .bnm a:VISITED, .bnm a:HOVER, .bnm{
 	color: #000000;
 	text-decoration: none;
-	font-size: 26px;	
+	font-size: 26px;
 }
 .bbnm{
-	float: left;	
+	float: left;
 }
 .tdx {
 	display: inline-block;
 	border: #a6a6a6 1px solid;
 }
- a.tdx,  a.tdx:ACTIVE,  a.tdx:VISITED,  a.tdx:HOVER{
+a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
 	color: #000000;
 	text-decoration: none;
 }
@@ -361,13 +361,13 @@ a.ratem:HOVER {
 	margin-bottom: 6px;
 }
 .ctop {
-	background: #edeff0;	
+	background: #edeff0;
 }
 .cntop{
-	background: #BEF8A1;	
+	background: #BEF8A1;
 }
 .unr {
-	background: #81d769;	
+	background: #81d769;
 }
 .scb {
 	color: #464646;
@@ -389,10 +389,10 @@ a.ratem:HOVER {
 	vertical-align: middle;
 	z-index:2;
 	_position: absolute;
- 	_left: expression( ( 20 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
- 	_top: expression( ( 10 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+	_left: expression( ( 20 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+	_top: expression( ( 10 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
 	_background-image: none;
-	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='wbg.png'); 
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='wbg.png');
 }
 #wd {
 	margin: 0px;
@@ -429,7 +429,7 @@ a.ratem:HOVER {
 	float: left;
 }
 .clnk {
-	padding-left: 5px;	
+	padding-left: 5px;
 }
 .crate {
 	float: right;
@@ -525,11 +525,11 @@ a.ratem:HOVER {
 	padding-right: 20px;
 }
 .jst {
-color:#2669A6;
+	color:#2669A6;
 }
 .text img {
-		max-width: 550px;
-/* Пользователи ie6 у которых расхерачило страницу - идите в пизду! */
+	max-width: 550px;
+	/* Пользователи ie6 у которых расхерачило страницу - идите в пизду! */
 }
 @media all and (device-width: 1280px) {
 	.text img {
@@ -587,27 +587,27 @@ color:#2669A6;
 	width: auto;
 }
 #ebaa {
-position: fixed;
-right: 0px;
-top:50%;
-width: 30px;
-padding-top:7px;
-height: 42px;
-vertical-align: middle;
-text-align: center;
-background: url('n_img/bg.png');
-_position: absolute;
-_left: expression( ( 20 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
-_top: expression( ( 10 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
-_background-image: none;
-_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='n_img/bg.png'); 
+	position: fixed;
+	right: 0px;
+	top:50%;
+	width: 30px;
+	padding-top:7px;
+	height: 42px;
+	vertical-align: middle;
+	text-align: center;
+	background: url('n_img/bg.png');
+	_position: absolute;
+	_left: expression( ( 20 + ( ignoreMe2 = document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft ) ) + 'px' );
+	_top: expression( ( 10 + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop ) ) + 'px' );
+	_background-image: none;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='n_img/bg.png');
 }
 #ebaa *{
-vertical-align: middle;
-text-align: center;
+	vertical-align: middle;
+	text-align: center;
 }
 #ln_doe {
-text-decoration: none;
+	text-decoration: none;
 }
 .prv, #prwb-1 {
 	display: none;
@@ -621,4 +621,7 @@ table.fullwidth {
 input.post-title,
 input.post-tags {
 	width:500px;
+}
+.rateonly {
+	margin: 0px 2px 0px 2px;
 }
