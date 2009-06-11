@@ -1,15 +1,11 @@
 <?php
-
-?><?php
 include ("cfg.php");
 include ("inc/head.php");
 include("inc/top.php");
-
-
 ?>
 
 
-<div id="main"><?php          
+<div id="main"><?php
 if (!isset($_GET['who'])) {
 	echo "<h2>Пользователь с таким именем не найден!</h2>";
 } else {
@@ -31,7 +27,7 @@ if (!isset($_GET['who'])) {
 		echo  mysql_error();
 	}
 
-	if ($id=mysql_num_rows($result)==0) {
+	if (($id=mysql_num_rows($result))==0) {
 		echo "<span id='nocom'>Коментариев нет</span>";
 	} else {
 		$com=new com;
@@ -42,9 +38,9 @@ if (!isset($_GET['who'])) {
 
 			$rw = mysql_fetch_assoc($resul);
 			if ($rw['blogid']==0 ) {
-				$us="<a href='auth/".$rw['auth']."'>".$rw['auth']."</a> → "
+				$us="<a href='auth/".$rw['auth']."'>".$rw['auth']."</a> → ";
 			} else {
-				$us="<a href='blog/".$rw['blog']."'>".$rw['blog']."</a> → "
+				$us="<a href='blog/".$rw['blog']."'>".$rw['blog']."</a> → ";
 			}
 			echo "<div class='ctop'><span class='date'>".date('d.m.y  H:i',$com->date)."</span><span class='auth'>$us<a href='post/".$rw['id']."#cm".$row['id']."'>".$rw['title']."</a></span></div>";
 
