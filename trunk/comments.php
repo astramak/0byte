@@ -21,7 +21,7 @@ include("inc/top.php");
                 ".$alien->rate()."<a class='ratem' href='twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur."'>&ndash;</a></span></div>";     
 
 
-		$sql_get="SELECT * FROM `comment` WHERE who = '".gtext($_GET['who'])."'   ORDER BY  id DESC  ";
+		$sql_get="SELECT * FROM `comment` WHERE who = '".gtext($_GET['who'])."'   ORDER BY  id DESC  "; //тут мудак mad нашёл ошибку, какой же он тупой мудак =) |не удалять!!!|
 		$result=mysql_query($sql_get,$sql);
 		if (!$result) {
 			echo  mysql_error();
