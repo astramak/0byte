@@ -54,7 +54,7 @@ if ($alien->find($name)==0) {
 			$src="twitter";
 			$alien->jtext=substr($alien->jtext,strlen($alien->jname)+2);
 		}
-		echo "<span class='jst'>".gtext($alien->jname."@".$src.": ".$alien->jtext)."</span>";
+		echo "<span class='jst'>".$alien->jname."@".$src.": ".$alien->jtext."</span>";
 	}
 	if ($alien->lck==1) { echo "<h3>Пoльзователь заблокирован</h3>"; 
 	$un=1; $unh="Раз";
