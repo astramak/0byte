@@ -113,7 +113,8 @@ function com_echo($com,$noecho) {
 		$ssa= "<img class='cauth' src='res.php?t=av&amp;img=".$alien->av."' />";
 	}
 
-	$rt="";$rate=$com->rate();
+	$rt="";
+	$rate=$com->rate();
 	if ($com->lvl>0) {
 		$top="<a class='clnk' href='post/".$post11."/#cmnt".$com->cid."' title='Уровнем выше'>&#8593;</a>";
 	} else {$top="";}
@@ -141,13 +142,11 @@ function com_echo($com,$noecho) {
 		if (!$result) {
 			echo  mysql_error();
 		}
-		if ($id=mysql_num_rows($result)==0) {} else {
-
+		if (($id=mysql_num_rows($result)) > 0) {
 			$cm=new com;
 			while($row = mysql_fetch_assoc($result)) {
 				$cm->make($row);
 				com_echo($cm);
-					
 			}
 		}
 	}
