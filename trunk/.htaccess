@@ -45,7 +45,6 @@ RewriteRule ^blog/([0-9]*) index.php?blog=$1 [L]
 RewriteRule ^auth/([^\/]*) index.php?auth=$1 [L]
 RewriteRule ^tag/(.*) index.php?tag=$1 [L]
 
-
 RewriteRule ^login/new login.php?new=1 [L]
 RewriteRule ^login/(.*) login.php?cur=$1 [L]
 RewriteRule ^main index.php?pg=main [L]
@@ -60,3 +59,5 @@ RewriteRule ^rss/lenta/(.*) rss.php?lenta=$1 [L]
 RewriteRule ^rss/pers rss.php?pg=pers [L]
 RewriteRule ^rss/main rss.php?pg=main [L]
 RewriteRule ^rss rss.php [L]
+
+RewriteRule ^ajax/(.*) index.php?ajax=$1 [L,QSA]

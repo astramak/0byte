@@ -6,9 +6,8 @@ if ($json!=1) {
 }
 if ($json==1 && strlen($_POST['text'])<3) {
 	$out['err']="Вы не ввели комментарий!";
-	echo json_encode($out);
-	die;
-} else if( strlen($_POST['text'])<3) {
+	die(json_encode($out));
+} elseif( strlen($_POST['text'])<3) {
 	header("Request-URI: $lst");
 	header("Content-Location: $lst");
 	header("Location: $lst");
@@ -21,7 +20,6 @@ if (isset($_GET['lvl'])) {
 	$rw = mysql_fetch_assoc($result);
 	$krnl=$rw['krnl'];
 	$ceauth=$rw['who'];
-
 } else {
 	$lvl=0;
 	$krnl=intval($_GET['id']);
@@ -30,9 +28,9 @@ if (isset($_GET['lvl'])) {
 $sql_get="SELECT * FROM `post` WHERE `id` = '".$krnl."'   ";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
-	echo  mysql_error();
+	echo mysql_error();
 }
-	
+
 $raw = mysql_fetch_assoc($result);
 if ($raw['id']!=$krnl || $_GET['id']=="") {
 	header("Request-URI: $lst");
@@ -65,12 +63,11 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
 	$result=mysql_query($sql_get,$sql);
 
 	if ($row['comre']==1) {
-		mail($row['mail'], "Ответ на ваш комментарий на ".$s_name,
-		 "Пользователь ".$usr->login." ответил на ваш <a href='".$site."post/".$pid.$lst."'>комментарий</a>"
-		 , "Content-type: text/html; charset='UTF-8'\r\n" .
-		'From: reply'.$eml."\r\n" .
-    'Reply-To: reply'.$eml."\r\n" .
-    'X-Mailer: PHP/' . phpversion());
+		$to = $row['mail'];
+		$subject = "Ответ на ваш комментарий на " . $s_name;
+		$message = "Пользователь ".$usr->login." ответил на ваш <a href='".$site."post/".$pid.$lst."'>комментарий</a>";
+		$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
+		nullbyte_mail($to, $subject, $message, true, $headers);
 	}
 }
 if ($pauth!=$usr->login) {
@@ -82,21 +79,18 @@ if ($pauth!=$usr->login) {
 	$sql_get="INSERT INTO `eye` ( `who` ,`pid`) VALUES ('".$pauth."','".$pid."')";
 	$result=mysql_query($sql_get,$sql);
 	if ($row['postre']==1) {
-		mail($row['mail'], "Ответ на ваш пост на ".$s_name,
-		 "Пользователь ".$usr->login." ответил на ваш <a href='".$site."post/".$pid.$lst."'>пост</a>"
-		 , "Content-type: text/html; charset='UTF-8'\r\n" .
-		'From: reply'.$eml."\r\n" .
-    'Reply-To: reply'.$eml."\r\n" .
-    'X-Mailer: PHP/' . phpversion());
-
+		$to = $row['mail'];
+		$subject = "Ответ на ваш пост на ".$s_name;
+		$message = "Пользователь ".$usr->login." ответил на ваш <a href='".$site."post/".$pid.$lst."'>пост</a>";
+		$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
+		nullbyte_mail($to, $subject, $message, true, $headers);
 	}
 }
 flsnd($listp,$usr->login,$pid,$cm->id);
 
 $sql_get="DELETE FROM `eye` WHERE `pid`='' || `who`=''";
 $result=mysql_query($sql_get,$sql);
-if ($json==1)
-{
+if ($json==1) {
 	$post11=$pid;
 	$v_date=0;
 	$out['id']=$pid;

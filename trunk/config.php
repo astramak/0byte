@@ -15,23 +15,23 @@
  *
  */
 //sql settings
-$sql_srv='';
-$sql_db='';
-$sql_usr='';
-$sql_pwd='';
+$sql_srv='localhost';
+$sql_db='0byte';
+$sql_usr='root';
+$sql_pwd='helloworld';
 //acces level
 $elvl=3;
 $rlvl=5;
 $blvl=7;
 //other cfg
-$site=""; //full url like http://site.domain/dir/
-$s_name="";//site name
+$site="http://localhost/0byte/trunk/"; //full url like http://site.domain/dir/
+$s_name="Hello 0byte";//site name
 $ls_name=$s_name;
-$sl_name='';//short name
+$sl_name='0byte';//short name
 $to_main=0;//rate for main page
 $nb_rate=0;//lvl for new blog
 $dir="/";//dir
-$eml="";//email end like @site.domain
+$eml="@0byte.com";//email end like @site.domain
 $eml_a=0; //e-mail activation
 $blog_r=4; //user rate by blog
 $post_r=5; //user rate by post

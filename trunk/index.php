@@ -16,15 +16,23 @@
  */
 $index=1;
 include("cfg.php");
+
+$ajax = request::get_get('ajax');
+if ($ajax) {
+	include("inc/ajax/" . sfin($ajax) . ".inc");
+	die;
+}
+
 include("inc/head.php");
 include("inc/top.php");
 ?>
 <div id="main"><?php 
-if (isset($_GET['post'])) {
-	include("inc/spost.php"); 
-
-} else include("inc/post.php");
-?></div>
+	if (isset($_GET['post'])) {
+		include("inc/spost.php");
+	} else {
+		include("inc/post.php");
+	}
+	?></div>
 <?php
 
 include("inc/foot.php");
