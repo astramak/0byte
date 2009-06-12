@@ -20,15 +20,15 @@ $logged=login();
 $loged=$logged;
 if (isset($_GET['json'])) {
 	$json=1;
-		header("Content-Type: text/html; charset=utf-8");
+	header("Content-Type: text/html; charset=utf-8");
 } else {
 	$json=0;
 }
 if ($logged==0) {
-if ($json==1) die;	
+	if ($json==1) die;
 	header("Request-URI: login.php");
 	header("Content-Location: login.php");
-	header("Location: login.php"); 
+	header("Location: login.php");
 } else {
 	include("inc/twork/".sfin($_GET['wt']).".inc");
 }

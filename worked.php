@@ -18,16 +18,16 @@ include ("cfg.php");
 include ("inc/head.php");
 include("inc/top.php");
 ?>
-
-
-<div id="main"><?php
-if ($loged==1) {
-	include("inc/worked/".sfin($_GET['wt']).".inc"); } else {
+<div id="main">
+	<?php
+	if ($loged==1) {
+		include("inc/worked/".sfin($_GET['wt']).".inc");
+	} else {
 		echo_err("У вас нет прав на посещение данной страницы!");
 	}
-	?></div>
-
-
-	<?php
-	include("inc/foot.php");
 	?>
+</div>
+
+<?php
+include("inc/foot.php");
+?>

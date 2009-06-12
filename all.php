@@ -20,9 +20,11 @@ include("inc/top.php");
 ?>
 
 
-<div id="main"><?php
-include("inc/all/".sfin($_GET['wt']).".inc");
-?></div>
+<div id="main">
+	<?php
+	include("inc/all/".sfin($_GET['wt']).".inc");
+	?>
+</div>
 
 
 <?php

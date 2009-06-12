@@ -87,7 +87,7 @@ if ($loged==1) {
 	$la=", у вас <img src='style/img/".$kml.".gif' alt='' /> <a href='work/pmls'>$aid / $ida ЛС</a>";
 	echo $_SESSION['login']."</a> ".$rtt." ".$la.". <a href='work/newpost'>Новый пост</a> / $new</div>
 							<div id='inout'><img src='style/img/figure.gif' alt='' />
-							<form id='out' method='post' action='http://".$_SERVER['HTTP_HOST'].$dir."'><input type='hidden' name='un' value='1' /> <input id='outb' type='submit' value='Выйти' /></form></div>";
+							<form id='out' method='post' action='".$site."'><input type='hidden' name='un' value='1' /> <input id='outb' type='submit' value='Выйти' /></form></div>";
 } else  {
 	echo "<a href='register'>Зарегистрироваться</a></div><div id='inout'><a id='lgin' href='login/$cur'>Войти</a></div>";
 }

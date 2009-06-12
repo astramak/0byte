@@ -43,7 +43,10 @@ include("lib/geshi/geshi.php");
 include("lib/tmplr.inc");
 include("lib/flw.inc");
 include("lib/json.inc");
+require_once 'lib/request.class.php';
+require_once 'lib/utils.php';
 //end
+
 if (!isset($_GET['debug'])) ini_set ('display_errors', 0);
 
 $ma=new mn;

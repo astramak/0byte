@@ -31,21 +31,21 @@ function flsnd($list,$usr,$pid,$comid) {
 	global $sql,$eml,$site,$s_name;
 	$arr=split(",",$list);
 	$q=sizeof($arr);
-	for ($z=0;$z<$q;$z++) {
-		if (trim($arr[$z])!=$usr) {
+	for ($z=0; $z<$q; $z++) {
+		if (trim($arr[$z]) != $usr) {
 			$sql_get="SELECT * FROM `users` WHERE name = '".trim($arr[$z])."'";
 			$result=mysql_query($sql_get,$sql);
 			$row = mysql_fetch_assoc($result);
 			$sql_get="DELETE FROM `eye` WHERE `pid`='".$pid."' && `who`='".trim($arr[$z])."' LIMIT 1";
-			@$result=mysql_query($sql_get,$sql);
+			$result=mysql_query($sql_get,$sql);
 			$sql_get="INSERT INTO `eye` ( `who` ,`pid`) VALUES ('".trim($arr[$z])."','".$pid."')";
 			$result=mysql_query($sql_get,$sql);
-			mail($row['mail'], "Ответ на отслеживаемый вами пост на ".$s_name,
-		 	"Пользователь ".$usr." ответил на отслеживаемый вами <a href='".$site."post/".$pid."/#cmnt".$comid."'>пост</a>"
-		 	, "Content-type: text/html; charset='UTF-8'\r\n" .
-			'From: reply'.$eml."\r\n" .
-   			 'Reply-To: reply'.$eml."\r\n" .
-    		'X-Mailer: PHP/' . phpversion());
+
+			$to = $row['mail'];
+			$subject = "Ответ на отслеживаемый вами пост на ".$s_name;
+			$message = "Пользователь ".$usr." ответил на отслеживаемый вами <a href='".$site."post/".$pid."/#cmnt".$comid."'>пост</a>";
+			$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
+			nullbyte_mail($to, $subject, $message, true, $headers);
 		}
 	}
 }

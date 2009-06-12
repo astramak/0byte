@@ -625,3 +625,18 @@ input.post-tags {
 .rateonly {
 	margin: 0px 5px 0px 5px;
 }
+.required {
+	font-weight:bold;
+	color:red;
+}
+div.required {
+	float:right;
+}
+.correctval {
+	color:green;
+	background-color:green;
+}
+.invalidval {
+	color:red;
+	background-color:red;
+}
