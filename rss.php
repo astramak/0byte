@@ -27,9 +27,9 @@ if (isset($_GET['pg'])) {
 		$lnk=$site."pers";
 	}
 } else if (isset($_GET['blog'])) {
-	$sql_get="SELECT * FROM `post` WHERE `blogid`= ".intval($_GET['blog'])." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-	$lnk=$site."blog/".intval($_GET['blog']);
-	$sqlg="SELECT * FROM `blogs` WHERE `id`= ".intval($_GET['blog']);
+	$sql_get="SELECT * FROM `post` WHERE `blogid`= ".gint($_GET['blog'])." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+	$lnk=$site."blog/".gint($_GET['blog']);
+	$sqlg="SELECT * FROM `blogs` WHERE `id`= ".gint($_GET['blog']);
 	$result=mysql_query($sqlg,$sql);
 	$row = mysql_fetch_assoc($result);
 	$title=$ls_name." Блог ".$row['name'];
@@ -38,7 +38,7 @@ if (isset($_GET['pg'])) {
 	$title=$ls_name."Посты от ".$_GET['auth'];
 	$lnk=$site."auth/".$_GET['auth'];
 } else if (isset($_GET['lenta'])) {
-	$name=base64_decode($_GET['lenta']);
+	$name=gtext(base64_decode($_GET['lenta']));
 	$sql_get="SELECT * FROM `post` WHERE ";
 	$sl="SELECT * FROM `inblog` WHERE  `name` = '".$name."' &&  `out` = 0 ORDER BY  id DESC ";
 	$rt=mysql_query($sl,$sql);
@@ -86,7 +86,7 @@ $result=mysql_query($sql_get,$sql);
 date("r", $row['date']).
 '</pubDate>
 <item>
-<title>'.htmlspecialchars($us).' -&gt;'.htmlspecialchars($row['title']).'</title>
+<title>'.htmlspecialchars($us).' &#8212; '.htmlspecialchars($row['title']).'</title>
 <link>'.$site.'post/'.$row['id'].'</link>
 <description>'.htmlspecialchars(code(str_replace("[cut]"," ",str_replace("[fcut]"," ",$row['text'])))).
 '</description>
@@ -104,7 +104,7 @@ date("r", $row['date']).
 		}
 		echo '
 <item>
-<title>'.htmlspecialchars($us).' -&gt;'.htmlspecialchars($row['title']).'</title>
+<title>'.htmlspecialchars($us).' &#8212; '.htmlspecialchars($row['title']).'</title>
 <link>'.$site.'post/'.$row['id'].'</link>
 <description>'.htmlspecialchars(code(str_replace("[cut]"," ",str_replace("[fcut]"," ",$row['text'])))).
 '</description>
