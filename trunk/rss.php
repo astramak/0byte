@@ -15,103 +15,84 @@
  *
  */
 include("cfg.php");
+
+if (request::get_get('pg')) {
+	$pg = request::get_get('pg');
+	if ($pg == "main") {
+		$sql_get="SELECT * FROM `post` WHERE `blogid`!= 0 && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+		$lnk=$site."main";
+		$title="Персональное на ".$ls_name;
+	} elseif ($pg == "pers") {
+		$sql_get="SELECT * FROM `post` WHERE `blogid`= 0 && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+		$title="Коллективное на ".$ls_name;
+		$lnk=$site."pers";
+	}
+} elseif (request::get_get('blog')) {
+	$blogid = intval(request::get_get('blog'));
+	$sql_get="SELECT * FROM `post` WHERE `blogid`= ".$blogid." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+	$lnk=$site."blog/".intval($_GET['blog']);
+	$sqlg="SELECT * FROM `blogs` WHERE `id`= ".$blogid;
+	$result=mysql_query($sqlg,$sql);
+	$row = mysql_fetch_assoc($result);
+	$title=$ls_name." Блог ".$row['name'];
+} elseif (request::get_get('auth')) {
+	$auth = request::get_get('auth');
+	$sql_get="SELECT * FROM `post` WHERE `auth`= '".mysql_escape_string(gtext($auth))."' && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+	$title=$ls_name."Посты от ".$auth;
+	$lnk=$site."auth/".$auth;
+} elseif (request::get_get('lenta')) {
+	$name=gtext(base64_decode(request::get_get('lenta')));
+	$sql_get="SELECT * FROM `post` WHERE ";
+	$sl="SELECT * FROM `inblog` WHERE  `name` = '".$name."' &&  `out` = 0 ORDER BY  id DESC ";
+	$rt=mysql_query($sl,$sql);
+	$rwo = mysql_fetch_assoc($rt);
+	$sql_get.="`blogid` = '".$rwo['blogid']."'";
+	while ($rwo = mysql_fetch_assoc($rt)) {
+		$sql_get.=" || `blogid` = '".$rwo['blogid']."'";
+	}
+	$sl="SELECT * FROM `users` WHERE  `name` = '".$name."'";
+	$rt=mysql_query($sl,$sql);
+	$rwo = mysql_fetch_assoc($rt);
+	$arr=split(",",$rwo['frnd']);
+	$q=sizeof($arr);
+	for ($z=1;$z<$q;$z++) {
+		$f=trim($arr[$z]);
+		$sql_get.=" || `auth` = '".$f."'";
+	}
+	$sql_get.=" ORDER BY  id DESC LIMIT 100";
+	$title="Персональная лента ".$name;
+} else {
+	$sql_get="SELECT * FROM `post` WHERE ratep >= ratem && `blck` = 0 ORDER BY  id DESC LIMIT 100";
+	$title=$ma->title;
+	$lnk=$site;
+}
+
+$result=mysql_query($sql_get,$sql);
+if (!$result) {
+	echo  mysql_error();
+}
+
+$items = array();
+while ($row = mysql_fetch_assoc($result)) {
+	$items[] = prepare_rss_post_item($row);
+}
+
 header("content-type: application/rss+xml");
-echo '<?xml version="1.0" encoding="utf-8"?>';
-?>
-<rss version="2.0">
-	<channel>
-		<?php
-		if (isset($_GET['pg'])) {
-			if ($_GET['pg']=="main") {
-				$sql_get="SELECT * FROM `post` WHERE `blogid`!= 0 && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-				$lnk=$site."main";
-				$title="Персональное на ".$ls_name;
-			} elseif ($_GET['pg']=="pers") {
-				$sql_get="SELECT * FROM `post` WHERE `blogid`= 0 && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-				$title="Коллективное на ".$ls_name;
-				$lnk=$site."pers";
-			}
-		} elseif (isset($_GET['blog'])) {
-			$sql_get="SELECT * FROM `post` WHERE `blogid`= ".intval($_GET['blog'])." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-			$lnk=$site."blog/".intval($_GET['blog']);
-			$sqlg="SELECT * FROM `blogs` WHERE `id`= ".intval($_GET['blog']);
-			$result=mysql_query($sqlg,$sql);
-			$row = mysql_fetch_assoc($result);
-			$title=$ls_name." Блог ".$row['name'];
-		} elseif (isset($_GET['auth'])) {
-			$sql_get="SELECT * FROM `post` WHERE `auth`= '".mysql_escape_string(gtext($_GET['auth']))."' && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-			$title=$ls_name."Посты от ".$_GET['auth'];
-			$lnk=$site."auth/".$_GET['auth'];
-		} elseif (isset($_GET['lenta'])) {
-			$name=gtext(base64_decode($_GET['lenta']));
-			$sql_get="SELECT * FROM `post` WHERE ";
-			$sl="SELECT * FROM `inblog` WHERE  `name` = '".$name."' &&  `out` = 0 ORDER BY  id DESC ";
-			$rt=mysql_query($sl,$sql);
-			$rwo = mysql_fetch_assoc($rt);
-			$sql_get.="`blogid` = '".$rwo['blogid']."'";
-			while ($rwo = mysql_fetch_assoc($rt)) {
-				$sql_get.=" || `blogid` = '".$rwo['blogid']."'";
-			}
-			$sl="SELECT * FROM `users` WHERE  `name` = '".$name."'";
-			$rt=mysql_query($sl,$sql);
-			$rwo = mysql_fetch_assoc($rt);
-			$arr=split(",",$rwo['frnd']);
-			$q=sizeof($arr);
-			for ($z=1;$z<$q;$z++) {
-				$f=trim($arr[$z]);
-				$sql_get.=" || `auth` = '".$f."'";
-			}
-			$sql_get.=" ORDER BY  id DESC LIMIT 100";
-			$title="Персональная лента ".$name;
-		} else {
-			$sql_get="SELECT * FROM `post` WHERE ratep >= ratem && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-			$title=$ma->title;
-			$lnk=$site;
-		}
-		echo "<title>".htmlspecialchars($title)."</title>
-<link>".$lnk."</link>
-<description>".htmlspecialchars($title)."; rss канал</description>
- <language>ru-ru</language>
+echo render_rss('posts', $title, $lnk, $items);
 
-";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-
-		while ($row = mysql_fetch_assoc($result)) {
-			if ($row['blogid']==0) {
-				$us=$row['auth'];
-			} else {
-				$us=$row['blog'];
-			}
-			echo format_rss_item($us, $row);
-		}
-		?>
-	</channel>
-</rss>
-<?php
-function format_rss_item($blogname, $row) {
+function prepare_rss_post_item($row) {
 	global $site;
 
-	$post_url = $site.'post/'.$row['id'];
+	$post_url = $site . 'post/' . $row['id'];
 	$cut_url = $post_url;
 
 	$has_cut = (strpos($row['text'], '[cut]') !== false);
 	$has_fcut = (strpos($row['text'], '[fcut]') !== false);
-	$descr = code(str_replace("[cut]"," ",str_replace("[fcut]"," ",$row['text'])));
+	$row['descr'] = code(str_replace("[cut]", " ", str_replace("[fcut]", " ", $row['text'])));
 	if ($has_cut || $has_fcut) {
-		$descr .= '<br /><br /><a href="' . $cut_url . '">Полностью...</a>';
+		$row['descr'] .= '<br /><br /><a href="' . $cut_url . '">Полностью...</a>';
 	}
 
-	return '<pubDate>'.date("r", $row['date']).'</pubDate>
-<item>
-<title>'.htmlspecialchars($blogname).' &#8212; '.htmlspecialchars($row['title']).'</title>
-<link>'.$post_url.'</link>
-<description>'.htmlspecialchars($descr).'</description>
-<pubDate>' . date("r", $row['date']) . '</pubDate>
-<author>' . $row['auth'] . '</author>
-<guid>'.$post_url.'</guid>
-</item>';
+	return $row;
 }
 ?>

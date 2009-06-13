@@ -45,4 +45,22 @@ function render_template($tpl_path, $variables) {
 function render_mail($mail_name, $variables) {
 	return render_template(TPL_MAIL . '/' . $mail_name . '.tpl.php', $variables);
 }
+
+/**
+ * Renders rss template
+ *
+ * @param string $type
+ * @param string $title
+ * @param string $link
+ * @param array $items
+ * @return string
+ */
+function render_rss($type, $title, $link, $items) {
+	$vars = array(
+		'title' => $title,
+		'link' => $link,
+		'items' => $items,
+	);
+	return render_template(TPL_RSS . '/' . posts . '.tpl.php', $vars);
+}
 ?>
