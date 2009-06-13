@@ -1,0 +1,1 @@
+Пользователь <?php print $user ?> отправил вам <a href="<?php echo $site, 'work/pmread/', $pm_id ?>">личное сообщение</a>

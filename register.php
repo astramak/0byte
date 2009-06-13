@@ -84,7 +84,10 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 
 				$to = $mail;
 				$subject = "Регистрация на ".$s_name;
-				$message = "Для продолжения регистрации перейдите <a href='http://welinux.ru/active.php?id=".$row['id']."&name=".$name."'>по этой ссылке</a>";
+				$message = render_mail('register', array(
+					'id' => $row['id'],
+					'name' => $name,
+				));
 				$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
 				nullbyte_mail($to, $subject, $message, true, $headers);
 			}

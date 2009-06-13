@@ -14,18 +14,11 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-if (isset($_GET['pg'])) {
-	$pg=$_GET['pg'];
-} else {
-	$pg='main';
-}
-//user cfg
-include("config.php");
-//end of user cfg
-
-$sql=mysql_connect($sql_srv, $sql_usr, $sql_pwd) or die ('e1');
-mysql_select_db($sql_db) or die ('e2');
-mysql_query("SET NAMES UTF8", $sql);
+// define some constants
+define('ROOT_PATH', dirname(__FILE__));
+define('TPL_ROOT', ROOT_PATH . '/style/templates');
+define('TPL_MAIL', TPL_ROOT . '/mail');
+define('TPL_MAIN', TPL_ROOT);
 
 //lib load
 include("lib/blog.inc");
@@ -42,16 +35,28 @@ include("lib/geshi/geshi.php");
 include("lib/tmplr.inc");
 include("lib/flw.inc");
 include("lib/json.inc");
+
 require_once 'lib/request.class.php';
 require_once 'lib/utils.php';
-//end
+require_once 'lib/native_template.php';
 
-if (!isset($_GET['debug'])) ini_set ('display_errors', 0);
+//user cfg
+include("config.php");
 
-$ma=new mn;
+$pg = request::get_get('pg', 'main', true);
+
+$sql=mysql_connect($sql_srv, $sql_usr, $sql_pwd) or die ('e1');
+mysql_select_db($sql_db) or die ('e2');
+mysql_query("SET NAMES UTF8", $sql);
+
+if (!request::get_get('debug')) ini_set('display_errors', 0);
+
+$ma=new mn();
 $ma->title=$s_name;
 $ma=cmenu($ma);
-$usr=new user;
+
+$usr=new user();
+
 function crl($a) {
 	if ($a==0) {
 		echo '<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>';

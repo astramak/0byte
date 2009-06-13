@@ -1,30 +1,36 @@
 <?php
-if ($json!=1) {
-	$lst=$_GET['from'];
+if ($json != 1) {
+	$lst = request::get_get('from');
 	$lst=str_replace("*amp","&",$lst);
 	$lst=str_replace("*qw","?",$lst);
 }
-if ($json==1 && strlen($_POST['text'])<3) {
-	$out['err']="Вы не ввели комментарий!";
-	die(json_encode($out));
-} elseif( strlen($_POST['text'])<3) {
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
-	die;
+
+$text = request::get_post('text');
+if (strlen($text) < 3) {
+	if ($json == 1) {
+		$out['err']="Вы не ввели комментарий!";
+		die(json_encode($out));
+	} else {
+		header("Request-URI: $lst");
+		header("Content-Location: $lst");
+		header("Location: $lst");
+		die;
+	}
 }
-if (isset($_GET['lvl'])) {
-	$lvl=$_GET['lvl'];
-	$sql_get="SELECT * FROM `comment` WHERE `id` = '".intval($_GET['id'])."'   ";
+
+$lvl = request::get_get('lvl', 0, true);
+$id = request::get_get('id');
+if ($lvl) {
+	$sql_get="SELECT * FROM `comment` WHERE `id` = '".intval($id)."'   ";
 	$result=mysql_query($sql_get,$sql);
 	$rw = mysql_fetch_assoc($result);
 	$krnl=$rw['krnl'];
 	$ceauth=$rw['who'];
 } else {
-	$lvl=0;
-	$krnl=intval($_GET['id']);
+	$krnl=intval($id);
 	$ceauth="";
 }
+
 $sql_get="SELECT * FROM `post` WHERE `id` = '".$krnl."'   ";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
@@ -32,7 +38,7 @@ if (!$result) {
 }
 
 $raw = mysql_fetch_assoc($result);
-if ($raw['id']!=$krnl || $_GET['id']=="") {
+if ($raw['id'] != $krnl || $id == "") {
 	header("Request-URI: $lst");
 	header("Content-Location: $lst");
 	header("Location: $lst");
@@ -42,12 +48,12 @@ if ($raw['id']!=$krnl || $_GET['id']=="") {
 $pauth=$raw['auth'];
 $pid=$raw['id'];
 $listp=$raw['flw'];
-$text=mysql_escape_string(gtext($_POST['text']));
+$text=mysql_escape_string(gtext($text));
 $date=time();
 $sl="INSERT INTO `$sql_db`.`comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
-VALUES ( '".$date."', '".$text."' , '".$usr->login."' ,".intval($_GET['id'])." , ".$lvl." , '".$krnl."')";
+VALUES ( '".$date."', '".$text."' , '".$usr->login."' ,".intval($id)." , ".$lvl." , '".$krnl."')";
 $result=mysql_query($sl,$sql);
-$sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($_GET['id'])."' && `date`= '".$date."'   ";
+$sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($id)."' && `date`= '".$date."'   ";
 $result=mysql_query($sql_get,$sql);
 $rw = mysql_fetch_assoc($result);
 $cm=new com;
@@ -65,7 +71,11 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
 	if ($row['comre']==1) {
 		$to = $row['mail'];
 		$subject = "Ответ на ваш комментарий на " . $s_name;
-		$message = "Пользователь ".$usr->login." ответил на ваш <a href='".$site."post/".$pid.$lst."'>комментарий</a>";
+		$message = render_mail('comment_reply', array(
+			'user' => $usr->login,
+			'pid' => $pid,
+			'lst' => $lst,
+		));
 		$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
 		nullbyte_mail($to, $subject, $message, true, $headers);
 	}
@@ -81,7 +91,11 @@ if ($pauth!=$usr->login) {
 	if ($row['postre']==1) {
 		$to = $row['mail'];
 		$subject = "Ответ на ваш пост на ".$s_name;
-		$message = "Пользователь ".$usr->login." ответил на ваш <a href='".$site."post/".$pid.$lst."'>пост</a>";
+		$message = render_mail('post_reply', array(
+			'user' => $usr->login,
+			'pid' => $pid,
+			'lst' => $lst,
+		));
 		$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
 		nullbyte_mail($to, $subject, $message, true, $headers);
 	}
@@ -90,14 +104,14 @@ flsnd($listp,$usr->login,$pid,$cm->id);
 
 $sql_get="DELETE FROM `eye` WHERE `pid`='' || `who`=''";
 $result=mysql_query($sql_get,$sql);
-if ($json==1) {
+
+if ($json == 1) {
 	$post11=$pid;
 	$v_date=0;
 	$out['id']=$pid;
-	$out['cid']=intval($_GET['id']);
+	$out['cid']=intval($id);
 	$out['txt']=com_echo($cm,1);
-	echo json_encode($out);
-	jkill();
+	die(json_encode($out));
 }
 header("Request-URI: $lst");
 header("Content-Location: $lst");
