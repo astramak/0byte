@@ -43,7 +43,11 @@ function flsnd($list,$usr,$pid,$comid) {
 
 			$to = $row['mail'];
 			$subject = "Ответ на отслеживаемый вами пост на ".$s_name;
-			$message = "Пользователь ".$usr." ответил на отслеживаемый вами <a href='".$site."post/".$pid."/#cmnt".$comid."'>пост</a>";
+			$message = render_mail('observe_reply', array(
+				'user' => $usr,
+				'pid' => $pid,
+				'comid' => $comid,
+			));
 			$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
 			nullbyte_mail($to, $subject, $message, true, $headers);
 		}
