@@ -23,10 +23,9 @@ if (isset($_GET['pg'])) {
 include("config.php");
 //end of user cfg
 
-$sql=mysql_connect($sql_srv,$sql_usr,$sql_pwd) or die ('e1');
+$sql=mysql_connect($sql_srv, $sql_usr, $sql_pwd) or die ('e1');
 mysql_select_db($sql_db) or die ('e2');
-$sqs="SET NAMES UTF8";
-mysql_query($sqs,$sql);
+mysql_query("SET NAMES UTF8", $sql);
 
 //lib load
 include("lib/blog.inc");

@@ -47,7 +47,7 @@ include("inc/top.php");
 				if ($rw['blogid']==0 ) {
 					$us="<a href='auth/".$rw['auth']."'>".$rw['auth']."</a>  &#8212;  ";
 				} else {
-					$us="<a href='blog/".$rw['blog']."'>".$rw['blog']."</a>  &#8212;  ";
+					$us="<a href='blog/".$rw['blogid']."'>".$rw['blog']."</a>  &#8212;  ";
 				}
 				$date = date('d.m.y  H:i',$com->date);
 				$text = code($com->text);
