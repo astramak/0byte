@@ -70,7 +70,7 @@ function g_plist(tp) {
 		document.getElementById('cf').style.display="none";
 		document.getElementById('pf').style.display="none";
 	}
-	xmlhttp.open('GET', "js/r_get.php?"+ttp+tt, true);
+	xmlhttp.open('GET', "ajax/r_get?"+ttp+tt, true);
 	var atr="";
 	if (arguments[1]==1) {
 		atr="g_plist('"+arguments[2]+"')";
@@ -79,7 +79,7 @@ function g_plist(tp) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4) {
 			var resp=eval('('+xmlhttp.responseText+')');
-		for (i=0;i<=resp.num-1;i++) {
+			for (i=0;i<=resp.num-1;i++) {
 				rt="";
 				ln="";
 				if (resp.arr[i].rate>0) {
@@ -110,25 +110,22 @@ function g_plist(tp) {
 				} else {
 					wh.innerHTML+=what;
 				}
-		} 
-		eval(atr);
+			}
+			eval(atr);
 		
 		}
-	
-			
-	 };
+	};
 	xmlhttp.send(null);
-	
 }
 function hplist() {
-	_touch('js/r_get.php?noo=1');
+	_touch('ajax/r_get?noo=1');
 	document.getElementById('pf').style.display="none";
 	document.getElementById('cf').style.display="none";
 	document.getElementById('ef').style.display="none";
 	document.getElementById('af').style.display="table-row";	
 }
 function hgptop() {
-	_touch('js/r_get.php?noo=2');
+	_touch('ajax/r_get?noo=2');
 	document.getElementById("ulister").innerHTML=ulist;
 	document.getElementById("blist").innerHTML=blist;
 	document.getElementById("bltop").style.display="table-row";
