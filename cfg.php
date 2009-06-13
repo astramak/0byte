@@ -18,6 +18,7 @@
 define('ROOT_PATH', dirname(__FILE__));
 define('TPL_ROOT', ROOT_PATH . '/style/templates');
 define('TPL_MAIL', TPL_ROOT . '/mail');
+define('TPL_RSS', TPL_ROOT . '/rss');
 define('TPL_MAIN', TPL_ROOT);
 
 //lib load
