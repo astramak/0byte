@@ -19,6 +19,7 @@ define('ROOT_PATH', dirname(__FILE__));
 define('TPL_ROOT', ROOT_PATH . '/style/templates');
 define('TPL_MAIL', TPL_ROOT . '/mail');
 define('TPL_RSS', TPL_ROOT . '/rss');
+define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_MAIN', TPL_ROOT);
 
 //lib load
@@ -52,9 +53,6 @@ mysql_query("SET NAMES UTF8", $sql);
 
 if (!request::get_get('debug')) ini_set('display_errors', 0);
 
-$ma=new mn();
-$ma->title=$s_name;
-$ma=cmenu($ma);
 
 $usr=new user();
 
