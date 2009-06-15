@@ -61,6 +61,20 @@ function render_rss($type, $title, $link, $items) {
 		'link' => $link,
 		'items' => $items,
 	);
-	return render_template(TPL_RSS . '/' . posts . '.tpl.php', $vars);
+	return render_template(TPL_RSS . '/posts.tpl.php', $vars);
+}
+
+function render_menu($menu_arr,$count) {
+	$vars = array('elements'=>$menu_arr,
+	'count'=>$count);
+	return render_template(TPL_TOP.'/menu.tpl.php',$vars);
+}
+
+function render_top() {
+	return render_template(TPL_TOP.'/top.tpl.php',null);
+}
+
+function render_bottom_of_top($var) {
+	return render_template(TPL_TOP.'/bottom.tpl.php',$var);
 }
 ?>
