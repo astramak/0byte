@@ -18,8 +18,7 @@ $inser='';
 if (isset($_GET['pg'])) {
 	$inser.=$_GET['pg']."/";
 }
-if (isset($_GET['blog']))
-{
+if (isset($_GET['blog'])) {
 	$inser.="blog/".$_GET['blog']."/";
 }
 $blck="&& blck = '0'";
@@ -39,39 +38,32 @@ if (isset($_GET['frm'])) {
 if (sizeof($_GET)==0 || sizeof($_GET)==sizeof($_GET['frm']) ) {
 	$sql_get="SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY  id DESC ";
 } else
-if (isset($_GET['tag'])) {
-	$sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
+	if (isset($_GET['tag'])) {
+		$sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
 			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";
-	$inser.="tag/".gtext($_GET['tag'])."/";
-	echo "<h3 class='elt'>С тегом &#171;".gtext($_GET['tag'])."&#187;</h3>";
-
-} else if (isset($_GET['pg']) && $_GET['pg']=='pers') {
-
-	$sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck ORDER BY  id DESC ";
-} else {
-	if (isset($_GET['auth'])) {
-		$sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string($_GET['auth'])."' $blck ORDER BY  id DESC ";
-		$inser.="auth/".$_GET['auth']."/";
-		$au=1;
-	} else
-	if (isset($_GET['blog'])) {
-			
-		$sql_get="SELECT * FROM `post` WHERE blogid = '".intval($_GET['blog'])."' $blck ORDER BY  id DESC ";
-		$bl=1;
+		$inser.="tag/".gtext($_GET['tag'])."/";
+		echo "<h3 class='elt'>С тегом &#171;".gtext($_GET['tag'])."&#187;</h3>";
+	} elseif (isset($_GET['pg']) && $_GET['pg']=='pers') {
+		$sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck ORDER BY  id DESC ";
+	} else {
+		if (isset($_GET['auth'])) {
+			$sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string($_GET['auth'])."' $blck ORDER BY  id DESC ";
+			$inser.="auth/".$_GET['auth']."/";
+			$au=1;
+		} elseif (isset($_GET['blog'])) {
+			$sql_get="SELECT * FROM `post` WHERE blogid = '".intval($_GET['blog'])."' $blck ORDER BY  id DESC ";
+			$bl=1;
+		} else {
+			$sql_get="SELECT * FROM `post` WHERE blog != 'own' $blck ORDER BY  id DESC ";
+		}
 	}
-
-	else {
-		$sql_get="SELECT * FROM `post` WHERE blog != 'own' $blck ORDER BY  id DESC ";
-			
-	}
-}
 if (isset($_GET['fnd'])) {
 	$fnd=trim(str_replace(" ", "%", $_GET['fnd']));
 	$sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
 	echo "<h3 class='elt'>Поиск: «".gtext($_GET['fnd'])."»</h3>";
 }
 if (isset($_GET['pg']) && $_GET['pg']=='lenta') {
-	//lenta start
+//lenta start
 	if ($loged==1) {
 		$sql_get="SELECT * FROM `post` WHERE ";
 		$sl="SELECT * FROM `inblog` WHERE  `name` = '".$usr->login."' &&  `out` = 0 ORDER BY  id DESC ";
@@ -92,7 +84,7 @@ if (isset($_GET['pg']) && $_GET['pg']=='lenta') {
 		}
 		$sql_get.=" ORDER BY  id DESC";
 	}
-	//lenta end
+//lenta end
 }
 $result=mysql_query($sql_get,$sql);
 $i=0; $k=0;
@@ -106,43 +98,43 @@ if ($kol<1) {
 	if (isset($_GET['fnd'])) {
 		echo "<h3 class='not'>Ничего не найдено!";
 	} else if (isset($_GET['blog'])) {
-		$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
-		$resul=mysql_query($sql_get,$sql);
-		$rowa = mysql_fetch_assoc($resul);
-		$blg=new blog;
-		$blg->make($rowa);
-		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($_GET['blog'])."' && name =
+			$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
+			$resul=mysql_query($sql_get,$sql);
+			$rowa = mysql_fetch_assoc($resul);
+			$blg=new blog;
+			$blg->make($rowa);
+			$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($_GET['blog'])."' && name =
 			'".$usr->login."'";
-		$res=mysql_query($sql_get,$sql);
-		$ro = mysql_fetch_assoc($res);
-		$k="";
-		if (strlen($blg->av)>0) {
-			$k="<img style='float:left' src='res.php?t=bl&img=".$blg->av."' alt='' />";
-		}
-		$in="<a id='ibl' href='twork.php?wt=mergeblog&amp;id=".$blg->id."'>Вступить!</a>";
-		if ($ro['name']==$usr->login && $ro['out']==0 ) {
-			$in="<a id='obl' href='twork.php?wt=mergeblog&amp;id=".$blg->id."'>Выйти!</a>";
-		}
-		if ($blg->owner==$usr->login || $loged==0) {
-			$in="";
-		}
-		$rate=$blg->rate();
-		$rt="";
-		if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
-		else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";}
-		else {$rt=0;}
+			$res=mysql_query($sql_get,$sql);
+			$ro = mysql_fetch_assoc($res);
+			$k="";
+			if (strlen($blg->av)>0) {
+				$k="<img style='float:left' src='res.php?t=bl&img=".$blg->av."' alt='' />";
+			}
+			$in="<a id='ibl' href='twork.php?wt=mergeblog&amp;id=".$blg->id."'>Вступить!</a>";
+			if ($ro['name']==$usr->login && $ro['out']==0 ) {
+				$in="<a id='obl' href='twork.php?wt=mergeblog&amp;id=".$blg->id."'>Выйти!</a>";
+			}
+			if ($blg->owner==$usr->login || $loged==0) {
+				$in="";
+			}
+			$rate=$blg->rate();
+			$rt="";
+			if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
+			else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";}
+				else {$rt=0;}
 
-		echo "<div id='btop'>$k<div class='bbnm'><span class='bnm'>".$blg->name."</span><br />".$blg->about."</div><span class='rate'>
-		$in	<noindex><a class='ratep' rel='nofollow' href='twork.php?wt=rateblog&amp;id=".$blg->id."&amp;rate=p&amp;from=".$cur."'>+</a></noindex>
+			echo "<div id='btop'>$k<div class='bbnm'><span class='bnm'>".$blg->name."</span><br />".$blg->about."</div><span class='rate'>
+				$in	<noindex><a class='ratep' rel='nofollow' href='twork.php?wt=rateblog&amp;id=".$blg->id."&amp;rate=p&amp;from=".$cur."'>+</a></noindex>
 			<span id='rb".$blg->id."'>".$rt."</span>
 			<noindex><a class='ratem'  rel='nofollow' 
 			href='twork.php?wt=rateblog&amp;id=".$blg->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></noindex></span></div>";
-		echo "<h2>Блог пуст!</h2>";
-	} else {
-		echo "<h3 class='not'>Страница не существует</h3>"	;
-	}
+			echo "<h2>Блог пуст!</h2>";
+		} else {
+			echo "<h3 class='not'>Страница не существует</h3>"	;
+		}
 } else {
-	if ($bl==1) {
+	if (isset($bl) && $bl==1) {
 		$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
 		$resul=mysql_query($sql_get,$sql);
 		$rowa = mysql_fetch_assoc($resul);
@@ -167,14 +159,14 @@ if ($kol<1) {
 		$rt="";
 		if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
 		else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";}
-		else {$rt=0;}
+			else {$rt=0;}
 		echo "<div id='btop'>$k<div class='bbnm'><span class='bnm'>".$blg->name."</span><br />".$blg->about."</div><span class='rate'>
-		$in	<noindex><a rel='nofollow' class='ratep' href='twork.php?wt=rateblog&amp;id=".$blg->id."&amp;rate=p&amp;from=".$cur."'>+</a></noindex>
+			$in	<noindex><a rel='nofollow' class='ratep' href='twork.php?wt=rateblog&amp;id=".$blg->id."&amp;rate=p&amp;from=".$cur."'>+</a></noindex>
 			<span id='rb".$blg->id."'>".$rt."</span>
 			<noindex><a rel='nofollow' class='ratem' 
 			href='twork.php?wt=rateblog&amp;id=".$blg->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></noindex></span></div>";
 	} else {
-		if ($au==1) {
+		if (isset($au) && $au==1) {
 			$alien=new user;
 			$alien->find($_GET['auth']);
 			$ssa="";
@@ -185,14 +177,12 @@ if ($kol<1) {
 			if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
 			else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
 			echo "<div id='btop'>$ssa<span class='bnm'><a href='user/".$alien->login."/'>".$alien->login."</a></span><span class='rate'>
-			$in	<noindex><a rel='nofollow' class='ratep' href='twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur."'>+</a></noindex>
+				$in	<noindex><a rel='nofollow' class='ratep' href='twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur."'>+</a></noindex>
 			<span id='ru".$alien->login."'>
 			".$rt."</span><noindex><a rel='nofollow' class='ratem' href='twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur."'>&ndash;</a></noindex></span></div>";
 		}
-			
 	}
-	while ($row = mysql_fetch_assoc($result))
-	{
+	while ($row = mysql_fetch_assoc($result)) {
 		if (chkin($row)==1 || isset($_GET['tag']) || isset($_GET['blog']) || isset($_GET['auth'])) {
 
 			if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
@@ -247,7 +237,7 @@ if ($frm>=5*$count) {
 }
 if ($frm<($k-6)*$count) {
 	if ($wtch==1) {echo "||";}
-	echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";	
+	echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
 }
 echo "</div>";
 ?>

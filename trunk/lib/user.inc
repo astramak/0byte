@@ -39,9 +39,11 @@ class user {
 	var $crate;
 	var $prate;
 	var $juse;
+	var $jdate;
 	var $jtext;
 	var $jname;
 	var $city;
+
 	function rate() {
 		global $blog_r,$com_r,$post_r;
 		if ($this->uotr==0) {
@@ -50,107 +52,61 @@ class user {
 		}
 		return($this->ratep - $this->ratem + $this->otr);
 	}
+
 	function find($name) {
-		global $sql;
-		$sql_get="SELECT * FROM `users` WHERE LOWER(name) = LOWER('".mysql_escape_string($name)."')   ";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
+		$result = db_query('SELECT * FROM `users` WHERE LOWER(name) = LOWER(%s)', $name);
+		$row = db_fetch_assoc($result);
+		if ($row) {
+			$this->uotr = 0;
+			$this->login = $name;
+			foreach ($row as $key => $val) {
+				$this->{$key} = $val;
+			}
+			return true;
 		}
-		$row = mysql_fetch_assoc($result);
-		if (strtolower($row['name'])==strtolower($name)) {
-			$this->uotr=0;
-			$this->login=$name;
-			$this->ratep=$row['ratep'];
-			$this->ratem=$row['ratem'];
-			$this->mail=$row['mail'];
-			$this->icq=$row['icq'];
-			$this->jabber=$row['jabber'];
-			$this->site=$row['site'];
-			$this->about=$row['about'];
-			$this->av=$row['av'];
-			$this->lvl=$row['lvl'];
-			$this->frnd=$row['frnd'];
-			$this->lck=$row['lck'];
-			$this->hml=$row['hml'];
-			$this->pr=$row['postre'];
-			$this->cr=$row['comre'];
-			$this->pmr=$row['pmre'];
-			$this->crate=$row['crate'];
-			$this->brate=$row['brate'];
-			$this->prate=$row['prate'];
-			$this->city=$row['city'];
-			return (1);
-		} else {
-			return(0);
-		}
+		return false;
 	}
+
 	function g_j() {
-		global $sql;
-		$sql_get="SELECT * FROM `users` WHERE name = '".mysql_escape_string($this->login)."'   ";
-		$result=mysql_query($sql_get,$sql);
-		$row = mysql_fetch_assoc($result);
-		$this->juse=$row['juse'];
-		if ($this->juse!=0){
-			$this->jname=$row['jname'];
-			if ($row['jdate']>=(time()-300)) {
-				$this->jtext=$row['jtext'];
-			} else {
-				if ($this->juse==1) {
-					$jurl="http://rss.juick.com/".$row['jname']."/blog";
+		if ($this->juse != 0) {
+			if ($this->jdate < (time()-300)) {
+				if ($this->juse == 1) {
+					$jurl = "http://rss.juick.com/".$row['jname']."/blog";
 				} else {
-					$jurl="http://twitter.com/statuses/user_timeline/".$row['jname'].".rss";
+					$jurl = "http://twitter.com/statuses/user_timeline/".$row['jname'].".rss";
 				}
-				$xml=simplexml_load_file($jurl);
-				$this->jtext=$xml->channel->item[0]->description;
-				$sl="UPDATE `users` SET `jdate` = '".time()."', `jtext` = '".$this->jtext."'
-				WHERE `users`.`name` = '".mysql_escape_string($this->login)."'";
-				$result=mysql_query($sl,$sql);
+				$xml = simplexml_load_file($jurl);
+				$this->jtext = $xml->channel->item[0]->description;
+				$this->jdate = time();
+				db_query('UPDATE users SET jdate = %d, jtext = %s WHERE name = %s', time(), $this->jtext, $this->login);
 			}
 		}
 		return $this->juse;
 	}
+
 	function looser($name) {
-		global $sql;
-		$sql_get="SELECT * FROM `users` WHERE name = '".mysql_escape_string($name)."'   ";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-		$row = mysql_fetch_assoc($result);
-		if ($row['name']==$name) {
-			$this->login=$name;
-			$this->mail=$row['mail'];
-			$this->pwd=$row['pwd'];
-			return (1);
-		} else {
-			return(0);
-		}
+		return $this->find($name);
 	}
-	function chek() {
-		global $sql;
-		if ($this->cheked!=1) {
-			$sql_get="SELECT * FROM `users` WHERE  name = '".$this->login."' && lck = 0  ";
-			$result=mysql_query($sql_get,$sql);
-			if (!$result) {
-				echo  mysql_error();
-			}
-			$row = mysql_fetch_assoc($result);
-			if (strcmp($row['pwd'],$this->pwd)==0 && $row['activ']==1) {
-				$this->cheked=1;
-				$this->ratep=$row['ratep'];
-				$this->ratem=$row['ratem'];
-				$this->crate=$row['crate'];
-				$this->brate=$row['brate'];
-				$this->prate=$row['prate'];
-				$this->lvl=$row['lvl'];
-				return(1);
+
+	function check() {
+		if ($this->cheked != 1) {
+			$result = db_query('SELECT * FROM users WHERE name = %s AND lck = 0', $this->login);
+			$row = db_fetch_assoc($result);
+			if ($row && strcmp($row['pwd'], $this->pwd) == 0 && $row['activ'] == 1) {
+				$this->cheked = 1;
+				$this->ratep = $row['ratep'];
+				$this->ratem = $row['ratem'];
+				$this->crate = $row['crate'];
+				$this->brate = $row['brate'];
+				$this->prate = $row['prate'];
+				$this->lvl = $row['lvl'];
+				return true;
 			} else {
-				return(0);
-			} } else {
-				return(1);
+				return false;
 			}
-				
+		} else {
+			return true;
+		}
 	}
 }
 
@@ -163,13 +119,14 @@ function login() {
 		session_unregister("pwd");
 		session_destroy();
 		return(0);
-	} else 	if (isset($_COOKIE['login']) && isset($_COOKIE['pwd']) && strlen($_COOKIE['login'])>1 && $_SESSION['login']<2 ) {
+	} elseif (isset($_COOKIE['login']) && isset($_COOKIE['pwd']) && strlen($_COOKIE['login'])>1 && $_SESSION['login']<2 ) {
 		$_SESSION['login']=$_COOKIE['login'];
 		$_SESSION['pwd']=$_COOKIE['pwd'];
 	}
+	if (!isset($_SESSION['login'])) return 0;
 	$usr->login=$_SESSION['login'];
 	$usr->pwd=md5(base64_decode($_SESSION['pwd']));
-	if ($usr->chek()==1) {
+	if ($usr->check()==1) {
 		return(1);
 	} else {
 		return(0);

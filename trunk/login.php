@@ -26,15 +26,11 @@ if (!isset($_GET['cur']) || strlen($_GET['cur'])<3) {
 	$lst=$_GET['cur'];
 	$lst=str_replace("*amp","&",$lst);
 	$lst=str_replace("*qw","?",$lst);
-//	$lstw=strrpos($lst,"un");
-//	if ($lstw!=false) {
-//		$lst=substr($lst,0,$lstw);
-//	}
 }
 if (isset($_POST['login']) && isset($_POST['pwd'])) {
 	$usr->login=$_POST['login'];
 	$usr->pwd=md5($_POST['pwd']);
-	if ($usr->chek()==1) {
+	if ($usr->check()) {
 		session_start();
 		if ($zap=="on") {
 			$dt = mktime(0,0,0,1,1,2010);

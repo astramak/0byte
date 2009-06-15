@@ -21,7 +21,7 @@ $ma=new mn();
 $ma=cmenu($ma);
 $act=0;
 
-for ($i=$ma->menu_c-1;$i>=0;$i--){
+for ($i=$ma->menu_c-1;$i>=0;$i--) {
 	$mk=$ma->mg($i);
 	$mk->snew();
 	$enu_arr[$i]['url']=$mk->url;
@@ -76,43 +76,45 @@ $top_ar['current_url']=$cur;
 if ($loged==1) {
 	$top_ar['loged']=1;
 	if ($usr->rate()>=$nb_rate || $usr->lvl>5) {
-//		$new="<a href='work/newblog'>блог</a>. <a href='work/myblog'>Мои блоги</a>";
-		$top_ar['blog_allow']=1;
-	} else {$top_ar['blog_allow']=0;}
-//	echo "<a class='you' href='user/'>";
+	//		$new="<a href='work/newblog'>блог</a>. <a href='work/myblog'>Мои блоги</a>";
+		$top_ar['allow_blog']=1;
+	} else {
+		$top_ar['allow_blog']=0;
+	}
+	//	echo "<a class='you' href='user/'>";
 	$sql_get="SELECT * FROM `pm` WHERE `to` = '".$usr->login."' && `readed` = 0  && `dto` != 2  ";
 
-	$result=mysql_query($sql_get,$sql);
+	$result=mysql_query($sql_get);
 	$aid=mysql_num_rows($result);
-//	if ($aid>0) {
-//		$kml="mail";
-//	} else {
-//		$kml="envelope";
-//	}
+	//	if ($aid>0) {
+	//		$kml="mail";
+	//	} else {
+	//		$kml="envelope";
+	//	}
 	$top_ar['not_readed']=$aid;
 	$row = mysql_fetch_assoc($result);
 	if ($row['readed']!=1) { $id=0; }
 	$sql_get="SELECT * FROM `pm` WHERE `to` = '".$usr->login."' && `dto` != 2  ";
-	$result=mysql_query($sql_get,$sql);
+	$result=mysql_query($sql_get);
 	$ida=mysql_num_rows($result);
-//	if ($usr->rate()>0) {
-//		$rtt="(<span class='rp'>".$usr->rate()."</span>)";
-//	} else if ($usr->rate()<0) {
-//		$rtt="(<span class='rm'>".$usr->rate()."</span>)";
-//	}
-	$top_ar['user_rate']=$usr->rate;
+	//	if ($usr->rate()>0) {
+	//		$rtt="(<span class='rp'>".$usr->rate()."</span>)";
+	//	} else if ($usr->rate()<0) {
+	//		$rtt="(<span class='rm'>".$usr->rate()."</span>)";
+	//	}
+	$top_ar['user_rate'] = $usr->rate();
 	$top_ar['mail']=$ida;
-//	$la=", у вас <img src='style/img/".$kml.".gif' alt='' /> <a href='work/pmls'>$aid / $ida ЛС</a>";
-//	echo $_SESSION['login']."</a> ".$rtt." ".$la.". <a href='work/newpost'>Новый пост</a> / $new</div>
-//							<div id='inout'><img src='style/img/figure.gif' alt='' />
-//							<form id='out' method='post' action='".$site."'><input type='hidden' name='un' value='1' /> <input id='outb' type='submit' value='Выйти' /></form></div>";
+	//	$la=", у вас <img src='style/img/".$kml.".gif' alt='' /> <a href='work/pmls'>$aid / $ida ЛС</a>";
+	//	echo $_SESSION['login']."</a> ".$rtt." ".$la.". <a href='work/newpost'>Новый пост</a> / $new</div>
+	//							<div id='inout'><img src='style/img/figure.gif' alt='' />
+	//							<form id='out' method='post' action='".$site."'><input type='hidden' name='un' value='1' /> <input id='outb' type='submit' value='Выйти' /></form></div>";
 	$top_ar['login']=$usr->login;
-} else  {
+} else {
 //	echo "<a href='register'>Зарегистрироваться</a></div><div id='inout'><a id='lgin' href='login/$cur'>Войти</a></div>";
 	$top_ar['loged']=0;
 }
 
-	echo	render_bottom_of_top($top_ar);
+echo render_bottom_of_top($top_ar);
 //echo '</div></div>	</div>';
 
 ?>
