@@ -17,9 +17,9 @@
 session_start();
 ob_start("ob_gzhandler");
 $loged=login();
-if ($loged==1) {
+if ($loged) {
 	$sql_get="UPDATE `users` SET online = '".time()."' WHERE `users`.`name` ='".$usr->login."'";
-	$result=mysql_query($sql_get,$sql);
+	$result=mysql_query($sql_get);
 }
 if (isset($_GET['post'])) {
 	$post11=intval($_GET['post']);
@@ -40,7 +40,11 @@ if (isset($_GET['post']) && !isset($_GET['wt'])) {
 	} else {$blog=$row['blog'];}
 	echo $sl_name."/".$blog." &#8212; ".$row['title'];
 } else {
-	$ma->gt(); }?></title>
+	// FIXME: why did you removed $ma instance initialization but left this piece of code??
+	echo 'hello bug!';
+	//$ma->gt();
+}
+?></title>
 <meta name="keywords"
 	content="<?php 
 		if (!isset($_GET['post'])) {
@@ -58,7 +62,7 @@ if (isset($_GET['post']) && !isset($_GET['wt'])) {
 			}
  			ob_end_clean();
  			echo $kwd;
-		} {
+		} else {
 			$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
 			$result=mysql_query($sql_get,$sql);
 			$row = mysql_fetch_assoc($result);

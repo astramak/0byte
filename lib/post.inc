@@ -160,7 +160,7 @@ function post_echo($row,$t) {
 		}
 	}
 	if ($fst_post==1) {$fst='fst_top'; $fst_post=0; } else {$fst='top';}
-	echo "<div class='$fst'><span class='date'>".date('d.m.y  H:i',$a->date)."</span>".$auth_blc."</div>";
+	echo "<div class='$fst'><span class='date'>".date('d.m.y  H:i',$a->date)."</span>".(isset($auth_blc) ? $auth_blc : '')."</div>";
 	echo "<div class='text'><h2 class='title' $bls>".$blog."
 			</h2><div class='mtxt'>".str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ."</div></div>";
 	return($a);
@@ -170,34 +170,31 @@ function chkin($a) {
 	global $sql,$usr;
 	if ($a['lock']==0) {
 		return(1);
-	} else if ($loged==0) {
-			return (0);
+	} elseif ($loged==0) {
+		return (0);
+	} elseif ($a['auth']==$usr->login) {
+		return(1);
+	} elseif ($a['blogid']==0) {
+		$sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && frnd LIKE  '%".$a['auth']."%' ORDER BY  id DESC ";
+		$result=mysql_query($sql_get,$sql);
+		if (!$result) {
+			echo  mysql_error();
 		}
-		else
-			if ($a['auth']==$usr->login) {
-				return(1);
-			} else
-				if ($a['blogid']==0) {
-					$sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && frnd LIKE  '%".$a['auth']."%' ORDER BY  id DESC ";
-					$result=mysql_query($sql_get,$sql);
-					if (!$result) {
-						echo  mysql_error();
-					}
-					$row = mysql_fetch_assoc($result);
-					if ($row['name']==$usr->login) {
-						return(1);
-					} else {return(0);}
-				} else {
-					$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."' && blogid = '".$a['blogid']."' ORDER BY  id DESC ";
-					$result=mysql_query($sql_get,$sql);
-					if (!$result) {
-						echo  mysql_error();
-					}
-					$row = mysql_fetch_assoc($result);
-					if ($row['name']==$usr->login) {
-						return(1);
-					} else {return(0);}
-				}
+		$row = mysql_fetch_assoc($result);
+		if ($row['name']==$usr->login) {
+			return(1);
+		} else {return(0);}
+	} else {
+		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."' && blogid = '".$a['blogid']."' ORDER BY  id DESC ";
+		$result=mysql_query($sql_get,$sql);
+		if (!$result) {
+			echo  mysql_error();
+		}
+		$row = mysql_fetch_assoc($result);
+		if ($row['name']==$usr->login) {
+			return(1);
+		} else {return(0);}
+	}
 }
 
 

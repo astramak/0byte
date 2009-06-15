@@ -19,41 +19,43 @@ class mel {
 	var $url;
 	var $cur;
 	var $new;
+
 	function chcur() {
 		global $index,$pg;
 		if ( isset($index) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($_GET['frm']) ) && $this->url=="." ) {
 			$this->cur=1;
-		} else if  ($this->url=="main" && $_GET['pg']!="main") {
-			$this->cur=0;
-		}
-		else if (strncmp($this->url,$pg,strlen($pg))==0 || ( sizeof($_GET)==0 && $this->url=="." )) {
-			$this->cur=1;
-		} else {
-			$this->cur=0;
-		}
+		} else if  ($this->url=="main" && $pg != "main") {
+				$this->cur=0;
+			}
+			else if (strncmp($this->url,$pg,strlen($pg))==0 || ( sizeof($_GET)==0 && $this->url=="." )) {
+					$this->cur=1;
+				} else {
+					$this->cur=0;
+				}
 		return $this->cur;
 	}
+
 	function snew() {
-		global $sql,$usr,$to_main,$loged;
-		$dt=time()-86400;
+		global $usr,$to_main,$loged;
+		$dt = time() - 86400;
 		if ($this->url==".") {
 			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && `ratep` - `ratem` >= ".$to_main;
-		} else if ($this->url=="main") {
+		} elseif ($this->url=="main") {
 			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && blog != 'own'";
-		} else if ($this->url=="pers") {
+		} elseif ($this->url=="pers") {
 			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && blog = 'own'";
-		} else if ($this->url=="lenta") {
+		} elseif ($this->url=="lenta") {
 			if ($loged==1) {
 				$sql_get="SELECT * FROM `post` WHERE (";
 				$sl="SELECT * FROM `inblog` WHERE  `name` = '".$usr->login."' &&  `out` = 0 ORDER BY  id DESC ";
-				$rt=mysql_query($sl,$sql);
+				$rt=mysql_query($sl);
 				$rwo = mysql_fetch_assoc($rt);
 				$sql_get.="`blogid` = '".$rwo['blogid']."'";
 				while ($rwo = mysql_fetch_assoc($rt)) {
 					$sql_get.=" || `blogid` = '".$rwo['blogid']."'";
 				}
 				$sl="SELECT * FROM `users` WHERE  `name` = '".$usr->login."'";
-				$rt=mysql_query($sl,$sql);
+				$rt=mysql_query($sl);
 				$rwo = mysql_fetch_assoc($rt);
 				$arr=split(",",$rwo['frnd']);
 				$q=sizeof($arr);
@@ -62,16 +64,16 @@ class mel {
 					$sql_get.=" || `auth` = '".$f."'";
 				}
 				$sql_get.=" ) && (`date` > '".$dt."'  && `blck` = 0) ORDER BY  id DESC";
-
 			}
 		}
-		$resul=mysql_query($sql_get,$sql);
+		$resul=mysql_query($sql_get);
 		$this->new=mysql_num_rows($resul);
 		if ($this->new==0) {$this->new="";} else {
 			$this->new="+".$this->new;
 		}
 	}
 }
+
 class mn {
 	var $title;
 	var $menu;
@@ -83,15 +85,11 @@ class mn {
 		return($this->menu[$el]);
 	}
 }
-function cmenu ($en) {
-	global $sql;
-	$sql_get="SELECT * FROM `menu` ORDER BY  id  ";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
+
+function cmenu($en) {
+	$result = db_query('SELECT * FROM menu ORDER BY id ASC');
 	$en->menu_c=0;
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = db_fetch_assoc($result)) {
 		$en->menu[$en->menu_c]=new mel;
 		$en->menu[$en->menu_c]->name=$row['name'];
 		$en->menu[$en->menu_c]->url=$row['url'];

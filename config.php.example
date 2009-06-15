@@ -14,16 +14,15 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-//sql settings
-$sql_srv='localhost';
-$sql_db='test';
-$sql_usr='test';
-$sql_pwd='test';
-//acces level
+// sql settings
+$db_settings = 'mysql://test:test@localhost/test';
+
+// acces level
 $elvl=3;
 $rlvl=5;
 $blvl=7;
-//other cfg
+
+// other cfg
 $site="http://localhost/"; //full url like http://site.domain/dir/
 $s_name="test";//site name
 $ls_name=$s_name;

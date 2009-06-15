@@ -41,20 +41,20 @@ include("lib/json.inc");
 require_once 'lib/request.class.php';
 require_once 'lib/utils.php';
 require_once 'lib/native_template.php';
+require_once 'lib/db.inc';
 
 //user cfg
 include("config.php");
 
+$db_connection = db_connect();
+// depricated and should be removed after DB code update
+$sql = $db_connection;
+
 $pg = request::get_get('pg', 'main', true);
 
-$sql=mysql_connect($sql_srv, $sql_usr, $sql_pwd) or die ('e1');
-mysql_select_db($sql_db) or die ('e2');
-mysql_query("SET NAMES UTF8", $sql);
+//if (!request::get_get('debug')) ini_set('display_errors', 0);
 
-if (!request::get_get('debug')) ini_set('display_errors', 0);
-
-
-$usr=new user();
+$usr = new user();
 
 function crl($a) {
 	if ($a==0) {
