@@ -33,11 +33,11 @@ if ( ( $usr->lvl>$elvl || $usr->login==$row['auth'] ) && ((isset($_POST['title']
 
 
 	if ($row['tp']==3) {
-		$sql_get="UPDATE `$sql_db`.`post` SET `lock` = '".intval($lock)."', `tag` = '".mysql_escape_string(gtext($tag))."', `blog` = '".$blog."',
+		$sql_get="UPDATE `post` SET `lock` = '".intval($lock)."', `tag` = '".mysql_escape_string(gtext($tag))."', `blog` = '".$blog."',
 		`blogid` = '".intval($_POST['blog']);
 
 	} else {
-		$sql_get="UPDATE `$sql_db`.`post` SET `title` = '".mysql_escape_string(gtext($_POST['title']))."' ,
+		$sql_get="UPDATE `post` SET `title` = '".mysql_escape_string(gtext($_POST['title']))."' ,
 		`text` = '".mysql_escape_string(gtext($txt))."' ,`ftext` = '".mysql_escape_string(gtext($text))."',
 		`lock` = '".intval($lock)."',
 		`blog` = '".$blog."', 

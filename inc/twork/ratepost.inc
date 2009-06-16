@@ -38,18 +38,18 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 		header("Location: $lst");
 	} else {
 			
-		$sl="UPDATE `$sql_db`.`post` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `post`.`id` = ".intval($_GET['id']);
+		$sl="UPDATE `post` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `post`.`id` = ".intval($_GET['id']);
 		$result=mysql_query($sl,$sql);
 
 		if ($_GET['rate'][0]=='p') {
-			$sl="UPDATE `$sql_db`.`users` SET `prate` = `prate`+1 WHERE `users`.`name`
+			$sl="UPDATE `users` SET `prate` = `prate`+1 WHERE `users`.`name`
 				 = '".$row['auth']."'";
 		} else {
-			$sl="UPDATE `$sql_db`.`users` SET `prate` = `prate`-1 WHERE `users`.`name`
+			$sl="UPDATE `users` SET `prate` = `prate`-1 WHERE `users`.`name`
 				 = '".$row['auth']."'";
 		}
 		$result=mysql_query($sl,$sql);
-		$sl="INSERT INTO `$sql_db`.`rate` (`who` ,`pid`) VALUES ( '".$usr->login."', '".intval($_GET['id'])."')";
+		$sl="INSERT INTO `rate` (`who` ,`pid`) VALUES ( '".$usr->login."', '".intval($_GET['id'])."')";
 		$result=mysql_query($sl,$sql);
 		if ($json==1) {
 			if ($_GET['rate']=='p') {

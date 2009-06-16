@@ -40,15 +40,15 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 
 
 		if ($_GET['rate'][0]=='p') {
-			$sl="UPDATE `$sql_db`.`users` SET `crate` = `crate`+1 WHERE `users`.`name`
+			$sl="UPDATE `users` SET `crate` = `crate`+1 WHERE `users`.`name`
 				 = '".$row['who']."'";
 		} else {
-			$sl="UPDATE `$sql_db`.`users` SET `crate` = `crate`-1 WHERE `users`.`name`
+			$sl="UPDATE `users` SET `crate` = `crate`-1 WHERE `users`.`name`
 				 = '".$row['who']."'";
 		}
 
 		$result=mysql_query($sl,$sql);
-		$sl="INSERT INTO `$sql_db`.`crate` (`who` ,`pid`) VALUES ( '".$usr->login."', '".intval($_GET['id'])."')";
+		$sl="INSERT INTO `crate` (`who` ,`pid`) VALUES ( '".$usr->login."', '".intval($_GET['id'])."')";
 		$result=mysql_query($sl,$sql);
 		if ($json==1) {
 			if ($_GET['rate']=='p') {

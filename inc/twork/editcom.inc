@@ -12,7 +12,7 @@ if (!isset($_POST['text']) || (($usr->login!=$row['who'] && $cedit==1 )&& $usr->
 	header("Location: $lst");
 	die;
 }
-$sql_get="UPDATE `$sql_db`.`comment` SET `text` = '".mysql_escape_string(gtext($_POST['text']))."'
+$sql_get="UPDATE `comment` SET `text` = '".mysql_escape_string(gtext($_POST['text']))."'
 		 WHERE `comment`.`id` = '".$_GET['id']."'";
 
 $result=mysql_query($sql_get,$sql);

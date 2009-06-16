@@ -19,6 +19,7 @@ define('ROOT_PATH', dirname(__FILE__));
 define('TPL_ROOT', ROOT_PATH . '/style/templates');
 define('TPL_MAIL', TPL_ROOT . '/mail');
 define('TPL_RSS', TPL_ROOT . '/rss');
+define('TPL_UTILS', TPL_ROOT . '/utils');
 define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_MAIN', TPL_ROOT);
 
@@ -55,7 +56,7 @@ $pg = request::get_get('pg');
 //if (!request::get_get('debug')) ini_set('display_errors', 0);
 
 $usr = new user();
-
+ini_set('display_errors', 1);
 function crl($a) {
 	if ($a==0) {
 		echo '<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>';

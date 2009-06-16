@@ -13,7 +13,7 @@ if ($row['auth']==$usr->login) {
 			echo  mysql_error();
 		}
 	}  else  {
-		$sql_get="UPDATE `$sql_db`.`pm` SET `dto` = 1   WHERE `pm`.`id` = ".intval($_GET['id']);
+		$sql_get="UPDATE `pm` SET `dto` = 1   WHERE `pm`.`id` = ".intval($_GET['id']);
 		$result=mysql_query($sql_get,$sql);
 	}
 } else if ($row['to']==$usr->login) {
@@ -24,7 +24,7 @@ if ($row['auth']==$usr->login) {
 			echo  mysql_error();
 		}
 	}  else  {
-		$sql_get="UPDATE `$sql_db`.`pm` SET `dto` = 2   WHERE `pm`.`id` = ".intval($_GET['id']);
+		$sql_get="UPDATE `pm` SET `dto` = 2   WHERE `pm`.`id` = ".intval($_GET['id']);
 		$result=mysql_query($sql_get,$sql);
 	}
 }
