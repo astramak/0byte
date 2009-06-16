@@ -14,7 +14,7 @@ if (isset($_POST['nox'])) {
 		header("Location: $lst");
 		die;
 	}
-	$sl="INSERT INTO `$sql_db`.`wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
+	$sl="INSERT INTO `wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 	$result=mysql_query($sl,$sql);
 	if ($json==1) {
 		echo answ_echo($_GET['id']);

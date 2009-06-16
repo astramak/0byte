@@ -14,13 +14,13 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-?><div rel="noindex" class='rtblb'>
-<table class="rtbl">
-	<tbody>
-		<tr id='af' class='sd'>
-			<td class='lsd'>
-			<ul id='alist'>
-			<?php
+//<div rel="noindex" class='rtblb'>
+//<table class="rtbl">
+//	<tbody>
+//		<tr id='af' class='sd'>
+//			<td class='lsd'>
+//			<ul id='alist'>
+//
 			$sql_get="SELECT * FROM `post` WHERE `blck`='0' ORDER BY  id DESC LIMIT 16";
 			$result=mysql_query($sql_get,$sql);
 			if (!$result) {
@@ -29,114 +29,121 @@
 			$e=0;
 			while ($row = mysql_fetch_assoc($result)) {
 				$tarr[$e]=$row;
-				$tarr[$e]['type']=0;
+				$tarr[$e]['type']='post';
+                $tarr[$e]['rate']=$tarr[$e]['ratep']-$tarr[$e]['ratem'];
 				$e++;
 			}
 			$sql_get="SELECT *,`post`.`id` as `pid`,`post`.`date` as `pate` FROM `post`,`comment` WHERE `post`.`id`=`comment`.`krnl` && `post`.`blck`='0' ORDER BY  `comment`.`id` DESC LIMIT 16";
 			$result=mysql_query($sql_get,$sql);
 			while ($row = mysql_fetch_assoc($result)) {
 				$tarr[$e]=$row;
-				$tarr[$e]['type']=1;
+				$tarr[$e]['type']='comment';
+                $tarr[$e]['rate']=$tarr[$e]['ratep']-$tarr[$e]['ratem'];
 				$e++;
 			}
 			$siz = count($tarr)-1;
 			for ($i = $siz; $i>=0; $i--) {
 				for ($j = 0; $j<=($i-1); $j++)
-				if ($tarr[$j]['date']>$tarr[$j+1]['date']) {
+				if ($tarr[$j]['date']<$tarr[$j+1]['date']) {
 					$k = $tarr[$j];
 					$tarr[$j] = $tarr[$j+1];
 					$tarr[$j+1] = $k;
 				}
 			}
-			for ($i=($e-1); $i>=16;$i--) {
-				if ($tarr[$i]['type']==0) {
-					if ($tarr[$i]['blog']=="own") {
-						$fs="<a href='user/".$tarr[$i]['auth']."/'>".$tarr[$i]['auth']."</a>";
-					} else {
-						$fs="<a href='user/".$tarr[$i]['auth']."/'>".$tarr[$i]['auth']."</a>";
-					}
-					$rate=$tarr[$i]['ratep']-$tarr[$i]['ratem'];
-					$rt="";
-					if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
-					else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
-					echo "<li class='pelis'>".$fs." &#8212; &laquo;<a href='post/".$tarr[$i]['id']."/'>".$tarr[$i]['title']."</a>&raquo; ".$rt."</li>";
-				} else {
-					$rate=$tarr[$i]['ratep']-$tarr[$i]['ratem'];
-					$rt="";
-					if ($tarr[$i]['blog']=="own") {
-						$fs=$tarr[$i]['auth'];
-					} else {
-						$fs=$tarr[$i]['blog'];
-					}
-					if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
-					else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
-					echo "<li class='celis'><a href='user/".$tarr[$i]['who']."/'>".$tarr[$i]['who']."</a> &#8212; &laquo;<a href='post/".$tarr[$i]['pid']."/#cmnt".$tarr[$i]['id']."'>".$fs." / ".$tarr[$i]['title']."</a>&raquo; ".$rt."</li>";
-				}
-			}
-			?>
-			</ul>
-			</td>
+            
+//            for ($i=($e-1); $i>=16;$i--) {
+//                $arr[$i]=$tarr[$i];
+//            }
+           echo render_hands_free($tarr,$siz);
+//			for ($i=($e-1); $i>=16;$i--) {
+//				if ($tarr[$i]['type']==0) {
+////					if ($tarr[$i]['blog']=="own") {
+////						$fs="<a href='user/".$tarr[$i]['auth']."/'>".$tarr[$i]['auth']."</a>";
+////					} else {
+////						$fs="<a href='user/".$tarr[$i]['auth']."/'>".$tarr[$i]['auth']."</a>";
+////					}
+//					$rate=$tarr[$i]['ratep']-$tarr[$i]['ratem'];
+//					$rt="";
+////					if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
+////					else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
+////					echo "<li class='pelis'>".$fs." &#8212; &laquo;<a href='post/".$tarr[$i]['id']."/'>".$tarr[$i]['title']."</a>&raquo; ".$rt."</li>";
+//				} else {
+//					$rate=$tarr[$i]['ratep']-$tarr[$i]['ratem'];
+//					$rt="";
+//					if ($tarr[$i]['blog']=="own") {
+//						$fs=$tarr[$i]['auth'];
+//					} else {
+//						$fs=$tarr[$i]['blog'];
+//					}
+//					if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
+//					else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
+//					echo "<li class='celis'><a href='user/".$tarr[$i]['who']."/'>".$tarr[$i]['who']."</a> &#8212; &laquo;<a href='post/".$tarr[$i]['pid']."/#cmnt".$tarr[$i]['id']."'>".$fs." / ".$tarr[$i]['title']."</a>&raquo; ".$rt."</li>";
+//				}
+//			}
+//
+//			</ul>
+//			</td>
+//
+//			<td class='rsdno' id='ped'><a class="bbls"
+//				href='javascript:g_plist("post")'><img src="style/img/document.gif"
+//				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+//				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <?php if ($loged) {echo '<a class="bbls" href='."'javascript:g_plist".'("eye")'."'><img src=".'"style/n_img/eye.gif" alt="Изменения" /></a>'; } 
+//			</td>
+//		</tr>
+//		<tr id='pf' class='sd'>
+//			<td class='lsd'><span class='ttl'>Последние посты</span>
+//			<ul id='plist'>
+//			</ul>
+//			</td>
+//			<td class='rsdno'><a class="bbls"
+//				style="background: #B6B6B6;" href='javascript:hplist()'><img
+//				src="style/img/document.gif" alt="Посты" /></a> <a class="bbls"
+//				href='javascript:g_plist("com")'><img
+//				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <?php if ($loged) {echo '<a class="bbls" href='."'javascript:g_plist".'("eye")'."'><img src=".'"style/n_img/eye.gif" alt="Изменения" /></a>'; } 
+//			</td>
+//		</tr>
+//		<tr id='cf' class='sd'>
+//			<td class='lsd'><span class='ttl'>Последние комментарии</span>
+//			<ul id='clist'>
+//			</ul>
+//			</td>
+//			<td class='rsdno'><a class="bbls"
+//				href='javascript:g_plist("post")'><img src="style/img/document.gif"
+//				alt="Посты" /></a> <a class="bbls" style="background: #B6B6B6;"
+//				href='javascript:hplist()'><img src="style/img/speech_bubble.gif"
+//				alt="Комментарии" /></a> <?php if ($loged) {echo '<a class="bbls" href='."'javascript:g_plist".'("eye")'."'><img src=".'"style/n_img/eye.gif" alt="Изменения" /></a>'; } 
+//			</td>
+//		</tr>
+//
+//		<tr id='ef' class='sd'>
+//			<td class='lsd'><span class='ttl'>Изменения</span>
+//			<ul id='eblist'>
+//			</ul>
+//			</td>
+//			<td class='rsdno'><a class="bbls"
+//				href='javascript:g_plist("post")'><img src="style/img/document.gif"
+//				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+//				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
+//				class="bbls" style="background: #B6B6B6;" href='javascript:hplist()'><img
+//				src="style/n_img/eye.gif" alt="Изменения" /></a></td>
+//		</tr>
+//
+//	</tbody>
+//</table>
+//</div>
+//			 echo '<form id="fuck" method="get" action="'.$site.'">';
+//<div class='rtblb'>
+//<table class="rtbl">
+//	<tr class='sd'>
+//		<td class='lsd'><input id="fnd" type="text" name="fnd" /></td>
+//		<td class='rsd'><input type='image' src="style/img/mag_glass.gif" /></td>
+//	</tr>
+//</table>
+//</div>
+//</form>
 
-			<td class='rsdno' id='ped'><a class="bbls"
-				href='javascript:g_plist("post")'><img src="style/img/document.gif"
-				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <?php if ($loged) {echo '<a class="bbls" href='."'javascript:g_plist".'("eye")'."'><img src=".'"style/n_img/eye.gif" alt="Изменения" /></a>'; } ?>
-			</td>
-		</tr>
-		<tr id='pf' class='sd'>
-			<td class='lsd'><span class='ttl'>Последние посты</span>
-			<ul id='plist'>
-			</ul>
-			</td>
-			<td class='rsdno'><a class="bbls"
-				style="background: #B6B6B6;" href='javascript:hplist()'><img
-				src="style/img/document.gif" alt="Посты" /></a> <a class="bbls"
-				href='javascript:g_plist("com")'><img
-				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <?php if ($loged) {echo '<a class="bbls" href='."'javascript:g_plist".'("eye")'."'><img src=".'"style/n_img/eye.gif" alt="Изменения" /></a>'; } ?>
-			</td>
-		</tr>
-		<tr id='cf' class='sd'>
-			<td class='lsd'><span class='ttl'>Последние комментарии</span>
-			<ul id='clist'>
-			</ul>
-			</td>
-			<td class='rsdno'><a class="bbls"
-				href='javascript:g_plist("post")'><img src="style/img/document.gif"
-				alt="Посты" /></a> <a class="bbls" style="background: #B6B6B6;"
-				href='javascript:hplist()'><img src="style/img/speech_bubble.gif"
-				alt="Комментарии" /></a> <?php if ($loged) {echo '<a class="bbls" href='."'javascript:g_plist".'("eye")'."'><img src=".'"style/n_img/eye.gif" alt="Изменения" /></a>'; } ?>
-			</td>
-		</tr>
 
-		<tr id='ef' class='sd'>
-			<td class='lsd'><span class='ttl'>Изменения</span>
-			<ul id='eblist'>
-			</ul>
-			</td>
-			<td class='rsdno'><a class="bbls"
-				href='javascript:g_plist("post")'><img src="style/img/document.gif"
-				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
-				class="bbls" style="background: #B6B6B6;" href='javascript:hplist()'><img
-				src="style/n_img/eye.gif" alt="Изменения" /></a></td>
-		</tr>
-
-	</tbody>
-</table>
-</div>
-			<?php echo '<form id="fuck" method="get" action="'.$site.'">';?>
-<div class='rtblb'>
-<table class="rtbl">
-	<tr class='sd'>
-		<td class='lsd'><input id="fnd" type="text" name="fnd" /></td>
-		<td class='rsd'><input type='image' src="style/img/mag_glass.gif" /></td>
-	</tr>
-</table>
-</div>
-</form>
-
-
-			<?php
+			
 			echo "<script type='text/javascript'>
 var pd=document.getElementById('ped').innerHTML;
 var cd=document.getElementById('ced').innerHTML;

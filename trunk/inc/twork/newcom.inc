@@ -50,7 +50,7 @@ $pid=$raw['id'];
 $listp=$raw['flw'];
 $text=mysql_escape_string(gtext($text));
 $date=time();
-$sl="INSERT INTO `$sql_db`.`comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
+$sl="INSERT INTO `comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
 VALUES ( '".$date."', '".$text."' , '".$usr->login."' ,".intval($id)." , ".$lvl." , '".$krnl."')";
 $result=mysql_query($sl,$sql);
 $sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($id)."' && `date`= '".$date."'   ";

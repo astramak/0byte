@@ -80,7 +80,7 @@ function rmcom($com) {
 		}
 	}
 }
-function com_echo($com,$noecho) {
+function com_echo($com,$noecho=0) {
 	global $sql,$usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id;
 	$ech= "<dl class='lvl2'><dt id='cmnt".$com->id."' >";
 	if ($last_com_id<$com->id) {
@@ -151,7 +151,7 @@ function com_echo($com,$noecho) {
 		}
 	}
 	$ech.= "</dd><dt id='cm".$com->id."'></dt></dl>";
-	if (isset($noecho)) {
+	if ($noecho!=0) {
 		return $ech;
 	}	else {
 		echo $ech;

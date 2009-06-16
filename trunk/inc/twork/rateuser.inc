@@ -35,12 +35,12 @@ if (strcmp($row['pid'],$_GET['name'])==0 && $row['type']==$type) {
 		header("Location: $lst");
 	} else {
 			
-		$sl="UPDATE `$sql_db`.`users` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+".$nr."
+		$sl="UPDATE `users` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+".$nr."
 				WHERE `users`.`name` = '".mysql_escape_string($_GET['name'])."'";
 		$result=mysql_query($sl,$sql);
 		$sl="DELETE FROM `urate` WHERE `who`='".$usr->login."' && `pid` = '".mysql_escape_string($_GET['name'])."' LIMIT 1";
 		$result=mysql_query($sl,$sql);
-		$sl="INSERT INTO `$sql_db`.`urate` ( `who` ,`pid`,`type`) VALUES ('".$usr->login."',
+		$sl="INSERT INTO `urate` ( `who` ,`pid`,`type`) VALUES ('".$usr->login."',
 				 '".mysql_escape_string($_GET['name'])."','".$type."')";
 		$result=mysql_query($sl,$sql);
 		if ($json==1) {

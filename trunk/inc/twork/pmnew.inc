@@ -38,7 +38,7 @@ if (request::get_get('lock') == "on" ) {
 }
 
 $time=time();
-$sl="INSERT INTO `$sql_db`.`pm` (`date` ,`title`,`auth`, `text` ,`to` )
+$sl="INSERT INTO `pm` (`date` ,`title`,`auth`, `text` ,`to` )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($title))."' ,
 '".$usr->login."' ,'".mysql_escape_string(gtext($text))."'
 ,'$to' )";

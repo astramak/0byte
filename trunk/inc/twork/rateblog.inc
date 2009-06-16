@@ -20,28 +20,28 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 	}
 	$row = mysql_fetch_assoc($result);
 	if ($row['owner']==$usr->login) {
-		j_err("Нельзя голосовать за свой блог!")
+		j_err("Нельзя голосовать за свой блог!");
 		jkill();
 		header("Request-URI: $lst");
 		header("Content-Location: $lst");
 		header("Location: $lst");
 	} else {
 			
-		$sl="UPDATE `$sql_db`.`blogs` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `blogs`.`id`
+		$sl="UPDATE `blogs` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `blogs`.`id`
 				 = '".intval($_GET['id'])."'";
 		$result=mysql_query($sl,$sql);
 
 		if ($_GET['rate'][0]=='p') {
-			$sl="UPDATE `$sql_db`.`users` SET `brate` = `brate`+1 WHERE `users`.`name`
+			$sl="UPDATE `users` SET `brate` = `brate`+1 WHERE `users`.`name`
 				 = '".$row['owner']."'";
 		} else {
-			$sl="UPDATE `$sql_db`.`users` SET `brate` = `brate`-1 WHERE `users`.`name`
+			$sl="UPDATE `users` SET `brate` = `brate`-1 WHERE `users`.`name`
 				 = '".$row['owner']."'";
 		}
 
 		$result=mysql_query($sl,$sql);
 		$sql_get="SELECT * FROM `urate`";
-		$sl="INSERT INTO `$sql_db`.`brate` (`who` ,`pid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
+		$sl="INSERT INTO `brate` (`who` ,`pid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 		$result=mysql_query($sl,$sql);
 		if ($json==1) {
 			if ($_GET['rate']=='p') {

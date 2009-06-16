@@ -22,14 +22,14 @@ if (strlen($row['name'])==strlen($btitle)) {
 	header("Location: index.php");
 	die;
 }
-$sl="INSERT INTO `$sql_db`.`blogs` (`name` ,`owner` )
+$sl="INSERT INTO `blogs` (`name` ,`owner` )
 VALUES ('".$btitle."' , '".$usr->login."')";
 $result=mysql_query($sl,$sql);
 $sl="SELECT * FROM `blogs` where `name` = '$btitle'  ";
 $result=mysql_query($sl,$sql);
 $row = mysql_fetch_assoc($result);
 $id=$row['id'];
-$sl="INSERT INTO `$sql_db`.`inblog` (`blogid` ,`name` , `bname` )
+$sl="INSERT INTO `inblog` (`blogid` ,`name` , `bname` )
 	 VALUES ( '".$id."', '".$usr->login."' , '".$btitle."')";
 $result=mysql_query($sl,$sql);
 $lst="work/newpost";

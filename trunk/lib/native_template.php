@@ -77,4 +77,10 @@ function render_top() {
 function render_bottom_of_top($var) {
 	return render_template(TPL_TOP.'/bottom.tpl.php',$var);
 }
+
+function render_hands_free($elements_arr,$size) {
+    global $loged;
+    $vars=array('elements'=>$elements_arr,'size'=>$size,'loged'=>$loged);
+    return render_template(TPL_UTILS.'/hands_free.tpl.php',$vars);
+}
 ?>

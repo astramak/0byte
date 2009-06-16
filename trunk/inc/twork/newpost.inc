@@ -30,7 +30,7 @@ if (isset($_POST['lock']) && $_POST['lock']=="on" ) {
 
 $time=time();
 if ($_GET['tp']==0) {
-	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` )
+	$sl="INSERT INTO `post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' ,'".mysql_escape_string(gtext($txt))."'
 , '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."' ,
 '".intval($lock)."' )";
@@ -41,7 +41,7 @@ VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$us
 		header("Location: index.php");
 		die;
 	}
-	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk` )
+	$sl="INSERT INTO `post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk` )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' ,'".mysql_escape_string(gtext($txt))."'
 , '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."'
  ,'".intval($lock)."' ,'1' , '".mysql_escape_string(gtext($_POST['lnk']))."' )";
@@ -72,7 +72,7 @@ VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$us
 	} else {
 		$nm=0;
 	}
-	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk`  )
+	$sl="INSERT INTO `post` (`date` ,`title`,`auth`, `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk`  )
 VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' , '".$blog."', 
 '".intval($_POST['blog'])."','".mysql_escape_string($tag)."' ,'".intval($lock)."' ,'3' , '".$nm."' )";
 	//	echo $sl;die;
@@ -86,7 +86,7 @@ $id=$row['id'];
 if ($_GET['tp']==3) {
 	for ($q=1;$q<=$_POST['len'];$q++) {
 		if (strlen(trim($_POST['an'.$q]))>0) {
-			$sl="INSERT INTO `$sql_db`.`answ` (`title`,`cid` )
+			$sl="INSERT INTO `answ` (`title`,`cid` )
 VALUES ( '".gtext($_POST['an'.$q])."', '".$id."')";
 			$result=mysql_query($sl,$sql);	}
 	}

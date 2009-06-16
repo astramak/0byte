@@ -14,16 +14,16 @@ if ($ro['id']!=$_GET['id'] || $ro['owner']==$usr->login) {
 }
 if ($row['name']==$usr->login) {
 	if ($row['out']==1) {
-		$sl="UPDATE `$sql_db`.`inblog` SET `out` = '0' WHERE `inblog`.`blogid` =".intval($_GET['id'])."
+		$sl="UPDATE `inblog` SET `out` = '0' WHERE `inblog`.`blogid` =".intval($_GET['id'])."
 		&& `inblog`.`name` = '".$usr->login."'";
 	} else {
-		$sl="UPDATE `$sql_db`.`inblog` SET `out` = '1' WHERE `inblog`.`blogid` =".intval($_GET['id'])."
+		$sl="UPDATE `inblog` SET `out` = '1' WHERE `inblog`.`blogid` =".intval($_GET['id'])."
 		&& `inblog`.`name` = '".$usr->login."'";
 		#echo $sl;
 	}
 } else {
 
-	$sl="INSERT INTO `$sql_db`.`inblog` (`blogid` ,`name` , `bname` )
+	$sl="INSERT INTO `inblog` (`blogid` ,`name` , `bname` )
 	 VALUES ( '".intval($_GET['id'])."', '".$usr->login."' , '".$ro['name']."')";
 	#echo $sl;
 }
