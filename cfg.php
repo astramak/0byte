@@ -50,7 +50,7 @@ $db_connection = db_connect();
 // depricated and should be removed after DB code update
 $sql = $db_connection;
 
-$pg = request::get_get('pg', 'main', true);
+$pg = request::get_get('pg');
 
 //if (!request::get_get('debug')) ini_set('display_errors', 0);
 

@@ -22,14 +22,16 @@ class mel {
 
 	function chcur() {
 		global $index,$pg;
-		if ( isset($index) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($_GET['frm']) ) && $this->url=="." ) {
+		if ( isset($index) && $this->url=="." && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($_GET['frm'])   || strncmp($this->url,$pg,strlen($pg))==0 ||  sizeof($_GET)==0 )) {
 			$this->cur=1;
-		} else if  ($this->url=="main" && $pg != "main") {
-				$this->cur=0;
-			}
-			else if (strncmp($this->url,$pg,strlen($pg))==0 || ( sizeof($_GET)==0 && $this->url=="." )) {
-					$this->cur=1;
-				} else {
+		}
+//        else if  ($this->url=="main" && $pg != "main") {
+//				$this->cur=0;
+//			}
+			else if (strlen($pg)>1 && strncmp($this->url,$pg,strlen($pg))==0 ) {
+				$this->cur=1;
+            }
+				 else {
 					$this->cur=0;
 				}
 		return $this->cur;

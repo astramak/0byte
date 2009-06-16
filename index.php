@@ -26,6 +26,7 @@ if ($ajax) {
 include("inc/head.php");
 include("inc/top.php");
 ?>
+
 <div id="main"><?php 
 	if (isset($_GET['post'])) {
 		include("inc/spost.php");
