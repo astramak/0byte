@@ -15,18 +15,14 @@
  *
  */
 include 'cfg.php';
-if (isset($_GET['name']) && isset($_GET['id'])) {
-	$sql_get="SELECT * FROM `users` WHERE id = ".intval($_GET['id'])."   ";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$row = mysql_fetch_assoc($result);
-	if ($row['name']==$_GET['name']) {
-		$sql_get="UPDATE `$sql_db`.`users` SET `activ` = 1  WHERE `users`.`name` = '".mysql_escape_string($_GET['name'])."'";
 
-
-		$result=mysql_query($sql_get,$sql);
+$name = request::get_get('name');
+$id = request::get_get('id');
+if ($name && $id) {
+	$result = db_query('SELECT * FROM users WHERE id = %d AND name = %s', $id, $name);
+	$row = db_fetch_assoc($result);
+	if ($row) {
+		db_query('UPDATE users SET activ = 1 WHERE id = %d', $id);
 	}
 }
 $lst='login/';
