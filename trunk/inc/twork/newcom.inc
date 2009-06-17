@@ -2,7 +2,7 @@
 if ($json != 1) {
 	$lst = request::get_get('from');
 	$lst=str_replace("*amp","&",$lst);
-	$lst=str_replace("*qw","?",$lst);
+	$lst="/".str_replace("*qw","?",$lst);
 }
 
 $text = request::get_post('text');
