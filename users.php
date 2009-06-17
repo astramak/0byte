@@ -133,7 +133,7 @@ if ($alien->find($name)==0) {
 		}
 			
 	}
-	if (strlen($res)>=1) {
+	if (isset($res) && strlen($res)>=1) {
 		echo "<tr><td>Друзья</td><td>$res</td></tr>";
 	}
 	echo "</table><br />";

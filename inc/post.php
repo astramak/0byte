@@ -30,12 +30,13 @@ if (isset($_GET['count'])) {
 } else {
 	$count=10;
 }
-if (isset($_GET['frm'])) {
-	$frm=$_GET['frm'];
-} else {
-	$frm=0;
-}
-if (sizeof($_GET)==0 || sizeof($_GET)==sizeof($_GET['frm']) ) {
+//if (isset($_GET['frm'])) {
+//	$frm=$_GET['frm'];
+//} else {
+//	$frm=0;
+//}
+$frm=request::get_get("frm",0,0);
+if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<1) ) {
 	$sql_get="SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY  id DESC ";
 } else
 	if (isset($_GET['tag'])) {

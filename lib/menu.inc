@@ -19,28 +19,27 @@ class mel {
 	var $url;
 	var $cur;
 	var $new;
-
+    var $show;
 	function chcur() {
 		global $index,$pg;
         $frm=request::get_get("frm");
-		if ( isset($index) && $this->url=="." && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   || strncmp($this->url,$pg,strlen($pg))==0 ||  sizeof($_GET)==0 )) {
+        echo $frm;
+		if ( (isset($index) && $this->url=="." && strlen($pg)<1) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   /*|| strncmp($this->url,$pg,strlen($pg))==0*/  )) {
 			$this->cur=1;
-		}
-//        else if  ($this->url=="main" && $pg != "main") {
-//				$this->cur=0;
-//			}
-			else if (strlen($pg)>1 && strncmp($this->url,$pg,strlen($pg))==0 ) {
+//            echo 2;
+		} else if (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
 				$this->cur=1;
+//                echo 1;
             }
 				 else {
 					$this->cur=0;
 				}
 		return $this->cur;
 	}
-
 	function snew() {
 		global $usr,$to_main,$loged;
 		$dt = time() - 86400;
+        $this->show=1;
 		if ($this->url==".") {
 			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && `ratep` - `ratem` >= ".$to_main;
 		} elseif ($this->url=="main") {
@@ -67,13 +66,17 @@ class mel {
 					$sql_get.=" || `auth` = '".$f."'";
 				}
 				$sql_get.=" ) && (`date` > '".$dt."'  && `blck` = 0) ORDER BY  id DESC";
-			}
+			} else {
+                $this->show=0;
+            }
 		}
-		$resul=mysql_query($sql_get);
-		$this->new=mysql_num_rows($resul);
-		if ($this->new==0) {$this->new="";} else {
-			$this->new="+".$this->new;
-		}
+		if ($this->show) {
+            $resul=mysql_query($sql_get);
+            $this->new=mysql_num_rows($resul);
+            if ($this->new==0) {$this->new="";} else {
+                $this->new="+".$this->new;
+            }
+        }
 	}
 }
 

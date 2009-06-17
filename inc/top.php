@@ -26,8 +26,9 @@ for ($i=$ma->menu_c-1;$i>=0;$i--) {
 	$mk->snew();
 	$enu_arr[$i]['url']=$mk->url;
 	$enu_arr[$i]['title']=$mk->name;
-	$enu_arr[$i]['active']=$mk->chcur();
+	$enu_arr[$i]['active']=$mk->cur;
 	$enu_arr[$i]['new']=$mk->new;
+    $enu_arr[$i]['show']=$mk->show;
 	if ($i<$ma->menu_c-1 && $enu_arr[$i+1]['active']) $enu_arr[$i]['before_active']=1; else $enu_arr[$i]['before_active']=0;
 }
 for ($i=0;$i<$ma->menu_c;$i++) {
