@@ -15,6 +15,7 @@
  *
  */
 $reg=1;
+$err=0;
 include("cfg.php");
 
 $name = request::get_post('login');
@@ -70,7 +71,7 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 				$e_s=1;
 			}
 
-			$sl="INSERT INTO `$sql_db`.`users` (`name`, `mail`, `icq`, `jabber`, `site`, `lvl`, `pwd` ,`about`, `activ`)
+			$sl="INSERT INTO `users` (`name`, `mail`, `icq`, `jabber`, `site`, `lvl`, `pwd` ,`about`, `activ`)
 		VALUES ( '$name', '$mail', '$icq', '$jabber', '$site', '', '$pwd', '$about', '$e_s')";
 			$result=mysql_query($sl,$sql);
 
@@ -110,77 +111,81 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 }
 include("inc/head.php");
 include 'inc/top.php';
-?>
 
 
-<div id="golog">
-	<h3>Регистрация</h3>
-	<?php
-	if ($err==1) {
-		echo_err('Пользователь с таки именем уже существует!');
-	} elseif ($err==3) {
-		echo_err("Капча введена не правильно, вы бот?");
-	} elseif ($err==2) {
-		echo_err("Не все поля заполнены, либо вы используюте спец. символы!");
-	}
-	?>
-	<p>Поля, помеченные <span class="required">*</span> обязательны для заполнения!</p>
-	<form method="post" action="register.php?reg" id="reg">
-		<table border="0">
-			<tr>
-				<td>Логин <div class="required" id='clogin'>*</div></td>
-				<td><input type="text" name="login" onkeyup="chka(this,'login')" value='<?php echo request::get_post('login') ?>' /></td>
-			</tr>
-			<tr>
-				<td>Пароль <div class="required" id='pwd'>*</div></td>
-				<td><input type="password" name="pwd" onkeyup="chkpwd(this.form)"  /></td>
-			</tr>
-			<tr>
-				<td>Повтор <div class="required" id='pwd2'>*</div></td>
-				<td><input type="password" name="pwd2" onkeyup="chkpwd(this.form)" /></td>
-			</tr>
-			<tr>
-				<td>E-mail <div class="required" id='cmail'>*</div></td>
-				<td><input type="text" name="mail" onkeyup="chka(this,'mail')" value='<?php echo request::get_post('mail') ?>' /></td>
-			</tr>
-			<tr>
-				<td>ICQ</td>
-				<td><input type="text" name="icq" value='<?php echo request::get_post('icq') ?>' /></td>
-			</tr>
-			<tr>
-				<td>Jabber</td>
-				<td><input type="text" name="jabber" value='<?php echo request::get_post('jabber') ?>' /></td>
-			</tr>
-			<tr>
-				<td>Сайт</td>
-				<td><input type="text" name="site" value='<?php echo request::get_post('site') ?>' /></td>
-			</tr>
-			<tr>
-				<td>О себе</td>
-				<td><textarea name="about" rows="5" cols="30"><?php echo request::get_post('about') ?></textarea></td>
-			</tr>
-			<tr>
-				<td>
-					<img src="cap/kap.php?rand=<?php echo rand(); ?>" alt="капча" onclick="this.src='cap/kap.php?rand='+Math.random()" />
-					<div class="required" id='ccap'>*</div>
-				</td>
-				<td><input type="text" name="kap" onkeyup="chka(this,'cap')" /></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" value="Регистрироваться!" /></td>
-			</tr>
-		</table>
-	</form>
-	<?php
-	if ($eml_a):
-		?>
-	<br />
-	После регистрации на вашу электронную почту придёт письмо для подтверждения регистрации.
-	<?php
-	endif;
-	?>
-</div>
-<?php
+
+//<div id="golog">
+//	<h3>Регистрация</h3>
+
+//	if ($err==1) {
+//		echo_err('Пользователь с таки именем уже существует!');
+//	} elseif ($err==3) {
+//		echo_err("Капча введена не правильно, вы бот?");
+//	} elseif ($err==2) {
+//		echo_err("Не все поля заполнены, либо вы используюте спец. символы!");
+//	}
+//
+//	<p>Поля, помеченные <span class="required">*</span> обязательны для заполнения!</p>
+//	<form method="post" action="register.php?reg" id="reg">
+//		<table border="0">
+//			<tr>
+//				<td>Логин <div class="required" id='clogin'>*</div></td>
+//				<td><input type="text" name="login" onkeyup="chka(this,'login')" value='<?php echo request::get_post('login') ' /></td>
+//			</tr>
+//			<tr>
+//				<td>Пароль <div class="required" id='pwd'>*</div></td>
+//				<td><input type="password" name="pwd" onkeyup="chkpwd(this.form)"  /></td>
+//			</tr>
+//			<tr>
+//				<td>Повтор <div class="required" id='pwd2'>*</div></td>
+//				<td><input type="password" name="pwd2" onkeyup="chkpwd(this.form)" /></td>
+//			</tr>
+//			<tr>
+//				<td>E-mail <div class="required" id='cmail'>*</div></td>
+//				<td><input type="text" name="mail" onkeyup="chka(this,'mail')" value='<?php echo request::get_post('mail') ' /></td>
+//			</tr>
+//			<tr>
+//				<td>ICQ</td>
+//				<td><input type="text" name="icq" value='<?php echo request::get_post('icq') ' /></td>
+//			</tr>
+//			<tr>
+//				<td>Jabber</td>
+//				<td><input type="text" name="jabber" value='<?php echo request::get_post('jabber') ' /></td>
+//			</tr>
+//			<tr>
+//				<td>Сайт</td>
+//				<td><input type="text" name="site" value='<?php echo request::get_post('site') ' /></td>
+//			</tr>
+//			<tr>
+//				<td>О себе</td>
+//				<td><textarea name="about" rows="5" cols="30"><?php echo request::get_post('about') </textarea></td>
+//			</tr>
+//			<tr>
+//				<td>
+//					<img src="cap/kap.php?rand=<?php echo rand(); " alt="капча" onclick="this.src='cap/kap.php?rand='+Math.random()" />
+//					<div class="required" id='ccap'>*</div>
+//				</td>
+//				<td><input type="text" name="kap" onkeyup="chka(this,'cap')" /></td>
+//			</tr>
+//			<tr>
+//				<td>&nbsp;</td>
+//				<td><input type="submit" value="Регистрироваться!" /></td>
+//			</tr>
+//		</table>
+//	</form>
+
+    $register_arr=array("reg_login"=>request::get_post('login'),"reg_mail"=>request::get_post('mail'),
+"reg_icq"=>request::get_post('icq'),"reg_jabber"=>request::get_post('jabber'),"reg_site"=>request::get_post('site'),
+    "reg_about"=>request::get_post('about'),"error"=>$err,"email_register"=>$eml_a);
+    echo render_register_page($register_arr);
+//	if ($eml_a):
+//
+//	<br />
+//	После регистрации на вашу электронную почту придёт письмо для подтверждения регистрации.
+//
+//	endif;
+//
+//</div>
+//
 include("inc/foot.php");
 ?>

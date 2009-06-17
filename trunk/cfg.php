@@ -20,6 +20,7 @@ define('TPL_ROOT', ROOT_PATH . '/style/templates');
 define('TPL_MAIL', TPL_ROOT . '/mail');
 define('TPL_RSS', TPL_ROOT . '/rss');
 define('TPL_UTILS', TPL_ROOT . '/utils');
+define('TPL_FRAMES', TPL_ROOT . '/frames');
 define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_MAIN', TPL_ROOT);
 
