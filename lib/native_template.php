@@ -86,4 +86,7 @@ function render_hands_free($elements_arr,$size) {
 function render_search_panel() {
     return render_template(TPL_UTILS.'/search_panel.tpl.php',null);
 }
+function render_register_page($array) {
+    return render_template(TPL_FRAMES.'/register.tpl.php', $array);
+}
 ?>
