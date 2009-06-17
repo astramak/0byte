@@ -83,4 +83,7 @@ function render_hands_free($elements_arr,$size) {
     $vars=array('elements'=>$elements_arr,'size'=>$size,'loged'=>$loged);
     return render_template(TPL_UTILS.'/hands_free.tpl.php',$vars);
 }
+function render_search_panel() {
+    return render_template(TPL_UTILS.'/search_panel.tpl.php',null);
+}
 ?>

@@ -1,17 +1,19 @@
-<h3>Создание <?php if (!isset($_GET['tp'])) {
-	echo "сообщения";
-	$tp=0;
-} else if ($_GET['tp']=='lnk') {
+<h3>Создание <?php
+    $tp=request::get_get("tp",0,0);
+//if ($tp==0)
+if (strncmp($tp,'lnk',3)==0) {
 	echo "поста-ссылки";
 	$tp=1;
-} else if ($_GET['tp']=='tr') {
+} else if (strncmp($tp,'tr',2)==0) {
 	echo "перевода";
 	$tp=2;
-} else if ($_GET['tp']=='answ') {
+} else if (strncmp($tp,'answ',4)==0) {
 	echo "опроса";
 	$tp=3;
+}  else {
+	echo "сообщения";
+	$tp=0;
 }
-
 ?></h3>
 <a href="work/newpost"> Сообщение </a>
 |
@@ -44,15 +46,15 @@
 			?>
 		</select></td>
 	</tr>
-	<?php if (!isset($_GET['tp']) || $_GET['tp']=='tr' || $_GET['tp']=='lnk') {
+	<?php if ($tp<=2) {
 		echo "<tr><td id='otxt'>Текст</td><td>
 		<div id='mq' class='inpt'></div>
 		<textarea onkeypress='do_key(this.form,\"new\",event);' onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"new\",event);}' name='text' rows='15' cols='70' class='post-body'></textarea>
 		
 		</td></tr>";
 	}  else {
-		if (isset($_GET['len']) && $_GET['len']>2) {
-			$len=$_GET['len'];
+        if (request::get_get("len",0)>2) {
+			$len=request::get_get("len",0);
 		} else {$len=2;}
 		echo "<tr><td>Ответы:
 			<br /> <a id='adda' href='work/newpost/answ/".($len+1)."'>Добавить</a>
@@ -65,9 +67,9 @@
 		echo "<input type='hidden' id='len' name='len' value='".$len."' /></td></tr>
 			<tr><td>Несколько ответов</td><td><input type='checkbox' name='mng'  /></td></tr>";
 	}
-	if  ($_GET['tp']=='tr') {
+	if  ($tp==2) {
 		echo "<tr><td>Оригинал</td><td><input type='text' name='org' /></td></tr>";
-	} else if ($_GET['tp']=='lnk') {
+	} else if ($tp==3) {
 		echo "<tr><td>Ссылка</td><td><input type='text' name='lnk' /></td></tr>";
 	}
 	?>

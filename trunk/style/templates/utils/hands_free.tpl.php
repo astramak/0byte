@@ -88,3 +88,7 @@
 	</tbody>
 </table>
 </div>
+<script type='text/javascript'>
+var pd=document.getElementById('ped').innerHTML;
+var cd=document.getElementById('ced').innerHTML;
+</script>

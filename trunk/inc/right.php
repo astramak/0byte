@@ -141,13 +141,10 @@
 //</table>
 //</div>
 //</form>
-
+echo render_search_panel();
 
 			
-			echo "<script type='text/javascript'>
-var pd=document.getElementById('ped').innerHTML;
-var cd=document.getElementById('ced').innerHTML;
-</script>" ;
+			echo "" ;
 			ob_start();
 			if (!$tops = readCache('tops.cache', 30)) {
 				echo "<div class='rtblb'><div id='tags'>";
