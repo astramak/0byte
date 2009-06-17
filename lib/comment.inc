@@ -23,6 +23,7 @@ class com {
 	var $ratep;
 	var $lvl;
 	var $cid;
+    var $new;
 	function make($a) {
 		$this->id=$a['id'];
 		$this->auth=$a['who'];
@@ -30,10 +31,12 @@ class com {
 		$this->text=$a['text'];
 		$this->ratem=$a['ratem'];
 		$this->ratep=$a['ratep'];
+//        echo $a['ratep'];
 		$this->lvl=$a['lvl'];
 		$this->cid=$a['cid'];
 	}
 	function rate() {
+//        echo $this->ratep;
 		return ($this->ratep-$this->ratem);
 	}
 }
@@ -81,69 +84,83 @@ function rmcom($com) {
 	}
 }
 function com_echo($com,$noecho=0) {
-	global $sql,$usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id;
+	global $sql,$usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id,$cedit;
 	$ech= "<dl class='lvl2'><dt id='cmnt".$com->id."' >";
 	if ($last_com_id<$com->id) {
 		$last_com_id=$com->id;
 	}
 	$cur=$cur;
-	if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
-		$ech.= "<a id='".$row['id']."'></a>";
-	}
+//	if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
+//		$ech.= "<a id='".$row['id']."'></a>";
+//	}
 	$alien=new user;
 	$alien->find($com->auth);
-	$cmn="";
+//	$cmn="";
 	$usr=$usr;
+//    echo $com->rate();
 	if ($loged==1) {
-		$lnk="work/comment/".$com->id."/".$com->lvl."/$cur";
-		if (isset($noecho)) {
-			$lnk="javascript:doit('".$com->id."','".($com->lvl+1)."')";
-		}
-		$cmn="(<a href=\"".$lnk."\">Ответить</a>)"; 
+//		$lnk="work/comment/".$com->id."/".$com->lvl."/$cur";
+//		if (isset($noecho)) {
+//			$lnk="javascript:doit('".$com->id."','".($com->lvl+1)."')";
+//		}
+//		$cmn="(<a href=\"".$lnk."\">Ответить</a>)";
+$allow_edit=0;
+$allow_delete=0;
 		if ($usr->lvl>=$elvl || ($com->auth == $usr->login && $cedit==1)) {
-
-			$cmn.=" (<a href='work/editcom/".$com->id."/'>Редактировать</a>)";
+$allow_edit=1;
+//			$cmn.=" (<a href='work/editcom/".$com->id."/'>Редактировать</a>)";
 		}
 		if ($usr->lvl>=$elvl) {
-			$cmn.=" (<a href='work/rmcom/".$com->id."/'>Удалить</a>)";
+//			$cmn.=" (<a href='work/rmcom/".$com->id."/'>Удалить</a>)";
+$allow_delete=1;
 		}
 	}
-	$ssa= "<img class='cnoauth' src='style/img/figure.gif' />";
-	if (strlen($alien->av)>2) {
-		$ssa= "<img class='cauth' src='res.php?t=av&amp;img=".$alien->av."' />";
-	}
+//	$ssa= "<img class='cnoauth' src='style/img/figure.gif' />";
+	$avatar_use=0;
+    if (strlen($alien->av)>2) {
+//		$ssa= "<img class='cauth' src='res.php?t=av&amp;img=".$alien->av."' />";
+        $avatar_use=1;
+    }
 
-	$rt="";
-	$rate=$com->rate();
-	if ($com->lvl>0) {
-		$top="<a class='clnk' href='post/".$post11."/#cmnt".$com->cid."' title='Уровнем выше'>&#8593;</a>";
-	} else {$top="";}
+//	$rt="";
+//	$rate=$com->rate();
+//	if ($com->lvl>0) {
+//		$top="<a class='clnk' href='post/".$post11."/#cmnt".$com->cid."' title='Уровнем выше'>&#8593;</a>";
+//	} else {$top="";}
 	if ($com->date>=$v_date && $com->auth!=$usr->login && $loged==1) {
-		$cls="cntop";
+//		$cls="cntop";
 		$jstocom.="com_arr[".$num_com."]='#cmnt".$com->id."'; ";
 		$num_com+=1;
+        $com->new=1;
 	} else {
-		$cls="ctop";
+//		$cls="ctop";
+        $com->new=0;
 	}
-	if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
-	else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
-	$ech.= "<div class='".$cls."'>".$ssa."<a class='cauth' href='user/".$com->auth."'>".$com->auth."</a><span class='date'>".date('d.m.y  H:i',$com->date)."</span><a title='Ссылка на комментарий' class='clnk' href='post/".$post11."/#cmnt".$com->id."'>#</a>".$top."
-			<span class='crate'><noindex><a rel='nofollow' class='ratep' href='twork.php?wt=ratecom&id=".$com->id."&rate=p&from=".$cur."'>+</a></noindex><span id='rc".$com->id."'>".$rt."</span><noindex><a rel='nofollow' class='ratem' href='twork.php?wt=ratecom&id=".$com->id."&rate=m&from=".$cur."'>&ndash;</a></noindex></span>
-			
-			</div>";
+//	if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
+//	else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
+//	$ech.= "<div class='".$cls."'>".$ssa."<a class='cauth' href='user/".$com->auth."'>".$com->auth."</a><span class='date'>".date('d.m.y  H:i',$com->date)."</span><a title='Ссылка на комментарий' class='clnk' href='post/".$post11."/#cmnt".$com->id."'>#</a>".$top."
+//			<span class='crate'><noindex><a rel='nofollow' class='ratep' href='twork.php?wt=ratecom&id=".$com->id."&rate=p&from=".$cur."'>+</a></noindex><span id='rc".$com->id."'>".$rt."</span><noindex><a rel='nofollow' class='ratem' href='twork.php?wt=ratecom&id=".$com->id."&rate=m&from=".$cur."'>&ndash;</a></noindex></span>
+//
+//			</div>";
 
-	$ech.= "<div class='ctext' >".code($com->text)."</div>
-			<div class='cbottom'>$cmn</div>
-			</dt><dd id='cmadd".$com->id."'>";
-	if (!isset($noecho)) {
+//	$ech.= "<div class='ctext' >".code($com->text)."</div>
+//			<div class='cbottom'>$cmn</div>
+//			</dt><dd id='cmadd".$com->id."'>";
+
+$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho);
+$ech.="</dt><dd id='cmadd".$com->id."'>";
+	if (!$noecho) {
 		echo $ech; $ech="";
-		$sql_get="SELECT * FROM `comment` WHERE cid = '".$com->id."' && lvl='".($com->lvl+1)."'  ORDER BY  id   ";
+		$sql_get="SELECT * FROM `comment` WHERE `cid` = '".$com->id."' && `lvl`='".($com->lvl+1)."'  ORDER BY  `id`   ";
 		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-		if (($id=mysql_num_rows($result)) > 0) {
+//		if (!$result) {
+//			echo  mysql_error();
+//		}
+//ini_set('display_errors', 1);
+//        echo mysql_num_rows($result);
+		if (mysql_num_rows($result) > 0) {
 			$cm=new com;
+
 			while($row = mysql_fetch_assoc($result)) {
 				$cm->make($row);
 				com_echo($cm);

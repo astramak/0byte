@@ -35,7 +35,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 		header("Location: $lst");
 	} else {
 			
-		$sl="UPDATE `$sql_db`.`comment` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `comment`.`id` = ".intval($_GET['id']);
+		$sl="UPDATE `comment` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `comment`.`id` = ".intval($_GET['id']);
 		$result=mysql_query($sl,$sql);
 
 
