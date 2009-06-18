@@ -154,4 +154,61 @@ function render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$
 "allow_delete"=>$allow_delete,"current"=>$cur,"loged"=>$loged,"pid"=>$pid,"js"=>$js);
     return render_template(TPL_FRAMES.'/comment.tpl.php', $vars);
 }
+/**
+ * Render tags
+ *
+ * @param array $array
+ * @param numeric $num
+ * @return string
+ */
+function render_tags($array,$num) {
+    return render_template(TPL_UTILS.'/tags.tpl.php',array("elements" => $array, "count" => $num));
+}
+/**
+ * Render users and blogs top list
+ *
+ * @param array $users
+ * @param array $blogs
+ * @return string
+ */
+function render_tops($users,$blogs) {
+    return render_template(TPL_UTILS.'/tops.tpl.php', array("users"=>$users,"blogs"=>$blogs));
+}
+/**
+ * Render online and new users list
+ *
+ * @param array $online
+ * @param numeric $online_count
+ * @param array $new
+ * @return string
+ */
+function render_online_and_new($online,$online_count,$new) {
+    return render_template(TPL_UTILS.'/online_new.tpl.php', array("online"=>$online,"count"=>$online_count,"new"=>$new));
+}
+/**
+ * Render comment creation page
+ *
+ * @param string $old_comment
+ * @param numeric $lvl
+ * @param string $current
+ * @param numeric $id
+ * @return string
+ */
+function render_new_comment($old_comment,$lvl,$current,$id) {
+    return render_template(TPL_FRAMES.'/new_comment.tpl.php',
+    array("comment"=>$old_comment,"lvl"=>$lvl,"current"=>$current,"id"=>$id));
+}
+/**
+ * Render change password page
+ * 
+ * @param string $login
+ * @return string 
+ */
+function render_change_password($login) {
+    return render_template(TPL_FRAMES.'/change_password.tpl.php', array("login"=>$login));
+}
+
+function render_edit_comment($id,$text) {
+    return render_template(TPL_FRAMES.'/edit_comment.tpl.php',array('id'=>$id,'text'=>$text));
+}
 ?>

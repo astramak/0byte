@@ -147,7 +147,7 @@ echo render_search_panel();
 			echo "" ;
 			ob_start();
 			if (!$tops = readCache('tops.cache', 30)) {
-				echo "<div class='rtblb'><div id='tags'>";
+//				echo "<div class='rtblb'><div id='tags'>";
 				$sql_get="SELECT * FROM `tags` WHERE num > 0 ORDER BY  num DESC LIMIT 40";
 				$result=mysql_query($sql_get,$sql);
 				if (!$result) {
@@ -179,97 +179,108 @@ echo render_search_panel();
 						}
 					}
 				}
-				for ($i=1;$i<=$id;$i++) {
-					echo "<a style='font-size: ".$rws[$i]['size']."px;' href='tag/".$rws[$i]['name']."' rel='tag'>".$rws[$i]['name']."</a>  ";
-				}
+//				for ($i=1;$i<=$id;$i++) {
+//					echo "<a style='font-size: ".$rws[$i]['size']."px;' href='tag/".$rws[$i]['name']."' rel='tag'>".$rws[$i]['name']."</a>  ";
+//				}
 
 
-				echo "</div></div>";
-
-				echo "<div class='rtblb'><table  class='rtbl'><tbody>
-<tr id ='bltop' class='sd'>
-<td class='lsd'>
-<span class='ttl'>Top блогов (<a href='list/blog/'>все</a>)</span>
-<ul id='blist'>";
+//				echo "</div></div>";
+echo render_tags($rws, $id);
+//				echo "<div class='rtblb'><table  class='rtbl'><tbody>
+//<tr id ='bltop' class='sd'>
+//<td class='lsd'>
+//<span class='ttl'>Top блогов (<a href='list/blog/'>все</a>)</span>
+//<ul id='blist'>";
 				$sql_get=" SELECT * FROM `blogs` ORDER BY ratep - ratem DESC LIMIT 10 ";
 				$result=mysql_query($sql_get,$sql);
 				if (!$result) {
 					echo  mysql_error();
 				}
+                $i=0;
 				while ($row = mysql_fetch_assoc($result)) {
 					$rate=$row['ratep']-$row['ratem'];
-					$rt="";
+//					$rt="";
 					$sql_get=" SELECT * FROM `post` WHERE blogid = ".$row['id']." && blck = 0";
 					$res=mysql_query($sql_get,$sql);
 					$count=mysql_num_rows($res);
-					if ($count>0) {
-						if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
-						else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
-						echo "<li><a href='blog/".$row['id']."'>".$row['name']."</a> ".$rt."</li>";
-					}
+                    $blogs[$i]['id']=$row['id'];
+                    $blogs[$i]['name']=$row['name'];
+                    $blogs[$i]['rate']=$rate;
+                    $i++;
+//					if ($count>0) {
+//						if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
+//						else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
+//						echo "<li><a href='blog/".$row['id']."'>".$row['name']."</a> ".$rt."</li>";
+//					}
 				}
-				echo "</ul>
-</td><td class='rsdno'>
-
-<div id='shall'><a class='bbls'  href='javascript:g_plist(\"top_user\")'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
-<a class='bbls' href='javascript:g_plist(\"top_blog\")'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
-<div id='shblog'><a class='bbls'  href='javascript:g_plist(\"top_user\")'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
-<a class='bbls' style='background:#B6B6B6;' href='javascript:hgptop()'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
-
-
-</td></tr>
-<tr id ='ustop' class='sd'>
-<td class='lsd'>
-<span class='ttl'>Top пользователей (<a href='list/user/'>все</a>)</span>
-<ul class='ulist' id='ulister'>";
+//				echo "</ul>
+//</td><td class='rsdno'>
+//
+//<div id='shall'><a class='bbls'  href='javascript:g_plist(\"top_user\")'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
+//<a class='bbls' href='javascript:g_plist(\"top_blog\")'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
+//<div id='shblog'><a class='bbls'  href='javascript:g_plist(\"top_user\")'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
+//<a class='bbls' style='background:#B6B6B6;' href='javascript:hgptop()'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
+//
+//
+//</td></tr>
+//<tr id ='ustop' class='sd'>
+//<td class='lsd'>
+//<span class='ttl'>Top пользователей (<a href='list/user/'>все</a>)</span>
+//<ul class='ulist' id='ulister'>";
 				$sql_get=" SELECT * FROM `users` WHERE `lvl`='0' ORDER BY (ratep - ratem + prate / $post_r + crate / $com_r + brate / $blog_r) DESC LIMIT 10 ";
 				$result=mysql_query($sql_get,$sql);
 				if (!$result) {
 					echo  mysql_error();
 				}
 				$alien=new user;
+                $i=0;
 				while ($row = mysql_fetch_assoc($result)) {
-					$rt="";
+//					$rt="";
 					$rate=$row['ratep']-$row['ratem']+$row['prate']/$post_r+$row['crate']/$com_r+$row['brate']/$blog_r;
-					if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
-					else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
-					echo "<li><a href='user/".$row['name']."'>".$row['name']."</a> ".$rt."</li>";
+                    $users[$i]['name']=$row['name'];
+                    $users[$i]['rate']=$rate;
+                    $i++;
+//					if ($rate>0) {$rt="<span class='scb'>(<span class='rp'>".$rate."</span>)</span>";}
+//					else if ($rate<0) {$rt="<span class='scb'>(<span class='rm'>".$rate."</span>)</span>";}
+//					echo "<li><a href='user/".$row['name']."'>".$row['name']."</a> ".$rt."</li>";
 				}
+                echo render_tops($users, $blogs);
 				$tops = ob_get_contents();
 				writeCache($tops,'tops.cache');
 			}
 			ob_end_clean();
 			echo $tops;
-			echo "</ul></td><td class='rsdno'>
-
-<div id='shuser'><a style='background:#B6B6B6;' class='bbls'  href='javascript:hgptop()'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
-<a class='bbls' href='javascript:g_plist(\"top_blog\")'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
-
-</td></tr></tbody></table></div><div class='rtblb'><div class='tagsa'>";
+//			echo "</ul></td><td class='rsdno'>
+//
+//<div id='shuser'><a style='background:#B6B6B6;' class='bbls'  href='javascript:hgptop()'><img src='style/img/figure.gif' alt='Топ пользователей' /></a>
+//<a class='bbls' href='javascript:g_plist(\"top_blog\")'><img src='style/img/documents.gif' alt='Топ блогов' /></a></div>
+//
+//</td></tr></tbody></table></div>
+//echo "<div class='rtblb'><div class='tagsa'>";
 			$sql_get="SELECT * FROM `users` WHERE `online` >= '".(time()-300)."'  ORDER BY `online` DESC";
 			$result=mysql_query($sql_get,$sql);
 			$onl=mysql_num_rows($result);
-			if ($onl>1 || ($onl>0 && $loged!=1)) {
-				echo "В сети: ";
-				$sql_get="SELECT * FROM `users` WHERE `online` >= '".(time()-300)."'  ORDER BY `online` DESC LIMIT 20";
-				$result=mysql_query($sql_get,$sql);
-				$fst=1;
+			
+//				$fst=1;
 				while ($row = mysql_fetch_assoc($result)) {
-					if ($fst!=1) {echo ", ";} else {$fst=0;}
-					echo "<a href='user/".$row['name']."'>".$row['name']."</a>";
+//					if ($fst!=1) {echo ", ";} else {$fst=0;}
+//					echo "<a href='user/".$row['name']."'>".$row['name']."</a>";
+                    $onlines[]=$row['name'];
 				}
-				echo "<br /><br />";
-			}
-			echo "Новенькие: ";
+//				echo "<br /><br />";
+			
+//			echo "Новенькие: ";
 			$sql_get="SELECT * FROM `users` ORDER BY  id DESC LIMIT 5";
 			$result=mysql_query($sql_get,$sql);
-			$fst=1;
+//			$fst=1;
 			while ($row = mysql_fetch_assoc($result)) {
-				if ($fst!=1) {echo ", ";} else {$fst=0;}
-				echo "<a href='user/".$row['name']."'>".$row['name']."</a>";
+//				if ($fst!=1) {echo ", ";} else {$fst=0;}
+//				echo "<a href='user/".$row['name']."'>".$row['name']."</a>";
+                $news[]=$row['name'];
 			}
 
-			echo "</div></div>";
+//			echo "</div></div>";
+echo render_online_and_new($onlines, $onl, $news);
 			?>
 <script type="text/javascript">var ulist=document.getElementById("ulister").innerHTML;
 var blist=document.getElementById("blist").innerHTML;
