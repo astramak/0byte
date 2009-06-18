@@ -15,83 +15,52 @@
  *
  */
 include ("cfg.php");
-$reg=1;
-$js=request::get_get("js",0);
+$reg = 1;
+$js = request::get_get("js",0);
 if ($js) {
 	header("Content-Type: text/html; charset=utf-8");
+}
 
-}
-$cur=request::get_get("cur");
-if (strlen($cur)<3) {
-	$lst=$site;
+$cur = request::get_get("cur");
+if (strlen($cur) < 3) {
+	$lst = $site;
 } else {
-	$lst=$cur;
-	$lst=str_replace("*amp","&",$lst);
-	$lst=str_replace("*qw","?",$lst);
+	$lst = $cur;
+	$lst = str_replace("*amp", "&", $lst);
+	$lst = str_replace("*qw", "?", $lst);
 }
-if (strlen(request::get_post('login'))>2 && strlen(request::get_post('pwd'))>2) {
-	$usr->login=request::get_post('login');
-	$usr->pwd=md5(request::get_post('pwd'));
+
+$login = request::get_post('login');
+$pwd = request::get_post('pwd');
+if (strlen($login) > 2 && strlen($pwd) > 2) {
+	$usr->login = $login;
+	$usr->pwd = md5($pwd);
 	if ($usr->check()) {
 		session_start();
-		if ($zap=="on") {
-			$dt = mktime(0,0,0,1,1,2010);
+		if (request::get_post('zap')) {
+			$dt = mktime(0, 0, 0, 1, 1, 2010);
 			setcookie('login', request::get_post('login'), $dt);
+			// TOFIX: very-very-very unsecure, use md5 or sha1
 			setcookie('pwd', base64_encode(request::get_post('pwd')), $dt);
 		}
-		$_SESSION['login']=request::get_post('login');
-		$_SESSION['pwd']=base64_encode(request::get_post('pwd'));
+		$_SESSION['login'] = $login;
+		// TOFIX: very-very-very unsecure, use md5 or sha1
+		$_SESSION['pwd'] = base64_encode($pwd);
 		header("Request-URI: $lst");
 		header("Content-Location: $lst");
 		header("Location: $lst");
 	} else {
-		$err=1;
+		$err = 1;
 	}
 }
 if (!$js) {
 	include ("inc/head.php");
 	include("inc/top.php");
 }
-//	echo '<div id="login">';
-//	crl(0);
-//	echo '<div id="lgn">'; }
-//if (request::get_get('new') && $eml_a==1) {
-//		echo "<b>Перед входом активируйте свою учётную запись, для этого проверьте свою электронную почту и пройдите по полученной ссылке!</b>";
-//	}
-	
-//<form name="ta" method="post"
-//	action="login.php?cur=<?php echo $_GET['cur']; ?\>">
-//<table border="0">
-//	<tr>
-//		<td>Логин:</td>
-//		<td><input type="text" name="login" /></td>
-//	</tr>
-//	<tr>
-//		<td>Пароль:</td>
-//		<td><input type="password" name="pwd" /></td>
-//	</tr>
-//	<tr>
-//		<td>Запомнить:</td>
-//		<td><input type="checkbox" name="zap" /></td>
-//	</tr>
-//	<tr>
-//		<td></td>
-//		<td><input type="submit" value="Войти" /> <?php
-//		if (isset($_GET['js'])) {
-//			echo "<input type='button' onblur='onBlur(this)' onfocus='onFocus(this)' onClick='unlogin()' value='Вернуться' />";
-//		}
-//		?\></td>
-//	</tr>
-//</table>
-//</form>
-//<a href='register'>Зарегистрироваться</a>
-//
-//
-if (request::get_get("new") && $eml_a) {$new=1;} else {$new=0;}
-echo render_login(request::get_post("login", 0), $cur, $js,$new);
-		if (!$js) {
-//			echo '<br /></div>';
-//			crl(1);
-//			echo '</div>';
-			include("inc/foot.php"); }
-			?>
+
+echo render_login(request::get_post("login", 0), $cur, $js, (request::get_get("new") && $eml_a));
+
+if (!$js) {
+	include("inc/foot.php");
+}
+?>

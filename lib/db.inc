@@ -130,4 +130,14 @@ function db_result($result) {
 function db_last_insert_id($table, $field = 'id') {
 	return _db_last_insert_id($table, $field);
 }
+
+/**
+ * Returns rows number in the result
+ *
+ * @param resource $result
+ * @return int
+ */
+function db_num_rows($result) {
+	return _db_num_rows($result);
+}
 ?>

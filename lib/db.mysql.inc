@@ -98,4 +98,14 @@ function _db_result($result) {
 function _db_last_insert_id($table, $field) {
 	return _db_result(_db_query('SELECT LAST_INSERT_ID()'));
 }
+
+/**
+ * Returns rows number in the result
+ *
+ * @param resource $result
+ * @return int
+ */
+function _db_num_rows($result) {
+	return mysql_num_rows($result);
+}
 ?>
