@@ -112,21 +112,26 @@ class user {
 
 function login() {
 	global $usr;
-	if (isset($_POST['un']) && $_POST['un']==1) {
-		setcookie(login);
-		setcookie(pwd);
-		session_unregister("login");
-		session_unregister("pwd");
+	$un = request::get_post('un');
+	$login = request::get_cookie('login');
+	$pwd = request::get_cookie('pwd');
+
+	if ($un == 1) {
+		foreach(array('login', 'pwd') as $key) setcookie($key, '', time() - 4200, '/');
+		if (request::get_cookie(session_name())) setcookie(session_name(), '', time() - 4200, '/');
 		session_destroy();
 		return(0);
-	} elseif (isset($_COOKIE['login']) && isset($_COOKIE['pwd']) && strlen($_COOKIE['login'])>1 && $_SESSION['login']<2 ) {
-		$_SESSION['login']=$_COOKIE['login'];
-		$_SESSION['pwd']=$_COOKIE['pwd'];
+	} elseif ($pwd && strlen($login) > 1 && !isset($_SESSION['login'])) {
+		$_SESSION['login'] = $login;
+		$_SESSION['pwd'] = $pwd;
 	}
+
 	if (!isset($_SESSION['login'])) return 0;
-	$usr->login=$_SESSION['login'];
-	$usr->pwd=md5(base64_decode($_SESSION['pwd']));
-	if ($usr->check()==1) {
+
+	$usr->login = $login;
+	$usr->pwd = md5(base64_decode($pwd));
+
+	if ($usr->check()) {
 		return(1);
 	} else {
 		return(0);

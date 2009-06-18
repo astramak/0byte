@@ -19,13 +19,11 @@ include ("inc/head.php");
 include("inc/top.php");
 ?>
 
-
 <div id="main">
 	<?php
 	include("inc/all/".sfin($_GET['wt']).".inc");
 	?>
 </div>
-
 
 <?php
 include("inc/foot.php");

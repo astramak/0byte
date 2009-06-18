@@ -15,21 +15,23 @@
  *
  */
 session_start();
+
 include ("cfg.php");
-$logged=login();
-$loged=$logged;
-if (isset($_GET['json'])) {
-	$json=1;
+$logged = login();
+// TODO: why do we need one more variable with the same value?
+$loged = $logged;
+$json = request::get_get('json');
+if ($json) {
 	header("Content-Type: text/html; charset=utf-8");
-} else {
-	$json=0;
 }
-if ($logged==0) {
-	if ($json==1) die;
-	header("Request-URI: login.php");
-	header("Content-Location: login.php");
-	header("Location: login.php");
+
+if ($logged == 0) {
+	if (!$jsons) {
+		header("Request-URI: login.php");
+		header("Content-Location: login.php");
+		header("Location: login.php");
+	}
 } else {
-	include("inc/twork/".sfin($_GET['wt']).".inc");
+	include("inc/twork/" . sfin($_GET['wt']) . ".inc");
 }
 ?>

@@ -19,61 +19,57 @@ include("cfg.php");
 if (request::get_get('pg')) {
 	$pg = request::get_get('pg');
 	if ($pg == "main") {
-		$sql_get="SELECT * FROM `post` WHERE `blogid`!= 0 && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-		$lnk=$site."main";
-		$title="Персональное на ".$ls_name;
+		$sql_get = "SELECT * FROM post WHERE blogid != 0 AND blck = 0 ORDER BY id DESC";
+		$lnk = $site . "main";
+		$title = "Персональное на " . $ls_name;
 	} elseif ($pg == "pers") {
-		$sql_get="SELECT * FROM `post` WHERE `blogid`= 0 && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-		$title="Коллективное на ".$ls_name;
-		$lnk=$site."pers";
+		$sql_get = "SELECT * FROM post WHERE blogid = 0 AND blck = 0 ORDER BY id DESC";
+		$title = "Коллективное на " . $ls_name;
+		$lnk = $site . "pers";
 	}
 } elseif (request::get_get('blog')) {
 	$blogid = intval(request::get_get('blog'));
-	$sql_get="SELECT * FROM `post` WHERE `blogid`= ".$blogid." && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-	$lnk=$site."blog/".intval($_GET['blog']);
-	$sqlg="SELECT * FROM `blogs` WHERE `id`= ".$blogid;
-	$result=mysql_query($sqlg,$sql);
-	$row = mysql_fetch_assoc($result);
-	$title=$ls_name." Блог ".$row['name'];
+	$sql_get="SELECT * FROM post WHERE blogid = " . $blogid . " AND blck = 0 ORDER BY id DESC";
+	$lnk = $site . "blog/" . $blogid;
+	$title = $ls_name . " Блог " . db_result(db_query('SELECT name FROM blogs WHERE id = %d', $blogid));
 } elseif (request::get_get('auth')) {
 	$auth = request::get_get('auth');
-	$sql_get="SELECT * FROM `post` WHERE `auth`= '".mysql_escape_string(gtext($auth))."' && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-	$title=$ls_name."Посты от ".$auth;
-	$lnk=$site."auth/".$auth;
+	$sql_get = "SELECT * FROM post WHERE auth = " . _db_escape_string($auth) . " AND blck = 0 ORDER BY id DESC";
+	$title = $ls_name . "Посты от " . $auth;
+	$lnk = $site . "auth/" . $auth;
 } elseif (request::get_get('lenta')) {
-	$name=gtext(base64_decode(request::get_get('lenta')));
-	$sql_get="SELECT * FROM `post` WHERE ";
-	$sl="SELECT * FROM `inblog` WHERE  `name` = '".$name."' &&  `out` = 0 ORDER BY  id DESC ";
-	$rt=mysql_query($sl,$sql);
-	$rwo = mysql_fetch_assoc($rt);
-	$sql_get.="`blogid` = '".$rwo['blogid']."'";
-	while ($rwo = mysql_fetch_assoc($rt)) {
-		$sql_get.=" || `blogid` = '".$rwo['blogid']."'";
+	$name = base64_decode(request::get_get('lenta'));
+	$where = array();
+
+	$result = db_query('SELECT blogid FROM inblog WHERE name = %s AND out = 0 ORDER BY id DESC', $name);
+	$ids = array();
+	while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
+	if ($ids) $where[] = 'blogid IN (' . implode(',', $ids) . ')';
+
+	$frnd = db_result(db_query('SELECT frnd WHERE name = %s', $name));
+	if ($frnd) {
+		$arr = explode(',', $frnd);
+		array_walk($arr, create_function('&$v,$k', '$v = _db_escape_string(trim($v));'));
+		if ($arr) $where[] = 'auth IN (' . implode(',', $arr) . ')';
 	}
-	$sl="SELECT * FROM `users` WHERE  `name` = '".$name."'";
-	$rt=mysql_query($sl,$sql);
-	$rwo = mysql_fetch_assoc($rt);
-	$arr=split(",",$rwo['frnd']);
-	$q=sizeof($arr);
-	for ($z=1;$z<$q;$z++) {
-		$f=trim($arr[$z]);
-		$sql_get.=" || `auth` = '".$f."'";
+
+	$sql_get = 'SELECT * FROM post WHERE ';
+	if ($where) {
+		$sql_get .= implode(' OR ', $where);
+	} else {
+		$sql_get .= '0';
 	}
-	$sql_get.=" ORDER BY  id DESC LIMIT 100";
-	$title="Персональная лента ".$name;
+	$sql_get .= ' ORDER BY id DESC';
+	$title = "Персональная лента " . $name;
 } else {
-	$sql_get="SELECT * FROM `post` WHERE ratep >= ratem && `blck` = 0 ORDER BY  id DESC LIMIT 100";
-	$title=$ma->title;
-	$lnk=$site;
+	$sql_get = 'SELECT * FROM post WHERE ratep >= ratem && blck = 0 ORDER BY id DESC';
+	$title = $s_name;
+	$lnk = $site;
 }
 
-$result=mysql_query($sql_get,$sql);
-if (!$result) {
-	echo  mysql_error();
-}
-
+$result = db_query($sql_get . ' LIMIT 100');
 $items = array();
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = db_fetch_assoc($result)) {
 	$items[] = prepare_rss_post_item($row);
 }
 

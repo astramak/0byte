@@ -15,10 +15,9 @@
  *
  */
 include("index.php");
-if (isset($_GET['who']) && $_COOKIE['ref']!=1) {
-	setcookie('ref',1);
-	$sql_get="UPDATE `$sql_db`.`users` SET `ref` =  `ref` + 1
-	WHERE `users`.`name` = '".mysql_escape_string($_GET['who'])."'";
-	$result=mysql_query($sql_get,$sql);
+$who = request::get_get('who');
+if ($who && request::get_cookie('ref') != 1) {
+	setcookie('ref', 1);
+	db_query('UPDATE users SET ref = ref + 1 WHERE name = %s', $who);
 }
 ?>
