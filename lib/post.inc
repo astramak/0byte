@@ -86,40 +86,54 @@ function post_echo($row,$t) {
 	$txt=code($txt);
 
 	$bls="";
+    $array['blocked']=0;
 	if($a->blck==1) {
-		$bls="style='color:red'";
+//		$bls="style='color:red'";
+        $array['blocked']=1;
 	}
+    $array['avatar']=0;
 	if ($a->blog=="own") {
 		$alien->find($a->auth);
-		$ssa="";
+//		$ssa="";
+        $array['not_in_blog']=1;
 		if (strlen($alien->av)>2) {
-			$ssa= "<img  src='res.php?t=av&amp;img=".$alien->av."' class='pav' />";
+              $array['avatar']=1;
+//            $ssa= "<img  src='res.php?t=av&amp;img=".$alien->av."' class='pav' />";
+                $array['avatar_url']='res.php?t=av&amp;img='.$alien->av;
 		}
 
-		$blog="$ssa <a class='blog' href='user/".$a->auth."/'>".$a->auth."</a>  &#8212; ";
+//		$blog="$ssa <a class='blog' href='user/".$a->auth."/'>".$a->auth."</a>  &#8212; ";
 	} else {
+        $array['not_in_blog']=0;
 		$sql_get="SELECT * FROM `blogs` WHERE id = '".$a->blogid."' ";
 		$resul=mysql_query($sql_get,$sql);
 		$rowa = mysql_fetch_assoc($resul);
 		$blg=new blog;
 		$blg->make($rowa);
-		$k="";
+//		$k="";
 		if (strlen($blg->av)>0) {
-			$k="<img class='pav' src='res.php?t=bl&amp;img=".$blg->av."' alt='' />";
+//			$k="<img class='pav' src='res.php?t=bl&amp;img=".$blg->av."' alt='' />";
+            $array['avatar']=1;
+            $array['avatar_url']='res.php?t=bl&amp;img='.$blg->av;
 		}
-		$blog="$k <a class='blog' href='blog/".$a->blogid."/'>".$a->blog."</a> &#8212; ";
-		$auth_blc="<a class='auth' href='user/".$a->auth."/'>".$a->auth."</a>";
+        $array['blog_name']=$blg->name;
+        $array['blog_id']=$a->blogid;
+//		$blog="$k <a class='blog' href='blog/".$a->blogid."/'>".$a->blog."</a> &#8212; ";
+//		$auth_blc="<a class='auth' href='user/".$a->auth."/'>".$a->auth."</a>";
 	}
 	if ($a->tp==1) {
-		$blog="<a href='".$a->lnk."' rel='nofollow' class='blog'><img class='auth' src='style/lnk.gif' style='height: 20px;' /></a>
-		".$blog."<a href='".$a->lnk."' rel='nofollow' class='blog'>".$a->title."</a>";
+//		$blog="<a href='".$a->lnk."' rel='nofollow' class='blog'><img class='auth' src='style/lnk.gif' style='height: 20px;' /></a>
+//		".$blog."<a href='".$a->lnk."' rel='nofollow' class='blog'>".$a->title."</a>";
+        $array['type']='link';
 	} else if ($a->tp==2) {
-			$blog="<img class='auth' src='style/tr.gif' style='height: 20px;' />
-		".$blog."<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
+//			$blog="<img class='auth' src='style/tr.gif' style='height: 20px;' />
+//		".$blog."<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
 			$txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
+              $array['type']='translate';
 		}
 		else {
-			$blog.="<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
+//			$blog.="<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
+  $array['type']='other';
 		}
 	$answ="";
 	if ($a->is_voting()) {
@@ -159,11 +173,24 @@ function post_echo($row,$t) {
 			}
 		}
 	}
-	if ($fst_post==1) {$fst='fst_top'; $fst_post=0; } else {$fst='top';}
-	echo "<div class='$fst'><span class='date'>".date('d.m.y  H:i',$a->date)."</span>".(isset($auth_blc) ? $auth_blc : '')."</div>";
-	echo "<div class='text'><h2 class='title' $bls>".$blog."
-			</h2><div class='mtxt'>".str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ."</div></div>";
-	return($a);
+	if ($fst_post==1) {
+//        $fst='fst_top';
+        $fst_post=0;
+        $array['first']=1;
+    } else {
+//        $fst='top';
+        $array['first']=0;
+        }
+    $array['text']=str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ;
+    $array['author']=$a->auth;
+    $array['title']=$a->title;
+    $array['date']=date('d.m.y  H:i',$a->date);
+    $array['id']=$a->id;
+//	echo "<div class='$fst'><span class='date'>".date('d.m.y  H:i',$a->date)."</span>".(isset($auth_blc) ? $auth_blc : '')."</div>";
+//	echo "<div class='text'><h2 class='title' $bls>".$blog."
+//			</h2><div class='mtxt'>".str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ."</div></div>";
+    echo render_post($array);
+    return($a);
 }
 
 function chkin($a) {

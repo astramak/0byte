@@ -207,8 +207,17 @@ function render_new_comment($old_comment,$lvl,$current,$id) {
 function render_change_password($login) {
     return render_template(TPL_FRAMES.'/change_password.tpl.php', array("login"=>$login));
 }
-
+/**
+ * Render edit comment page
+ *
+ * @param numeric $id
+ * @param string $text
+ * @return string
+ */
 function render_edit_comment($id,$text) {
     return render_template(TPL_FRAMES.'/edit_comment.tpl.php',array('id'=>$id,'text'=>$text));
+}
+function render_post($array) {
+    return render_template(TPL_FRAMES.'/post.tpl.php', $array);
 }
 ?>
