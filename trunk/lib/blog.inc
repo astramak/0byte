@@ -23,18 +23,16 @@ class blog {
 	var $av;
 	var $about;
 	var $owner;
-	function make($a) {
-		$this->id=$a['id'];
-		$this->auth=$a['owner'];
-		$this->name=$a['name'];
-		$this->ratem=$a['ratem'];
-		$this->ratep=$a['ratep'];
-		$this->av=$a['av'];
-		$this->owner=$a['owner'];
-		$this->about=$a['about'];
+
+	function make($record) {
+		$alias = array('auth' => 'owner');
+		foreach ($this as $prop => $val) {
+			$this->{$prop} = $record[isset($alias[$prop]) ? $alias[$prop] : $prop];
+		}
 	}
+
 	function rate() {
-		return($this->ratep-$this->ratem);
+		return($this->ratep - $this->ratem);
 	}
 }
 ?>

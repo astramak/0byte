@@ -16,155 +16,101 @@
  */
 class com {
 	var $id;
-	var $auth;
 	var $date;
 	var $text;
-	var $ratem;
-	var $ratep;
-	var $lvl;
+	var $auth;
 	var $cid;
-    var $new;
-	function make($a) {
-		$this->id=$a['id'];
-		$this->auth=$a['who'];
-		$this->date=$a['date'];
-		$this->text=$a['text'];
-		$this->ratem=$a['ratem'];
-		$this->ratep=$a['ratep'];
-//        echo $a['ratep'];
-		$this->lvl=$a['lvl'];
-		$this->cid=$a['cid'];
+	var $ratep;
+	var $ratem;
+	var $lvl;
+	var $krnl;
+	var $new;
+
+	function com($row = null) {
+		if ($row) $this->make($row);
 	}
-	function rate() {
-//        echo $this->ratep;
-		return ($this->ratep-$this->ratem);
-	}
-}
-function klist($a) {
-	global $sql,$loged,$usr;
-	$sql_get="SELECT * FROM `comment` WHERE krnl = '".$a."'   ";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$re= "<a class='klist' href='post/".$a."/#cm'><img src='style/img/speech_bubble.gif' alt='Коментариев: ' />";
-	$id=mysql_num_rows($result);
-	if ($loged==1) {
-		$sql_get="SELECT * FROM `hist` WHERE `pid` = '".$a."' && `who`='".$usr->login."'  ";
-		$result=mysql_query($sql_get,$sql);
-		$rw = mysql_fetch_assoc($result);
-		$v_date=$rw['date'];
-		$sql_get="SELECT * FROM `comment` WHERE `krnl` = '".$a."' && `date` >= '".$v_date."' && `who`!='".$usr->login."'";
-		$result=mysql_query($sql_get,$sql);
-		$nid=mysql_num_rows($result);
-		if ($nid>0) {
-			$re.="<span class='rp'>".$nid."</span> / ";
+
+	function make($row) {
+		$alias = array('who' => 'auth');
+		foreach ($row as $key => $val) {
+			$prop = isset($alias[$key]) ? $alias[$key] : $key;
+			$this->{$prop} = $val;
 		}
 	}
-	if ($id==0) {
-		$re.="нет";
-	} else {
-		$re.=$id;
+
+	function rate() {
+		return ($this->ratep - $this->ratem);
 	}
-	$re.="</a>";
+}
+
+function klist($pid) {
+	global $loged, $usr;
+	$re = "<a class='klist' href='post/".$pid."/#cm'><img src='style/img/speech_bubble.gif' alt='Коментариев:' /> ";
+	$count = db_result(db_query('SELECT COUNT(id) FROM comment WHERE krnl = %d', $pid));
+	if ($loged) {
+		$v_date = db_result(db_query('SELECT date FROM hist WHERE pid = %d AND who = %s', $pid, $usr->login));
+		$new = db_result(db_query('SELECT COUNT(id) FROM comment WHERE krnl = %d AND date >= %d AND who != %s', $pid, $v_date, $usr->login));
+		if ($new) {
+			$re .= "<span class='rp'>" . $new . "</span> / ";
+		}
+	}
+	$re .= ($count ? $count : 'нет') . '</a>';
 	return $re;
 }
+
 function rmcom($com) {
-	global $sql;
-	$sql_get="DELETE FROM `comment` WHERE `comment`.`id` = ".$com->id;
-	$result=mysql_query($sql_get,$sql);
-	$sql_get="SELECT * FROM `comment` WHERE cid = '".$com->id."' && lvl='".($com->lvl+1)."'  ORDER BY  id   ";
-	$result=mysql_query($sql_get,$sql);
-	if ($id=mysql_num_rows($result)==0) {} else {
-		$cm=new com;
-		while($row = mysql_fetch_assoc($result)) {
-			$cm->make($row);
-			rmcom($cm);
-		}
+// remove comment itself
+	db_query('DELETE FROM comment WHERE id = %d', $com->id);
+	// and remove all comment children
+	$result = db_query('SELECT id FROM comment WHERE cid = %d', $com->id);
+	while ($row = db_fetch_object($result)) {
+		rmcom($row);
 	}
 }
+
 function com_echo($com,$noecho=0) {
-	global $sql,$usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id,$cedit;
+	global $usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id,$cedit;
+
 	$ech= "<dl class='lvl2'><dt id='cmnt".$com->id."' >";
 	if ($last_com_id<$com->id) {
 		$last_com_id=$com->id;
 	}
 	$cur=$cur;
-//	if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
-//		$ech.= "<a id='".$row['id']."'></a>";
-//	}
-	$alien=new user;
+
+	$alien=new user();
 	$alien->find($com->auth);
-//	$cmn="";
-	$usr=$usr;
-//    echo $com->rate();
+	$usr = $usr;
 	if ($loged==1) {
-//		$lnk="work/comment/".$com->id."/".$com->lvl."/$cur";
-//		if (isset($noecho)) {
-//			$lnk="javascript:doit('".$com->id."','".($com->lvl+1)."')";
-//		}
-//		$cmn="(<a href=\"".$lnk."\">Ответить</a>)";
-$allow_edit=0;
-$allow_delete=0;
+		$allow_edit=0;
+		$allow_delete=0;
 		if ($usr->lvl>=$elvl || ($com->auth == $usr->login && $cedit==1)) {
-$allow_edit=1;
-//			$cmn.=" (<a href='work/editcom/".$com->id."/'>Редактировать</a>)";
+			$allow_edit=1;
 		}
 		if ($usr->lvl>=$elvl) {
-//			$cmn.=" (<a href='work/rmcom/".$com->id."/'>Удалить</a>)";
-$allow_delete=1;
+			$allow_delete=1;
 		}
 	}
-//	$ssa= "<img class='cnoauth' src='style/img/figure.gif' />";
 	$avatar_use=0;
-    if (strlen($alien->av)>2) {
-//		$ssa= "<img class='cauth' src='res.php?t=av&amp;img=".$alien->av."' />";
-        $avatar_use=1;
-    }
+	if (strlen($alien->av)>2) {
+		$avatar_use=1;
+	}
 
-//	$rt="";
-//	$rate=$com->rate();
-//	if ($com->lvl>0) {
-//		$top="<a class='clnk' href='post/".$post11."/#cmnt".$com->cid."' title='Уровнем выше'>&#8593;</a>";
-//	} else {$top="";}
 	if ($com->date>=$v_date && $com->auth!=$usr->login && $loged==1) {
-//		$cls="cntop";
 		$jstocom.="com_arr[".$num_com."]='#cmnt".$com->id."'; ";
 		$num_com+=1;
-        $com->new=1;
+		$com->new=1;
 	} else {
-//		$cls="ctop";
-        $com->new=0;
+		$com->new=0;
 	}
-//	if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
-//	else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
-//	$ech.= "<div class='".$cls."'>".$ssa."<a class='cauth' href='user/".$com->auth."'>".$com->auth."</a><span class='date'>".date('d.m.y  H:i',$com->date)."</span><a title='Ссылка на комментарий' class='clnk' href='post/".$post11."/#cmnt".$com->id."'>#</a>".$top."
-//			<span class='crate'><noindex><a rel='nofollow' class='ratep' href='twork.php?wt=ratecom&id=".$com->id."&rate=p&from=".$cur."'>+</a></noindex><span id='rc".$com->id."'>".$rt."</span><noindex><a rel='nofollow' class='ratem' href='twork.php?wt=ratecom&id=".$com->id."&rate=m&from=".$cur."'>&ndash;</a></noindex></span>
-//
-//			</div>";
 
-//	$ech.= "<div class='ctext' >".code($com->text)."</div>
-//			<div class='cbottom'>$cmn</div>
-//			</dt><dd id='cmadd".$com->id."'>";
-
-$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho);
-$ech.="</dt><dd id='cmadd".$com->id."'>";
+	$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho);
+	$ech.="</dt><dd id='cmadd".$com->id."'>";
 	if (!$noecho) {
-		echo $ech; $ech="";
-		$sql_get="SELECT * FROM `comment` WHERE `cid` = '".$com->id."' && `lvl`='".($com->lvl+1)."'  ORDER BY  `id`   ";
-		$result=mysql_query($sql_get,$sql);
-//		if (!$result) {
-//			echo  mysql_error();
-//		}
-//ini_set('display_errors', 1);
-//        echo mysql_num_rows($result);
-		if (mysql_num_rows($result) > 0) {
-			$cm=new com;
-
-			while($row = mysql_fetch_assoc($result)) {
-				$cm->make($row);
-				com_echo($cm);
-			}
+		echo $ech;
+		$ech="";
+		$result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = %d ORDER BY id ASC', $com->id, ($com->lvl + 1));
+		while ($row = db_fetch_assoc($result)) {
+			com_echo(new com($row));
 		}
 	}
 	$ech.= "</dd><dt id='cm".$com->id."'></dt></dl>";

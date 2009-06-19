@@ -24,24 +24,23 @@ function fladd($list,$user) {
 	}
 	return($list);
 }
+
 function flrm($list,$user) {
 	return (str_replace($user.", ","",$list));
 }
+
 function flsnd($list,$usr,$pid,$comid) {
-	global $sql,$eml,$site,$s_name;
+	global $eml,$site,$s_name;
 	$arr=split(",",$list);
 	$q=sizeof($arr);
 	for ($z=0; $z<$q; $z++) {
-		if (trim($arr[$z]) != $usr) {
-			$sql_get="SELECT * FROM `users` WHERE name = '".trim($arr[$z])."'";
-			$result=mysql_query($sql_get,$sql);
-			$row = mysql_fetch_assoc($result);
-			$sql_get="DELETE FROM `eye` WHERE `pid`='".$pid."' && `who`='".trim($arr[$z])."' LIMIT 1";
-			$result=mysql_query($sql_get,$sql);
-			$sql_get="INSERT INTO `eye` ( `who` ,`pid`) VALUES ('".trim($arr[$z])."','".$pid."')";
-			$result=mysql_query($sql_get,$sql);
+		$name = trim($arr[$z]);
+		if ($name != $usr) {
+		// TOFIX: why do we need to delete record and then add the same record?
+			db_query('DELETE FROM eye WHERE pid = %d AND who = %s LIMIT 1', $pid,$name);
+			db_query('INSERT INTO eye SET who = %s, pid = %d', $name, $pid);
 
-			$to = $row['mail'];
+			$to = db_result(db_query('SELECT mail FROM users WHERE name = %s', $name));
 			$subject = "Ответ на отслеживаемый вами пост на ".$s_name;
 			$message = render_mail('observe_reply', array(
 				'user' => $usr,
