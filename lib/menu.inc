@@ -19,64 +19,71 @@ class mel {
 	var $url;
 	var $cur;
 	var $new;
-    var $show;
+	var $show;
+
 	function chcur() {
 		global $index,$pg;
-        $frm=request::get_get("frm");
-        echo $frm;
+		$frm=request::get_get("frm");
+		echo $frm;
 		if ( (isset($index) && $this->url=="." && strlen($pg)<1) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   /*|| strncmp($this->url,$pg,strlen($pg))==0*/  )) {
 			$this->cur=1;
-//            echo 2;
-		} else if (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
-				$this->cur=1;
-//                echo 1;
-            }
-				 else {
-					$this->cur=0;
-				}
+		} elseif (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
+			$this->cur=1;
+		} else {
+			$this->cur=0;
+		}
 		return $this->cur;
 	}
+
 	function snew() {
 		global $usr,$to_main,$loged;
+
 		$dt = time() - 86400;
-        $this->show=1;
-		if ($this->url==".") {
-			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && `ratep` - `ratem` >= ".$to_main;
-		} elseif ($this->url=="main") {
-			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && blog != 'own'";
-		} elseif ($this->url=="pers") {
-			$sql_get="SELECT * FROM `post` WHERE `date` > '".$dt."' && `blck` = 0 && blog = 'own'";
-		} elseif ($this->url=="lenta") {
-			if ($loged==1) {
-				$sql_get="SELECT * FROM `post` WHERE (";
-				$sl="SELECT * FROM `inblog` WHERE  `name` = '".$usr->login."' &&  `out` = 0 ORDER BY  id DESC ";
-				$rt=mysql_query($sl);
-				$rwo = mysql_fetch_assoc($rt);
-				$sql_get.="`blogid` = '".$rwo['blogid']."'";
-				while ($rwo = mysql_fetch_assoc($rt)) {
-					$sql_get.=" || `blogid` = '".$rwo['blogid']."'";
+		$this->show = 1;
+		switch ($this->url) {
+			case '.':
+				$new = db_result(db_query('SELECT COUNT(id) FROM post WHERE date > %d AND ratep - ratem >= %f', $dt, $to_main));
+				break;
+			case 'main':
+				$new = db_result(db_query("SELECT COUNT(id) FROM post` WHERE date > %d AND blck = 0 AND blog != 'own'", $dt));
+				break;
+			case 'pers':
+				$new = db_result(db_query("SELECT COUNT(id) FROM post` WHERE date > %d AND blck = 0 AND blog = 'own'", $dt));
+				break;
+			case 'lenta':
+				if ($loged==1) {
+					$where = array();
+
+					$result = db_query('SELECT blogid FROM inblog WHERE name = %s AND `out` = 0 ORDER BY id DESC', $usr->login);
+					$ids = array();
+					while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
+					if ($ids) $where[] = 'blogid IN (' . implode(',', $ids) . ')';
+
+					$frnd = db_result(db_query('SELECT frnd FROM users WHERE name = %s', $usr->login));
+					if ($frnd) {
+						$arr = explode(',', $frnd);
+						array_walk($arr, create_function('&$v,$k', '$v = _db_escape_string(trim($v));'));
+						if ($arr) $where[] = 'auth IN (' . implode(',', $arr) . ')';
+					}
+
+					$sql_get = 'SELECT COUNT(id) FROM post WHERE date > %d AND blck = 0 AND ';
+					if ($where) {
+						$sql_get .= implode(' OR ', $where);
+					} else {
+						$sql_get .= '0';
+					}
+					$new = db_result(db_query($sql_get));
+				} else {
+					$this->show = 0;
 				}
-				$sl="SELECT * FROM `users` WHERE  `name` = '".$usr->login."'";
-				$rt=mysql_query($sl);
-				$rwo = mysql_fetch_assoc($rt);
-				$arr=split(",",$rwo['frnd']);
-				$q=sizeof($arr);
-				for ($z=1;$z<$q;$z++) {
-					$f=trim($arr[$z]);
-					$sql_get.=" || `auth` = '".$f."'";
-				}
-				$sql_get.=" ) && (`date` > '".$dt."'  && `blck` = 0) ORDER BY  id DESC";
-			} else {
-                $this->show=0;
-            }
+				break;
+			default:
+				$new = 0;
 		}
+
 		if ($this->show) {
-            $resul=mysql_query($sql_get);
-            $this->new=mysql_num_rows($resul);
-            if ($this->new==0) {$this->new="";} else {
-                $this->new="+".$this->new;
-            }
-        }
+			$this->new = $new ? ("+" . $new) : '';
+		}
 	}
 }
 
@@ -84,9 +91,11 @@ class mn {
 	var $title;
 	var $menu;
 	var $menu_c;
+
 	function gt () {
 		echo $this->title;
 	}
+
 	function mg ($el) {
 		return($this->menu[$el]);
 	}

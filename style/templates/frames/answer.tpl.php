@@ -1,19 +1,29 @@
 <?php if ($answered) {?>
-    <table>
-    <?php foreach ($elements as $element):?>
-    <tr><td><b><?php echo $element['title'];?></b></td><td><?php echo $element['val']; ?>
-    </td><td class="tdans"><div class="ans" style="width:<?php echo $element['size']; ?>%">
-    </div></td></tr>
-    <?php endforeach;?>
-    </table>
+<table>
+		<?php foreach ($elements as $element): ?>
+    <tr>
+		<td><b><?php echo $element['title'];?></b></td>
+		<td><?php echo $element['val']; ?></td>
+		<td class="tdans">
+			<div class="ans" style="width:<?php echo $element['size']; ?>%"></div>
+		</td>
+	</tr>
+		<?php endforeach;?>
+</table>
 <?php } else { ?>
-<div id='a_<?php echo $id;?>'><form method='post' action='<?php echo $action; ?>' />
-<?php foreach ($elements as $element):?>
-<label><input <?php echo $element['options']; ?> /><?php echo $element['title']; ?></label><br />
-<?php endforeach;
-if ($loged) {?>
-<input type='submit' name='nax' onClick='answe(this.form,1)' value='Голосовать' />
-<input type='submit' name='nox' onClick='answe(this.form,2)' value='Воздержаться' />
-<?php }?>
-</form></div>
+<div id='a_<?php echo $id;?>'>
+	<form method='post' action='<?php echo $action; ?>'>
+			<?php foreach ($elements as $element): ?>
+		<div>
+			<label><input <?php echo $element['options']; ?> /><?php echo $element['title']; ?></label>
+		</div>
+			<?php endforeach; ?>
+			<?php if ($loged) {?>
+		<div>
+			<input type='submit' name='nax' onClick='answe(this.form,1)' value='Голосовать' />
+			<input type='submit' name='nox' onClick='answe(this.form,2)' value='Воздержаться' />
+		</div>
+			<?php } ?>
+	</form>
+</div>
 <?php } ?>

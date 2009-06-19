@@ -13,4 +13,7 @@
 		<?php } else {?>
 		<a href='register'>Зарегистрироваться</a></div>
 	<div id='inout'><a id='lgin' href='login/<?php echo $current_url; ?>'>Войти</a></div>
-<?php }?></div></div></div>
+	<?php }?>
+</div>
+</div>
+</div>

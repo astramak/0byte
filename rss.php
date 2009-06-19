@@ -41,12 +41,12 @@ if (request::get_get('pg')) {
 	$name = base64_decode(request::get_get('lenta'));
 	$where = array();
 
-	$result = db_query('SELECT blogid FROM inblog WHERE name = %s AND out = 0 ORDER BY id DESC', $name);
+	$result = db_query('SELECT blogid FROM inblog WHERE name = %s AND `out` = 0 ORDER BY id DESC', $name);
 	$ids = array();
 	while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
 	if ($ids) $where[] = 'blogid IN (' . implode(',', $ids) . ')';
 
-	$frnd = db_result(db_query('SELECT frnd WHERE name = %s', $name));
+	$frnd = db_result(db_query('SELECT frnd FROM users WHERE name = %s', $name));
 	if ($frnd) {
 		$arr = explode(',', $frnd);
 		array_walk($arr, create_function('&$v,$k', '$v = _db_escape_string(trim($v));'));

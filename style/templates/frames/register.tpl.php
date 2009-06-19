@@ -1,28 +1,22 @@
 <div id="golog">
 	<h3>Регистрация</h3>
-    <?php
-    if ($error>0) {
-     ?>
-     <span class='err'>
-     <?php
-	if ($error==1) {
-		?> Пользователь с таки именем уже существует!<?php
-	} elseif ($error==3) {
-		?>Капча введена не правильно, вы бот?<?php
-	} elseif ($error==2) {
-		?>Не все поля заполнены, либо вы используюте спец. символы!<?php
-	}
-    ?>
+	<?php if ($error) { ?>
+	<span class='err'>
+			<?php
+			switch ($error) {
+				case 1: echo 'Пользователь с таки именем уже существует!'; break;
+				case 2: echo 'Не все поля заполнены, либо вы используюте спец. символы'; break;
+				case 3: echo 'Капча введена не правильно. Вы бот?'; break;
+			}
+			?>
     </span>
-    <?php
-    }
-	?>
-<p>Поля, помеченные <span class="required">*</span> обязательны для заполнения!</p>
+	<?php } ?>
+	<p>Поля, помеченные <span class="required">*</span> обязательны для заполнения!</p>
 	<form method="post" action="register.php?reg" id="reg">
 		<table border="0">
 			<tr>
 				<td>Логин <div class="required" id='clogin'>*</div></td>
-				<td><input type="text" name="login" onkeyup="chka(this,'login')" value='<?php echo request::get_post('login') ?>' /></td>
+				<td><input type="text" name="login" onkeyup="chka(this,'login')" value='<?php echo $reg_login ?>' /></td>
 			</tr>
 			<tr>
 				<td>Пароль <div class="required" id='pwd'>*</div></td>
@@ -65,8 +59,7 @@
 			</tr>
 		</table>
 	</form>
-    <?php if ($email_register) { ?>
-    <br />
-    После регистрации на вашу электронную почту придёт письмо для подтверждения регистрации.
-    <?php } ?>
+	<?php if ($email_register) { ?>
+    <p>После регистрации на вашу электронную почту придёт письмо для подтверждения регистрации.</p>
+	<?php } ?>
 </div>
