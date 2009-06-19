@@ -41,7 +41,7 @@ if ($row['lnk']==1) {
 	$result=mysql_query($sl,$sql);
 	while ($raw = mysql_fetch_assoc($result)) {
 		if (isset($_POST[$raw['id']]) && $_POST[$raw['id']]=="on") {
-			$sla="UPDATE `$sql_db`.`answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".$raw['id']."'";
+			$sla="UPDATE `answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".$raw['id']."'";
 			$rest=mysql_query($sla,$sql);
 		}
 	}
@@ -54,11 +54,11 @@ if ($row['lnk']==1) {
 		header("Location: $lst");
 		die;
 	}
-	$sl="UPDATE `$sql_db`.`answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".intval($_POST['answ'])."'";
+	$sl="UPDATE `answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".intval($_POST['answ'])."'";
 	$result=mysql_query($sl,$sql);
 
 }
-$sl="INSERT INTO `$sql_db`.`wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
+$sl="INSERT INTO `wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 $result=mysql_query($sl,$sql);
 if ($json==1) {
 	echo answ_echo($_GET['id']);

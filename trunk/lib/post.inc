@@ -146,9 +146,9 @@ function post_echo($row,$t) {
 			$answ.=answ_echo($a->id);
 		} else {
 			$sql_get="SELECT * FROM `answ` WHERE cid = '".$a->id."'";
-			$answ.="<div id='a_".$a->id."'><form method='post' action='twork.php?wt=answ&cur=".$cur."&id=".$a->id."' />";
+//			$answ.="<div id='a_".$a->id."'><form method='post' action='twork.php?wt=answ&cur=".$cur."&id=".$a->id."' />";
 			$res=mysql_query($sql_get,$sql);
-
+            $action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;
 			if ($lnk==1) {
 				$ttp="checkbox";
 				echo "<script type='text/javascript'>var a_type=1;</script>";
@@ -156,6 +156,7 @@ function post_echo($row,$t) {
 				$ttp="radio";
 				echo "<script type='text/javascript'>var a_type=2;</script>";
 			}
+            $i=0;
 			while ($ro = mysql_fetch_assoc($res)) {
 				if ($lnk==1) {
 					$nam=$ro['id'];
@@ -166,11 +167,15 @@ function post_echo($row,$t) {
 					$vl=" value='".$ro['id']."'";
 					$fn="onClick=\"set_a(this.form,'".$ro['id']."')\"";
 				}
-				$answ.="<label><input type='".$ttp."' name='".$nam."' ".$fn." ".$vl." />".$ro['title']."</label><br />";
-			}
-			if ($GLOBALS['loged']==1) {
-				$answ.="<input type='submit' name='nax' onClick='answe(this.form,1)' value='Голосовать' /><input type='submit' name='nox' onClick='answe(this.form,2)' value='Воздержаться' /></form></div>";
-			}
+//				$answ.="<label><input type='".$ttp."' name='".$nam."' ".$fn." ".$vl." />".$ro['title']."</label><br />";
+                $answer_ar[$i]['options']=" type='".$ttp."' name='".$nam."' ".$fn." ".$vl;
+                $answer_ar[$i]['title']=$ro['title'];
+                $i++;
+            }
+            $answ.=render_answer( $answer_ar, 0, $a->id, $loged,$action);
+//			if ($GLOBALS['loged']==1) {
+//				$answ.="<input type='submit' name='nax' onClick='answe(this.form,1)' value='Голосовать' /><input type='submit' name='nox' onClick='answe(this.form,2)' value='Воздержаться' /></form></div>";
+//			}
 		}
 	}
 	if ($fst_post==1) {
@@ -229,7 +234,7 @@ function answ_echo ($id) {
 	global $sql;
 	$sql_get="SELECT * FROM `answ` WHERE cid = '".$id."'";
 	$res=mysql_query($sql_get,$sql);
-	$anw="<table>";
+//	$anw="<table>";
 	$num=0;
 	$aval=0;
 	while ($ro = mysql_fetch_assoc($res)) {
@@ -240,10 +245,10 @@ function answ_echo ($id) {
 	}
 	$prc=$aval/100;
 	for ($i=1;$i<=$num;$i++) {
-		$anw.= "<tr><td><b>".$ak[$i]['title']."</b></td><td>".$ak[$i]['val'].'
-			</td><td class="tdans"><div class="ans" style="width: '.($ak[$i]['val']/$prc).'%"></div></td></tr>';
+//		$anw.= "<tr><td><b>".$ak[$i]['title']."</b></td><td>".$ak[$i]['val'].'
+//			</td><td class="tdans"><div class="ans" style="width: '.($ak[$i]['val']/$prc).'%"></div></td></tr>';
+    $ak[$i]['size']=$ak[$i]['val']/$prc;
 	}
-	return($anw."</table>");
+    return(render_answer($ak,1));
 }
-//seq_zone:
 ?>
