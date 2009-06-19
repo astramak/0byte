@@ -220,4 +220,8 @@ function render_edit_comment($id,$text) {
 function render_post($array) {
     return render_template(TPL_FRAMES.'/post.tpl.php', $array);
 }
+function render_answer($array,$answered,$id=0,$loged=1,$action="") {
+    return render_template(TPL_FRAMES.'/answer.tpl.php',
+        array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));
+}
 ?>
