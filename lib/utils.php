@@ -42,7 +42,7 @@ function nullbute_generate_pwd($len) {
 	$pwd = '';
 	// generate random string
 	while (strlen($pwd) < $len) {
-		$pwd .= uniqid();
+		$pwd .= md5(uniqid());
 	}
 	$pwd = substr($pwd, 0, $len);
 	// more entropy by capitalizing some letters

@@ -35,22 +35,9 @@ class post {
 		if ($row) $this->make($row);
 	}
 
-	function make($a) {
-		$this->title=$a['title'];
-		$this->date=$a['date'];
-		$this->auth=$a['auth'];
-		$this->id=$a['id'];
-		$this->text=$a['text'];
-		$this->ftext=$a['ftext'];
-		$this->ratep=$a['ratep'];
-		$this->ratem=$a['ratem'];
-		$this->blog=$a['blog'];
-		$this->blck=$a['blck'];
-		$this->blogid=$a['blogid'];
-		$this->tp=$a['tp'];
-		$this->flw=$a['flw'];
-		if ($this->tp==1 || $this->tp==2) {
-			$this->lnk=$a['lnk'];
+	function make($row) {
+		foreach ($row as $key => $val) {
+			$this->{$key} = $val;
 		}
 	}
 
@@ -63,8 +50,7 @@ class post {
 	}
 
 	function rate() {
-		$a=$this->ratep-$this->ratem;
-		return($a);
+		return($this->ratep - $this->ratem);
 	}
 
 	function is_voting() {
@@ -72,83 +58,52 @@ class post {
 	}
 }
 
-function post_echo($row,$t) {
-	global $sql,$usr,$cur,$fst_post,$loged;
+function post_echo($row, $t) {
+	global $usr,$cur,$fst_post,$loged;
 
-	$alien=new user();
-	$a=new post($row);
-
-	if ($t==1) {
-		$txt=$a->ftext;
-	} else {
-		$txt=$a->text;
-	}
-	$txt=code($txt);
+	$alien = new user();
+	$a = new post($row);
+	$txt = code(($t == 1 ? $a->ftext : $txt=$a->text));
 
 	$bls="";
-    $array['blocked']=0;
-	if($a->blck==1) {
-//		$bls="style='color:red'";
-        $array['blocked']=1;
-	}
-    $array['avatar']=0;
+	$array['blocked'] = $a->blck;
+	$array['avatar']=0;
 	if ($a->blog=="own") {
 		$alien->find($a->auth);
-//		$ssa="";
-        $array['not_in_blog']=1;
+		$array['not_in_blog']=1;
 		if (strlen($alien->av)>2) {
-              $array['avatar']=1;
-//            $ssa= "<img  src='res.php?t=av&amp;img=".$alien->av."' class='pav' />";
-                $array['avatar_url']='res.php?t=av&amp;img='.$alien->av;
+			$array['avatar']=1;
+			$array['avatar_url']='res.php?t=av&amp;img='.$alien->av;
 		}
-
-//		$blog="$ssa <a class='blog' href='user/".$a->auth."/'>".$a->auth."</a>  &#8212; ";
 	} else {
-        $array['not_in_blog']=0;
-		$sql_get="SELECT * FROM `blogs` WHERE id = '".$a->blogid."' ";
-		$resul=mysql_query($sql_get,$sql);
-		$rowa = mysql_fetch_assoc($resul);
-		$blg=new blog;
-		$blg->make($rowa);
-//		$k="";
+		$array['not_in_blog']=0;
+		$result = db_query('SELECT * FROM `blogs` WHERE id = %d', $a->blogid);
+		$rowa = db_fetch_assoc($result);
+		$blg = new blog($rowa);
 		if (strlen($blg->av)>0) {
-//			$k="<img class='pav' src='res.php?t=bl&amp;img=".$blg->av."' alt='' />";
-            $array['avatar']=1;
-            $array['avatar_url']='res.php?t=bl&amp;img='.$blg->av;
+			$array['avatar']=1;
+			$array['avatar_url']='res.php?t=bl&amp;img='.$blg->av;
 		}
-        $array['blog_name']=$blg->name;
-        $array['blog_id']=$a->blogid;
-//		$blog="$k <a class='blog' href='blog/".$a->blogid."/'>".$a->blog."</a> &#8212; ";
-//		$auth_blc="<a class='auth' href='user/".$a->auth."/'>".$a->auth."</a>";
+		$array['blog_name']=$blg->name;
+		$array['blog_id']=$a->blogid;
 	}
 	if ($a->tp==1) {
-//		$blog="<a href='".$a->lnk."' rel='nofollow' class='blog'><img class='auth' src='style/lnk.gif' style='height: 20px;' /></a>
-//		".$blog."<a href='".$a->lnk."' rel='nofollow' class='blog'>".$a->title."</a>";
-        $array['type']='link';
-	} else if ($a->tp==2) {
-//			$blog="<img class='auth' src='style/tr.gif' style='height: 20px;' />
-//		".$blog."<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
-			$txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
-              $array['type']='translate';
-		}
-		else {
-//			$blog.="<a href='post/".$a->id."/' class='blog'>".$a->title."</a>";
-  $array['type']='other';
-		}
+		$array['type'] = 'link';
+	} elseif ($a->tp==2) {
+		$txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
+		$array['type']='translate';
+	} else {
+		$array['type']='other';
+	}
 	$answ="";
 	if ($a->is_voting()) {
 		$lnk=$row['lnk'];
-		$sl="SELECT * FROM `wansw` WHERE who = '".$usr->login."' && cid = '".$a->id."'";
-		$result=mysql_query($sl,$sql);
-		$row = mysql_fetch_assoc($result);
-		#echo $sl;
-		if (strcmp($row['cid'],$a->id)==0) {
-			$answ.=answ_echo($a->id);
+		$result = db_query('SELECT * FROM wansw WHERE who = %s AND cid = %d', $usr->login, $a->id);
+		$row = db_fetch_assoc($result);
+		if ($row['cid'] == $a->id) {
+			$answ .= answ_echo($a->id);
 		} else {
-			$sql_get="SELECT * FROM `answ` WHERE cid = '".$a->id."'";
-//			$answ.="<div id='a_".$a->id."'><form method='post' action='twork.php?wt=answ&cur=".$cur."&id=".$a->id."' />";
-			$res=mysql_query($sql_get,$sql);
-            $action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;
+			$action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;
 			if ($lnk==1) {
 				$ttp="checkbox";
 				echo "<script type='text/javascript'>var a_type=1;</script>";
@@ -156,8 +111,9 @@ function post_echo($row,$t) {
 				$ttp="radio";
 				echo "<script type='text/javascript'>var a_type=2;</script>";
 			}
-            $i=0;
-			while ($ro = mysql_fetch_assoc($res)) {
+			$i=0;
+			$result = db_query('SELECT * FROM `answ` WHERE cid = %d', $a->id);
+			while ($ro = db_fetch_assoc($result)) {
 				if ($lnk==1) {
 					$nam=$ro['id'];
 					$vl="";
@@ -167,39 +123,30 @@ function post_echo($row,$t) {
 					$vl=" value='".$ro['id']."'";
 					$fn="onClick=\"set_a(this.form,'".$ro['id']."')\"";
 				}
-//				$answ.="<label><input type='".$ttp."' name='".$nam."' ".$fn." ".$vl." />".$ro['title']."</label><br />";
-                $answer_ar[$i]['options']=" type='".$ttp."' name='".$nam."' ".$fn." ".$vl;
-                $answer_ar[$i]['title']=$ro['title'];
-                $i++;
-            }
-            $answ.=render_answer( $answer_ar, 0, $a->id, $loged,$action);
-//			if ($GLOBALS['loged']==1) {
-//				$answ.="<input type='submit' name='nax' onClick='answe(this.form,1)' value='Голосовать' /><input type='submit' name='nox' onClick='answe(this.form,2)' value='Воздержаться' /></form></div>";
-//			}
+				$answer_ar[$i]['options']=" type='".$ttp."' name='".$nam."' ".$fn." ".$vl;
+				$answer_ar[$i]['title']=$ro['title'];
+				$i++;
+			}
+			$answ.=render_answer( $answer_ar, 0, $a->id, $loged,$action);
 		}
 	}
 	if ($fst_post==1) {
-//        $fst='fst_top';
-        $fst_post=0;
-        $array['first']=1;
-    } else {
-//        $fst='top';
-        $array['first']=0;
-        }
-    $array['text']=str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ;
-    $array['author']=$a->auth;
-    $array['title']=$a->title;
-    $array['date']=date('d.m.y  H:i',$a->date);
-    $array['id']=$a->id;
-//	echo "<div class='$fst'><span class='date'>".date('d.m.y  H:i',$a->date)."</span>".(isset($auth_blc) ? $auth_blc : '')."</div>";
-//	echo "<div class='text'><h2 class='title' $bls>".$blog."
-//			</h2><div class='mtxt'>".str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ."</div></div>";
-    echo render_post($array);
-    return($a);
+		$fst_post=0;
+		$array['first']=1;
+	} else {
+		$array['first']=0;
+	}
+	$array['text']=str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ;
+	$array['author']=$a->auth;
+	$array['title']=$a->title;
+	$array['date']=date('d.m.y  H:i',$a->date);
+	$array['id']=$a->id;
+	echo render_post($array);
+	return($a);
 }
 
 function chkin($a) {
-	global $sql,$usr;
+	global $usr;
 	if ($a['lock']==0) {
 		return(1);
 	} elseif ($loged==0) {
@@ -207,48 +154,37 @@ function chkin($a) {
 	} elseif ($a['auth']==$usr->login) {
 		return(1);
 	} elseif ($a['blogid']==0) {
-		$sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && frnd LIKE  '%".$a['auth']."%' ORDER BY  id DESC ";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-		$row = mysql_fetch_assoc($result);
-		if ($row['name']==$usr->login) {
+		$name = db_result(db_query('SELECT name FROM users WHERE name = %s AND frnd LIKE %s', $usr->login, '%' . $a['auth'] . '%'));
+		if ($name == $usr->login) {
 			return(1);
-		} else {return(0);}
+		} else {
+			return(0);
+		}
 	} else {
-		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."' && blogid = '".$a['blogid']."' ORDER BY  id DESC ";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-		$row = mysql_fetch_assoc($result);
-		if ($row['name']==$usr->login) {
+		$name = db_result(db_query('SELECT * FROM inblog WHERE name = %s AND blogid = %d', $usr->login, $a['blogid']));
+		if ($name == $usr->login) {
 			return(1);
-		} else {return(0);}
+		} else {
+			return(0);
+		}
 	}
 }
 
 
 function answ_echo ($id) {
-	global $sql;
-	$sql_get="SELECT * FROM `answ` WHERE cid = '".$id."'";
-	$res=mysql_query($sql_get,$sql);
-//	$anw="<table>";
-	$num=0;
-	$aval=0;
-	while ($ro = mysql_fetch_assoc($res)) {
+	$num = 0;
+	$aval = 0;
+	$result = db_query('SELECT * FROM answ WHERE cid = %d', $id);
+	while ($ro = db_fetch_assoc($result)) {
 		$num++;
-		$ak[$num]['title']=$ro['title']	;
-		$ak[$num]['val']=$ro['val'];
-		$aval+=$ro['val'];
+		$ak[$num]['title'] = $ro['title']	;
+		$ak[$num]['val'] = $ro['val'];
+		$aval += $ro['val'];
 	}
-	$prc=$aval/100;
-	for ($i=1;$i<=$num;$i++) {
-//		$anw.= "<tr><td><b>".$ak[$i]['title']."</b></td><td>".$ak[$i]['val'].'
-//			</td><td class="tdans"><div class="ans" style="width: '.($ak[$i]['val']/$prc).'%"></div></td></tr>';
-    $ak[$i]['size']=$ak[$i]['val']/$prc;
+	$prc = $aval / 100;
+	for ($i = 1; $i <= $num; $i++) {
+		$ak[$i]['size'] = $ak[$i]['val'] / $prc;
 	}
-    return(render_answer($ak,1));
+	return(render_answer($ak,1));
 }
 ?>

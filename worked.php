@@ -23,7 +23,7 @@ include("inc/top.php");
 	if ($loged==1) {
 		include("inc/worked/".sfin($_GET['wt']).".inc");
 	} else {
-		echo_err("У вас нет прав на посещение данной страницы!");
+		echo "<span class='err'>У вас нет прав на посещение данной страницы!</span>";
 	}
 	?>
 </div>
