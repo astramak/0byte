@@ -154,15 +154,15 @@ function render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$
 "allow_delete"=>$allow_delete,"current"=>$cur,"loged"=>$loged,"pid"=>$pid,"js"=>$js);
     return render_template(TPL_FRAMES.'/comment.tpl.php', $vars);
 }
+
 /**
  * Render tags
  *
- * @param array $array
- * @param numeric $num
+ * @param array $tags
  * @return string
  */
-function render_tags($array,$num) {
-    return render_template(TPL_UTILS.'/tags.tpl.php',array("elements" => $array, "count" => $num));
+function render_tags($tags) {
+    return render_template(TPL_UTILS.'/tags.tpl.php', array("tags" => $tags));
 }
 /**
  * Render users and blogs top list
@@ -172,18 +172,17 @@ function render_tags($array,$num) {
  * @return string
  */
 function render_tops($users,$blogs) {
-    return render_template(TPL_UTILS.'/tops.tpl.php', array("users"=>$users,"blogs"=>$blogs));
+    return render_template(TPL_UTILS.'/tops.tpl.php', array("users"=>$users, "blogs"=>$blogs));
 }
 /**
  * Render online and new users list
  *
  * @param array $online
- * @param numeric $online_count
  * @param array $new
  * @return string
  */
-function render_online_and_new($online,$online_count,$new) {
-    return render_template(TPL_UTILS.'/online_new.tpl.php', array("online"=>$online,"count"=>$online_count,"new"=>$new));
+function render_online_and_new($online, $new) {
+    return render_template(TPL_UTILS.'/online_new.tpl.php', array("online"=>$online, "new"=>$new));
 }
 /**
  * Render comment creation page

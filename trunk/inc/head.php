@@ -18,83 +18,57 @@ session_start();
 ob_start("ob_gzhandler");
 $loged=login();
 if ($loged) {
-	$sql_get="UPDATE `users` SET online = '".time()."' WHERE `users`.`name` ='".$usr->login."'";
-	$result=mysql_query($sql_get);
+	db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
 }
-if (isset($_GET['post'])) {
-	$post11=intval($_GET['post']);
-}
-echo '<?xml version="1.0" encoding="UTF-8"?>'; ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
-<head>
-<base href="<?php echo $site; ?>" />
-<title><?php 
-if (isset($_GET['post']) && !isset($_GET['wt'])) {
-	$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
-	$result=mysql_query($sql_get,$sql);
-	$row = mysql_fetch_assoc($result);
-	if ($row['blog']=="own") {
-		$blog=$row['auth'];
-	} else {$blog=$row['blog'];}
-	echo $sl_name."/".$blog." &#8212; ".$row['title'];
+$post_id = intval(request::get_get('post'));
+
+$vars = array();
+
+if ($post_id && !isset($_GET['wt'])) {
+	$row = db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $post_id));
+	if ($row['blog'] == "own") {
+		$blog = $row['auth'];
+	} else {
+		$blog = $row['blog'];
+	}
+	$vars['title'] = $sl_name."/".$blog." &#8212; ".$row['title'];
 } else {
-	// FIXME: why did you removed $ma instance initialization but left this piece of code??
-	echo 'hello bug!';
-	//$ma->gt();
+// FIXME: why did you removed $ma instance initialization but left this piece of code?
+	$vars['title'] = 'hello bug!';
+//$ma->gt();
 }
-?></title>
-<meta name="keywords"
-	content="<?php 
-		if (!isset($_GET['post'])) {
-			ob_start(); 
-			if (!$kwd = readCache('kwd.cache', 30)) {
-				$sql_get="SELECT * FROM `tags` WHERE num > 0 ORDER BY  num DESC LIMIT 10";
-				$result=mysql_query($sql_get,$sql);
-				$row = mysql_fetch_assoc($result);
-				echo $row['name'];
-				while ($row = mysql_fetch_assoc($result)) {
-					echo ", ".$row['name'];
-				}
-			  $kwd = ob_get_contents();
-  			  writeCache($kwd,'kwd.cache'); 
-			}
- 			ob_end_clean();
- 			echo $kwd;
-		} else {
-			$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
-			$result=mysql_query($sql_get,$sql);
-			$row = mysql_fetch_assoc($result);
-			echo str_replace(',',', ',$row['tag']);
-		}
-				
-		?>" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="style/css.php?css=new.css" type="text/css" />
-<link rel="search" type="application/opensearchdescription+xml"
-	href="opensearch.php" title="<?php echo $sl_name; ?>" />
-<link rel="alternate" type="application/rss+xml" title="RSS"
-	href="<?php 
-		if (isset($_GET['pg'])) {
-			if ($_GET['pg']=='lenta' && $loged==1) {
-				echo "rss/lenta/".base64_encode($usr->login);
-			} else {
-				echo "rss/".gtext($_GET['pg']);
-			}
-		} else if (isset($_GET['blog'])) {
-			echo "rss/blog/".intval($_GET['blog']);
-		} else if (isset($_GET['auth'])) {
-			echo "rss/auth/".gtext($_GET['auth']);
-		} else {
-			echo "rss";
-		}
-		?>" />
-<script type="text/javascript" src="js/js.php?js=main.js"></script>
-<script type="text/javascript" src="js/js.php?js=right.js"></script>
-<script type="text/javascript" src="js/js.php?js=login.js"></script>
-<script type="text/javascript" src="js/js.php?js=ve.js"></script>
-<script type="text/javascript" src="js/js.php?js=pm.js"></script>
-</head>
-<body onkeydown="to_(event)">
+
+if ($post_id) {
+	$tags = db_result(db_query('SELECT tag FROM post WHERE id = %d', $post_id));
+	$vars['kwd'] = str_replace(',', ', ', $tags);
+} else {
+	if (!$vars['kwd'] = readCache('kwd.cache', 30)) {
+		$result = db_query('SELECT name FROM tags WHERE num > 0 ORDER BY num DESC LIMIT 10');
+		$tags = array();
+		while ($row = db_fetch_object($result)) $tags[] = $row->name;
+		$vars['kwd'] = implode(', ', $tags);
+		writeCache($vars['kwd'], 'kwd.cache');
+	}
+}
+
+$pg = request::get_get('pg');
+$blog = intval(request::get_get('blog'));
+$auth = request::get_get('auth');
+
+if ($pg) {
+	if ($pg == 'lenta' && $loged == 1) {
+		$vars['rss'] = "rss/lenta/" . base64_encode($usr->login);
+	} else {
+		$vars['rss'] = "rss/" . gtext($pg);
+	}
+} elseif ($blog) {
+	$vars['rss'] = "rss/blog/" . $blog;
+} elseif ($auth) {
+	$vars['rss'] = "rss/auth/" . gtext($auth);
+} else {
+	$vars['rss'] = "rss";
+}
+
+echo render_template(TPL_ROOT . '/head.tpl.php', $vars);
+?>
