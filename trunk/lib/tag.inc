@@ -14,29 +14,17 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-function ntag($a) {
-	global $sql;
-	if (strlen($a)<3 || strlen($a)>40 ) {
-		return(0);
-	}
-	$sql_get="SELECT * FROM `tags` WHERE LOWER(name) = LOWER('".$a."')";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$row = mysql_fetch_assoc($result);
-	if (strlen($row['name'])==strlen($a)) {
-
-		$sl="UPDATE `tags` SET `num` = `num`+1
-		WHERE `tags`.`name` = '".$row['name']."'";
-		$result=mysql_query($sl,$sql);
+function ntag($tag) {
+	if (!tag_is_valid($tag)) return 0;
+	$id = db_result(db_query('SELEC id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
+	if ($id) {
+		db_query('UPDATE tags SET num = num + 1 WHERE id = %d', $id);
 	} else {
-		$sl="INSERT INTO `tags` (`name`,`num`)
-	VALUES ( '".$a."' ,'1' )"; 
-		$result=mysql_query($sl,$sql);
+		db_query('INSERT INTO tags SET name = %s, num = 1', $tag);
 	}
 	return(1);
 }
+
 function stag($a) {
 	$t=0;
 	$arr=split(",",$a);
@@ -54,27 +42,21 @@ function stag($a) {
 	}
 	return($res);
 }
-//tag remove
 
-function otag($a) {
-	global $sql;
-	if (strlen($a)<3 || strlen($a)>40 ) {
-		return(0);
-	}
-	$sql_get="SELECT * FROM `tags` WHERE LOWER(name) = LOWER('".$a."')";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$row = mysql_fetch_assoc($result); 
-	if (strlen($row['name'])==strlen($a)) {
-
-		$sl="UPDATE `tags` SET `num` = `num`-1
-		WHERE `tags`.`name` = '".$row['name']."'";
-		$result=mysql_query($sl,$sql);
+function otag($tag) {
+	if (!tag_is_valid($tag)) return 0;
+	$id = db_result(db_query('SELECT id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
+	if ($id) {
+		db_query('UPDATE tags SET num = num - 1 WHERE id = %d', $id);
 	}
 	return(1);
 }
+
+function tag_is_valid($tag) {
+	$len = strlen($tag);
+	return ($len > 2 && $len < 40);
+}
+
 function rtag($a) {
 	$t=0;
 	$arr=split(",",$a);

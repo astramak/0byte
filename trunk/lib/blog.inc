@@ -24,6 +24,10 @@ class blog {
 	var $about;
 	var $owner;
 
+	function blog($row = null) {
+		if ($row) $this->make($row);
+	}
+
 	function make($record) {
 		$alias = array('auth' => 'owner');
 		foreach ($this as $prop => $val) {

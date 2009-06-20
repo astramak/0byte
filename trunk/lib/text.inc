@@ -185,7 +185,6 @@ class dtxt {
 	var $t;
 
 	function cut($a) {
-
 		if (strpos($a,"[cut]")) {
 			$t="/(.*?)\[cut\]/is";
 			preg_match($t,$a,$txt);
