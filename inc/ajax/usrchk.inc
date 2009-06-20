@@ -4,40 +4,21 @@ $mail = request::get_get('mail');
 $cap = request::get_get('cap');
 
 if ($login && chud($login) ) {
-	$sql_get="SELECT * FROM `users` WHERE name = '".mysql_escape_string($login)."'   ";
-	$result=mysql_query($sql_get,$GLOBALS['sql']);
-	$row = mysql_fetch_assoc($result);
-	if (strlen($row['name'])!=strlen($login)) {
-		echo '
-		{
-		"val" : "true"
-		}
-		';
+	$exists = db_result(db_query('SELECT id FROM users WHERE name = %s', $login));
+	if (!$exists) {
+		echo '{"val" : "true"}';
 	} else {
-		echo '
-		{
-		"val" : "false"
-		}
-		';
+		echo '{"val" : "false"}';
 	}
 } elseif ($mail && chml($mail)) {
-	$sql_get="SELECT * FROM `users` WHERE mail = '".mysql_escape_string($mail)."'   ";
-	$result=mysql_query($sql_get,$GLOBALS['sql']);
-	$row = mysql_fetch_assoc($result);
-	if (strlen($row['mail'])!=strlen($mail) ) {
-		echo '
-		{
-		"val" : "true"
-		}
-		';
+	$exists = db_result(db_query('SELECT id FROM users WHERE mail = %s', $mail));
+	if (!$exists) {
+		echo '{"val" : "true"}';
 	} else {
-		echo '
-		{
-		"val" : "false"
-		}
-		';
+		echo '{"val" : "false"}';
 	}
 } elseif ($cap) {
+// TODO: move to function that returns bool
 	session_start();
 	$a=md5(session_id());
 	$a1=ord($a[2]);
@@ -52,17 +33,9 @@ if ($login && chud($login) ) {
 	else { $res=$a1-$a2; }
 
 	if ($cap == $res) {
-		echo '
-		{
-		"val" : "true"
-		}
-		';
+		echo '{"val" : "true"}';
 	} else {
-		echo '
-		{
-		"val" : "false"
-		}
-		';
+		echo '{"val" : "false"}';
 	}
 }
 ?>

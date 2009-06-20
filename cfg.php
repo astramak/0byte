@@ -36,7 +36,6 @@ include("lib/text.inc");
 include("lib/user.inc");
 include("lib/cache.inc");
 include("lib/geshi/geshi.php");
-include("lib/tmplr.inc");
 include("lib/flw.inc");
 include("lib/json.inc");
 

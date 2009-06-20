@@ -1,10 +1,12 @@
 <?php
 session_start();
 $loged=login();
+
 class out {
 	var $arr;
 	var $num;
 }
+
 $aft="";
 $tp="";
 if (isset($_GET['com'])) {
@@ -26,8 +28,7 @@ if (isset ($_GET['noo'])) {
 	} else {
 		$_SESSION['tp2']='none';
 	}
-}
-elseif (isset($_GET['pst'])) {
+} elseif (isset($_GET['pst'])) {
 	$_SESSION['tp1']='pst';
 	$sql_get="SELECT * FROM `post` WHERE `blck`='0' ".$aft." ORDER BY id DESC LIMIT ".$limit;
 	$result=mysql_query($sql_get,$GLOBALS['sql']);
@@ -49,14 +50,9 @@ elseif (isset($_GET['pst'])) {
 	}
 } elseif (isset($_GET['com'])) {
 	$_SESSION['tp1']='com';
-	//	if (strlen($aft)>1) {$aft=",".$aft;}
 	$sql_get="SELECT *,`post`.`id` as `pid` FROM `post`,`comment` WHERE `post`.`id`=`comment`.`krnl` && `post`.`blck`='0' ".$aft." ORDER BY `comment`.`id` DESC LIMIT ".$limit;
-	//echo $sql_get;
 	$result=mysql_query($sql_get,$sql);
 	while ($row = mysql_fetch_assoc($result)) {
-	//		$sql_get="SELECT * FROM `post` WHERE id = ".$row['krnl']." ORDER BY  id DESC LIMIT 10";
-	//	$resul=mysql_query($sql_get,$GLOBALS['sql']);
-	//$rw = mysql_fetch_assoc($resul);
 		$arr[$i]['id']=$row['id'];
 		$arr[$i]['wid']=$row['pid'];
 		$arr[$i]['who']=$row['who'];
@@ -109,8 +105,7 @@ elseif (isset($_GET['pst'])) {
 			}
 			$i++;
 		} }
-}
-elseif (isset($_GET['last_com_id']) && isset($_GET['pid'])) {
+} elseif (isset($_GET['last_com_id']) && isset($_GET['pid'])) {
 	$post11=intval($_GET['pid']);
 	$sql_get="SELECT * FROM `comment` WHERE `id`>'".intval($_GET['last_com_id'])."' && `krnl`='".intval($_GET['pid'])."' ORDER by `id`";
 	$result=mysql_query($sql_get,$GLOBALS['sql']);

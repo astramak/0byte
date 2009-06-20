@@ -27,11 +27,13 @@ $site="http://localhost/"; //full url like http://site.domain/dir/
 $s_name="test";//site name
 $ls_name=$s_name;
 $sl_name='test';//short name
-$to_main=0;//rate for main page
 $nb_rate=0;//lvl for new blog
 $dir="/";//dir
 $eml="@localhost";//email end like @site.domain
 $eml_a=0; //e-mail activation
+
+// rates borders
+$to_main=0;//rate for main page
 $blog_r=4; //user rate by blog
 $post_r=5; //user rate by post
 $com_r=10; //user rate by comment
