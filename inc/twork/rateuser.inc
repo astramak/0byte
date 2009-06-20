@@ -1,56 +1,45 @@
 <?php
-$lst=$_GET['from'];
+$lst = request::get_get('from');
 $lst=str_replace("*amp","&",$lst);
 $lst=str_replace("*qw","?",$lst);
-$sl="SELECT * FROM `urate` WHERE who = '".$usr->login."' && pid = '".mysql_escape_string($_GET['name'])."'";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-if ($_GET['rate']=='p') {
-	$type=1;
-} else {
-	$type=2;
-}
-$nr=1;
-if (strcmp($row['pid'],$_GET['name'])==0) {
-	$nr=2;
-}
-if (strcmp($row['pid'],$_GET['name'])==0 && $row['type']==$type) {
+
+$name = request::get_get('name');
+$type = request::get_request('rate') == 'p' ? 1 : 2;
+
+$result = db_query('SELECT * FROM urate WHERE who = %s AND pid = %s', $usr->login, $name);
+$row = db_fetch_assoc($result);
+
+$nr = $row['pid'] == $name ? 2 : 1;
+
+if ($row['pid'] == $name && $row['type'] == $type) {
 	j_err("Нельзя дважды поднимать или опускать рейтинг!");
 	jkill();
 	header("Request-URI: $lst");
 	header("Content-Location: $lst");
 	header("Location: $lst");
 } else {
-	$sql_get="SELECT * FROM `users` WHERE name = '".mysql_escape_string($_GET['name'])."'   ";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$row = mysql_fetch_assoc($result);
-	if ($row['name']==$usr->login) {
+	$result = db_query('SELECT * FROM users WHERE name = %s', $name);
+	$row = db_fetch_assoc($result);
+	if ($row['name'] == $usr->login) {
 		j_err("Нельзя голосовать за себя!");
 		jkill();
 		header("Request-URI: $lst");
 		header("Content-Location: $lst");
 		header("Location: $lst");
 	} else {
-			
-		$sl="UPDATE `users` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+".$nr."
-				WHERE `users`.`name` = '".mysql_escape_string($_GET['name'])."'";
-		$result=mysql_query($sl,$sql);
-		$sl="DELETE FROM `urate` WHERE `who`='".$usr->login."' && `pid` = '".mysql_escape_string($_GET['name'])."' LIMIT 1";
-		$result=mysql_query($sl,$sql);
-		$sl="INSERT INTO `urate` ( `who` ,`pid`,`type`) VALUES ('".$usr->login."',
-				 '".mysql_escape_string($_GET['name'])."','".$type."')";
-		$result=mysql_query($sl,$sql);
-		if ($json==1) {
-			if ($_GET['rate']=='p') {
-				$rr=$nr;
-			} else {$rr=0-$nr;}
-			$otr=$row['ratep']-$row['ratem']+$rr;
-			
-			$otr+=$row['brate']/$blog_r+$row['crate']/$com_r+$row['prate']/$post_r;
-			cmpl($_GET['name'],$otr);
+		if ($type == 1) {
+			db_query('UPDATE users SET ratep = ratep + %d WHERE name = %s', $nr, $name);
+		} else {
+			db_query('UPDATE users SET ratem = ratem + %d WHERE name = %s', $nr, $name);
+		}
+		db_query('DELETE FROM urate WHERE who = %s AND pid = %s LIMIT 1', $usr->login, $name);
+		db_query('INSERT INTO urate SET who = %s, pid = %s, type = %d', $usr->login, $name, $type);
+
+		if ($json == 1) {
+			$rr = $type == 1 ? $nr : (0 - $nr);
+			$otr = $row['ratep'] - $row['ratem'] + $rr;
+			$otr += $row['brate'] / $blog_r + $row['crate'] / $com_r + $row['prate'] / $post_r;
+			cmpl($name, $otr);
 			die;
 		}
 		header("Request-URI: $lst");

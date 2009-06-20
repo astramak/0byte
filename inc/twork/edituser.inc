@@ -1,24 +1,18 @@
 <?php
-if ($_POST['hml']=="on") { $hml=1; } else {$hml=0;}
-if ($_POST['pr']=="on") { $pr=1; } else {$pr=0;}
-if ($_POST['cr']=="on") { $cr=1; } else {$cr=0;}
-if ($_POST['pmr']=="on") { $pmr=1; } else {$pmr=0;}
-$sql_get="UPDATE `users` SET `icq` = '".mysql_escape_string(gtext($_POST['icq']))."' ,
-	`hml` = '$hml ' ,
-	`mail` = '".mysql_escape_string(gtext($_POST['mail']))."' ,
-	`jabber` = '".mysql_escape_string(gtext($_POST['jabber']))."' ,
-	`site` = '".mysql_escape_string(gtext($_POST['site']))."',
-	`about` = '".mysql_escape_string(gtext($_POST['about']))."' ,
-	`postre` = '".$pr."' ,
-	`comre` = '".$cr."' ,
-	`pmre` = '".$pmr."' ,
-	`juse` = '".intval($_POST['juse'])."' ,
-	`jname` = '".mysql_escape_string(gtext($_POST['jname']))."' ,
-	`jdate` = '',
-	`city` = '".mysql_escape_string(gtext($_POST['city']))."'
-	WHERE `users`.`name` = '".$usr->login."'";
-$result=mysql_query($sql_get,$sql);
-$lst="user/";
+$hml = request::get_post('hml') == 'on' ? 1 : 0;
+$pr = request::get_post('pr') == 'on' ? 1 : 0;
+$cr = request::get_post('cr') == 'on' ? 1 : 0;
+$pmr = request::get_post('pmr') == 'on' ? 1 : 0;
+
+db_query('UPDATE users SET icq = %s, hml = %d, mail = %s, jabber = %s,
+	site = %s, about = %s, postre = %d, comre = %d, pmre = %d,
+	juse = %d, jname = %s, jdate = "", city = %s WHERE name = %s',
+	request::get_post('icq'), $hml, request::get_post('mail'),
+	request::get_post('jabber'), request::get_post('site'),
+	request::get_post('about'), $pr, $cr, $pmr, request::get_post('juse'),
+	request::get_post('jname'), request::get_post('city'), $usr->login);
+
+$lst = "user/";
 header("Request-URI: $lst");
 header("Content-Location: $lst");
 header("Location: $lst");

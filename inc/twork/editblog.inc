@@ -1,7 +1,7 @@
 <?php
-$sl="UPDATE `blogs` SET `about`= '".gtext($_POST['text'])."' WHERE `owner` = '".$usr->login."' && `id` = '".intval($_GET['bid'])."'";
-$result=mysql_query($sl,$sql);
-//echo $sl; die;
+db_query('UPDATE blogs SET about = %s WHERE owner = %s AND id = %d',
+	request::get_post('text'), $usr->login, request::get_request('bid'));
+
 $lst="work/myblog";
 header("Request-URI: $lst");
 header("Content-Location: $lst");
