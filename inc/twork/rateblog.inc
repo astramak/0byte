@@ -9,9 +9,7 @@ $row = mysql_fetch_assoc($result);
 if (strcmp($row['pid'],$_GET['id'])==0) {
 	j_err("Повторное голосование запрещено!");
 	jkill();
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 } else {
 	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['id'])."'   ";
 	$result=mysql_query($sql_get,$sql);
@@ -22,11 +20,9 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 	if ($row['owner']==$usr->login) {
 		j_err("Нельзя голосовать за свой блог!");
 		jkill();
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+		redirect($lst);
 	} else {
-			
+
 		$sl="UPDATE `blogs` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `blogs`.`id`
 				 = '".intval($_GET['id'])."'";
 		$result=mysql_query($sl,$sql);
@@ -50,9 +46,7 @@ if (strcmp($row['pid'],$_GET['id'])==0) {
 			cmpl($_GET['id'],$row['ratep']-$row['ratem']+$rr);
 			die;
 		}
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+		redirect($lst);
 	}
 }
 ?>

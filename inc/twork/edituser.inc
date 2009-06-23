@@ -12,8 +12,5 @@ db_query('UPDATE users SET icq = %s, hml = %d, mail = %s, jabber = %s,
 	request::get_post('about'), $pr, $cr, $pmr, request::get_post('juse'),
 	request::get_post('jname'), request::get_post('city'), $usr->login);
 
-$lst = "user/";
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect('user/');
 ?>

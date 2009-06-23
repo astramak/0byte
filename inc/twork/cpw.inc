@@ -10,7 +10,5 @@ if (isset($_POST['old']) && isset($_POST['new']) && strlen($_POST['new'])>4) {
 } 	 else {
 	$lst="users.php?cpw=2";
 }
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect($lst);
 ?>

@@ -46,9 +46,7 @@ if (strlen($login) > 2 && strlen($pwd) > 2) {
 		$_SESSION['login'] = $login;
 		// TOFIX: very-very-very unsecure, use md5 or sha1
 		$_SESSION['pwd'] = base64_encode($pwd);
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+		redirect($lst);
 	} else {
 		$err = 1;
 	}

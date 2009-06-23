@@ -7,10 +7,7 @@ $resul=mysql_query($sl,$sql);
 $ro = mysql_fetch_assoc($resul);
 $lst="index.php?blog=".$_GET['id'];
 if ($ro['id']!=$_GET['id'] || $ro['owner']==$usr->login) {
-
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 }
 if ($row['name']==$usr->login) {
 	if ($row['out']==1) {
@@ -28,7 +25,5 @@ if ($row['name']==$usr->login) {
 	#echo $sl;
 }
 $resul=mysql_query($sl,$sql);
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect($lst);
 ?>

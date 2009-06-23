@@ -11,10 +11,7 @@ if (strlen($text) < 3) {
 		$out['err']="Вы не ввели комментарий!";
 		die(json_encode($out));
 	} else {
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
-		die;
+		redirect($lst);
 	}
 }
 
@@ -39,10 +36,7 @@ if (!$result) {
 
 $raw = mysql_fetch_assoc($result);
 if ($raw['id'] != $krnl || $id == "") {
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
-	die;
+	redirect($lst);
 }
 
 $pauth=$raw['auth'];
@@ -113,7 +107,5 @@ if ($json == 1) {
 	$out['txt']=com_echo($cm,1);
 	die(json_encode($out));
 }
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect($lst);
 ?>

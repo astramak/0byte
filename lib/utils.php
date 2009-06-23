@@ -97,4 +97,40 @@ function validate_utf8($text) {
 	}
 	return (preg_match('/^./us', $text) == 1);
 }
+
+/**
+ * Trim array values
+ *
+ * @param array $list
+ * @param string $apply_function apply additional function to all array values
+ */
+function trim_array(array &$list, $apply_function = '') {
+	if ($apply_function) {
+		$func = '$v = ' . $apply_function . '(trim($v));';
+	} else {
+		$func = '$v = trim($v);';
+	}
+	array_walk($list, create_function('&$v,$k', $func));
+}
+
+/**
+ * Redirect user to some location
+ *
+ * @param string $location
+ * @param int $http_response_code
+ *   Valid values for an actual "goto" as per RFC 2616 section 10.3 are:
+ *   - 301 Moved Permanently (the recommended value for most redirects)
+ *   - 302 Found (default in Drupal and PHP, sometimes used for spamming search
+ *         engines)
+ *   - 303 See Other
+ *   - 304 Not Modified
+ *   - 305 Use Proxy
+ *   - 307 Temporary Redirect (alternative to "503 Site Down for Maintenance")
+ *   Note: Other values are defined by RFC 2616, but are rarely used and poorly
+ *   supported.
+ */
+function redirect($location, $http_response_code = 302) {
+	header('Location: '. $location, true, $http_response_code);
+	die;
+}
 ?>

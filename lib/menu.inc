@@ -62,7 +62,7 @@ class mel {
 					$frnd = db_result(db_query('SELECT frnd FROM users WHERE name = %s', $usr->login));
 					if ($frnd) {
 						$arr = explode(',', $frnd);
-						array_walk($arr, create_function('&$v,$k', '$v = _db_escape_string(trim($v));'));
+						trim_array($arr, '_db_escape_string');
 						if ($arr) $where[] = 'auth IN (' . implode(',', $arr) . ')';
 					}
 
