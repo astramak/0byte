@@ -49,7 +49,7 @@ if (request::get_get('pg')) {
 	$frnd = db_result(db_query('SELECT frnd FROM users WHERE name = %s', $name));
 	if ($frnd) {
 		$arr = explode(',', $frnd);
-		array_walk($arr, create_function('&$v,$k', '$v = _db_escape_string(trim($v));'));
+		trim_array($arr, '_db_escape_string');
 		if ($arr) $where[] = 'auth IN (' . implode(',', $arr) . ')';
 	}
 
@@ -73,7 +73,7 @@ while ($row = db_fetch_assoc($result)) {
 	$items[] = prepare_rss_post_item($row);
 }
 
-header("content-type: application/rss+xml");
+header("Content-type: application/rss+xml");
 echo render_rss('posts', $title, $lnk, $items);
 
 function prepare_rss_post_item($row) {

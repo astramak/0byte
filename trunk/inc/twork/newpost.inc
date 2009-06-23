@@ -1,99 +1,75 @@
 <?php
+$title = trim(request::get_post('title'));
+$text = trim(request::get_post('text'));
+$len = request::get_post('len');
+$blog_id = request::get_post('blog');
+$tp = request::get_get('tp');
+$lnk = request::get_post('lnk');
+$org = request::get_post('org');
 
-if(!isset($_POST['title']) || (!isset($_POST['text']) && !isset($_POST['len']) ) || strlen(trim($_POST['title']))<2) {
-	header("Request-URI: index.php");
-	header("Content-Location: index.php");
-	header("Location: index.php");
-	die;
-} else if ($_POST['blog']==0) {
-	$blog="own";
-}
-else {
-	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_POST['blog'])."'  ";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$row = mysql_fetch_assoc($result);
-	$blog=$row['name'];
+if(!$title || (!$text && !$len) || strlen($title) < 2) {
+	redirect('index.php');
+} elseif ($blog_id == 0) {
+	$blog = "own";
+} else {
+	$blog = db_result(db_query('SELECT name FROM blogs WHERE id = %d', $blog_id));
 }
 
-$text=gtext($_POST['text']);
-$tag=stag($_POST['tag']);
-$tz=new dtxt;
-$tz->cut($_POST['text']);
-$text=$tz->o;
-$txt=$tz->t;
-if (isset($_POST['lock']) && $_POST['lock']=="on" ) {
-	$lock=1;
-} else {$lock=0;}
-
+$tag = tags_add_list(request::get_post('tag'));
+$tz = new dtxt();
+$tz->cut($text);
+$lock = request::get_post('lock') == 'on' ? 1 : 0;
 $time=time();
-if ($_GET['tp']==0) {
-	$sl="INSERT INTO `post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` )
-VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' ,'".mysql_escape_string(gtext($txt))."'
-, '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."' ,
-'".intval($lock)."' )";
-} else if ($_GET['tp']==1) {
-	if (!isset($_POST['lnk'])) {
-		header("Request-URI: index.php");
-		header("Content-Location: index.php");
-		header("Location: index.php");
-		die;
-	}
-	$sl="INSERT INTO `post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk` )
-VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' ,'".mysql_escape_string(gtext($txt))."'
-, '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."'
- ,'".intval($lock)."' ,'1' , '".mysql_escape_string(gtext($_POST['lnk']))."' )";
 
-} else if ($_GET['tp']==2) {
-	if (!isset($_POST['org'])) {
-		header("Request-URI: index.php");
-		header("Content-Location: index.php");
-		header("Location: index.php");
-		die;
-	}
-	$sl="INSERT INTO `$sql_db`.`post` (`date` ,`title`,`auth`, `text`,`ftext` , `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk` )
-VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' 
-,'".mysql_escape_string(gtext($txt))."'
-, '".mysql_escape_string(gtext($text))."', '".$blog."', '".intval($_POST['blog'])."','".mysql_escape_string($tag)."' 
-,'".intval($lock)."' ,'2' , '".mysql_escape_string(gtext($_POST['org']))."' )";
+switch ($tp) {
+	case 0:
+		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
+			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d',
+			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
+			$blog_id, $tag, $lock, $tp);
+		break;
 
-} else if ($_GET['tp']==3) {
-	if (!isset($_POST['len'])) {
-		header("Request-URI: index.php");
-		header("Content-Location: index.php");
-		header("Location: index.php");
-		die;
-	}
+	case 1:
+		if (!$lnk) {
+			redirect('index.php');
+		}
+		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
+			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d, lnk = %s',
+			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
+			$blog_id, $tag, $lock, $tp, $lnk);
+		break;
 
-	if (isset($_POST['mng']) && $_POST['mng']=="on") {
-		$nm=1;
-	} else {
-		$nm=0;
-	}
-	$sl="INSERT INTO `post` (`date` ,`title`,`auth`, `blog`, `blogid`, `tag` ,`lock` , `tp` , `lnk`  )
-VALUES ( '".$time."', '".mysql_escape_string(gtext($_POST['title']))."' , '".$usr->login."' , '".$blog."', 
-'".intval($_POST['blog'])."','".mysql_escape_string($tag)."' ,'".intval($lock)."' ,'3' , '".$nm."' )";
-	//	echo $sl;die;
+	case 2:
+		if ($org) {
+			redirect('index.php');
+		}
+		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
+			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d, lnk = %s',
+			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
+			$blog_id, $tag, $lock, $tp, $org);
+		break;
+
+	case 3:
+		if (!$len) {
+			redirect('index.php');
+		}
+		$nm = request::get_post('mng') == 'on' ? 1 : 0;
+		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
+			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d, lnk = %s',
+			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
+			$blog_id, $tag, $lock, $tp, $nm);
+		break;
 }
-//die;
-$result=mysql_query($sl,$sql);
-$sl="SELECT * FROM `post` where `date` = '$time' and `tag` = '$tag'  ";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-$id=$row['id'];
-if ($_GET['tp']==3) {
-	for ($q=1;$q<=$_POST['len'];$q++) {
-		if (strlen(trim($_POST['an'.$q]))>0) {
-			$sl="INSERT INTO `answ` (`title`,`cid` )
-VALUES ( '".gtext($_POST['an'.$q])."', '".$id."')";
-			$result=mysql_query($sl,$sql);	}
+
+$id = db_last_insert_id('post');
+if ($tp == 3) {
+	for ($i = 0; $i < $len; $i++) {
+		$question = trim(request::get_post('an' . ($i + 1)));
+		if ($question) {
+			db_query('INSERT INTO answ SET title = %s, id = %d', $question, $id);
+		}
 	}
 }
-//die;
-$lst="post/".$id;
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+
+redirect("post/" . $id)
 ?>

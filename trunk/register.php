@@ -66,10 +66,7 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 				$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
 				nullbyte_mail($to, $subject, $message, true, $headers);
 			}
-
-			header("Request-URI: login/new");
-			header("Content-Location: login/new");
-			header("Location: login/new");
+			redirect('login/new');
 		} else {
 			$err=3;
 		}

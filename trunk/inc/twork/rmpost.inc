@@ -1,22 +1,16 @@
 <?php
-
 if ($usr->lvl<$elvl ) {
-	$lst="post/".$_GET['id'];
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
-	die;
+	redirect('post/' . request::get_get('id'));
 }
+
 $sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'   ";
 $result=mysql_query($sql_get,$sql);
 $row=mysql_fetch_assoc($result);
-rtag($row['tag']);
+tags_remove_list($row['tag']);
 $sql_get="DELETE FROM `post` WHERE `post`.`id` = ".intval($_GET['id']);
 $result=mysql_query($sql_get,$sql);
 $sql_get="DELETE FROM `comment` WHERE `comment`.`krnl` = ".intval($_GET['id']);
 $result=mysql_query($sql_get,$sql);
-$lst="http://".$_SERVER['HTTP_HOST'].$dir;
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+
+redirect($site);
 ?>

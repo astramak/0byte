@@ -17,19 +17,15 @@
 session_start();
 
 include ("cfg.php");
-$logged = login();
-// TODO: why do we need one more variable with the same value?
-$loged = $logged;
+$loged = login();
 $json = request::get_get('json');
 if ($json) {
 	header("Content-Type: text/html; charset=utf-8");
 }
 
-if ($logged == 0) {
+if ($loged == 0) {
 	if (!$jsons) {
-		header("Request-URI: login.php");
-		header("Content-Location: login.php");
-		header("Location: login.php");
+		redirect('login.php');
 	}
 } else {
 	include("inc/twork/" . sfin($_GET['wt']) . ".inc");

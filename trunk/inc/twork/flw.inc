@@ -1,9 +1,6 @@
 <?php
 if ($usr->login==$row['auth']) {
-	$lst="http://".$_SERVER['HTTP_HOST'].$dir."post/".$row['id'];
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($site . 'post/' . $row['id']);
 }
 $sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'   ";
 $result=mysql_query($sql_get,$sql);
@@ -26,8 +23,5 @@ if ($json) {
 	}';
 	jkill();
 }
-$lst="http://".$_SERVER['HTTP_HOST'].$dir."post/".intval($_GET['id']);
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect($site . 'post/' . intval($_GET['id']));
 ?>

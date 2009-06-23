@@ -110,7 +110,7 @@ include("inc/top.php");
 		$t=0;
 		if ($alien->frnd) {
 			$arr = explode(",",$alien->frnd);
-			array_walk($arr, create_function('&$v,$k', '$v = trim($v);'));
+			trim_array($arr);
 			$friends = array();
 			foreach ($arr as $f) {
 				$friends[] = "<a href='user/".$f."'>".$f."</a>";

@@ -14,63 +14,97 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-function ntag($tag) {
-	if (!tag_is_valid($tag)) return 0;
-	$id = db_result(db_query('SELEC id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
+
+/**
+ * Add tags to DB or increase its count and returns comma-separated list of valid tags
+ *
+ * @param string $tags comma-separated tags list
+ * @return string
+ */
+function tags_add_list($tags) {
+	$list = array();
+	foreach (tags_explode($tags) as $tag) {
+		if (tags_add($tag)) $list[] = $tag;
+	}
+	return implode(', ', $list);
+}
+
+/**
+ * Decrease tags count and returns comma-separated list of valid tags
+ *
+ * @param string $tags comma-separated tags list
+ * @return string
+ */
+function tags_remove_list($tags) {
+	$list = array();
+	foreach (tags_explode($tags) as $tag) {
+		if (tags_remove($tag)) $list[] = $tag;
+	}
+	return implode(', ', $list);
+}
+
+/**
+ * Try to add new tag or decrease existing tag count
+ *
+ * @param string $tag single tag
+ * @return bool
+ */
+function tags_add($tag) {
+	if (!tags_is_valid($tag)) return false;
+	$id = tags_get_id($tag);
 	if ($id) {
 		db_query('UPDATE tags SET num = num + 1 WHERE id = %d', $id);
 	} else {
 		db_query('INSERT INTO tags SET name = %s, num = 1', $tag);
 	}
-	return(1);
+	return true;
 }
 
-function stag($a) {
-	$t=0;
-	$arr=split(",",$a);
-	$q=sizeof($arr);
-	$res="";
-	for ($z=0;$z<$q;$z++) {
-		if (ntag(trim($arr[$z]))==1) {
-			if ($t==0) {
-				$t=1;
-				$res=trim($arr[$z]);
-			} else {
-				$res.=",".trim($arr[$z]);
-			}
-		}
-	}
-	return($res);
-}
-
-function otag($tag) {
-	if (!tag_is_valid($tag)) return 0;
-	$id = db_result(db_query('SELECT id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
+/**
+ * Decrease tag count
+ *
+ * @param string $tag single tag
+ * @return bool
+ */
+function tags_remove($tag) {
+	if (!tags_is_valid($tag)) return false;
+	$id = tags_get_id($tag);
 	if ($id) {
 		db_query('UPDATE tags SET num = num - 1 WHERE id = %d', $id);
 	}
-	return(1);
+	return true;
 }
 
-function tag_is_valid($tag) {
+/**
+ * Create array of tags from comma-separated list
+ *
+ * @param string $tags comma-separated tags list
+ * @return array
+ */
+function tags_explode($tags) {
+	$list = explode(',', $tags);
+	trim_array($list);
+	return $list;
+}
+
+/**
+ * Check if the tag exists and get it ID
+ *
+ * @param string $tag single tag
+ * @return int
+ */
+function tags_get_id($tag) {
+	return db_result(db_query('SELECT id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
+}
+
+/**
+ * Check if the string is valid tag
+ *
+ * @param string $tag single tag
+ * @return bool
+ */
+function tags_is_valid($tag) {
 	$len = strlen($tag);
 	return ($len > 2 && $len < 40);
-}
-
-function rtag($a) {
-	$t=0;
-	$arr=split(",",$a);
-	$q=sizeof($arr);
-	for ($z=0;$z<$q;$z++) {
-		if (otag(trim($arr[$z]))==1) {
-			if ($t==0) {
-				$t=1;
-				$res=trim($arr[$z]);
-			} else {
-				$res.=",".trim($arr[$z]);
-			}
-		}
-	}
-	return($res);
 }
 ?>

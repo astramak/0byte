@@ -28,8 +28,8 @@ if ( ( $usr->lvl>$elvl || $usr->login==$row['auth'] ) && ((isset($_POST['title']
 	if (isset($_POST['lock']) && $_POST['lock']=="on" ) {
 		$lock=1;
 	} else {$lock=0;}
-	$tag=stag($_POST['tag']);
-	rtag($row['tag']);
+	$tag = tags_add_list($_POST['tag']);
+	tags_remove_list($row['tag']);
 
 
 	if ($row['tp']==3) {
@@ -42,21 +42,17 @@ if ( ( $usr->lvl>$elvl || $usr->login==$row['auth'] ) && ((isset($_POST['title']
 		`lock` = '".intval($lock)."',
 		`blog` = '".$blog."', 
 		`blogid` = '".intval($_POST['blog'])."',
-		`tag` = '".mysql_escape_string(gtext($tag)); }
-		if (isset($_POST['lnk'])) {
-			$sql_get.="' ,`lnk` = '".mysql_escape_string(gtext($_POST['lnk']))." ";
-		}
+		`tag` = '".mysql_escape_string(gtext($tag));
+	}
+	if (isset($_POST['lnk'])) {
+		$sql_get.="' ,`lnk` = '".mysql_escape_string(gtext($_POST['lnk']))." ";
+	}
 
-		$sql_get.="' WHERE `post`.`id` =".intval($_GET['post']);
-		$result=mysql_query($sql_get,$sql);
-		$lst="post/".$_GET['post'];
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+	$sql_get.="' WHERE `post`.`id` =".intval($_GET['post']);
+	$result=mysql_query($sql_get,$sql);
+	redirect("post/".$_GET['post']);
 } else {
-	header("Request-URI: index.php");
-	header("Content-Location: index.php");
-	header("Location: index.php");
+	redirect('index.php');
 }
 
 ?>

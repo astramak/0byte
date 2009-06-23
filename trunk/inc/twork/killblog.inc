@@ -14,8 +14,5 @@ if (isset($_GET['id'])) {
 		mysql_query($sq,$sql);
 	}
 }
-$lst=$dir."/work/myblog";
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect('work/myblog');
 ?>

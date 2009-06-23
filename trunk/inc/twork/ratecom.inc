@@ -18,17 +18,13 @@ $voted = db_result(db_query('SELECT COUNT(id) FROM crate WHERE who = %s AND pid 
 if ($voted) {
 	j_err("Повторное голосование запрещено!");
 	jkill();
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 } else {
-	$row = db_fetch_assoc(db_query('SELECT COUNT(id) FROM comment WHERE id = %d', $id));
+	$row = db_fetch_assoc(db_query('SELECT * FROM comment WHERE id = %d', $id));
 	if ($row['who'] == $usr->login) {
 		j_err("Нельзя голосовать за свой комментарий!");
 		jkill();
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+		redirect($lst);
 	} else {
 		$rate = request::get_get('rate');
 		if ($rate == 'p') {
@@ -48,8 +44,7 @@ if ($voted) {
 			cmpl($id, $row['ratep'] - $row['ratem'] + $rr);
 			die;
 		}
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst"); }
+		redirect($lst);
+	}
 }
 ?>

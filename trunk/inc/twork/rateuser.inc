@@ -14,18 +14,14 @@ $nr = $row['pid'] == $name ? 2 : 1;
 if ($row['pid'] == $name && $row['type'] == $type) {
 	j_err("Нельзя дважды поднимать или опускать рейтинг!");
 	jkill();
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 } else {
 	$result = db_query('SELECT * FROM users WHERE name = %s', $name);
 	$row = db_fetch_assoc($result);
 	if ($row['name'] == $usr->login) {
 		j_err("Нельзя голосовать за себя!");
 		jkill();
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+		redirect($lst);
 	} else {
 		if ($type == 1) {
 			db_query('UPDATE users SET ratep = ratep + %d WHERE name = %s', $nr, $name);
@@ -42,9 +38,7 @@ if ($row['pid'] == $name && $row['type'] == $type) {
 			cmpl($name, $otr);
 			die;
 		}
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
+		redirect($lst);
 	}
 }
 ?>

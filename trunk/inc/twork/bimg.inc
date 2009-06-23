@@ -1,14 +1,11 @@
 <?php
 $lst="worked.php?wt=myblog";
 if (!isset($_FILES['img'])) {
-
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 }
 $sz = getimagesize($_FILES['img']['tmp_name']);
 if (strncmp($_FILES['img']['type'],"image",5)==0 && $sz[0]<=70 && $sz[1]<=70
-&& $_FILES['img']['size']<400000 ) {
+	&& $_FILES['img']['size']<400000 ) {
 	$uploaddir = "tmp/bl/";
 	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['bid'])."'   ";
 	$result=mysql_query($sql_get,$sql);
@@ -18,12 +15,8 @@ if (strncmp($_FILES['img']['type'],"image",5)==0 && $sz[0]<=70 && $sz[1]<=70
 	$sqlg="UPDATE `blogs` SET `av` = '".intval($_GET['bid']).time().".".substr($_FILES['img']['type'],6)."'
 	WHERE `blogs`.`id` ='".intval($_GET['bid'])."'";
 	$resul=mysql_query($sqlg,$sql);
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 } else {
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
+	redirect($lst);
 }
 ?>

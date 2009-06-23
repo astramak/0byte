@@ -25,9 +25,5 @@ if ($name && $id) {
 		db_query('UPDATE users SET activ = 1 WHERE id = %d', $id);
 	}
 }
-$lst='login/';
-
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect('login');
 ?>

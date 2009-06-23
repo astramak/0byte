@@ -4,18 +4,12 @@ $title = request::get_post('title');
 $text = request::get_post('text');
 
 if (!isset($title{2}) || !isset ($text{2}) || !isset($to{2})) {
-	header("Request-URI: work/pmls");
-	header("Content-Location: work/pmls");
-	header("Location: work/pmls");
-	die;
+	redirect('work/pmls');
 }
 
 $alien=new user();
 if (!$alien->find($to) || $alien->login == $usr->login) {
-	header("Request-URI: work/pmls");
-	header("Content-Location: work/pmls");
-	header("Location: work/pmls");
-	die;
+	redirect('work/pmls');
 }
 
 $sql_get="SELECT * FROM `users` WHERE `name` = '".mysql_escape_string($to)."' ORDER BY  id DESC  ";
@@ -26,10 +20,7 @@ if (!$result) {
 
 $row = mysql_fetch_assoc($result);
 if (strlen($row['name'])<1) {
-	header("Request-URI: work/pmls");
-	header("Content-Location: work/pmls");
-	header("Location: work/pmls");
-	die;
+	redirect('work/pmls');
 }
 if (request::get_get('lock') == "on" ) {
 	$lock=1;
@@ -58,8 +49,5 @@ if ($row['pmre'] == 1) {
 	$headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
 	nullbyte_mail($to, $subject, $message, true, $headers);
 }
-$lst="work/pmls/1";
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect('work/pmls/1');
 ?>

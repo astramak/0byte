@@ -9,21 +9,15 @@ if (isset($_POST['nox'])) {
 	#echo $sl;
 	if (strcmp($row['cid'],$_GET['id'])==0) {
 		jkill();
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
-		die;
+		redirect($lst);
 	}
 	$sl="INSERT INTO `wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
 	$result=mysql_query($sl,$sql);
 	if ($json==1) {
 		echo answ_echo($_GET['id']);
-		jkill();
-	} else {
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
-		die; }
+	}
+	jkill();
+	redirect($lst);
 }
 
 $sl="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'";
@@ -31,10 +25,7 @@ $result=mysql_query($sl,$sql);
 $row = mysql_fetch_assoc($result);
 if (!isset($_POST['answ']) && $row['lnk']==0) {
 	jkill();
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
-	die;
+	redirect($lst);
 }
 if ($row['lnk']==1) {
 	$sl="SELECT * FROM `answ` WHERE cid = '".intval($_GET['id'])."'";
@@ -46,13 +37,10 @@ if ($row['lnk']==1) {
 		}
 	}
 } else {
-	#echo $sl;
+#echo $sl;
 	if (strcmp($row['cid'],$_GET['id'])==0) {
 		jkill();
-		header("Request-URI: $lst");
-		header("Content-Location: $lst");
-		header("Location: $lst");
-		die;
+		redirect($lst);
 	}
 	$sl="UPDATE `answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".intval($_POST['answ'])."'";
 	$result=mysql_query($sl,$sql);
@@ -62,10 +50,7 @@ $sl="INSERT INTO `wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_G
 $result=mysql_query($sl,$sql);
 if ($json==1) {
 	echo answ_echo($_GET['id']);
-	jkill();
-} else {
-	header("Request-URI: $lst");
-	header("Content-Location: $lst");
-	header("Location: $lst");
 }
+jkill();
+redirect($lst);
 ?>

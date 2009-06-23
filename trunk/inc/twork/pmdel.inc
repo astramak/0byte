@@ -1,38 +1,23 @@
 <?php
-$sql_get="SELECT * FROM `pm` WHERE `id` = '".intval($_GET['id'])."'   ORDER BY  id DESC  ";
-$result=mysql_query($sql_get,$sql);
-if (!$result) {
-	echo  mysql_error();
-}
-$row = mysql_fetch_assoc($result);
-if ($row['auth']==$usr->login) {
-	if ($row['dto']==2) {
-		$sql_get="DELETE FROM `pm` WHERE `pm`.`id` = ".intval($_GET['id'])." LIMIT 1";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-	}  else  {
-		$sql_get="UPDATE `pm` SET `dto` = 1   WHERE `pm`.`id` = ".intval($_GET['id']);
-		$result=mysql_query($sql_get,$sql);
+$id = request::get_get('id');
+$result = db_query('SELECT * FROM pm WHERE id = %d', $id);
+$row = db_fetch_assoc($result);
+if ($row['auth'] == $usr->login) {
+	if ($row['dto'] == 2) {
+		db_query('DELETE FROM pm WHERE id = %d', $id);
+	}  else {
+		db_query('UPDATE pm SET dto = 1 WHERE id = %d', $id);
 	}
-} else if ($row['to']==$usr->login) {
-	if ($row['dto']==1) {
-		$sql_get="DELETE FROM `pm` WHERE `pm`.`id` = ".intval($_GET['id'])." LIMIT 1";
-		$result=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-	}  else  {
-		$sql_get="UPDATE `pm` SET `dto` = 2   WHERE `pm`.`id` = ".intval($_GET['id']);
-		$result=mysql_query($sql_get,$sql);
+} elseif ($row['to'] == $usr->login) {
+	if ($row['dto'] == 1) {
+		db_query('DELETE FROM pm WHERE id = %d', $id);
+	}  else {
+		db_query('UPDATE pm SET dto = 2 WHERE id = %d', $id);
 	}
 }
 jkill();
-$lst=$_GET['cur'];
-$lst=str_replace("*amp","&",$lst);
-$lst=str_replace("*qw","?",$lst);
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+$lst = request::get_get('cur');
+$lst = str_replace("*amp", "&", $lst);
+$lst = str_replace("*qw", "?", $lst);
+redirect($lst);
 ?>

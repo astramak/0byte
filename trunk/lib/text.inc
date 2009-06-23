@@ -15,10 +15,8 @@
  *
  */
 function gtext($text) {
-	$text=str_replace("'", "&#39;", $text);
-	$text=str_replace('"', "&#34;", $text);
-	$text=str_replace('<', "&lt;", $text);
-	$text=str_replace('>', "&gt;", $text);
+	$replace = array("'" => '&#39;', '"' => '&#34;', '<' => '&lt;', '<' => '&gt;');
+	$text = str_replace(array_keys($replace), array_values($replace), $text);
 	$bb[] = "#\[b\](.*?)\[/b\]#si";
 	$html[] = "<b>\\1</b>";
 	$bb[] = "#\[i\](.*?)\[/i\]#si";
@@ -111,10 +109,10 @@ function gtext($text) {
 
 	return($text);
 }
+
 function utext($text) {
-	$text=str_replace( "&lt;",'<', $text);
-	$text=str_replace("&gt;",'>',  $text);
-	$text=str_replace("<br />",'',  $text);
+	$replace = array('<br />' => '', '<' => '&lt;', '<' => '&gt;');
+	$text = str_replace(array_values($replace), array_keys($replace), $text);
 	$bb[] = "#\<b\>(.*?)\</b\>#si";
 	$html[] = "[b]\\1[/b]";
 	$bb[] = "#\<i\>(.*?)\</i\>#si";
@@ -180,61 +178,74 @@ function utext($text) {
 	$text = preg_replace ($bb, $html, $text);
 	return($text);
 }
+
 class dtxt {
+	var $short_text;
+	var $full_text;
+	/**
+	 *
+	 * @deprecated
+	 */
 	var $o;
+	/**
+	 *
+	 * @deprecated
+	 */
 	var $t;
 
-	function cut($a) {
-		if (strpos($a,"[cut]")) {
-			$t="/(.*?)\[cut\]/is";
-			preg_match($t,$a,$txt);
-			$t="/(.*?)\[cut\](.*?)/is";
-			$q="$1[cut]$2";
-			$this->t=$txt[0];
-			$this->o=preg_replace($t,$q,$a);
-		} else if (strpos($a,"[fcut]")) {
-			$t="/(.*?)\[fcut\]/is";
-			preg_match($t,$a,$txt);
-			$this->t=$txt[0];
-			$this->o=substr($a,strlen($txt[0]));
+	function cut($text) {
+		if (strpos($a, "[cut]")) {
+			$parts = explode('[cut]', $text);
+			trim_array($parts);
+			$this->short_text = $parts[0];
+			$this->full_text = implode('[cut]', $parts);
+			// depricated
+			$this->t = $parts[0];
+			$this->o = implode('[cut]', $parts);
+		} elseif (strpos($a, "[fcut]")) {
+			$parts = explode('[fcut]', $text);
+			trim_array($parts);
+			$this->short_text = $parts[0];
+			$this->full_text = $parts[1];
+			// depricated
+			$this->t = $parts[0];
+			$this->o = $parts[1];
 		} else {
-			$this->o=$a; $this->t=$a;
+			$this->short_text = $this->full_text = $text;
+			// depricated
+			$this->o = $this->t = $text;
 		}
 	}
 }
 
 function code($txt) {
-	$txt=str_replace("[code]","[code=]",$txt);
-	preg_match_all("/\[code\=(.*?)\]/is",$txt,$lang);
-	$arr=preg_split("/\[(.?)code(.*?)\]/",$txt);
-	$q=1;
-	$txt="";
+	$txt = str_replace("[code]", "[code=]", $txt);
+	preg_match_all("/\[code\=(.*?)\]/is",$txt, $lang);
+	$arr = preg_split("/\[(.?)code(.*?)\]/",$txt);
+	$q = 1;
+	$txt = "";
+	$replace = array('<br />' => '', '&lt;' => '<', '&gt;' => '<', '&#39;' => "'", '&#34;' => '"');
 	foreach ($arr as $i) {
-		if ($q%2==0) {
-			$i=str_replace("<br />","",$i);
-			$i=str_replace("&lt;", '<',$i);
-			$i=str_replace("&gt;", '>',$i);
-			$i=str_replace("&#39;","'",$i);
-			$i=str_replace("&#34;", '"',$i);
-			$lang[$q/2 -1]=preg_replace("/\[code\=(.*?)\]/is","$1",$lang[$q/2 -1]);
-			$i=geshi_highlight($i,$lang[0][$q/2 -1],null,true);
-			$i=str_replace("<code>", '',$i);
-			$i=str_replace("</code>", '',$i);
-			$cnt=substr_count($i,"<br />");
-			$ln="";
-			if ($cnt!=0) {
-				for ($e=2;$e<=($cnt+1);$e++) {
-					$ln.=$e."<br />";
+		if ($q % 2 == 0) {
+			$i = str_replace(array_keys($replace), array_values($replace), $i);
+			$lang[$q / 2 - 1] = preg_replace("/\[code\=(.*?)\]/is", "$1", $lang[$q / 2 - 1]);
+			$i = geshi_highlight($i, $lang[0][$q / 2 - 1], null, true);
+			$i = str_replace(array('<code>', '</code>'), '', $i);
+			$cnt = substr_count($i, "<br />");
+			$ln = "";
+			if ($cnt != 0) {
+				for ($e = 2; $e <= ($cnt+1); $e++) {
+					$ln .= $e . "<br />";
 				}
-				$i='<table><tr><td class="ln">1<br />'.$ln.'</td><td class="code" lang="'.$lang[0][$q/2 -1].'">'.$i.'</td></tr></table>';
+				$i = render_util('code_utils', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i, 'lines' => $ln));
 			} else {
-				$i='<div class="code" lang="'.$lang[0][$q/2 -1].'">'.$i.'</div>';
+				$i = render_util('code', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i));
 			}
 		}
-		$txt.=$i;
+		$txt .= $i;
 		$q++;
 	}
-	$txt=str_replace("<a href","<a rel='nofollow' href",  $txt);
-	return($txt);
+	$txt = str_replace("<a href", "<a rel='nofollow' href", $txt);
+	return $txt;
 }
 ?>

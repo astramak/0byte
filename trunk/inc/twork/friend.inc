@@ -31,7 +31,5 @@ if (isset($who)) {
 $lst=$_GET['cur'];
 $lst=str_replace("*amp","&",$lst);
 $lst=str_replace("*qw","?",$lst);
-header("Request-URI: $lst");
-header("Content-Location: $lst");
-header("Location: $lst");
+redirect($lst);
 ?>

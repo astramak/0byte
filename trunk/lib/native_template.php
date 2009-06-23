@@ -63,6 +63,17 @@ function render_rss($type, $title, $link, $items) {
 	);
 	return render_template(TPL_RSS . '/posts.tpl.php', $vars);
 }
+
+/**
+ * Renders utils template
+ *
+ * @param string $name
+ * @param array $variables
+ * @return string
+ */
+function render_util($name, $variables) {
+	return render_template(TPL_UTILS . '/' . $name . '.tpl.php', $variables);
+}
 /**
  * Render menu
  *
