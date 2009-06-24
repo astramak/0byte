@@ -227,9 +227,25 @@ function render_change_password($login) {
 function render_edit_comment($id,$text) {
     return render_template(TPL_FRAMES.'/edit_comment.tpl.php',array('id'=>$id,'text'=>$text));
 }
+/**
+ * Render posts
+ *
+ * @param array $array
+ * @return string
+ */
 function render_post($array) {
     return render_template(TPL_FRAMES.'/post.tpl.php', $array);
 }
+/**
+ * Render answer
+ *
+ * @param array $array
+ * @param numeric $answered
+ * @param numeric $id
+ * @param numeric $loged
+ * @param string $action
+ * @return string
+ */
 function render_answer($array,$answered,$id=0,$loged=1,$action="") {
     return render_template(TPL_FRAMES.'/answer.tpl.php',
         array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));

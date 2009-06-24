@@ -69,6 +69,14 @@ if ($pg) {
 } else {
 	$vars['rss'] = "rss";
 }
-
+if (!$native_script) {
+    $SCRIPT="";
+}
+ if (@count($script_plugins)>0) {
+         foreach($script_plugins as $plugin) {
+            include('plugins/'.$plugin['name'].'/actions.php');
+        }
+    }
+$vars['SCRIPT']=$SCRIPT;
 echo render_template(TPL_ROOT . '/head.tpl.php', $vars);
 ?>

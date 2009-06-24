@@ -14,6 +14,7 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
+//parse_plugin_array($use);
 $last_com_id=0;
 $jstocom="var com_arr=new Array();";
 $num_com=0;
@@ -99,9 +100,9 @@ onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"com\",event); }' name='text'  r
 //spy
 if ($loged == 1) {
 	if (!$v_id) {
-		db_query('INSER INTO hist SET pid = %d, who = %s, date = %d', $post_id, $usr->login, time());
+		db_query('INSER INTO `hist` SET `pid` = %d, `who` = %s, `date` = %d', $post_id, $usr->login, time());
 	} else {
-		db_query('UPDATE hist SET date = %d WHERE id = %d', time(), $v_id);
+		db_query('UPDATE `hist` SET `date` = %s WHERE `id` = %d', time(), $v_id);
 	}
 }
 ///spy
