@@ -10,11 +10,11 @@
 		<?php foreach ($items as $item): ?>
 		<item>
 			<title><?php print htmlspecialchars($item['blogid'] ? $item['blog'] : $item['auth']) ?> &#8212; <?php print htmlspecialchars($item['title']) ?></title>
-			<link><?php echo $site, 'post/', $item['id'] ?></link>
+			<link><?php echo $site, 'post/', $item['id'], '/' ?></link>
 			<description><?php print htmlspecialchars($item['descr']) ?></description>
 			<pubDate><?php print date('r', $item['date']) ?></pubDate>
 			<author><? print $item['auth'] ?></author>
-			<guid><?php echo $site, 'post/', $item['id'] ?></guid>
+			<guid><?php echo $site, 'post/', $item['id'], '/' ?></guid>
 		</item>
 		<?php endforeach; ?>
 	</channel>
