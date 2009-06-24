@@ -32,6 +32,7 @@ function _db_query($query) {
 		return $result;
 	} else {
 		trigger_error(check_plain(mysql_error() ."\nquery: ". $query), E_USER_WARNING);
+//        echo "<br><br>".$query;
 	}
 }
 

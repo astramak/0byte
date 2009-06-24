@@ -10,10 +10,6 @@
 		<link rel="stylesheet" href="style/css.php?css=new.css" type="text/css" />
 		<link rel="search" type="application/opensearchdescription+xml" href="<?php echo $site ?>opensearch.php" title="<?php echo $sl_name; ?>" />
 		<link rel="alternate" type="application/rss+xml" title="RSS" href="<?php echo $rss ?>" />
-		<script type="text/javascript" src="js/js.php?js=main.js"></script>
-		<script type="text/javascript" src="js/js.php?js=right.js"></script>
-		<script type="text/javascript" src="js/js.php?js=login.js"></script>
-		<script type="text/javascript" src="js/js.php?js=ve.js"></script>
-		<script type="text/javascript" src="js/js.php?js=pm.js"></script>
+        <?php echo $SCRIPT; ?>
 	</head>
 	<body onkeydown="to_(event)">

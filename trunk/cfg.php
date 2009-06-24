@@ -35,9 +35,10 @@ include("lib/pm.inc");
 include("lib/text.inc");
 include("lib/user.inc");
 include("lib/cache.inc");
-include("lib/geshi/geshi.php");
+//include("lib/geshi/geshi.php");
 include("lib/flw.inc");
 include("lib/json.inc");
+include("lib/plugins.inc");
 
 require_once 'lib/request.class.php';
 require_once 'lib/utils.php';
@@ -64,4 +65,5 @@ function crl($a) {
 		echo '<b class="b4"></b><b class="b3"></b><b class="b2"></b><b class="b1"></b>';
 	}
 }
+parse_plugin_array($use);
 ?>

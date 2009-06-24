@@ -23,8 +23,8 @@ $time=time();
 
 switch ($tp) {
 	case 0:
-		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
-			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d',
+		db_query('INSERT INTO `post` SET `date` = %s, `title` = %s, `auth` = %s, `text` = %s,
+			`ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d ',
 			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
 			$blog_id, $tag, $lock, $tp);
 		break;
@@ -33,8 +33,8 @@ switch ($tp) {
 		if (!$lnk) {
 			redirect('index.php');
 		}
-		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
-			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d, lnk = %s',
+		db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
+			`ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
 			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
 			$blog_id, $tag, $lock, $tp, $lnk);
 		break;
@@ -43,8 +43,8 @@ switch ($tp) {
 		if ($org) {
 			redirect('index.php');
 		}
-		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
-			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d, lnk = %s',
+		db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
+			`ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
 			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
 			$blog_id, $tag, $lock, $tp, $org);
 		break;
@@ -54,8 +54,8 @@ switch ($tp) {
 			redirect('index.php');
 		}
 		$nm = request::get_post('mng') == 'on' ? 1 : 0;
-		db_query('INSERT INTO post SET (date = %d, title = %s, auth = %s, text = %s,
-			ftext = %s, blog = %s, blogid = %d, tag = %s, lock = %d, tp = %d, lnk = %s',
+		db_query('INSERT INTO `post` SET (`date` = %d, `title` = %s, `auth` = %s, `text` = %s,
+			`ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
 			$time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
 			$blog_id, $tag, $lock, $tp, $nm);
 		break;
@@ -66,7 +66,7 @@ if ($tp == 3) {
 	for ($i = 0; $i < $len; $i++) {
 		$question = trim(request::get_post('an' . ($i + 1)));
 		if ($question) {
-			db_query('INSERT INTO answ SET title = %s, id = %d', $question, $id);
+			db_query('INSERT INTO `answ` SET `title` = %s, `id` = %d', $question, $id);
 		}
 	}
 }
