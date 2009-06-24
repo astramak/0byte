@@ -1,28 +1,18 @@
 <?php
-if( !isset($_POST['btitle']) || strlen(trim($_POST['btitle']))<3) {
+$btitle = trim(request::get_post('btitle'));
+
+if ($usr->rate() < $nb_rate || strlen($btitle) < 3) {
 	redirect('index.php');
 }
 
-$btitle=mysql_escape_string(gtext($_POST['btitle']));
-if ($usr->rate()<$nb_rate) {
+$exists = db_result(db_query('SELECT COUNT(id) FROM blogs WHERE LOWER(name) = LOWER(%s)', $btitle));
+if ($exists) {
 	redirect('index.php');
 }
-$sl="SELECT * FROM `blogs` where LOWER(`name`) = LOWER('$btitle')  ";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-if (strlen($row['name'])==strlen($btitle)) {
-	redirect('index.php');
-}
-$sl="INSERT INTO `blogs` (`name` ,`owner` )
-VALUES ('".$btitle."' , '".$usr->login."')";
-$result=mysql_query($sl,$sql);
-$sl="SELECT * FROM `blogs` where `name` = '$btitle'  ";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-$id=$row['id'];
-$sl="INSERT INTO `inblog` (`blogid` ,`name` , `bname` )
-	 VALUES ( '".$id."', '".$usr->login."' , '".$btitle."')";
-$result=mysql_query($sl,$sql);
+
+db_query('INSERT INTO blogs SET name = %s, owner = %s', $btitle, $usr->login);
+$id = db_last_insert_id('blogs');
+db_query('INSERT INTO inblog SET blogid = %d, name = %s, bname = %s', $id, $usr->login, $btitle);
 
 redirect("work/newpost");
 ?>
