@@ -1,20 +1,11 @@
 <?php
-
-if (isset($_GET['tp'])) {
-	$e="auth";
-	$in="`dto` != 1";
+if (request::get_get('tp')) {
+	$result = db_query('SELECT * FROM pm WHERE auth = %s AND dto != 1 ORDER BY id DESC');
 } else {
-	$e="to";
-	$in="`dto` != 2";
-}
-$sql_get="SELECT * FROM `pm` WHERE `$e` = '".$usr->login."' && $in   ORDER BY  id DESC  ";
-$result=mysql_query($sql_get,$sql);
-if (!$result) {
-	echo  mysql_error();
+	$result = db_query('SELECT * FROM pm WHERE to = %s AND dto != 2 ORDER BY id DESC');
 }
 
-while($row = mysql_fetch_assoc($result)) {
+while($row = db_fetch_assoc($result)) {
 	pm_ls($row);
 }
-
 ?>

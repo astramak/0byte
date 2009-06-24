@@ -1,16 +1,16 @@
 <?php
-if ($usr->lvl<$elvl ) {
-	redirect('post/' . request::get_get('id'));
+$id = request::get_get('id');
+
+if ($usr->lvl < $elvl ) {
+	redirect('post/' . $id);
 }
 
-$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'   ";
-$result=mysql_query($sql_get,$sql);
-$row=mysql_fetch_assoc($result);
-tags_remove_list($row['tag']);
-$sql_get="DELETE FROM `post` WHERE `post`.`id` = ".intval($_GET['id']);
-$result=mysql_query($sql_get,$sql);
-$sql_get="DELETE FROM `comment` WHERE `comment`.`krnl` = ".intval($_GET['id']);
-$result=mysql_query($sql_get,$sql);
+tags_remove_list(db_result(db_query('SELECT tag FROM post WHERE id = %d', $id)));
+db_query('DELETE FROM post WHERE id = %d', $id);
+$result = db_query('SELECT id FROM comment WHERE krnl = %d', $id);
+while ($row = db_fetch_object($result)) {
+	rmcom($row);
+}
 
 redirect($site);
 ?>
