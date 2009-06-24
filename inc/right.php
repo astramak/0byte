@@ -60,6 +60,7 @@ if (!($tops = readCache('tops.cache', 30))) {
 		$row['weight'] = ceil($row['num'] / $max * 10);
 		$tags[] = $row;
 	}
+	shuffle($tags);
 	$tops .= render_tags($tags);
 
 	$result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT 10');
