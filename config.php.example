@@ -37,6 +37,8 @@ $to_main=0;//rate for main page
 $blog_r=4; //user rate by blog
 $post_r=5; //user rate by post
 $com_r=10; //user rate by comment
-//plugins
-$use['geshi']=1;
+
+// plugins
+$user = array();
+$use['geshi'] = 1;
 ?>
