@@ -22,6 +22,13 @@ $SCRIPT='<script type="text/javascript" src="js/js.php?js=main.js"></script>
 $native_script=1;
 $native_presave=1;
 $native_prerender=1;
+/**
+ * Echanga script plugin
+ *
+ * @global numeric $native_script
+ * @global array $script_plugins
+ * @param array $plugin
+ */
 function plugin_script($plugin) {
     global $native_script,$script_plugins;
     if (strcmp($plugin['conflict_type'],'full_script')==0) {
@@ -29,6 +36,13 @@ function plugin_script($plugin) {
     }
     $script_plugins[]=$plugin;
 }
+/**
+ * Echange pre save plugin
+ *
+ * @global numeric $native_presave
+ * @global array $presave_plugins
+ * @param array $plugin
+ */
 function plugin_presave($plugin) {
     global $native_presave,$presave_plugins;
     if (strcmp($plugin['conflict_type'],'pre_save')==0) {
@@ -36,6 +50,13 @@ function plugin_presave($plugin) {
     }
     $presave_plugins[]=$plugin;
 }
+/**
+ * Echange pre render plugin
+ *
+ * @global numeric $native_prerender
+ * @global array $prerender_plugins
+ * @param array $plugin
+ */
 function plugin_prerender($plugin) {
     global $native_prerender,$prerender_plugins;
     if (strcmp($plugin['conflict_type'],'pre_render')==0) {
@@ -43,6 +64,12 @@ function plugin_prerender($plugin) {
     }
     $prerender_plugins[]=$plugin;
 }
+/**
+ * Initiale plugin by name
+ *
+ * @global array $block_plugins
+ * @param string $name
+ */
 function init_plugin($name) {
     global $block_plugins;
     include('plugins/'.$name.'/plugin.php');
@@ -66,6 +93,11 @@ function init_plugin($name) {
             break;
     }
 }
+/**
+ * Parse plugin array and send it to initiale 
+ *
+ * @param array $array
+ */
 function parse_plugin_array($array) {
     foreach ($array as $name=>$use) {
         if ($use==1) {
