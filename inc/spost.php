@@ -81,7 +81,7 @@ if (!$row) {
 		echo "<span id='nocom'>Комментариев нет</span>";
 	} else {
 		while ($row = db_fetch_assoc($result)) {
-			com_echo(new com($row));
+			com_echo(new comment($row));
 		}
 	}
 	echo "</div>";

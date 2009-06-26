@@ -7,6 +7,6 @@ if (!$row || $usr->lvl < $elvl) {
 	redirect("post/" . $row['krnl'] . "#cmnt" . $id);
 	die;
 }
-rmcom(new com($row));
+rmcom(new comment($row));
 redirect($site . "post/" . $row['krnl']);
 ?>

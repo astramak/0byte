@@ -34,7 +34,7 @@ include("inc/top.php");
 			echo "<span id='nocom'>Коментариев нет</span>";
 		} else {
 			while($row = db_fetch_assoc($result)) {
-				$com = new com($row);
+				$com = new comment($row);
 				
 				$post = db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $row['krnl']));
 				if ($post['blogid']) {
