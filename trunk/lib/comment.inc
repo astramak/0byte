@@ -14,7 +14,7 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-class com {
+class comment {
 	var $id;
 	var $date;
 	var $text;
@@ -26,7 +26,7 @@ class com {
 	var $krnl;
 	var $new;
 
-	function com($row = null) {
+	function comment($row = null) {
 		if ($row) $this->make($row);
 	}
 
@@ -110,13 +110,13 @@ function com_echo($com,$noecho=0) {
 		$ech="";
 		$result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = %d ORDER BY id ASC', $com->id, ($com->lvl + 1));
 		while ($row = db_fetch_assoc($result)) {
-			com_echo(new com($row));
+			com_echo(new comment($row));
 		}
 	}
 	$ech.= "</dd><dt id='cm".$com->id."'></dt></dl>";
 	if ($noecho!=0) {
 		return $ech;
-	}	else {
+	} else {
 		echo $ech;
 	}
 }

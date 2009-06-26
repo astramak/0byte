@@ -13,9 +13,7 @@ if (!$result) {
 $row = mysql_fetch_assoc($result);
 $lvl=$row['lvl']+1;
 if (!isset($_GET['js'])) {
-	$cm=new com;
-	$cm->make($row);
-	$old=com_echo($cm,1);
+	$old=com_echo(new comment($row),1);
 //	echo '<br />';
 
     }

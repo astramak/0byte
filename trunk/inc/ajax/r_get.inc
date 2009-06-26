@@ -113,9 +113,7 @@ if (isset ($_GET['noo'])) {
 		$arr[$i]['id']=$row['id'];
 		$arr[$i]['lvl']=$row['lvl'];
 		$arr[$i]['cid']=$row['cid'];
-		$cm=new com;
-		$cm->make($row);
-		$arr[$i]['txt']=com_echo($cm,1);
+		$arr[$i]['txt'] = com_echo(new comment($row), 1);
 		$i++;
 	}
 	if ($loged==1) {

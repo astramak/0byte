@@ -9,8 +9,7 @@ if (!$result) {
 $row = mysql_fetch_assoc($result);
 $lvl=$row['lvl']+1;
 
-$cm=new com;
-$cm->make($row);
+$cm=new comment($row);
 echo render_edit_comment($id,utext($cm->text));
 
 //<div id="mq" class="inpt"></div>

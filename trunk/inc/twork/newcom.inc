@@ -50,8 +50,7 @@ $result=mysql_query($sl,$sql);
 $sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($id)."' && `date`= '".$date."'   ";
 $result=mysql_query($sql_get,$sql);
 $rw = mysql_fetch_assoc($result);
-$cm=new com;
-$cm->make($rw);
+$cm=new comment($rw);
 $lst.='#cmnt'.$cm->id;
 if ($ceauth!="" && $ceauth!=$usr->login) {
 	$sql_get="SELECT * FROM `users` WHERE `name` = '".$ceauth."'";
