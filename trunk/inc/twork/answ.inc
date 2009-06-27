@@ -1,55 +1,48 @@
 <?php
-$lst=$_GET['cur'];
-$lst=str_replace("*amp","&",$lst);
-$lst=str_replace("*qw","?",$lst);
-if (isset($_POST['nox'])) {
-	$sl="SELECT * FROM `wansw` WHERE who = '".$usr->login."' && cid = '".intval($_GET['id'])."'";
-	$result=mysql_query($sl,$sql);
-	$row = mysql_fetch_assoc($result);
-	#echo $sl;
-	if (strcmp($row['cid'],$_GET['id'])==0) {
+$lst = request::get_get('cur');
+$lst = str_replace("*amp","&",$lst);
+$lst = str_replace("*qw","?",$lst);
+
+$id = request::get_get('id');
+$answ = request::get_post('answ');
+
+if (request::get_post('nox')) {
+	if (db_result(db_query('SELECT COUNT(id) FROM wansw WHERE who = %s AND cid = %d', $usr->login, $id))) {
 		jkill();
 		redirect($lst);
 	}
-	$sl="INSERT INTO `wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
-	$result=mysql_query($sl,$sql);
-	if ($json==1) {
-		echo answ_echo($_GET['id']);
+	db_query('INSERT INTO wansw SET who = %s, cid = %d', $usr->login, $id);
+	if ($json == 1) {
+		echo answ_echo($id);
 	}
 	jkill();
 	redirect($lst);
 }
 
-$sl="SELECT * FROM `post` WHERE id = '".intval($_GET['id'])."'";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-if (!isset($_POST['answ']) && $row['lnk']==0) {
+$resutl = db_query('SELECT * FROM post WHERE id = %d', $id);
+$row = db_fetch_assoc($result);
+if (!$answ && $row['lnk'] == 0) {
 	jkill();
 	redirect($lst);
 }
-if ($row['lnk']==1) {
-	$sl="SELECT * FROM `answ` WHERE cid = '".intval($_GET['id'])."'";
-	$result=mysql_query($sl,$sql);
-	while ($raw = mysql_fetch_assoc($result)) {
-		if (isset($_POST[$raw['id']]) && $_POST[$raw['id']]=="on") {
-			$sla="UPDATE `answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".$raw['id']."'";
-			$rest=mysql_query($sla,$sql);
+
+if ($row['lnk'] == 1) {
+	$result = db_query('SELECT * FROM answ WHERE cid = %d', $id);
+	while ($raw = db_fetch_assoc($result)) {
+		if (request::get_post($raw['id']) == 'on') {
+			db_query('UPDATE answ SET val = val + 1 WHERE id = %d', $raw['id']);
 		}
 	}
 } else {
-#echo $sl;
-	if (strcmp($row['cid'],$_GET['id'])==0) {
+	if ($row['cid'] == $id) {
 		jkill();
 		redirect($lst);
 	}
-	$sl="UPDATE `answ` SET `val` = `val`+1 WHERE `answ`.`id` = '".intval($_POST['answ'])."'";
-	$result=mysql_query($sl,$sql);
-
+	db_query('UPDATE answ SET val = val + 1 WHERE id = %d', $answ);
 }
-$sl="INSERT INTO `wansw` (`who` ,`cid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
-$result=mysql_query($sl,$sql);
-if ($json==1) {
-	echo answ_echo($_GET['id']);
+db_query('INSERT INTO wansw SET who = %s, cid = %d', $usr->login, $id);
+if ($json == 1) {
+	echo answ_echo($id);
 }
 jkill();
 redirect($lst);
