@@ -1,51 +1,37 @@
 <?php
-$lst=$_GET['from'];
-$lst=str_replace("*amp","&",$lst);
-$lst=str_replace("*qw","?",$lst);
-$sl="SELECT * FROM `brate` WHERE who = '".$usr->login."' && pid = '".$_GET['id']."'";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-#echo $sl;
-if (strcmp($row['pid'],$_GET['id'])==0) {
+$lst = request::get_get('from');
+$lst = str_replace("*amp","&",$lst);
+$lst = str_replace("*qw","?",$lst);
+
+$id = request::get_get('id');
+
+if (db_result(db_query('SELECT COUNT(id) FROM brate WHERE who = %s AND pid = %d', $usr->login, $id))) {
 	j_err("Повторное голосование запрещено!");
 	jkill();
 	redirect($lst);
 } else {
-	$sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['id'])."'   ";
-	$result=mysql_query($sql_get,$sql);
-	if (!$result) {
-		echo  mysql_error();
-	}
-	$row = mysql_fetch_assoc($result);
-	if ($row['owner']==$usr->login) {
+	$result = db_query('SELECT * FROM blogs WHERE id = %d', $id);
+	$row = db_fetch_assoc($result);
+	if ($row['owner'] == $usr->login) {
 		j_err("Нельзя голосовать за свой блог!");
 		jkill();
 		redirect($lst);
 	} else {
-
-		$sl="UPDATE `blogs` SET `rate".$_GET['rate'][0]."` = `rate".$_GET['rate'][0]."`+1 WHERE `blogs`.`id`
-				 = '".intval($_GET['id'])."'";
-		$result=mysql_query($sl,$sql);
-
-		if ($_GET['rate'][0]=='p') {
-			$sl="UPDATE `users` SET `brate` = `brate`+1 WHERE `users`.`name`
-				 = '".$row['owner']."'";
+		if (request::get_get('rate') == 'p') {
+			db_query('UPDATE blogs SET ratep = ratep + 1 WHERE id = %d', $id);
+			db_query('UPDATE users SET brate = brate + 1 WHERE name = %s', $row['owner']);
+			$rr = 1;
 		} else {
-			$sl="UPDATE `users` SET `brate` = `brate`-1 WHERE `users`.`name`
-				 = '".$row['owner']."'";
+			db_query('UPDATE blogs SET ratem = ratem + 1 WHERE id = %d', $id);
+			db_query('UPDATE users SET brate = brate - 1 WHERE name = %s', $row['owner']);
+			$rr = -1;
 		}
-
-		$result=mysql_query($sl,$sql);
 		$sql_get="SELECT * FROM `urate`";
-		$sl="INSERT INTO `brate` (`who` ,`pid`) VALUES ('".$usr->login."', '".intval($_GET['id'])."')";
-		$result=mysql_query($sl,$sql);
-		if ($json==1) {
-			if ($_GET['rate']=='p') {
-				$rr=1;
-			} else {$rr=-1;}
-			cmpl($_GET['id'],$row['ratep']-$row['ratem']+$rr);
-			die;
+		db_query('INSERT INTO brate SET who = %s, pid = %d', $usr->login, $id);
+		if ($json == 1) {
+			cmpl($id, $row['ratep'] - $row['ratem'] + $rr);
 		}
+		jkill();
 		redirect($lst);
 	}
 }
