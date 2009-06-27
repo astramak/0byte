@@ -14,69 +14,79 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 	if ($row['lock']==1) {
 		$h='checked="checked"';
 	}
-	echo '
-		<h3>Редактирование сообщения</h3>';
-	echo '<form id="new" name="new" method="post" action="twork.php?wt=editpost&post='.intval($_GET['post']).'">';
-	if ($row['tp']==3) {
-		echo '<b>В опросах запрещено изменять вопрос и ответы, для редактирования доступны только теги и доступ!</b>
-			<br />
-Блог<select name="blog">
-		<option value="own">Персональный</option>';
-
-		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
+   		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
 		$resul=mysql_query($sql_get,$sql);
 		if (!$resul) {
 			echo  mysql_error();
 		}
+        $blogs[]=array('value'=>'own','text'=>'Персональный','active'=>null);
 		while ($rw = mysql_fetch_assoc($resul)) {
-			if ($rw['blogid']==$row['blogid']) {$fin=' selected ';} else {$fin="";}
-
-			echo "<option value='".$rw['blogid']."' $fin >".$rw['bname']."</option>";
+			if ($rw['blogid']==$row['blogid']) {$fin='selected';} else {$fin="";}
+               $blogs[]=array('value'=>$rw['blogid'],'text'=>$rw['bname'],'active'=>$fin);
+//			echo "<option value='".$rw['blogid']."' $fin >".$rw['bname']."</option>";
 		}
+        $type=null;
+        if ($row['tp']==3) {
+            $type='answer';
+        } else if  ($row['tp']==2) {
+            $type='translate';
+        } else  if ($row['tp']==1) {
+            $type='link';
+        }
+        echo render_edit_post(utext($row['title']), $blogs, "twork.php?wt=editpost&post=".intval($_GET['post']),
+        $type, $row['tag'], $h, $zz, $row['lnk']);
+////	echo '
+////		<h3>Редактирование сообщения</h3>';
+////	echo '<form id="new" name="new" method="post" action="twork.php?wt=editpost&post='.intval($_GET['post']).'">';
+//	if ($row['tp']==3) {
+//		echo '<b>В опросах запрещено изменять вопрос и ответы, для редактирования доступны только теги и доступ!</b>
+//			<br />
+//Блог<select name="blog">
+//		<option value="own">Персональный</option>';
+//
 
-		echo "</select> <br />
-			Тэги ".'<input type="text" name="tag" style="width: 500px;" value="'.$row['tag'].'"/><br />';
-	} else {
-		echo '
-		<form name="new" id="new" method="post" action="twork.php?wt=editpost&post='.$_GET['post'].'">
-			<div id="prv"></div>
-		<table border="0" class="fullwidth">
-		<tr><td>Заголовок</td><td><input type="text" name="title" class="post-title" value="'.utext($row['title']).'" /></td></tr>
-		<tr><td>Блог</td><td><select name="blog">
-		<option value="own">Персональный</option>';
-
-		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
-		$resul=mysql_query($sql_get,$sql);
-		if (!$resul) {
-			echo  mysql_error();
-		}
-		while ($rw = mysql_fetch_assoc($resul)) {
-			if ($rw['blogid']==$row['blogid']) {$fin=' selected ';} else {$fin="";}
-
-			echo "<option value='".$rw['blogid']."' $fin >".$rw['bname']."</option>";
-		}
-
-		echo '</select> </td></tr>
-		<tr><td id="otxt">Текст</td><td><div id="mq" class="inpt"></div>
-		<textarea class="post-body" onkeypress="do_key(this.form,\'new\',event);" onkeydown="if(\'\v\'==\'v\') {do_key(this.form,\'new\',event);}" name="text" rows="15" cols="70">'.utext($zz).'</textarea>
-		</td></tr>
-		<tr><td>Тэги</td><td><input type="text" name="tag" class="post-tags" value="'.$row['tag'].'"/>
-		</td></tr>';
-		if  ($row['tp']==2) {
-			echo "<tr><td>Оригинал</td><td><input type='text' name='lnk' value='".$row['lnk']."' /></td></tr>";
-		} else if ($row['tp']==1) {
-			echo "<tr><td>Ссылка</td><td><input type='text' name='lnk' value='".$row['lnk']."' /></td></tr>";
-		}
-		echo '</table> '; }
-		echo '<input type="checkbox" name="lock" '.$h.' /> Только для друзей/собложников<br />
-		<input type="submit" value="Запостить!" />	
-		</form>';
+//		echo "</select> <br />
+//			Тэги ".'<input type="text" name="tag" style="width: 500px;" value="'.$row['tag'].'"/><br />';
+//	} else {
+//		echo '
+//		<form name="new" id="new" method="post" action="twork.php?wt=editpost&post='.$_GET['post'].'">
+//			<div id="prv"></div>
+//		<table border="0" class="fullwidth">
+//		<tr><td>Заголовок</td><td><input type="text" name="title" class="post-title" value="'.utext($row['title']).'" /></td></tr>
+//		<tr><td>Блог</td><td><select name="blog">
+//		<option value="own">Персональный</option>';
+//
+//		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
+//		$resul=mysql_query($sql_get,$sql);
+//		if (!$resul) {
+//			echo  mysql_error();
+//		}
+//		while ($rw = mysql_fetch_assoc($resul)) {
+//			if ($rw['blogid']==$row['blogid']) {$fin=' selected ';} else {$fin="";}
+//
+//			echo "<option value='".$rw['blogid']."' $fin >".$rw['bname']."</option>";
+//		}
+//
+//		echo '</select> </td></tr>
+//		<tr><td id="otxt">Текст</td><td><div id="mq" class="inpt"></div>
+//		<textarea class="post-body" onkeypress="do_key(this.form,\'new\',event);" onkeydown="if(\'\v\'==\'v\') {do_key(this.form,\'new\',event);}" name="text" rows="15" cols="70">'.utext($zz).'</textarea>
+//		</td></tr>
+//		<tr><td>Тэги</td><td><input type="text" name="tag" class="post-tags" value="'.$row['tag'].'"/>
+//		</td></tr>';
+//		if  ($row['tp']==2) {
+//			echo "<tr><td>Оригинал</td><td><input type='text' name='lnk' value='".$row['lnk']."' /></td></tr>";
+//		} else if ($row['tp']==1) {
+//			echo "<tr><td>Ссылка</td><td><input type='text' name='lnk' value='".$row['lnk']."' /></td></tr>";
+//		}
+//		echo '</table> '; }
+//		echo '<input type="checkbox" name="lock" '.$h.' /> Только для друзей/собложников<br />
+//		<input type="submit" value="Запостить!" />
+//		</form>';
 } else {
 	echo "<h3>Это не ваш пост!</h3>";
 }
-?>
-<script type="text/javascript">mk('mq','new');
+$script->add(`mk('mq','new');
 document.getElementById("otxt").innerHTML+="<br /><a href='javascript:prv()'>Предпросмотр</a>";
 		document.getElementById("mq").innerHTML+="<a class='tdx' href='javascript:insert(\"[cut]\",\"\",\"new\",\"text\")'>cut</a>"+
-		"<a class='tdx' href='javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")'>fcut</a>";
-		</script>
+		"<a class='tdx' href='javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")'>fcut</a>";`);
+?>

@@ -250,4 +250,18 @@ function render_answer($array,$answered,$id=0,$loged=1,$action="") {
     return render_template(TPL_FRAMES.'/answer.tpl.php',
         array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));
 }
+function render_edit_post($title,$blogs,$url,$type,$tags,$status,$text=null,$lnk=null) {
+    return render_template(TPL_FRAMES.'/edit_post.tpl.php', array('title'=>$title,'blogs'=>$blogs,
+        'url'=>$url,$type=>'1','text'=>$text,'tags'=>$tags,'lnk'=>$lnk,'status'=>$status));
+}
+function render_edit_user($array) {
+    return render_template(TPL_FRAMES.'/edit_user.tpl.php', $array);
+}
+function render_myblog($array,$loged=1) {
+    return render_template(TPL_FRAMES.'/myblog.tpl.php', array('blogs'=>$array,'loged'=>$loged));
+}
+function render_new_post($type,$type_,$tp,$blogs,$len=0) {
+    return render_template(TPL_FRAMES.'/new_post.tpl.php', array('type'=>$type,$type_=>'1','tp'=>$tp,
+        'blogs'=>$blogs,'len'=>$len));
+}
 ?>

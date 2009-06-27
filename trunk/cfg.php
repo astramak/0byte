@@ -21,7 +21,9 @@ define('TPL_MAIL', TPL_ROOT . '/mail');
 define('TPL_RSS', TPL_ROOT . '/rss');
 define('TPL_UTILS', TPL_ROOT . '/utils');
 define('TPL_FRAMES', TPL_ROOT . '/frames');
+define('TPL_PM', TPL_ROOT . '/pm');
 define('TPL_TOP',TPL_ROOT.'/top');
+define('TPL_BOTTOM',TPL_ROOT.'/bottom');
 define('TPL_MAIN', TPL_ROOT);
 
 //lib load
@@ -39,7 +41,7 @@ include("lib/cache.inc");
 include("lib/flw.inc");
 include("lib/json.inc");
 include("lib/plugins.inc");
-
+include("lib/script.inc");
 require_once 'lib/request.class.php';
 require_once 'lib/utils.php';
 require_once 'lib/native_template.php';
@@ -57,7 +59,7 @@ $pg = request::get_get('pg');
 //if (!request::get_get('debug')) ini_set('display_errors', 0);
 
 $usr = new user();
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 function crl($a) {
 	if ($a==0) {
 		echo '<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>';

@@ -77,6 +77,7 @@ if (!$native_script) {
             include('plugins/'.$plugin['name'].'/actions.php');
         }
     }
+$script=new script;
 $vars['SCRIPT']=$SCRIPT;
 echo render_template(TPL_ROOT . '/head.tpl.php', $vars);
 ?>

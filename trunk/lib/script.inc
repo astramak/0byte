@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  *     This file is part of 0byte.
  *
@@ -14,12 +14,26 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-echo render_template(TPL_BOTTOM."/top.tpl.php", null);
-include("inc/right.php"); 
-$cur=$_SERVER['REQUEST_URI'];
-	$cur=str_replace("&","*amp",$cur);
-	$cur=str_replace("?","*qw",$cur);
-	$script->add("var cur = '$cur';");
-$script->add("var loged=".$loged."; strt();");
-echo render_template(TPL_BOTTOM.'/main.tpl.php', array('SCRIPT'=>$script->result(),'loged'=>$loged));
+
+class script {
+    var $text;
+    function  __construct() {
+        $this->flush();
+    }
+    function add($what) {
+        $this->text.=$what;
+    }
+    function flush() {
+        $this->text=null;
+    }
+    function result() {
+        return '<script type="text/javascript">'. $this->text.'</script>';
+    }
+    function write($flush=1) {
+        echo $this->result();
+        if ($flush) {
+            $this->flush();
+        }
+    }
+}
 ?>

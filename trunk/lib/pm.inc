@@ -16,8 +16,10 @@
  */
 function pm_echo($row) {
 	$txt=$a->text;
-	echo "<div class='top'><span class='date'>".date('d.m.y  H:i',$row['date'])."</span><a class='auth' href='user/".$row['auth']."/'>".$row['auth']."</a></div>";
-	echo "<div class='text'><h2 class='title'>".$row['title']."</h2>".str_replace("[cut]"," ",str_replace("[fcut]"," ",$row['text']))."</div>";
+    echo render_template(TPL_PM.'/read.tpl.php', array('auth'=>$row['auth'],'date'=> date('d.m.y  H:i',$row['date']),
+        'title'=>$row['title'],'text'=>str_replace("[cut]"," ",str_replace("[fcut]"," ",$row['text']))));
+//	echo "<div class='top'><span class='date'>".date('d.m.y  H:i',$row['date'])."</span><a class='auth' href='user/".$row['auth']."/'>".$row['auth']."</a></div>";
+//	echo "<div class='text'><h2 class='title'>".$row['title']."</h2>".str_replace("[cut]"," ",str_replace("[fcut]"," ",$row['text']))."</div>";
 }
 function pm_ls($row) {
 	echo "<tr id='pm".$row['id']."'><td><a href='twork.php?wt=pmdel&id=".$row['id']."&cur=".$cur."'>X</a></td>

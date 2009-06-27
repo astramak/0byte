@@ -90,20 +90,19 @@ while ($row = db_fetch_assoc($result)) {
 }
 
 echo render_online_and_new($onlines, $news);
-?>
-<script type="text/javascript">var ulist=document.getElementById("ulister").innerHTML;
-	var blist=document.getElementById("blist").innerHTML;
-<?php 
+
+$scr='var ulist=document.getElementById("ulister").innerHTML;
+	var blist=document.getElementById("blist").innerHTML;';
 $e=0;
 if (isset($_SESSION['tp1'])) {
 	if ($_SESSION['tp1']=='pst') {
-		echo "g_plist('post'";
+		$scr.="g_plist('post'";
 		$e=1;
 	} elseif ($_SESSION['tp1']=='com') {
-		echo "g_plist('com'";
+		$scr.="g_plist('com'";
 		$e=1;
 	} elseif ($_SESSION['tp1']=='eye') {
-		echo "g_plist('eye'";
+		$scr.="g_plist('eye'";
 		$e=1;
 	}
 
@@ -112,20 +111,20 @@ if (isset($_SESSION['tp1'])) {
 if (isset($_SESSION['tp2'])) {
 	if ($_SESSION['tp2']=='us') {
 		if ($e==1) {
-			echo ",1,'top_user');";
+			$scr.=",1,'top_user');";
 			$e=2;
 		} else {
-			echo "g_plist('top_user');";
+			$scr.="g_plist('top_user');";
 		}
 	} elseif ($_SESSION['tp2']=='bl') {
 		if ($e==1) {
-			echo ",1,'top_blog');";
+			$scr.=",1,'top_blog');";
 			$e=2;
 		} else {
-			echo "g_plist('top_blog');";
+			$scr.="g_plist('top_blog');";
 		}
 	}
 }
-if ($e==1) {echo ");";}
+if ($e==1) {$scr.=");";}
+$script->add($scr);
 ?>
-</script>
