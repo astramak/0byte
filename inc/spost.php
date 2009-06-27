@@ -101,7 +101,7 @@ $script->add("document.getElementById('prwb-1').style.display='inline'; mk('mkt'
 //spy
 if ($loged == 1) {
 	if (!$v_id) {
-		db_query('INSER INTO `hist` SET `pid` = %d, `who` = %s, `date` = %d', $post_id, $usr->login, time());
+		db_query('INSERT INTO `hist` SET `pid` = %d, `who` = %s, `date` = %d', $post_id, $usr->login, time());
 	} else {
 		db_query('UPDATE `hist` SET `date` = %s WHERE `id` = %d', time(), $v_id);
 	}
