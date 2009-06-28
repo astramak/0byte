@@ -71,7 +71,7 @@ function plugin_prerender($plugin) {
  * @param string $name
  */
 function init_plugin($name) {
-    global $block_plugins;
+    global $block_plugins,$lib_plugins;
     include('plugins/'.$name.'/plugin.php');
     $plugin['name']=$name;
     $plugin['type']=$type;
@@ -91,6 +91,9 @@ function init_plugin($name) {
         case 'block':
             $block_plugins[]=$plugin;
             break;
+        case 'lib':
+            $lib_plugins[]=$plugin;
+            break;
     }
 }
 /**
@@ -104,5 +107,10 @@ function parse_plugin_array($array) {
             init_plugin($name);
         }
     }
+}
+if (@count($lib_plugins)>0) {
+        foreach($lib_plugins as $plugin) {
+            include('plugins/'.$plugin['name'].'/actions.php');
+        }
 }
 ?>
