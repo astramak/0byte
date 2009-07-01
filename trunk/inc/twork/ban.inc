@@ -1,12 +1,12 @@
 <?php
-if ($usr->lvl>=$blvl && isset($_GET['unb']) && isset($_GET['who'])) {
-	$un=1-$_GET['unb'];
-	$sql_get="UPDATE `users` SET `lck` = ".intval($un)."  WHERE `users`.`name` = '".mysql_escape_string($_GET['who'])."'";
-	#echo $sql_get;
-	$result=mysql_query($sql_get,$sql);
+$unb = request::get_get('unb');
+$who = request::get_get('who');
+if ($usr->lvl >= $blvl && strlen($unb) && $who) {
+	db_query('UPDATE users SET lck = %d WHERE name = %s', (1 - $unb), $who);
 }
-$lst=$_GET['cur'];
-$lst=str_replace("*amp","&",$lst);
-$lst=str_replace("*qw","?",$lst);
+
+$lst = request::get_get('cur');
+$lst = str_replace("*amp", "&", $lst);
+$lst = str_replace("*qw", "?", $lst);
 redirect($lst);
 ?>
