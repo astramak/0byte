@@ -1,29 +1,22 @@
 <?php
-$sl="SELECT * FROM `inblog` WHERE name = '".$usr->login."' && blogid = '".intval($_GET['id'])."'";
-$result=mysql_query($sl,$sql);
-$row = mysql_fetch_assoc($result);
-$sl="SELECT * FROM `blogs` WHERE id = '".intval($_GET['id'])."'";
-$resul=mysql_query($sl,$sql);
-$ro = mysql_fetch_assoc($resul);
-$lst="index.php?blog=".$_GET['id'];
-if ($ro['id']!=$_GET['id'] || $ro['owner']==$usr->login) {
-	redirect($lst);
-}
-if ($row['name']==$usr->login) {
-	if ($row['out']==1) {
-		$sl="UPDATE `inblog` SET `out` = '0' WHERE `inblog`.`blogid` =".intval($_GET['id'])."
-		&& `inblog`.`name` = '".$usr->login."'";
-	} else {
-		$sl="UPDATE `inblog` SET `out` = '1' WHERE `inblog`.`blogid` =".intval($_GET['id'])."
-		&& `inblog`.`name` = '".$usr->login."'";
-		#echo $sl;
-	}
-} else {
+$id = request::get_get('id');
 
-	$sl="INSERT INTO `inblog` (`blogid` ,`name` , `bname` )
-	 VALUES ( '".intval($_GET['id'])."', '".$usr->login."' , '".$ro['name']."')";
-	#echo $sl;
+$result = db_query('SELECT * FROM blogs WHERE id = %d', $id);
+$ro = db_fetch_assoc($result);
+
+if ($ro['owner'] != $usr->login) {
+	$result = db_query('SELECT * FROM inblog WHERE blogid = %d AND name = %s', $id, $usr->login);
+	$row = db_fetch_assoc($result);
+
+	if ($row['name'] == $usr->login) {
+		if ($row['out'] == 1) {
+			db_query('UPDATE inblog SET out = 0 WHERE blogid = %d', $id);
+		} else {
+			db_query('UPDATE inblog SET out = 1 WHERE blogid = %d', $id);
+		}
+	} else {
+		db_query('INSERT INTO inblog SET blogid = %d, name = %s, bname = %s', $id, $usr->login, $ro['name']);
+	}
 }
-$resul=mysql_query($sl,$sql);
-redirect($lst);
+redirect('index.php?blog=' . $id);
 ?>
