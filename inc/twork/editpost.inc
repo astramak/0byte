@@ -20,13 +20,13 @@ if (($usr->lvl > $elvl || $usr->login == $row['auth']) && (($title && $text) || 
 	tags_remove_list($row['tag']);
 
 	if ($row['tp'] == 3) {
-		db_query('UPDATE post SET lock = %d, tag = %s, blog = %s, blogid = %d, lnk = %s WHERE id = %d',
+		db_query('UPDATE post SET `lock` = %d, tag = %s, blog = %s, blogid = %d, lnk = %s WHERE id = %d',
 			$lock, $tag, $blog, $blog_id, $lnk, $post_id);
 	} else {
 		$tz = new dtxt();
 		$tz->cut($text);
 
-		db_query('UPDATE post SET title = %s, text = %s, ftext = %s, lock = %d, blog = %s, blogid = %d, tag = %s, lnk = %s WHERE id = %d',
+		db_query('UPDATE post SET title = %s, text = %s, ftext = %s, `lock` = %d, blog = %s, blogid = %d, tag = %s, lnk = %s WHERE id = %d',
 			$title, $tz->short_text, $tz->full_text, $lock, $blog, $blog_id, $tag, $lnk, $post_id);
 	}
 	redirect("post/" . $post_id);

@@ -209,7 +209,7 @@ class dtxt {
 	var $t;
 
 	function cut($text) {
-		if (strpos($a, "[cut]")) {
+		if (strpos($text, "[cut]")) {
 			$parts = explode('[cut]', $text);
 			trim_array($parts);
 			$this->short_text = $parts[0];
@@ -217,7 +217,7 @@ class dtxt {
 			// depricated
 			$this->t = $parts[0];
 			$this->o = implode('[cut]', $parts);
-		} elseif (strpos($a, "[fcut]")) {
+		} elseif (strpos($text, "[fcut]")) {
 			$parts = explode('[fcut]', $text);
 			trim_array($parts);
 			$this->short_text = $parts[0];
