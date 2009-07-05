@@ -30,13 +30,14 @@ if (isset($_GET['count'])) {
 } else {
 	$count=10;
 }
+$pg=request::get_get('pg','');
 //if (isset($_GET['frm'])) {
 //	$frm=$_GET['frm'];
 //} else {
 //	$frm=0;
 //}
 $frm=request::get_get("frm",0,0);
-if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<1) ) {
+if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2) ) {
 	$sql_get="SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY  id DESC ";
 } else
 	if (isset($_GET['tag'])) {
@@ -204,41 +205,66 @@ if ($kol<1) {
 			$k++; }
 	}
 }
-$k=1;
-echo "<div id='list'>";
+
+//echo "<div id='list'>";
 $fnd="";
 
 if (isset($_GET['fnd'])) {
 	$fnd="/".$_GET['fnd'];
 }
-if ($frm>=$count) {
-	echo "<a class='nomnm' id='prev' href='".$inser."from/".($frm-$count).$fnd."'>&#8592; </a>";
-}
-$numb=0;
-while ($kol>0 && $numb<10) {
-	if (($k-1-$frm/$count)<5 && ($k-1-$frm/$count)>-5) {
-		if ($frm==($k-1)*$count) {
-			echo "<span class='nmn'>$k</span> ";
-		} else {
-			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
-		}
-		$numb++;
-	}
-	$k++;
-	$kol-=$count;
-}
-if ($frm<($k-2)*$count) {
-	echo "<a class='nomnm' id='next' href='".$inser."from/".($frm+$count).$fnd."'> &#8594;</a>";
-}
-echo "<br />";
-$wtch=0;
-if ($frm>=5*$count) {
-	echo "<a class='nomnm' href='".$inser."from/0".$fnd."'>&#8612; Начало</a>";
-	$wtch=1;
-}
-if ($frm<($k-6)*$count) {
-	if ($wtch==1) {echo "||";}
-	echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
-}
-echo "</div>";
+echo render_pagenator($inser, $count, $kol, $frm, $fnd);
+//$prev=0;
+//$prev_url=null;
+//if ($frm>=$count) {
+////	echo "<a class='nomnm' id='prev' href='".$inser."from/".($frm-$count).$fnd."'>&#8592; </a>";
+//    $prev=1;
+//    $prev_url=$inser."from/".($frm-$count).$fnd;
+//}
+//$numb=0;
+//while ($kol>0 && $numb<10) {
+//	if (($k-1-$frm/$count)<5 && ($k-1-$frm/$count)>-5) {
+//		if ($frm==($k-1)*$count) {
+////			echo "<span class='nmn'>$k</span> ";
+//                        $current=1;
+//		} else {
+////			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
+//                        $current=0;
+//		}
+//                $numb++;
+//                $pages[]=array('current'=>$current,'number'=>$numb,'url'=>$inser."from/".(($k-1)*$count).$fnd);
+//
+//
+//	}
+//	$k++;
+//	$kol-=$count;
+//}
+//$next=0;
+//$next_url=null;
+//if ($frm<($k-2)*$count) {
+////	echo "<a class='nomnm' id='next' href='".$inser."from/".($frm+$count).$fnd."'> &#8594;</a>";
+//    $next=1;
+//    $next_url=$inser."from/".($frm+$count).$fnd;
+//}
+////echo "<br />";
+//$wtch=0;
+//$show_first=0;
+//$first_url=null;
+//if ($frm>=5*$count) {
+////	echo "<a class='nomnm' href='".$inser."from/0".$fnd."'>&#8612; Начало</a>";
+//        $show_first=1;
+//        $first_url=$inser."from/0".$fnd;
+////	$wtch=1;
+//}
+//$show_last=0;
+//$last_url=null;
+//if ($frm<($k-6)*$count) {
+////	if ($wtch==1) {echo "||";}
+//	$show_last=1;
+//        $last_url=$inser."from/".($k-2)*$count.$fnd;
+////        echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
+//}
+//echo render_template(TPL_FRAMES.'/pagenator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,
+//    'next'=>$next,'next_url'=>$next_url,'pages'=>$pages,'show_first'=>$show_first,'first_url'=>$first_url,
+//'show_last'=>$show_last,'last_url'=>$last_url));
+//echo "</div>";
 ?>
