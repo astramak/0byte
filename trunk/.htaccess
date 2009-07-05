@@ -12,6 +12,7 @@ RewriteRule ^list/blog/([^\/]*)/from/([0-9]*) all.php?wt=blogs&order=$1&from=$2 
 RewriteRule ^list/blog/([^\/]*) all.php?wt=blogs&order=$1 [L]
 RewriteRule ^list/blog all.php?wt=blogs [L]
 
+RewriteRule ^comment/([^\/]*)/from/([0-9]*) comments.php?who=$1&frm=$2 [L]
 RewriteRule ^comment/([^\/]*) comments.php?who=$1 [L]
 RewriteRule ^work/newpost/answ/([0-9]*) worked.php?wt=newpost&tp=answ&len=$1 [L]
 RewriteRule ^work/editpost/([0-9]*) worked.php?wt=editpost&post=$1 [L]

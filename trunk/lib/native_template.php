@@ -264,4 +264,69 @@ function render_new_post($type,$type_,$tp,$blogs,$len=0) {
     return render_template(TPL_FRAMES.'/new_post.tpl.php', array('type'=>$type,$type_=>'1','tp'=>$tp,
         'blogs'=>$blogs,'len'=>$len));
 }
+
+function render_pagenator($start,$count,$all_count,$current_num=0,$end=null) {
+        $k=1;
+        $pages=null;
+        $prev=0;
+        $prev_url=null;
+        if ($current_num>=$count) {
+        //	echo "<a class='nomnm' id='prev' href='".$inser."from/".($current_num-$count).$fnd."'>&#8592; </a>";
+            $prev=1;
+            $prev_url=$start."from/".($current_num-$count).$end;
+            if ($current_num-$count==0) {
+                $prev_url=$start.$end;
+            }
+        }
+        $numb=0;
+        while ($all_count>0 && $numb<10) {
+                if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
+                        if ($current_num==($k-1)*$count) {
+        //			echo "<span class='nmn'>$k</span> ";
+                                $current=1;
+                        } else {
+        //			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
+                                $current=0;
+                        }
+                        $numb++;
+                        $url=$start."from/".(($k-1)*$count).$end;
+                        if ($k-1==0) {
+                            $url=$start.$end;
+                        }
+                        $pages[]=array('current'=>$current,'number'=>$numb,'url'=>$url);
+
+
+                }
+                $k++;
+                $all_count-=$count;
+        }
+        $next=0;
+        $next_url=null;
+        if ($current_num<($k-2)*$count) {
+        //	echo "<a class='nomnm' id='next' href='".$inser."from/".($current_num+$count).$fnd."'> &#8594;</a>";
+            $next=1;
+            $next_url=$start."from/".($current_num+$count).$end;
+        }
+        //echo "<br />";
+        $wtch=0;
+        $show_first=0;
+        $first_url=null;
+        if ($current_num>=5*$count) {
+        //	echo "<a class='nomnm' href='".$inser."from/0".$fnd."'>&#8612; Начало</a>";
+                $show_first=1;
+                $first_url=$start.$end;
+        //	$wtch=1;
+        }
+        $show_last=0;
+        $last_url=null;
+        if ($current_num<($k-6)*$count) {
+        //	if ($wtch==1) {echo "||";}
+                $show_last=1;
+                $last_url=$start."from/".($k-2)*$count.$end;
+        //        echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
+        }
+        return render_template(TPL_FRAMES.'/pagenator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,
+            'next'=>$next,'next_url'=>$next_url,'pages'=>$pages,'show_first'=>$show_first,'first_url'=>$first_url,
+        'show_last'=>$show_last,'last_url'=>$last_url));
+}
 ?>

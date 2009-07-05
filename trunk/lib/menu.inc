@@ -42,14 +42,14 @@ class mel {
 		$this->show = 1;
 		switch ($this->url) {
 			case '.':
-				$new = db_result(db_query('SELECT COUNT(id) FROM post WHERE date > %d AND ratep - ratem >= %f', $dt, $to_main));
-				break;
+				$new = db_result(db_query('SELECT COUNT(id) FROM `post` WHERE date > %d AND ratep - ratem >= %f', $dt, $to_main));
+                                break;
 			case 'main':
-				$new = db_result(db_query("SELECT COUNT(id) FROM post` WHERE date > %d AND blck = 0 AND blog != 'own'", $dt));
-				break;
+				$new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid != 0", $dt));
+                                break;
 			case 'pers':
-				$new = db_result(db_query("SELECT COUNT(id) FROM post` WHERE date > %d AND blck = 0 AND blog = 'own'", $dt));
-				break;
+				$new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid = 0", $dt));
+                                break;
 			case 'lenta':
 				if ($loged==1) {
 					$where = array();
