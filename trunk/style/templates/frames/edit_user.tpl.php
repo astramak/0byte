@@ -23,6 +23,11 @@
 		<td><input type="text" name="city"
 			value="<?php echo $city; ?>" /></td>
 	</tr>
+        <tr>
+            <td>Часовой пояс</td>
+            <td><input type="text" name="timezone"
+			value="<?php echo $timezone; ?>" /></td>
+        </tr>
 	<tr>
 		<td>Сайт</td>
 		<td><input type="text" name="site"

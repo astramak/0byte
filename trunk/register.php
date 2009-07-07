@@ -53,8 +53,8 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 		}
 
 		if (request::get_post('kap') == $res) {
-			db_query('INSERT INTO users SET name = %s, mail = %s, icq = %s, jabber = %s, site = %s, lvl = %d, pwd = %s, about = %s, activ = %d',
-			$name, $mail, $icq, $jabber, $site, 0, $pwd, $about, ($eml_a ? 0 : 1));
+			db_query('INSERT INTO users SET name = %s, mail = %s, icq = %s, jabber = %s, site = %s, lvl = %d, pwd = %s, about = %s, activ = %d, timezone = %d',
+			$name, $mail, $icq, $jabber, $site, 0, $pwd, $about, ($eml_a ? 0 : 1),$server_time);
 
 			if ($eml_a==1) {
 				$to = $mail;

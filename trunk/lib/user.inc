@@ -43,7 +43,7 @@ class user {
 	var $jtext;
 	var $jname;
 	var $city;
-
+        var $timezone;
 	function rate() {
 		global $blog_r,$com_r,$post_r;
 		if ($this->uotr==0) {
@@ -100,6 +100,7 @@ class user {
 				$this->brate = $row['brate'];
 				$this->prate = $row['prate'];
 				$this->lvl = $row['lvl'];
+                                $this->timezone=$row['timezone'];
 				return true;
 			} else {
 				return false;
@@ -130,7 +131,6 @@ function login() {
 
 	$usr->login = $login;
 	$usr->pwd = md5(base64_decode($pwd));
-
 	if ($usr->check()) {
 		return(1);
 	} else {

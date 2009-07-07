@@ -18,15 +18,15 @@ include ("cfg.php");
 include ("inc/head.php");
 include("inc/top.php");
 ?>
-<div id="main">
+
 	<?php
 	if ($loged==1) {
 		include("inc/worked/".sfin($_GET['wt']).".inc");
 	} else {
-		echo "<span class='err'>У вас нет прав на посещение данной страницы!</span>";
+		echo render_error("У вас нет прав на посещение данной страницы!");
 	}
 	?>
-</div>
+
 
 <?php
 include("inc/foot.php");

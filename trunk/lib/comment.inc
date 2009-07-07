@@ -76,7 +76,7 @@ function com_echo($com,$noecho=0) {
 		$last_com_id=$com->id;
 	}
 	$cur=$cur;
-
+        $com->date+=TZ;
 	$alien=new user();
 	$alien->find($com->auth);
 	$usr = $usr;

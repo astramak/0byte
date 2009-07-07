@@ -27,13 +27,13 @@ include("inc/head.php");
 include("inc/top.php");
 ?>
 
-<div id="main"><?php 
+<?php 
 	if (isset($_GET['post'])) {
 		include("inc/spost.php");
 	} else {
 		include("inc/post.php");
 	}
-	?></div>
+	?>
 <?php
 
 include("inc/foot.php");

@@ -265,7 +265,7 @@ function render_new_post($type,$type_,$tp,$blogs,$len=0) {
         'blogs'=>$blogs,'len'=>$len));
 }
 
-function render_pagenator($start,$count,$all_count,$current_num=0,$end=null) {
+function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
         $k=1;
         $pages=null;
         $prev=0;
@@ -325,8 +325,11 @@ function render_pagenator($start,$count,$all_count,$current_num=0,$end=null) {
                 $last_url=$start."from/".($k-2)*$count.$end;
         //        echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
         }
-        return render_template(TPL_FRAMES.'/pagenator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,
+        return render_template(TPL_FRAMES.'/paginator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,
             'next'=>$next,'next_url'=>$next_url,'pages'=>$pages,'show_first'=>$show_first,'first_url'=>$first_url,
         'show_last'=>$show_last,'last_url'=>$last_url));
+}
+function render_error($text,$id=null) {
+    return render_template(TPL_FRAMES.'/error.tpl.php', array('text'=>$text,'id'=>$id));
 }
 ?>
