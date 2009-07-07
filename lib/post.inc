@@ -59,7 +59,7 @@ class post {
 }
 
 function post_echo($row, $t) {
-	global $usr,$cur,$fst_post,$loged;
+	global $usr,$cur,$fst_post,$loged,$script;
 
 	$alien = new user();
 	$a = new post($row);
@@ -106,10 +106,10 @@ function post_echo($row, $t) {
 			$action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;
 			if ($lnk==1) {
 				$ttp="checkbox";
-				echo "<script type='text/javascript'>var a_type=1;</script>";
+				$script->add("var a_type=1;");
 			} else {
 				$ttp="radio";
-				echo "<script type='text/javascript'>var a_type=2;</script>";
+				$script->add("var a_type=2;");
 			}
 			$i=0;
 			$result = db_query('SELECT * FROM `answ` WHERE cid = %d', $a->id);
@@ -139,7 +139,8 @@ function post_echo($row, $t) {
 	$array['text']=str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ;
 	$array['author']=$a->auth;
 	$array['title']=$a->title;
-	$array['date']=date('d.m.y  H:i',$a->date);
+	$array['date']=date('d.m.y  H:i',$a->date+TZ);
+//        echo TZ;
 	$array['id']=$a->id;
 	echo render_post($array);
 	return($a);

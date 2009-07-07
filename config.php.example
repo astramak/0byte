@@ -31,7 +31,7 @@ $nb_rate=0;//lvl for new blog
 $dir="/";//dir
 $eml="@localhost";//email end like @site.domain
 $eml_a=0; //e-mail activation
-
+$server_time="8";//server-GMT
 // rates borders
 $to_main=0;//rate for main page
 $blog_r=4; //user rate by blog

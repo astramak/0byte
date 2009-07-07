@@ -2,10 +2,7 @@
 include ("cfg.php");
 include ("inc/head.php");
 include("inc/top.php");
-?>
 
-
-	<?php
 	$who = request::get_get('who');
 	if (!$who) {
 		
@@ -83,6 +80,6 @@ $comments[]=array('blog'=>$blog,'blog_url'=>$blog_url,'date'=>date('d.m.y H:i',$
 		}
                 
 	}
-echo render_pagenator('comment/'.$alien->login.'/', $count,$all_count, $frm);
+echo render_paginator('comment/'.$alien->login.'/', $count,$all_count, $frm);
 include("inc/foot.php");
 ?>

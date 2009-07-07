@@ -6,7 +6,7 @@
 					<span class='ttl'>Top блогов (<a href='list/blog/'>все</a>)</span>
 					<ul id='blist'>
 						<?php foreach ($blogs as $blog): ?>
-						<li><a href='blog/<?php echo $blog['name']; ?>/'><?php echo $blog['name']; ?></a>
+						<li><a href='blog/<?php echo $blog['id']; ?>/'><?php echo $blog['name']; ?></a>
 								<?php if ($blog['rate']!=0) {?>
 							<span class='scb'>(<span class='r<?php if ($blog['rate']>0) echo 'p'; else echo 'm';?>'><?php echo $blog['rate']; ?></span>)</span>
 								<?php }?>

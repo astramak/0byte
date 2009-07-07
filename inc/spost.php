@@ -27,9 +27,9 @@ $cur=str_replace("?","*qw",$cur);
 
 $row = db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $post_id));
 if (!$row) {
-	echo "<h2>Пост не существует</h2>";
-} elseif ($row['blck']==1 && $usr->lvl<$blvl) {
-	echo "<h2>У вас недостаточно прав для просмотра данной страницы!</h2>";
+	echo render_error("Пост не существует");
+} else if ($row['blck']==1 && $usr->lvl<$blvl) {
+	echo render_error("У вас недостаточно прав для просмотра данной страницы!");
 } else {
 //spy
 	if ($loged == 1) {
@@ -37,44 +37,64 @@ if (!$row) {
 	}
 	///spy
 	$post=post_echo($row,1);
-	$ed='';
-	$unb="За";
-	if ($row['blck']==1) {
-		$unb="Раз";
-	}
-	$bls="";
+//	$ed='';
+//	$unb="За";
+//	if ($row['blck']==1) {
+//		$unb="Раз";
+//	}
+//	$bls="";
+        $allow_remove=0;
+        $blck=$row['blck'];
+        $block_url=null;
+        $remove_url=null;
 	if ($usr->lvl>=$rlvl) {
-		$bls="(<a  href='twork.php?wt=bpost&id=".$post_id."&unb=".$row['blck']."'>".$unb."блокировать</a>) (<a href='work/rmpost/".$post_id."'>Удалить</a>) ";
+            $allow_remove=1;
+            $block_url="twork.php?wt=bpost&id=".$post_id."&unb=".$row['blck'];
+            $remove_url="work/rmpost/".$post_id;
+//		$bls="(<a  href='twork.php?wt=bpost&id=".$post_id."&unb=".$row['blck']."'>".$unb."блокировать</a>) (<a href='work/rmpost/".$post_id."'>Удалить</a>) ";
 	}
+        $allow_edit=0;
 	if ($usr->login==$row['auth'] || $usr->lvl>=$elvl) {
-		$ed='(<a  href="work/editpost/'.intval($_GET['post']).'">Править</a>) '.$bls;
+            $allow_edit=1;
+//		$ed='(<a  href="work/editpost/'.intval($_GET['post']).'">Править</a>) '.$bls;
 	}
+        $allow_spy=0;
 	if ($usr->login!=$row['auth'] && $loged==1) {
+            $allow_spy=1;
 		if (strpos($post->flw,$usr->login)===false) {
-			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".$post_id."'>Отслеживать</a>)";
+                    $spyed=0;
+                    $spy_url="twork.php?wt=flw&id=".$post_id;
+//			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".$post_id."'>Отслеживать</a>)";
 		} else {
-			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".$post_id."&un=1'>Перестать отслеживать</a>)";
+                    $spyed=1;
+                    $spy_url="twork.php?wt=flw&id=".$post_id."&un=1";
+//			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".$post_id."&un=1'>Перестать отслеживать</a>)";
 		}
 	}
-	$rt="";
+//	$rt="";
 	$rate=$post->rate();
-	if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
-	else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
-	echo "<div class='bottom'>$ed<span class='rate'><a class='ratep' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur."'>+</a><span id='rp".$post->id."'>".$rt."</span><a class='ratem' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></span></div>";
-	echo "<div class='tags'>";
+//	if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
+//	else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
+//	echo "<div class='bottom'>$ed<span class='rate'><a class='ratep' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur."'>+</a>
+//<span id='rp".$post->id."'>".$rt."</span><a class='ratem' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></span></div>";
+//	echo "<div class='tags'>";
 
 	if (strlen($row['tag'])>1) {
 		$arr=split(",", $row['tag']);
 		$q=sizeof($arr);
 		for ($z=0; $z<$q; $z++) {
-			$tag = trim($arr[$z]);
-			echo "<a href='tag/".$tag."' rel='tag'>".$tag."</a>   ";
+			$tags[] = trim($arr[$z]);
+//			echo "<a href='tag/".$tag."' rel='tag'>".$tag."</a>   ";
 		}
 
 	}
 
-	echo "</div>";
-
+//	echo "</div>";
+        echo render_template(TPL_FRAMES.'/single_post.tpl.php', array('tags'=>$tags,
+            'allow_edit'=>$allow_edit,'allow_remove'=>$allow_remove,'allow_spy'=>$allow_spy,
+        'spy_url'=>$spy_url,'spyed'=>$spyed,'block_url'=>$block_url,'blocked'=>$blck,
+    'rate'=>$rate,'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
+'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur));
 	$result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = 0 ORDER BY id', $post_id);
 	echo "<a id='cm'></a><div id='cmn'>";
 	if (!db_num_rows($result)) {

@@ -24,6 +24,7 @@ define('TPL_FRAMES', TPL_ROOT . '/frames');
 define('TPL_PM', TPL_ROOT . '/pm');
 define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_BOTTOM',TPL_ROOT.'/bottom');
+define('TPL_POST_LIST',TPL_ROOT.'/post_list');
 define('TPL_MAIN', TPL_ROOT);
 
 //lib load
