@@ -92,7 +92,15 @@ while ($row = db_fetch_assoc($result)) {
 echo render_online_and_new($onlines, $news);
 
 $scr='var ulist=document.getElementById("ulister").innerHTML;
-	var blist=document.getElementById("blist").innerHTML;';
+	var blist=document.getElementById("blist").innerHTML;
+if (document.getElementById("ped")) {
+var pd=document.getElementById("ped").innerHTML; } else {
+var pd=null;
+}
+if (document.getElementById("ced")) {
+var cd=document.getElementById("ced").innerHTML; } else {
+var cd=null;
+}';
 $e=0;
 if (isset($_SESSION['tp1'])) {
 	if ($_SESSION['tp1']=='pst') {
