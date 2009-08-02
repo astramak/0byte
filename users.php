@@ -157,6 +157,11 @@ $allow_block=0;
 //			echo "<br /><br /><a href='twork.php?wt=ban&who=".$name."&cur=".$cur."&unb=".$un."'>".$unh."блокировать</a>";
 		}
 //                "twork.php?wt=ban&who=".$name."&cur=".$cur."&unb=".$un
+                if ($alien->check_lock()) {
+                    $block_url="twork.php?wt=ban&who=".$name."&cur=".$cur."&unb=1";
+                } else {
+                    $block_url="work/block/user/".$name;
+                }
                 	echo render_template(TPL_FRAMES.'/user.tpl.php', array('name'=>$alien->login,
                             'avatar'=>$avatar,'avatar_url'=>$avatar_url,'use_micro'=>$use_micro,
                         'blocked'=>$alien->lck,'lvl'=>$alien->lvl,'hide_mail'=>$alien->hml,
@@ -164,7 +169,7 @@ $allow_block=0;
                 'rate'=>$alien->rate(),'ratep_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur,
             'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur,
         'about'=>$about,'blogs'=>$blogs,'friends'=>@$friends,'is_friend'=>$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
-    'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>"work/block/user/".$name,
+    'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>$block_url,
 'owner'=>$own_profile));
 	}
 
