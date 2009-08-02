@@ -16,7 +16,6 @@
  */
 $index=1;
 include("cfg.php");
-
 $ajax = request::get_get('ajax');
 if ($ajax) {
 	include("inc/ajax/" . sfin($ajax) . ".inc");

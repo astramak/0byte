@@ -92,7 +92,7 @@ if (!$row) {
 //	echo "</div>";
         echo render_template(TPL_FRAMES.'/single_post.tpl.php', array('tags'=>$tags,
             'allow_edit'=>$allow_edit,'allow_remove'=>$allow_remove,'allow_spy'=>$allow_spy,
-        'spy_url'=>$spy_url,'spyed'=>$spyed,'block_url'=>$block_url,'blocked'=>$blck,
+        'spy_url'=>@$spy_url,'spyed'=>@$spyed,'block_url'=>$block_url,'blocked'=>$blck,
     'rate'=>$rate,'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
 'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur));
 	$result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = 0 ORDER BY id', $post_id);

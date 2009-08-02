@@ -25,7 +25,13 @@ function strt() {
 			document.links[i].href = "javascript:ifrnd('twork.php"+document.links[i].search+"')";
 		} else if (document.links[i].href.indexOf('twork.php?wt=flw')+1) {
 			document.links[i].href = "javascript:x_r('twork.php"+document.links[i].search+"&json=1','f')";
-		}
+		} else if (document.links[i].href.indexOf('work/block/user/')+1) {
+//                        re=/work\/block\/user\//;
+//			var arr=re.exec(document.links[i].href);
+                var txt= document.links[i].href.replace(/(.*?)\/work\/block\/user\//,'');
+                        
+                        document.links[i].href="javascript:cr(); x_r('ajax/editor?type=block&fr="+txt+"&el=user','box');"
+                }
 	}
 
 	if (document.getElementById("lgin")) {
@@ -62,6 +68,14 @@ function r_s(xrs,xs,xrt,tp) {
 
 			if (jr) {
 				if (!jr.err) {
+                                        if (tp=="box") {
+                                            if (jr.clean) {
+                                                document.getElementById(jr.id).innerHTML=jr.content;
+                                            } else {
+                                                document.getElementById(jr.id).innerHTML=jr.content;
+                                            }
+                                            //put cache here
+                                        } else
 					if (tp=="p") {
 						if (parseInt(jr.rate)>0) {
 							jr.rate="<span class='rp'>"+jr.rate+"</span>";
@@ -273,4 +287,10 @@ function to_(e) {
 			upd_ls();
 		}
 	}
+}
+function make_cause(type,url) {
+    cr();
+    if (type=='user_block') {
+        document.getElementById('mn').innerHTML="<h3>Причина блокировки пользователя</h3>";
+    }
 }

@@ -58,19 +58,7 @@ $use_micro=0;
                         $micro_url="http://".$src.".com/".$alien->jname;
 //			echo "<span class='jst'>".$alien->jname."@".$src.": ".$alien->jtext."</span>";
 		}
-//                $blocked=0;
-//		if ($alien->lck==1) { echo "<h3>Пoльзователь заблокирован</h3>";
-//			$blocked=1; #$unh="Раз";
-//		}
-//		if ($alien->hml==0) {
-//                    $ml="<a href='mailto:".$alien->mail."' class='email'>".$alien->mail."</a>";} else {$ml="Скрыт";}
-//                }
-//		$rate=$alien->rate();
-//		$rt="";
-//		if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
-//		elseif ($rate<0) {$rt="<span class='rm'>".$rate."</span>";}
-//		else {$rt=0;}
-//		$jab="";
+
 $jabber['set']=0;
 $city['set']=0;
 $site['set']=0;
@@ -94,7 +82,6 @@ $lvl['set']=0;
                     $site['text']=$alien->site;
 //			$siteq="<tr><td>Сайт</td><td><noindex><a href='".$alien->site."' rel='nofollow'>".$alien->site."</a></noindex></td></tr>";
 		}
-//		$icq="";
 		if ($alien->icq) {
                     $icq['set']=1;
                     $icq['text']=$alien->icq;
@@ -164,19 +151,20 @@ $lvl['set']=0;
 //				}
 			}
 		}
-$allow_block=1;
+$allow_block=0;
 		if ($usr->lvl >= $blvl) {
                     $allow_block=1;
 //			echo "<br /><br /><a href='twork.php?wt=ban&who=".$name."&cur=".$cur."&unb=".$un."'>".$unh."блокировать</a>";
 		}
+//                "twork.php?wt=ban&who=".$name."&cur=".$cur."&unb=".$un
                 	echo render_template(TPL_FRAMES.'/user.tpl.php', array('name'=>$alien->login,
                             'avatar'=>$avatar,'avatar_url'=>$avatar_url,'use_micro'=>$use_micro,
                         'blocked'=>$alien->lck,'lvl'=>$alien->lvl,'hide_mail'=>$alien->hml,
                     'mail'=>$alien->mail,'icq'=>$icq,'jabber'=>$jabber,'site'=>$site,'city'=>$city,
                 'rate'=>$alien->rate(),'ratep_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur,
             'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur,
-        'about'=>$about,'blogs'=>$blogs,'friends'=>$friends,'is_friend'=>$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
-    'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>"twork.php?wt=ban&who=".$name."&cur=".$cur."&unb=".$un,
+        'about'=>$about,'blogs'=>$blogs,'friends'=>@$friends,'is_friend'=>$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
+    'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>"work/block/user/".$name,
 'owner'=>$own_profile));
 	}
 

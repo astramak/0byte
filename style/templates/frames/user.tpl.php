@@ -46,11 +46,11 @@ if ($city['set']) {?>
     </td></tr>
 <tr><td><a href='auth/<?php echo $name; ?>/'>Всего постов</a></td><td><a href='auth/<?php echo $name; ?>/'><?php echo $post_count; ?></a></td></tr>
 <tr><td><a href='comment/<?php echo $name; ?>/'>Коментариев</a></td><td><a href='comment/<?php echo $name; ?>/'><?php echo $comment_count; ?></a></td></tr>
-<tr><td>Друзья</td><td>
+<?php if (@$friends) { ?><tr><td>Друзья</td><td>
         <?php foreach ($friends as $friend) {?>
             <a href='user/<?php echo $friend; ?>/'><?php echo $friend; ?></a>
         <?php } ?>
-    </td></tr>
+    </td></tr> <?php } ?>
 </table><br />
 <?php if ($owner) {?>
     <br /><a href="work/edituser">Редактировать личные данные</a>
