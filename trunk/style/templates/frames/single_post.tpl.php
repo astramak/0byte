@@ -26,7 +26,7 @@
     <a class='ratem' href='<?php echo $ratem_url; ?>'>&ndash;</a>
 </span></div>
 <div class='tags'>
-    <?php foreach ($tags as $tag)  { ?>
+    <?php if ($tags) foreach ($tags as $tag)  { ?>
         <a href='tag/<?php echo $tag; ?>' rel='tag'><?php echo $tag; ?></a>
     <?php } ?>
 </div>

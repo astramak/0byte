@@ -25,6 +25,7 @@ define('TPL_PM', TPL_ROOT . '/pm');
 define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_BOTTOM',TPL_ROOT.'/bottom');
 define('TPL_POST_LIST',TPL_ROOT.'/post_list');
+define('TPL_EDITOR',TPL_ROOT.'/editor');
 define('TPL_MAIN', TPL_ROOT);
 
 //lib load
@@ -60,7 +61,7 @@ $pg = request::get_get('pg');
 //if (!request::get_get('debug')) ini_set('display_errors', 0);
 
 $usr = new user();
-//ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 function crl($a) {
 	if ($a==0) {
 		echo '<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>';

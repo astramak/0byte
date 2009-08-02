@@ -39,22 +39,26 @@ function insert(aTag, eTag,form,el) {
 
 function cr_d(fr,el) {
 	cr();
-	document.getElementById('mn').innerHTML="<h3>Ссылка</h3>" +
-	"<form onsubmit=\"urla(this,'"+fr+"','"+el+"'); return false;\"><label>Адрес <input type='text' name='url' /></label>" +
-	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
+//        alert('ajax/editor?type=link&fr='+fr+'&el='+el);
+        x_r('ajax/editor?type=link&fr='+fr+'&el='+el,'box');
+//	document.getElementById('mn').innerHTML="<h3>Ссылка</h3>" +
+//	"<form onsubmit=\"urla(this,'"+fr+"','"+el+"'); return false;\"><label>Адрес <input type='text' name='url' /></label>" +
+//	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 }
 function code_d(fr,el) {
 	cr();
-	document.getElementById('mn').innerHTML="<h3>Код</h3>" +
-	"<form onsubmit=\"codea(this,'"+fr+"','"+el+"'); return false;\"><label>Язык для подсветки: <input type='text' name='code' /></label>" +
-	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
+        x_r('ajax/editor?type=code&fr='+fr+'&el='+el,'box');
+//	document.getElementById('mn').innerHTML="<h3>Код</h3>" +
+//	"<form onsubmit=\"codea(this,'"+fr+"','"+el+"'); return false;\"><label>Язык для подсветки: <input type='text' name='code' /></label>" +
+//	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 }
 function img_d(fr,el) {
 	cr();
-	document.getElementById('mn').innerHTML="<h3>Изображение</h3>" +
-	"<form onsubmit=\"imga(this,'"+fr+"','"+el+"'); return false;\"><label>Адрес <input type='text' name='url' /></label>" +
-	"<label>Текст <input type='text' name='alt' /></label>" +
-	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
+        x_r('ajax/editor?type=image&fr='+fr+'&el='+el,'box');
+//	document.getElementById('mn').innerHTML="<h3>Изображение</h3>" +
+//	"<form onsubmit=\"imga(this,'"+fr+"','"+el+"'); return false;\"><label>Адрес <input type='text' name='url' /></label>" +
+//	"<label>Текст <input type='text' name='alt' /></label>" +
+//	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 
 }
 
@@ -85,14 +89,16 @@ function quote(fr,el) {
 var last=null;
 var cmn=null;
 function doit(id,lvl) {
+//    var last;
 	if (loged==1) {
 		if (!document.getElementById("f"+id)) {
+                  
 			if (last!=null) {
 				document.getElementById("f"+last).style.display="none";
 				document.getElementById("wy"+last).style.display="none";
 				cmn=document.getElementById("f"+last).text.value;
 			}
-
+                        last=id;
 			document.getElementById("cmnt"+id).innerHTML+="<div class='cprv' id='cprv"+id+"'></div><div class='inpt' id='wy"+id+"'></div>"+"<form onsubmit='scm(this,\""+
 			id+"\",\""+lvl+"\"); klcprv("+id+"); return false;' id='f"+
 			id+"' name='f"+id+"'><textarea onkeypress='if (ce(event)) {scm(this.form,\""+id+"\",\""+lvl+"\"); klcprv("+id+"); } do_key(this.form,\"f"+id+"\",event);' onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"f"+id+"\",event);}'  name='text' rows='10' cols='80'></textarea><br />" +
@@ -105,7 +111,7 @@ function doit(id,lvl) {
 			if (prw_id!=0) {
 				klcprv(prw_id);
 			}
-			last=id;
+			
 		} else if (document.getElementById("f"+id).style.display=="none") {
 			document.getElementById("f"+last).style.display="none";
 			document.getElementById("wy"+last).style.display="none";
@@ -153,17 +159,19 @@ function nrm(a) {
 }
 function main_h() {
 	if (!document.getElementById('m-com')) {
+               
 		newi=document.createElement("a");
 		newi.innerHTML="Комментировать пост!";
 		newi.id='m-com';
 		newi.href="javascript:main_a()";
 		document.getElementById('mkt').style.display="none";
 		document.getElementById('com').style.display="none";
-		document.getElementById('main').insertBefore(newi,document.getElementById('mkt'));
+		document.getElementById('it').insertBefore(newi,document.getElementById('mkt'));
 		if (document.getElementById("com").text.value!=null) {
 			cmn=document.getElementById("com").text.value;
 			document.getElementById("com").text.value=null;
 		}
+                 
 	} else {
 		document.getElementById('mkt').style.display="none";
 		document.getElementById('com').style.display="none";
@@ -177,7 +185,9 @@ function main_h() {
 function main_a() {
 	document.getElementById('mkt').style.display="block";
 	document.getElementById('com').style.display="block";
-	document.getElementById('m-com').style.display="none";	
+	if (document.getElementById('m-com')) {
+            document.getElementById('m-com').style.display="none";
+        }
 	if (last!=null) {
 		document.getElementById("f"+last).style.display="none";
 		document.getElementById("wy"+last).style.display="none";
@@ -204,17 +214,19 @@ function li_a(a,id,fg) {
 }
 function list(id,fg) {
 	cr();
-	document.getElementById('mn').innerHTML="<h3>Список</h3><form id='list' onsubmit=\"li_a(this,'"+id+"','"+fg+"'); return false;\">" +
-	"<label><input type='radio' value='ul' name='lst' onClick=\"sli='ul';\" checked />Ненумерованный</label>" +
-	"<label><input type='radio' value='ol' name='lst' onClick=\"sli='ol';\" />Нумерованный</label><br />" +
-	"<input type='hidden' name='nm' value='1' />" +
-	"<label id='n1'><input type='text' id='na1' /><br /></label>" +
-	"<input type='button' id='ad' onClick='nadd(this.form)' value='Добавить' />"+
-	"<input type='button' id='rm' onClick='nrm(this.form)' value='Удалить' />"+
-	"<input type='submit' value='Создать' />" +
-	"<input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
+        x_r('ajax/editor?type=list&fr='+id+'&el='+fg,'box');
+//	document.getElementById('mn').innerHTML="<h3>Список</h3><form id='list' onsubmit=\"li_a(this,'"+id+"','"+fg+"'); return false;\">" +
+//	"<label><input type='radio' value='ul' name='lst' onClick=\"sli='ul';\" checked />Ненумерованный</label>" +
+//	"<label><input type='radio' value='ol' name='lst' onClick=\"sli='ol';\" />Нумерованный</label><br />" +
+//	"<input type='hidden' name='nm' value='1' />" +
+//	"<label id='n1'><input type='text' id='na1' /><br /></label>" +
+//	"<input type='button' id='ad' onClick='nadd(this.form)' value='Добавить' />"+
+//	"<input type='button' id='rm' onClick='nrm(this.form)' value='Удалить' />"+
+//	"<input type='submit' value='Создать' />" +
+//	"<input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 }
 function mk(id,fr) {
+//     x_r('ajax/editor?type=lis&fr='+id+'&el='+fg,'box');
 	document.getElementById(id).innerHTML="<a class='tdx' href='javascript:insert(\"[b]\",\"[/b]\",\""+fr+"\",\"text\")'><b>Ж</b></a>"+
 	" <a class='tdx' href='javascript:insert(\"[i]\",\"[/i]\",\""+fr+"\",\"text\")'><i>К</i></a>"+
 	" <a class='tdx' href='javascript:insert(\"[u]\",\"[/u]\",\""+fr+"\",\"text\")'><u>Ч</u></a>"+
@@ -312,25 +324,26 @@ function col(c,w) {
 
 function clr(id,fg) {
 	cr();
-	document.getElementById('mn').innerHTML='<table><tr><td>'+
-	'<div id="ex" style="width: 50px; height: 50px; "></div></td><td>'+
-	'<form onsubmit="clr_s(\''+id+'\',\''+fg+'\'); return false;">'+
-	'<table><tr><td>Красный</td><td>'+
-	'<input onClick="col(\'r\',1)" type="button" value="+" />'+
-	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="r" value="0" />'+
-	'<input onClick="col(\'r\',0)" type="button" value="&ndash;" />'+
-	'</td></tr><tr><td>Зелёный</td><td>'+
-	'<input onClick="col(\'g\',1)" type="button" value="+" />'+
-	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="g" value="0" />'+
-	'<input onClick="col(\'g\',0)" type="button" value="&ndash;" />'+
-	'</td></tr><tr><td>Голубой</td><td>'+
-	'<input onClick="col(\'b\',1)" type="button" value="+" />'+
-	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="b" value="0" />'+
-	'<input onClick="col(\'b\',0)" type="button" value="&ndash;" />'+
-	'</td></tr></table>'+
-	'<input type="submit" value="Выбрать" />' +
-	'<input type="button" value="Отмена" onClick="a_cr()" />' +
-	'</form> </td></tr></table><br />';
+        x_r('ajax/editor?type=color&fr='+id+'&el='+fg,'box');
+//	document.getElementById('mn').innerHTML='<table><tr><td>'+
+//	'<div id="ex" style="width: 50px; height: 50px; "></div></td><td>'+
+//	'<form onsubmit="clr_s(\''+id+'\',\''+fg+'\'); return false;">'+
+//	'<table><tr><td>Красный</td><td>'+
+//	'<input onClick="col(\'r\',1)" type="button" value="+" />'+
+//	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="r" value="0" />'+
+//	'<input onClick="col(\'r\',0)" type="button" value="&ndash;" />'+
+//	'</td></tr><tr><td>Зелёный</td><td>'+
+//	'<input onClick="col(\'g\',1)" type="button" value="+" />'+
+//	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="g" value="0" />'+
+//	'<input onClick="col(\'g\',0)" type="button" value="&ndash;" />'+
+//	'</td></tr><tr><td>Голубой</td><td>'+
+//	'<input onClick="col(\'b\',1)" type="button" value="+" />'+
+//	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="b" value="0" />'+
+//	'<input onClick="col(\'b\',0)" type="button" value="&ndash;" />'+
+//	'</td></tr></table>'+
+//	'<input type="submit" value="Выбрать" />' +
+//	'<input type="button" value="Отмена" onClick="a_cr()" />' +
+//	'</form> </td></tr></table><br />';
 }
 function clr_s(id,fg) {
 	insert("[color:"+selcol+"]","[/color]",fg,"text");

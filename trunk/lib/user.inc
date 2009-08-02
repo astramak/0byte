@@ -44,6 +44,7 @@ class user {
 	var $jname;
 	var $city;
         var $timezone;
+        var $block_cause;
 	function rate() {
 		global $blog_r,$com_r,$post_r;
 		if ($this->uotr==0) {
@@ -62,6 +63,7 @@ class user {
 			foreach ($row as $key => $val) {
 				$this->{$key} = $val;
 			}
+                        $this->check_lock();
 			return true;
 		}
 		return false;
@@ -87,12 +89,25 @@ class user {
 	function looser($name) {
 		return $this->find($name);
 	}
-
+// AND lck = 0
+        function check_lock() {
+            $row = db_fetch_assoc(db_query('SELECT *  FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
+            if ($row['end']<time()) {
+                db_query("DELETE FROM `block_user` WHERE `id` = %d LIMIT 1",$row['id']);
+                db_query("UPDATE `users` SET `lck` = '0' WHERE `name` = %s LIMIT 1 ",$this->login);
+                $this->lck=0;
+                return false;
+            } else {
+                $this->lck=1;
+                $this->block_cause=$row['cause'];
+                return true;
+            }
+        }
 	function check() {
 		if ($this->cheked != 1) {
-			$result = db_query('SELECT * FROM users WHERE name = %s AND lck = 0', $this->login);
+			$result = db_query('SELECT *  FROM `users` WHERE `name` = %s ', $this->login);
 			$row = db_fetch_assoc($result);
-			if ($row && strcmp($row['pwd'], $this->pwd) == 0 && $row['activ'] == 1) {
+			if ($row && strcmp($row['pwd'], $this->pwd) == 0 && $row['activ'] == 1 && !$this->check_lock()) {
 				$this->cheked = 1;
 				$this->ratep = $row['ratep'];
 				$this->ratem = $row['ratem'];
@@ -101,9 +116,15 @@ class user {
 				$this->prate = $row['prate'];
 				$this->lvl = $row['lvl'];
                                 $this->timezone=$row['timezone'];
+                                $this->lck=0;
 				return true;
 			} else {
+//                            if ($row['lck']==1) {
+//                                $this->lck=1;
+//                                $this->block_cause=db_result(db_query('SELECT `cause`  FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
+//                            }
 				return false;
+
 			}
 		} else {
 			return true;
