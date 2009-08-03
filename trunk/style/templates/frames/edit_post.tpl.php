@@ -1,4 +1,4 @@
-<h3>Редактирование сообщения</h3>
+<h3><?php if ($draft) { ?>Черновик<?php } else { ?>Редактирование сообщения<?php } ?></h3>
 <form id="new" name="new" method="post" action="<?php echo $url;?>">
 <?php if (@$answer) { ?>
     <b>В опросах запрещено изменять вопрос и ответы, для редактирования доступны только теги и доступ!</b>
@@ -31,7 +31,12 @@
     <tr><td>Ссылка</td><td><input type='text' name='lnk' value='<?php echo $lnk; ?>' /></td></tr>
     <?php } ?>
 </table>
-<?php } ?>
+<?php }
+if ($draft) {
+    ?><input type='hidden' name='draft' value='1' /><?php
+}
+?>
 <input type="checkbox" name="lock" <?php echo $status; ?> /> Только для друзей/собложников<br />
 		<input type="submit" value="Запостить!" />
+                <input type="submit" value="Сохранить<?php if (!$draft) {?> как черновик<?php } ?>!" />
 		</form>

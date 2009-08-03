@@ -17,7 +17,7 @@
 $e = 0;
 $tarr = array();
 
-$result = db_query('SELECT * FROM post WHERE blck = 0 ORDER BY id DESC LIMIT 16');
+$result = db_query('SELECT * FROM `post` WHERE `blck` = 0 && `lock` = 0 ORDER BY id DESC LIMIT 16');
 $e += db_num_rows($result);
 while ($row = db_fetch_assoc($result)) {
 	$row['type'] = 'post';

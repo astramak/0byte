@@ -1,4 +1,4 @@
-<h3>Создание <?php
+<?php
     $tp=request::get_get("tp",0,0);
 //if ($tp==0)
 if (strncmp($tp,'lnk',3)==0) {
