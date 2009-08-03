@@ -250,9 +250,9 @@ function render_answer($array,$answered,$id=0,$loged=1,$action="") {
     return render_template(TPL_FRAMES.'/answer.tpl.php',
         array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));
 }
-function render_edit_post($title,$blogs,$url,$type,$tags,$status,$text=null,$lnk=null) {
+function render_edit_post($title,$blogs,$url,$type,$tags,$status,$text=null,$lnk=null,$draft=null) {
     return render_template(TPL_FRAMES.'/edit_post.tpl.php', array('title'=>$title,'blogs'=>$blogs,
-        'url'=>$url,$type=>'1','text'=>$text,'tags'=>$tags,'lnk'=>$lnk,'status'=>$status));
+        'url'=>$url,$type=>'1','text'=>$text,'tags'=>$tags,'lnk'=>$lnk,'status'=>$status,'draft'=>$draft));
 }
 function render_edit_user($array) {
     return render_template(TPL_FRAMES.'/edit_user.tpl.php', $array);

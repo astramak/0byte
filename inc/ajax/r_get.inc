@@ -30,7 +30,7 @@ if (isset ($_GET['noo'])) {
 	}
 } elseif (isset($_GET['pst'])) {
 	$_SESSION['tp1']='pst';
-	$sql_get="SELECT * FROM `post` WHERE `blck`='0' ".$aft." ORDER BY id DESC LIMIT ".$limit;
+	$sql_get="SELECT * FROM `post` WHERE `blck`='0' && `lock` = 0 ".$aft." ORDER BY id DESC LIMIT ".$limit;
 	$result=mysql_query($sql_get,$GLOBALS['sql']);
 	while ($row = mysql_fetch_assoc($result)) {
 		$arr[$i]['id']=$row['id'];

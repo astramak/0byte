@@ -1,18 +1,27 @@
 <?php
-$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
-$result=mysql_query($sql_get,$sql);
-if (!$result) {
-	echo  mysql_error();
+//$sql_get="SELECT * FROM `post` WHERE id = '".intval($_GET['post'])."'   ";
+if (request::get_get('draft',0)) {
+    $row=db_fetch_assoc(db_query('SELECT * FROM `draft` WHERE id = %d',request::get_get('post')));
+    $row['blogid']=$row['blog'];
+} else {
+    $row=db_fetch_assoc(db_query('SELECT * FROM `post` WHERE id = %d',request::get_get('post')));
 }
-$row = mysql_fetch_assoc($result);
 if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
-	$zz=$row['ftext'];
-	if (strpos($row['text'],"[fcut]")) {
-		$zz=$row['text'].$row['ftext'];
-	}
-	$h="";
+	if (!request::get_get('draft',0)) {
+            $zz=$row['ftext'];
+            if (strpos($row['text'],"[fcut]")) {
+                    $zz=$row['text'].$row['ftext'];
+            }
+        } else {
+            $zz=$row['text'];
+        }
+	$h=null;
 	if ($row['lock']==1) {
 		$h='checked="checked"';
+	}
+        $mng=null;
+        if ($row['lnk']==1) {
+		$mng='checked="checked"';
 	}
    		$sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
 		$resul=mysql_query($sql_get,$sql);
@@ -33,8 +42,13 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
         } else  if ($row['tp']==1) {
             $type='link';
         }
-        echo render_edit_post(utext($row['title']), $blogs, "twork.php?wt=editpost&post=".intval($_GET['post']),
-        $type, $row['tag'], $h, $zz, $row['lnk']);
+        if ($row['tp']==3 && request::get_get('draft',0)) {
+            $answers = explode(' ', $row['text']);
+            trim_array($answers);
+            echo render_template(TPL_FRAMES.'/draft_answer.tpl.php', array('url'=>"twork.php?wt=editpost&post=".intval(request::get_get('post')),
+                'title'=>$row['title'],'blogs'=>$blogs,'len'=>count($answers),'answers'=>$answers,'tag'=>$row['tag'],'status'=>$h,'mng'=>$mng));
+        } else echo render_edit_post(utext($row['title']), $blogs, "twork.php?wt=editpost&post=".intval(request::get_get('post')),
+        $type, $row['tag'], $h, $zz, $row['lnk'],$draft=request::get_get('draft',0));
 ////	echo '
 ////		<h3>Редактирование сообщения</h3>';
 ////	echo '<form id="new" name="new" method="post" action="twork.php?wt=editpost&post='.intval($_GET['post']).'">';
@@ -83,7 +97,7 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 //		<input type="submit" value="Запостить!" />
 //		</form>';
 } else {
-	echo "<h3>Это не ваш пост!</h3>";
+	render_error("Это не ваш пост!");
 }
 $script->add(`mk('mq','new');
 document.getElementById("otxt").innerHTML+="<br /><a href='javascript:prv()'>Предпросмотр</a>";

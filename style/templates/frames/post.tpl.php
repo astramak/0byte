@@ -1,6 +1,6 @@
 <div class='<?php echo $first ? 'fst_top' : 'top' ?>'>
-	<span class='date'><?php echo $date; ?></span>
-	<?php if (!$not_in_blog) {?>
+	<?php if (!$draft) { ?><span class='date'><?php echo $date; ?></span>
+	<?php } if (!$not_in_blog) {?>
     <a class='auth' href='user/<?php echo $author; ?>/'><?php echo $author; ?></a>
 	<?php }?>
 </div>
@@ -21,7 +21,12 @@
 		<?php } else {?>
 		<a class='blog' href='blog/<?php echo $blog_id; ?>/'><?php echo $blog_name; ?></a>
 		<?php } ?> &#8212;
-		<?php if ($type=='link') {?>
+		<?php
+                if ($draft) {
+                 ?>
+		<a href='draft/<?php echo $id; ?>/' class='blog'><?php echo $title;?></a>
+		<?php
+                } else if ($type=='link') {?>
 		<a href='<?php echo $link; ?>' rel='nofollow' class='blog'><?php echo $title; ?></a>
 		<?php } else { ?>
 		<a href='post/<?php echo $id; ?>/' class='blog'><?php echo $title;?></a>

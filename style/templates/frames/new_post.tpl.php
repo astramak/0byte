@@ -43,4 +43,5 @@
 	</tr>
 </table>
 <input type="checkbox" name="lock" /> Только для друзей/собложников<br />
-<input type="submit" value="Запостить!" /></form>
+<input type="submit" value="Запостить!" />
+<input type="submit" value="Сохранить!" name="draft" /></form>

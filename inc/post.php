@@ -25,6 +25,7 @@ $blck="&& blck = '0'";
 if ($usr->lvl>=$rlvl) {
 	$blck="";
 }
+//$blck.=" && draft = 0";
 if (isset($_GET['count'])) {
 	$count=$_GET['count'];
 } else {
@@ -36,10 +37,15 @@ $pg=request::get_get('pg','');
 //} else {
 //	$frm=0;
 //}
+$draft=request::get_get('draft',0);
 $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2) ) {
 	$sql_get="SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY  id DESC ";
-} else
+}
+else if ($draft && $loged) {
+    $sql_get="SELECT * FROM `draft` WHERE auth = '".$usr->login."' ORDER BY  id DESC ";
+}
+else
 	if (isset($_GET['tag'])) {
 		$sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
 			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";
@@ -230,7 +236,7 @@ if ($kol<1 && !isset($_GET['blog'])) {
 			if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
 				echo "<a id='hl'></a>";
 			}
-			$posts[$k]=post_echo($row,0);
+			$posts[$k]=post_echo($row,0,$draft);
 //			$rate=$posts[$k]->rate();		$rt="";
 //			if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
 //			else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
@@ -245,7 +251,7 @@ if ($kol<1 && !isset($_GET['blog'])) {
                             'id'=>$posts[$k]->id,'comments'=>klist($posts[$k]->id),
                         'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=p&amp;from=".$cur,
                     'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=m&amp;from=".$cur,
-                'rate'=>$posts[$k]->rate()));
+                'rate'=>$posts[$k]->rate(),'draft'=>$draft));
 //			echo "<div class='bottom'>".$full."<span class='rate'>".klist($posts[$k]->id);
 //			echo "<noindex><a class='ratep' rel='nofollow' href='twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=p&amp;from=".$cur."'>+</a>
 //            </noindex><span id='rp".$posts[$k]->id."'>".$rt."</span><noindex><a rel='nofollow'

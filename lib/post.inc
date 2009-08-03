@@ -30,7 +30,7 @@ class post {
 	var $blck;
 	var $tp;
 	var $flw;
-
+        var $lnk;
 	function post($row = null) {
 		if ($row) $this->make($row);
 	}
@@ -58,7 +58,7 @@ class post {
 	}
 }
 
-function post_echo($row, $t) {
+function post_echo($row, $t,$draft=null) {
 	global $usr,$cur,$fst_post,$loged,$script;
 
 	$alien = new user();
@@ -68,7 +68,7 @@ function post_echo($row, $t) {
 	$bls="";
 	$array['blocked'] = $a->blck;
 	$array['avatar']=0;
-	if ($a->blog=="own") {
+	if ($a->blogid==0) {
 		$alien->find($a->auth);
 		$array['not_in_blog']=1;
 		if (strlen($alien->av)>2) {
@@ -140,8 +140,13 @@ function post_echo($row, $t) {
 	$array['author']=$a->auth;
 	$array['title']=$a->title;
 	$array['date']=date('d.m.y  H:i',$a->date+TZ);
+        $array['link']=$a->lnk;
 //        echo TZ;
 	$array['id']=$a->id;
+        if ($draft) {
+            $array['text']=gtext($txt);
+        }
+        $array['draft']=$draft;
 	echo render_post($array);
 	return($a);
 }
