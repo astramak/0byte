@@ -96,7 +96,7 @@ function post_echo($row, $t,$draft=null) {
 		$array['type']='other';
 	}
 	$answ="";
-	if ($a->is_voting()) {
+	if (!$draft && $a->is_voting()) {
 		$lnk=$row['lnk'];
 		$result = db_query('SELECT * FROM wansw WHERE who = %s AND cid = %d', $usr->login, $a->id);
 		$row = db_fetch_assoc($result);
@@ -144,7 +144,11 @@ function post_echo($row, $t,$draft=null) {
 //        echo TZ;
 	$array['id']=$a->id;
         if ($draft) {
-            $array['text']=gtext($txt);
+            if ($a->tp==3) {
+                $array['text']=null;
+            } else {
+                $array['text']=gtext($txt);
+            }
         }
         $array['draft']=$draft;
 	echo render_post($array);
