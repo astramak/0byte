@@ -78,8 +78,8 @@ if (!$row) {
 //	echo "<div class='bottom'>$ed<span class='rate'><a class='ratep' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur."'>+</a>
 //<span id='rp".$post->id."'>".$rt."</span><a class='ratem' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></span></div>";
 //	echo "<div class='tags'>";
-
-	if (strlen($row['tag'])>1) {
+        $tags=null;
+	if (strlen($row['tag'])>2) {
 		$arr=split(",", $row['tag']);
 		$q=sizeof($arr);
 		for ($z=0; $z<$q; $z++) {
@@ -94,7 +94,7 @@ if (!$row) {
             'allow_edit'=>$allow_edit,'allow_remove'=>$allow_remove,'allow_spy'=>$allow_spy,
         'spy_url'=>@$spy_url,'spyed'=>@$spyed,'block_url'=>$block_url,'blocked'=>$blck,
     'rate'=>$rate,'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
-'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur));
+'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,'remove_url'=>$remove_url));
 	$result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = 0 ORDER BY id', $post_id);
 	echo "<a id='cm'></a><div id='cmn'>";
 	if (!db_num_rows($result)) {

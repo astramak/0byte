@@ -26,7 +26,7 @@
 	<tr><td>Несколько ответов</td><td><input type='checkbox' name='mng' <?php echo $mng; ?>  /></td></tr>
         <tr><td>Только для друзей/собложников</td><td><input type="checkbox" name="lock" <?php echo $status; ?> /></td></tr>
         <tr><td>Тэги</td><td><input type="text" name="tag" class="post-tags" value="<?php echo $tag; ?>"/></td></tr>
-        <tr><td><input type="submit" value="Запостить!" />
-        <input type="submit" value="Сохранить!" name="draft" /></td></tr>
+        <tr><td><input type="submit" value="Запостить!" name='write' />
+        <input type="submit" value="Сохранить!" name="draft"  /></td></tr>
     </table>
 </form>

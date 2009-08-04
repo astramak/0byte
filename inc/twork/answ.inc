@@ -19,8 +19,7 @@ if (request::get_post('nox')) {
 	redirect($lst);
 }
 
-$resutl = db_query('SELECT * FROM post WHERE id = %d', $id);
-$row = db_fetch_assoc($result);
+$row = db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $id));
 if (!$answ && $row['lnk'] == 0) {
 	jkill();
 	redirect($lst);
@@ -34,7 +33,7 @@ if ($row['lnk'] == 1) {
 		}
 	}
 } else {
-	if ($row['cid'] == $id) {
+	if (db_num_rows(db_query('SELECT cid FROM wansw WHERE who = %s, cid = %d', $usr->login, $id))>=1) {
 		jkill();
 		redirect($lst);
 	}
