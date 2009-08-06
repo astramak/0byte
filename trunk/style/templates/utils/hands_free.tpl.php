@@ -42,7 +42,9 @@
 				href='javascript:g_plist("post")'><img src="style/img/document.gif"
 				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
 				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> 
-                <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a><?php } ?>
+                <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
+                     <a href="javascript:g_plist('draft')"><img
+                                src="style/n_img/draft.gif" alt="Черновики" /></a><?php } ?>
 			</td>
 		</tr>
 		<tr id='pf' class='sd'>
@@ -55,7 +57,9 @@
 				src="style/img/document.gif" alt="Посты" /></a> <a class="bbls"
 				href='javascript:g_plist("com")'><img
 				src="style/img/speech_bubble.gif" alt="Комментарии" /></a>
-                <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a><?php } ?>
+                <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
+                     <a href="javascript:g_plist('draft')"><img
+                                src="style/n_img/draft.gif" alt="Черновики" /></a><?php } ?>
 			</td>
 		</tr>
 		<tr id='cf' class='sd'>
@@ -68,7 +72,9 @@
 				alt="Посты" /></a> <a class="bbls" style="background: #B6B6B6;"
 				href='javascript:hplist()'><img src="style/img/speech_bubble.gif"
 				alt="Комментарии" /></a>
-                <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a><?php } ?>
+                <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
+                     <a href="javascript:g_plist('draft')"><img
+                                src="style/n_img/draft.gif" alt="Черновики" /></a><?php } ?>
 			</td>
 		</tr>
 
@@ -82,9 +88,26 @@
 				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
 				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
 				class="bbls" style="background: #B6B6B6;" href='javascript:hplist()'><img
-				src="style/n_img/eye.gif" alt="Изменения" /></a></td>
+				src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                <a href="javascript:g_plist('draft')"><img
+                                src="style/n_img/draft.gif" alt="Черновики" /></a>
+                        </td>
 		</tr>
-
+                <tr id='df' class='sd'>
+			<td class='lsd'><span class='ttl'>Черновики (<a href="draft">все</a>)</span>
+			<ul id='drlist'>
+			</ul>
+			</td>
+			<td class='rsdno'><a class="bbls"
+				href='javascript:g_plist("post")'><img src="style/img/document.gif"
+				alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+				src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
+				href='javascript:hplist()'><img
+				src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                <a href="javascript:hplist()"><img class="bbls" style="background: #B6B6B6;"
+                                src="style/n_img/draft.gif" alt="Черновики" /></a>
+                        </td>
+		</tr>
 	</tbody>
 </table>
 </div>

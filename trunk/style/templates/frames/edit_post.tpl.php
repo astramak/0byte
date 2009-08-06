@@ -38,5 +38,5 @@ if ($draft) {
 ?>
 <input type="checkbox" name="lock" <?php echo $status; ?> /> Только для друзей/собложников<br />
 		<input type="submit" value="Запостить!" <?php if ($draft) {?> name='write'<?php } ?> />
-                <input type="submit" value="Сохранить<?php if (!$draft) {?> как черновик<?php } ?>!" <?php if (!$draft) {?> name='to_draft'<?php } ?>  />
+                <?php if ($draft) { ?><input type="submit" value="Сохранить!" /><?php } ?>
 		</form>

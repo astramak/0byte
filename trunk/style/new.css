@@ -179,15 +179,15 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 	background: url('img/sb.png') repeat-x bottom;
 	padding-bottom:8px;
 }
-#plist,#clist,#alist, #blist,.ulist , #eblist{
+#plist,#clist,#alist, #blist,.ulist , #eblist, #drlist {
 	padding-left: 25px;
 	margin-top: 0px;
 	margin-bottom: 4px;
 }
-#plist,#clist, #blist,.ulist , #eblist {
+#plist,#clist, #blist,.ulist , #eblist, #drlist {
 	margin-top:8px;
 }
-#plist li,#clist li,#alist li, #blist li,.ulist li , #eblist{
+#plist li,#clist li,#alist li, #blist li,.ulist li , #eblist li, #drlist li{
 	padding-bottom: 4px;
 }
 #plist {
@@ -572,7 +572,7 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
 #eblist {
 	list-style-image:url('n_img/eye.gif');
 }
-#pf,#cf,#ef {
+#pf,#cf,#ef, #df {
 	display:none;
 }
 #shuser,#shblog {
