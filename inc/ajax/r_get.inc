@@ -24,9 +24,9 @@ if (isset($_GET['lm'])) {
 $i=0;
 if (isset ($_GET['noo'])) {
     if ($_GET['noo']==1) {
-        $_SESSION['tp1']='none';
+        $_SESSION['tp1']=0;
     } else {
-        $_SESSION['tp2']='none';
+        $_SESSION['tp2']=0;
     }
 } elseif (isset($_GET['pst'])) {
     $_SESSION['tp1']='pst';
@@ -35,7 +35,7 @@ if (isset ($_GET['noo'])) {
     while ($row = mysql_fetch_assoc($result)) {
         $arr[$i]['id']=$row['id'];
         $arr[$i]['title']=$row['title'];
-        if ($row['blog']=="own") {
+        if ($row['blogid']==0) {
             $arr[$i]['who']=$row['auth'];
             $arr[$i]['url']='user/'.$row['auth'].'/';
         } else {
@@ -57,7 +57,7 @@ if (isset ($_GET['noo'])) {
         $arr[$i]['wid']=$row['pid'];
         $arr[$i]['who']=$row['who'];
         $arr[$i]['where']=$row['title'];
-        if ($row['blog']=='own') {
+        if ($row['blogid']==0) {
             $arr[$i]['blg']=$row['auth'];
         } else {
             $arr[$i]['blg']=$row['blog'];
@@ -96,7 +96,7 @@ if (isset ($_GET['noo'])) {
         while ($row = mysql_fetch_assoc($result)) {
             $arr[$i]['id']=$row['id'];
             $arr[$i]['title']=$row['title'];
-            if ($row['blog']=="own") {
+            if ($row['blogid']==0) {
                 $arr[$i]['who']=$row['auth'];
                 $arr[$i]['url']='user/'.$row['auth'].'/';
             } else {
@@ -126,14 +126,33 @@ if (isset ($_GET['noo'])) {
 
 } else if (request::get_get('draft',0) && $loged) {
         $_SESSION['tp1']='draft';
-        $res=db_query('SELECT `id`,`title`,`auth` FROM `draft` WHERE `auth`= %s LIMIT %d ',$usr->login,$limit);
+        $res=db_query('SELECT `id`,`title`,`auth` FROM `draft` WHERE `auth`= %s ORDER BY `id` DESC LIMIT %d ',$usr->login,$limit);
         while ($row=db_fetch_assoc($res)) {
             $arr[$i]=$row;
             $arr[$i]['url']='draft/'.$row['id'];
             $arr[$i]['rate']=0;
             $i++;
         }
-    }
+    } else if (request::get_get('favourite',0) && $loged) {
+            $_SESSION['tp1']='favourite';
+            $res=db_query('SELECT `post`.`id` AS `id` , `post`.`title` AS `title`,`post`.`auth` AS `auth`,
+        `post`.`blog` AS `blog`, `post`.`blogid` AS `blogid`, `post`.`ratem` AS `ratem`, `post`.`ratep` AS `ratep`,
+        `favourite`.`who`, `favourite`.`pid` FROM `post`,`favourite` WHERE `favourite`.`who`= %s
+        && `favourite`.`pid`=`post`.`id` ORDER BY `post`.`id` DESC LIMIT %d ',$usr->login,$limit);
+            while ($row=db_fetch_assoc($res)) {
+                $arr[$i]['id']=$row['id'];
+                $arr[$i]['title']=$row['title'];
+                if ($row['blogid']==0) {
+                    $arr[$i]['who']=$row['auth'];
+                    $arr[$i]['url']='user/'.$row['auth'].'/';
+                } else {
+                    $arr[$i]['who']=$row['blog'];
+                    $arr[$i]['url']='blog/'.$row['blogid']."/";
+                }
+                $arr[$i]['rate']=$row['ratep']-$row['ratem'];
+                $i++;
+            }
+        }
 $out=new out;
 $out->arr=$arr;
 $out->num=$i;

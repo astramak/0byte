@@ -2,9 +2,18 @@ var fl_p=0; var fl_c=0; var fl_e=0;
 var fl_pid=0; var fl_cid=0;
 var fl_u=0; var fl_b=0;
 var xy=document.getElementById("alist");
+function kill_all() {
+    document.getElementById('cf').style.display="none";
+    document.getElementById('af').style.display="none";
+    document.getElementById('ef').style.display="none";
+    document.getElementById('pf').style.display="none";
+    document.getElementById('df').style.display="none";
+    document.getElementById('ff').style.display="none";
+}
 function g_plist(tp) {
     var xmlhttp = getXmlHttp();
-    if (tp=='post') {
+    if (tp=='post' || tp=='pst') {
+        tp='post';
         ttp='pst=1';
         if (fl_p==0) {
             tt="&lm=16";
@@ -15,11 +24,8 @@ function g_plist(tp) {
             nw=0;
         }
         wh=document.getElementById('plist');
-        document.getElementById('cf').style.display="none";
-        document.getElementById('af').style.display="none";
-        document.getElementById('ef').style.display="none";
+        kill_all();
         document.getElementById('pf').style.display="table-row";
-        document.getElementById('df').style.display="none";
     } else if (tp=='com') {
         ttp='com=1';
         if (fl_c==0) {
@@ -31,11 +37,8 @@ function g_plist(tp) {
             nw=0;
         }
         wh=document.getElementById('clist');
+        kill_all();
         document.getElementById('cf').style.display="table-row";
-        document.getElementById('af').style.display="none";
-        document.getElementById('ef').style.display="none";
-        document.getElementById('pf').style.display="none";
-        document.getElementById('df').style.display="none";
     } else if (tp=='top_user') {
         ttp='top_user=1';
         tt="&lm=16";
@@ -67,21 +70,24 @@ function g_plist(tp) {
             nw=0;
         }
         wh=document.getElementById('eblist');
+        kill_all();
         document.getElementById('ef').style.display="table-row";
-        document.getElementById('af').style.display="none";
-        document.getElementById('cf').style.display="none";
-        document.getElementById('pf').style.display="none";
-        document.getElementById('df').style.display="none";
     } else if (tp=='draft') {
         ttp='draft=1';
         tt="&lm=16";
         nw=1;
         wh=document.getElementById('drlist');
+        kill_all();
         document.getElementById('df').style.display="table-row";
-        document.getElementById('af').style.display="none";
-        document.getElementById('cf').style.display="none";
-        document.getElementById('pf').style.display="none";
-        document.getElementById('ef').style.display="none";
+        wh.innerHTML="";
+    } else if (tp=='favourite') {
+        nw=1;
+        tt="&lm=16";
+        ttp='favourite=1';
+        wh=document.getElementById('fvlist');
+        kill_all();
+        document.getElementById('ff').style.display="table-row";
+        wh.innerHTML="";
     }
     xmlhttp.open('GET', "ajax/r_get?"+ttp+tt, true);
     var atr="";
@@ -92,6 +98,7 @@ function g_plist(tp) {
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4) {
             var resp=eval('('+xmlhttp.responseText+')');
+     
             for (i=0;i<=resp.num-1;i++) {
                 rt="";
                 ln="";
@@ -105,8 +112,8 @@ function g_plist(tp) {
                         fl_cid=resp.arr[i].id;
                     }
                     what='<li class="celis"><a href="user/'+resp.arr[i].who+'/">'+resp.arr[i].who+'</a> &#8212; &laquo;<a href="post/'+resp.arr[i].wid+'/#cmnt'+resp.arr[i].id+'">'+resp.arr[i].blg+' / '+resp.arr[i].where+'</a>&raquo; '+rt+'</li>';
-                } else if (tp=='post'){
-                    if (resp.arr[i].id>fl_pid) {
+                } else if (tp=='post' || tp=='favourite'){
+                    if (resp.arr[i].id>fl_pid && tp!='favourite') {
                         fl_pid=resp.arr[i].id;
                     }
                     what='<li class="pelis"><a href="'+escape(resp.arr[i].url)+'">'+resp.arr[i].who+'</a> &#8212; &laquo;<a href="post/'+resp.arr[i].id+'/">'+resp.arr[i].title+'</a>&raquo; '+rt+'</li>';
@@ -134,10 +141,7 @@ function g_plist(tp) {
 }
 function hplist() {
     _touch('ajax/r_get?noo=1');
-    document.getElementById('pf').style.display="none";
-    document.getElementById('cf').style.display="none";
-    document.getElementById('ef').style.display="none";
-    document.getElementById('df').style.display="none";
+    kill_all();
     document.getElementById('af').style.display="table-row";
 }
 function hgptop() {

@@ -31,6 +31,7 @@ if (isset($_GET['count'])) {
 } else {
 	$count=10;
 }
+$favourite=request::get_get('favourite',0);
 $pg=request::get_get('pg','');
 //if (isset($_GET['frm'])) {
 //	$frm=$_GET['frm'];
@@ -42,10 +43,17 @@ $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2) ) {
 	$sql_get="SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY  id DESC ";
 }
-else if ($draft && $loged) {
-    $sql_get="SELECT * FROM `draft` WHERE auth = '".$usr->login."' ORDER BY  id DESC ";
-}
-else
+else if ($loged) {
+    if ($draft) {
+        $inser.='draft/';
+        $sql_get="SELECT * FROM `draft` WHERE auth = '".$usr->login."' ORDER BY  id DESC ";
+        echo render_template(TPL_POST_LIST.'/draft.tpl.php', null);
+    } else if ($favourite){
+        $inser.='favourite/';
+        $sql_get="SELECT * FROM `favourite`,`post` WHERE `favourite`.`pid`=`post`.`id` && `favourite`.`who` = '".$usr->login."' ORDER BY  `post`.`id` DESC";
+        echo render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
+    }
+} else
 	if (isset($_GET['tag'])) {
 		$sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
 			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";

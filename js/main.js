@@ -31,7 +31,12 @@ function strt() {
                 var txt= document.links[i].href.replace(/(.*?)\/work\/block\/user\//,'');
                         
                         document.links[i].href="javascript:cr(); x_r('ajax/editor?type=block&fr="+txt+"&el=user','box');"
+                }  else if (document.links[i].href.indexOf('draft#')+1) {
+                    document.links[i].href="javascript:g_plist('draft')";
+                }  else if (document.links[i].href.indexOf('favourite#')+1) {
+                    document.links[i].href=" javascript:g_plist('favourite')";
                 }
+               
 	}
 
 	if (document.getElementById("lgin")) {
