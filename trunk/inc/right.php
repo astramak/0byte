@@ -102,21 +102,9 @@ var cd=document.getElementById("ced").innerHTML; } else {
 var cd=null;
 }';
 $e=0;
-if (isset($_SESSION['tp1'])) {
-    if ($_SESSION['tp1']=='pst') {
-        $scr.="g_plist('post'";
+if (isset($_SESSION['tp1']) && strlen($_SESSION['tp1'])>2) {
+        $scr.="g_plist('".$_SESSION['tp1']."'";
         $e=1;
-    } else if ($_SESSION['tp1']=='com') {
-        $scr.="g_plist('com'";
-        $e=1;
-    } else if ($_SESSION['tp1']=='eye') {
-        $scr.="g_plist('eye'";
-        $e=1;
-    } else if ($_SESSION['tp1']=='draft') {
-        $scr.="g_plist('draft'";
-        $e=1;
-    }
-
 }
 
 if (isset($_SESSION['tp2'])) {

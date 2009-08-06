@@ -6,5 +6,9 @@
 		<td>Название блога</td>
 		<td><input type="text" name="btitle" /></td>
 	</tr>
+        <tr>
+		<td>Описание</td>
+		<td><textarea name="about"></textarea></td>
+	</tr>
 </table>
 <input type="submit" value="Запостить!" /></form>

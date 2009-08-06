@@ -10,7 +10,7 @@ if ($exists) {
 	redirect('index.php');
 }
 
-db_query('INSERT INTO blogs SET name = %s, owner = %s', $btitle, $usr->login);
+db_query('INSERT INTO blogs SET name = %s, owner = %s, about = %s', $btitle, $usr->login, request::get_post('about'));
 $id = db_last_insert_id('blogs');
 db_query('INSERT INTO inblog SET blogid = %d, name = %s, bname = %s', $id, $usr->login, $btitle);
 
