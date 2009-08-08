@@ -6,7 +6,7 @@ class out {
     var $arr;
     var $num;
 }
-
+$api=request::get_get('api',0); #for third party application
 $aft="";
 $tp="";
 if (isset($_GET['com'])) {
@@ -29,7 +29,7 @@ if (isset ($_GET['noo'])) {
         $_SESSION['tp2']=0;
     }
 } elseif (isset($_GET['pst'])) {
-    $_SESSION['tp1']='pst';
+    if (!$api) $_SESSION['tp1']='pst';
     $sql_get="SELECT * FROM `post` WHERE `blck`='0' && `lock` = 0 ".$aft." ORDER BY id DESC LIMIT ".$limit;
     $result=mysql_query($sql_get,$GLOBALS['sql']);
     while ($row = mysql_fetch_assoc($result)) {
@@ -49,7 +49,7 @@ if (isset ($_GET['noo'])) {
         $i++;
     }
 } elseif (isset($_GET['com'])) {
-    $_SESSION['tp1']='com';
+    if (!$api) $_SESSION['tp1']='com';
     $sql_get="SELECT *,`post`.`id` as `pid` FROM `post`,`comment` WHERE `post`.`id`=`comment`.`krnl` && `post`.`blck`='0' ".$aft." ORDER BY `comment`.`id` DESC LIMIT ".$limit;
     $result=mysql_query($sql_get,$sql);
     while ($row = mysql_fetch_assoc($result)) {
@@ -70,7 +70,7 @@ if (isset ($_GET['noo'])) {
     }
 
 } elseif (isset($_GET['top_user'])) {
-    $_SESSION['tp2']='us';
+    if (!$api) $_SESSION['tp2']='us';
     $sql_get=" SELECT * FROM `users` WHERE `lvl`='0'  ORDER BY (ratep - ratem + prate / $post_r + crate / $com_r + brate / $blog_r) DESC LIMIT ".$limit;
     $result=mysql_query($sql_get,$sql);
     while ($row = mysql_fetch_assoc($result)) {
@@ -79,7 +79,7 @@ if (isset ($_GET['noo'])) {
         $i++;
     }
 } elseif (isset($_GET['top_blog'])) {
-    $_SESSION['tp2']='bl';
+    if (!$api) $_SESSION['tp2']='bl';
     $sql_get=" SELECT * FROM `blogs` ORDER BY ratep - ratem DESC LIMIT ".$limit;
     $result=mysql_query($sql_get,$GLOBALS['sql']);
     while ($row = mysql_fetch_assoc($result)) {
@@ -89,7 +89,7 @@ if (isset ($_GET['noo'])) {
         $i++;
     }
 } elseif (isset($_GET['eye']) && $loged) {
-    $_SESSION['tp1']='eye';
+    if (!$api) $_SESSION['tp1']='eye';
     if (!isset($_GET['no'])) {
         $sql_get=" SELECT * FROM `eye`,`post` WHERE `eye`.`pid`=`post`.`id` && `eye`.`who`='".$usr->login."' ORDER BY  `eye`.`id` DESC LIMIT ".$limit;
         $result=mysql_query($sql_get,$GLOBALS['sql']);
@@ -125,7 +125,7 @@ if (isset ($_GET['noo'])) {
     }
 
 } else if (request::get_get('draft',0) && $loged) {
-        $_SESSION['tp1']='draft';
+        if (!$api) $_SESSION['tp1']='draft';
         $res=db_query('SELECT `id`,`title`,`auth` FROM `draft` WHERE `auth`= %s ORDER BY `id` DESC LIMIT %d ',$usr->login,$limit);
         while ($row=db_fetch_assoc($res)) {
             $arr[$i]=$row;
@@ -134,7 +134,7 @@ if (isset ($_GET['noo'])) {
             $i++;
         }
     } else if (request::get_get('favourite',0) && $loged) {
-            $_SESSION['tp1']='favourite';
+            if (!$api) $_SESSION['tp1']='favourite';
             $res=db_query('SELECT `post`.`id` AS `id` , `post`.`title` AS `title`,`post`.`auth` AS `auth`,
         `post`.`blog` AS `blog`, `post`.`blogid` AS `blogid`, `post`.`ratem` AS `ratem`, `post`.`ratep` AS `ratep`,
         `favourite`.`who`, `favourite`.`pid` FROM `post`,`favourite` WHERE `favourite`.`who`= %s
@@ -152,7 +152,17 @@ if (isset ($_GET['noo'])) {
                 $arr[$i]['rate']=$row['ratep']-$row['ratem'];
                 $i++;
             }
-        }
+        } else if (request::get_get('online',0)) {
+                $result = db_query('SELECT `name` FROM `users` WHERE `online` >= %d ORDER BY online DESC', time() - 300);
+                $online= new user;
+                while ($row = db_fetch_assoc($result)) {
+                    $online->find($row['name']);
+                    $arr[$i]['avatar']=$online->av;
+                    $arr[$i]['name']=$online->login;
+                    $arr[$i]['rate']=$online->rate();
+                    $i++;
+                }
+            }
 $out=new out;
 $out->arr=$arr;
 $out->num=$i;
