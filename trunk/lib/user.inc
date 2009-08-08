@@ -131,23 +131,32 @@ class user {
 		}
 	}
 }
-
+function unlogin() {
+    if (request::get_post('un',0)) {
+                setcookie('login',0);
+		setcookie('pwd',0);
+                session_unregister("login");
+                session_unregister("pwd");
+		session_destroy();
+	}
+}
 function login() {
 	global $usr;
-	$un = request::get_post('un');
+	
 	$login = request::get_cookie('login');
 	$pwd = request::get_cookie('pwd');
-
-	if ($un == 1) {
-		foreach(array('login', 'pwd') as $key) setcookie($key, '', time() - 4200, '/');
-		if (request::get_cookie(session_name())) setcookie(session_name(), '', time() - 4200, '/');
-		session_destroy();
-		return(0);
-	} elseif ($pwd && strlen($login) > 1 && !isset($_SESSION['login'])) {
+        if (request::get_post('un',0)) return 0;
+//	if ($pwd && strlen($login) > 2 && !isset($_SESSION['login'])) {
+//		$_SESSION['login'] = $login;
+//		$_SESSION['pwd'] = $pwd;
+//	}
+        if (strlen(@$_SESSION['login'])>strlen($login) && strlen(@$_SESSION['pwd'])>strlen($pwd)) {
+            $login=$_SESSION['login'];
+            $pwd=$_SESSION['pwd'];
+        } else {
 		$_SESSION['login'] = $login;
 		$_SESSION['pwd'] = $pwd;
-	}
-
+        }
 	if (!isset($_SESSION['login'])) return 0;
 
 	$usr->login = $login;

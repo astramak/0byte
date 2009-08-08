@@ -200,7 +200,9 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 #clist {
 	list-style-image: url('img/speech_bubble.gif');
 }
-
+#fvlist {
+    list-style-image: url('n_img/fav.gif');
+}
 .ulist {
 	list-style-image: url('img/figure.gif');
 	text-align: left;

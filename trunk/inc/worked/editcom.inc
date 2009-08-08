@@ -21,4 +21,5 @@ $row = db_fetch_assoc($result);
 
 $cm = new comment($row);
 echo render_edit_comment($id, utext($cm->text));
+$script->add("mk('mq','new');");
 ?>

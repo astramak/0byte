@@ -51,7 +51,8 @@ require_once 'lib/db.inc';
 
 //user cfg
 include("config.php");
-
+session_start();
+unlogin();
 $db_connection = db_connect();
 // depricated and should be removed after DB code update
 $sql = $db_connection;
@@ -61,13 +62,6 @@ $pg = request::get_get('pg');
 //if (!request::get_get('debug')) ini_set('display_errors', 0);
 
 $usr = new user();
-ini_set('display_errors', 1);
-function crl($a) {
-	if ($a==0) {
-		echo '<b class="b1"></b><b class="b2"></b><b class="b3"></b><b class="b4"></b>';
-	} else {
-		echo '<b class="b4"></b><b class="b3"></b><b class="b2"></b><b class="b1"></b>';
-	}
-}
+
 parse_plugin_array($use);
 ?>

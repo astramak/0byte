@@ -24,6 +24,7 @@ class script {
         $this->text.=$what;
     }
     function flush() {
+
         $this->text=null;
     }
     function result() {

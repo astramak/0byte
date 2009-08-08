@@ -14,7 +14,7 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-session_start();
+
 ob_start("ob_gzhandler");
 $loged=login();
 if ($loged) {

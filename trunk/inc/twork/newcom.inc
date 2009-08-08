@@ -4,7 +4,7 @@ if ($json != 1) {
 	$lst=str_replace("*amp","&",$lst);
 	$lst="/".str_replace("*qw","?",$lst);
 }
-
+$lst=null;
 $text = request::get_post('text');
 if (strlen($text) < 3) {
 	if ($json == 1) {
