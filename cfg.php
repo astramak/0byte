@@ -59,7 +59,7 @@ $sql = $db_connection;
 
 $pg = request::get_get('pg');
 
-//if (!request::get_get('debug')) ini_set('display_errors', 0);
+ini_set('display_errors', 0);
 
 $usr = new user();
 

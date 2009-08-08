@@ -48,7 +48,7 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
             echo render_template(TPL_FRAMES.'/draft_answer.tpl.php', array('url'=>"twork.php?wt=editpost&post=".intval(request::get_get('post')),
                 'title'=>$row['title'],'blogs'=>$blogs,'len'=>count($answers),'answers'=>$answers,'tag'=>$row['tag'],'status'=>$h,'mng'=>$mng));
         } else echo render_edit_post(utext($row['title']), $blogs, "twork.php?wt=editpost&post=".intval(request::get_get('post')),
-        $type, $row['tag'], $h, $zz, $row['lnk'],$draft=request::get_get('draft',0));
+        $type, $row['tag'], $h, utext($zz), $row['lnk'],$draft=request::get_get('draft',0));
 ////	echo '
 ////		<h3>Редактирование сообщения</h3>';
 ////	echo '<form id="new" name="new" method="post" action="twork.php?wt=editpost&post='.intval($_GET['post']).'">';
