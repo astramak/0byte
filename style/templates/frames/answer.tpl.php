@@ -20,8 +20,8 @@
 			<?php endforeach; ?>
 			<?php if ($loged) {?>
 		<div>
-			<input type='submit' name='nax' onClick='answe(this.form,1)' value='Голосовать' />
-			<input type='submit' name='nox' onClick='answe(this.form,2)' value='Воздержаться' />
+			<input type='submit' name='nax' onClick='answe(this.form,1); return false;' value='Голосовать' />
+			<input type='submit' name='nox' onClick='answe(this.form,2); return false;' value='Воздержаться' />
 		</div>
 			<?php } ?>
 	</form>

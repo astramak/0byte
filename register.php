@@ -31,7 +31,7 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 	$pwd = md5($pwd);
 	$icq = request::get_post('icq');
 	$jabber = request::get_post('jabber');
-	$site = request::get_post('site');
+	$rsite = request::get_post('site');
 	$about = request::get_post('about');
 
 	$name_exists = db_num_rows(db_query('SELECT id FROM users WHERE LOWER(name) = LOWER(%s)', $name));
@@ -85,7 +85,7 @@ include("inc/head.php");
 include 'inc/top.php';
 
 $register_arr=array("reg_login" => $name, "reg_mail" => $mail,
-	"reg_icq" => $icq, "reg_jabber" => $jabber, "reg_site" => $site,
+	"reg_icq" => $icq, "reg_jabber" => $jabber, "reg_site" => $rsite,
 	"reg_about" => $about, "error" => $err, "email_register" => $eml_a);
 
 echo render_register_page($register_arr);

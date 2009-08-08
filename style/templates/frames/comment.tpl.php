@@ -20,7 +20,7 @@
 				  ?>'><?php echo $comment->rate(); ?></span>
 		</span>
 		<noindex>
-			<a rel='nofollow' class='ratem' href="<?php if ($js) echo "jabascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=m&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">&ndash;</a>
+			<a rel='nofollow' class='ratem' href="<?php if ($js) echo "javascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=m&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">&ndash;</a>
 		</noindex>
 	</span>
 </div>

@@ -4,14 +4,17 @@ $lst = str_replace("*amp","&",$lst);
 $lst = str_replace("*qw","?",$lst);
 
 $id = request::get_get('id');
-$answ = request::get_post('answ');
-
+$answ = request::get_post('answ',0);
+if ($answ==0) {
+    jkill();
+    redirect($lst);
+}
 if (request::get_post('nox')) {
-	if (db_result(db_query('SELECT COUNT(id) FROM wansw WHERE who = %s AND cid = %d', $usr->login, $id))) {
+	if (db_result(db_query('SELECT COUNT(id) FROM wansw WHERE who = %s && cid = %d', $usr->login, $id))) {
 		jkill();
 		redirect($lst);
 	}
-	db_query('INSERT INTO wansw SET who = %s, cid = %d', $usr->login, $id);
+	db_query('INSERT INTO wansw SET who = %s && cid = %d', $usr->login, $id);
 	if ($json == 1) {
 		echo answ_echo($id);
 	}

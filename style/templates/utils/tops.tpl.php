@@ -17,18 +17,18 @@
 				<td class='rsdno'>
 					<div id='shall'>
 						<a class='bbls' href='javascript:g_plist("top_user")'>
-							<img src='style/img/figure.gif' alt='Топ пользователей' />
+							<img src='style/img/figure.gif' alt='Топ пользователей' title="Топ пользователей" />
 						</a>
 						<a class='bbls' href='javascript:g_plist("top_blog")'>
-							<img src='style/img/documents.gif' alt='Топ блогов' />
+							<img src='style/img/documents.gif' alt='Топ блогов'  title="Топ блогов" />
 						</a>
 					</div>
 					<div id='shblog'>
 						<a class='bbls' href='javascript:g_plist("top_user")'>
-							<img src='style/img/figure.gif' alt='Топ пользователей' />
+							<img src='style/img/figure.gif' alt='Топ пользователей'  title="Топ пользователей" />
 						</a>
 						<a class='bbls' style='background:#B6B6B6;' href='javascript:hgptop()'>
-							<img src='style/img/documents.gif' alt='Топ блогов' />
+							<img src='style/img/documents.gif' alt='Топ блогов'  title="Топ блогов" />
 						</a>
 					</div>
 				</td>
@@ -49,10 +49,10 @@
 				<td class='rsdno'>
 					<div id='shuser'>
 						<a style='background:#B6B6B6;' class='bbls'  href='javascript:hgptop()'>
-							<img src='style/img/figure.gif' alt='Топ пользователей' />
+							<img src='style/img/figure.gif' alt='Топ пользователей'  title="Топ пользователей" />
 						</a>
 						<a class='bbls' href='javascript:g_plist("top_blog")'>
-							<img src='style/img/documents.gif' alt='Топ блогов' />
+							<img src='style/img/documents.gif' alt='Топ блогов' title="Топ блогов" />
 						</a>
 					</div>
 				</td>

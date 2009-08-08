@@ -32,7 +32,7 @@ $tz->cut(gtext($text));
                     break;
 
             case 3:
-                    if (!$len) {
+                    if (!$len || $len<2) {
                             redirect('index.php');
                     }
                     $nm = request::get_post('mng') == 'on' ? 1 : 0;
