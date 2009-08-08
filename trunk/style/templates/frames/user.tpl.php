@@ -23,8 +23,8 @@ if ($icq['set']) {?>
 if ($jabber['set']) {?>
     <tr><td>Jabber</td><td><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a></td><td>
 <?php }
-if ($site['set']) { ?>
-    <tr><td>Сайт</td><td><noindex><a href='<?php echo $site['text']; ?>' rel='nofollow'><?php echo $site['text']; ?></a></noindex></td></tr>
+if ($usite['set']) { ?>
+    <tr><td>Сайт</td><td><noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex></td></tr>
 <?php }
 if ($city['set']) {?>
     <tr><td>Город</td><td><?php echo $city['text']; ?></td><td>

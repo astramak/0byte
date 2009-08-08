@@ -24,6 +24,8 @@ if (isset($_GET['blog'])) {
 $blck="&& blck = '0'";
 if ($usr->lvl>=$rlvl) {
 	$blck="";
+} else if ($loged) {
+    $blck.='|| `auth` = "'.$usr->login.'"';
 }
 //$blck.=" && draft = 0";
 if (isset($_GET['count'])) {
@@ -54,7 +56,7 @@ else
         echo render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
     }
  else
-	if (isset($_GET['tag'])) {
+	if (strlen(request::get_get('tag')>=2)) {
 		$sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
 			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";
 		$inser.="tag/".gtext($_GET['tag'])."/";

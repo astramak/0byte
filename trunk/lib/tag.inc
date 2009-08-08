@@ -105,6 +105,6 @@ function tags_get_id($tag) {
  */
 function tags_is_valid($tag) {
 	$len = strlen($tag);
-	return ($len > 2 && $len < 40);
+	return ($len > 2 && $len < 40 && strpos($tag, '>')===false && strpos($tag, '<')===false && strpos($tag, '/')===false && strpos($tag, '#')===false);
 }
 ?>

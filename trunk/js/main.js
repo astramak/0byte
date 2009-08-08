@@ -199,6 +199,9 @@ function rma() {
 }
 var w="";
 function answe(a,tp) {
+    if (tp==1 && a.answ.value==null) {
+        make_err('Вы не выбрали вариант ответа!');
+    } else {
 	a.nox.type='button';
 	a.nax.type='button';
 	url=a.action+"&json=1";
@@ -221,6 +224,8 @@ function answe(a,tp) {
 		ts="answ="+a.answ.value;
 	}
 	xmlhttp.send(ts);
+    }
+    return false;
 }
 function set_a(a,val) {
 	a.answ.value=val;

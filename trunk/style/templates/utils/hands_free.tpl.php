@@ -40,13 +40,13 @@
 
                                     <td class='rsdno' id='ped'><a class="bbls"
                                                                   href='javascript:g_plist("post")'><img src="style/img/document.gif"
-                                                                               alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-                                                src="style/img/speech_bubble.gif" alt="Комментарии" /></a>
-                                        <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                                                               alt="Посты" title="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+                                                src="style/img/speech_bubble.gif" alt="Комментарии" title="Комментарии" /></a>
+                                        <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" title="Изменения" /></a>
                                         <a class="bbls" href="draft#"><img
-                                                src="style/n_img/draft.png" alt="Черновики" /></a>
+                                                src="style/n_img/draft.png" alt="Черновики" title="Черновики" /></a>
                                         <a class="bbls" href="favourite#"><img
-                                                src="style/n_img/fav.gif" alt="Избранное" /></a>
+                                                src="style/n_img/fav.gif" alt="Избранное" title="Избранное" /></a>
                                             <?php } ?>
                                     </td>
                                     </tr>
@@ -57,15 +57,15 @@
                                         </td>
                                         <td class='rsdno'><a class="bbls"
                                                              style="background: #B6B6B6;" href='javascript:hplist()'><img
-                                                    src="style/img/document.gif" alt="Посты" /></a> <a class="bbls"
+                                                    src="style/img/document.gif" alt="Посты" title="Посты" /></a> <a class="bbls"
                                                                                                href='javascript:g_plist("com")'><img
-                                                    src="style/img/speech_bubble.gif" alt="Комментарии" /></a>
-                                            <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                                    src="style/img/speech_bubble.gif" alt="Комментарии" title="Комментарии" /></a>
+                                            <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" title="Изменения" /></a>
 
                                             <a class="bbls" href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                                    src="style/n_img/draft.png" alt="Черновики" title="Черновики" /></a>
                                             <a class="bbls" href="javascript:g_plist('favourite')"><img
-                                                    src="style/n_img/fav.gif" alt="Избранное" /></a>
+                                                    src="style/n_img/fav.gif" alt="Избранное" title="Избранное" /></a>
                                                 <?php } ?>
                                         </td>
                                     </tr>
@@ -76,14 +76,14 @@
                                         </td>
                                         <td class='rsdno'><a class="bbls"
                                                              href='javascript:g_plist("post")'><img src="style/img/document.gif"
-                                                                                   alt="Посты" /></a> <a class="bbls" style="background: #B6B6B6;"
+                                                                                   alt="Посты" title="Посты" /></a> <a class="bbls" style="background: #B6B6B6;"
                                                                   href='javascript:hplist()'><img src="style/img/speech_bubble.gif"
-                                                                            alt="Комментарии" /></a>
-                                            <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                                                            alt="Комментарии" title="Комментарии" /></a>
+                                            <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" title="Изменения" /></a>
                                             <a class="bbls" href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                                    src="style/n_img/draft.png" alt="Черновики" title="Черновики" /></a>
                                             <a class="bbls" href="javascript:g_plist('favourite')"><img
-                                                    src="style/n_img/fav.gif" alt="Избранное" /></a><?php } ?>
+                                                    src="style/n_img/fav.gif" alt="Избранное" title="Избранное" /></a><?php } ?>
                                         </td>
                                     </tr>
 
@@ -94,14 +94,14 @@
                                         </td>
                                         <td class='rsdno'><a class="bbls"
                                                              href='javascript:g_plist("post")'><img src="style/img/document.gif"
-                                                                                   alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-                                                    src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
+                                                                                   alt="Посты" title="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+                                                    src="style/img/speech_bubble.gif" alt="Комментарии" title="Комментарии" /></a> <a
                                                 class="bbls" style="background: #B6B6B6;" href='javascript:hplist()'><img
-                                                    src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                                    src="style/n_img/eye.gif" alt="Изменения" title="Изменения" /></a>
                                             <a class="bbls" href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                                    src="style/n_img/draft.png" alt="Черновики" title="Черновики" /></a>
                                             <a class="bbls" href="javascript:g_plist('favourite')"><img
-                                                    src="style/n_img/fav.gif" alt="Избранное" /></a>
+                                                    src="style/n_img/fav.gif" alt="Избранное" title="Избранное" /></a>
                                         </td>
                                     </tr>
                                     <tr id='df' class='sd'>
@@ -111,14 +111,14 @@
                                         </td>
                                         <td class='rsdno'><a class="bbls"
                                                              href='javascript:g_plist("post")'><img src="style/img/document.gif"
-                                                                                   alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-                                                    src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a class="bbls"
+                                                                                   alt="Посты" title="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+                                                    src="style/img/speech_bubble.gif" alt="Комментарии" title="Комментарии" /></a> <a class="bbls"
                                                 href='javascript:g_plist("eye")'><img
-                                                    src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                                    src="style/n_img/eye.gif" alt="Изменения" title="Изменения" /></a>
                                             <a class="bbls"  style="background: #B6B6B6;" href="javascript:hplist()"><img
-                                                                               src="style/n_img/draft.png" alt="Черновики" /></a>
+                                                                               src="style/n_img/draft.png" alt="Черновики" title="Черновики" /></a>
                                             <a class="bbls" href="javascript:g_plist('favourite')"><img
-                                                    src="style/n_img/fav.gif" alt="Избранное" /></a>
+                                                    src="style/n_img/fav.gif" alt="Избранное" title="Избранное" /></a>
                                         </td>
                                     </tr>
                                     <tr id='ff' class='sd'>
@@ -128,14 +128,14 @@
                                         </td>
                                         <td class='rsdno'><a class="bbls"
                                                              href='javascript:g_plist("post")'><img src="style/img/document.gif"
-                                                                                   alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-                                                    src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
+                                                                                   alt="Посты" title="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
+                                                    src="style/img/speech_bubble.gif" alt="Комментарии" title="Комментарии" /></a> <a
                                             class="bbls"    href='javascript:g_plist("eye")'><img
-                                                    src="style/n_img/eye.gif" alt="Изменения" /></a>
+                                                    src="style/n_img/eye.gif" alt="Изменения" title="Изменения" /></a>
                                             <a class="bbls" href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                                    src="style/n_img/draft.png" alt="Черновики" title="Черновики" /></a>
                                             <a class="bbls" style="background: #B6B6B6;" href="javascript:hplist()"><img
-                                                                               src="style/n_img/fav.gif" alt="Избранное" /></a>
+                                                                               src="style/n_img/fav.gif" alt="Избранное" title="Избранное" /></a>
                                         </td>
                                     </tr>
                                     </tbody>
