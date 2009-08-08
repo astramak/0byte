@@ -35,12 +35,12 @@ function strt() {
                     document.links[i].href="javascript:g_plist('draft')";
                 }  else if (document.links[i].href.indexOf('favourite#')+1) {
                     document.links[i].href=" javascript:g_plist('favourite')";
-                }
+                } 
                
 	}
 
 	if (document.getElementById("lgin")) {
-		document.getElementById("lgin").href="javascript:login()";
+    		document.getElementById("lgin").href="javascript:login()";
 	}
 	if (document.getElementById('rma')) {
 		document.getElementById('adda').href='javascript:adda()';

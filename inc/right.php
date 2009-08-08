@@ -48,6 +48,7 @@ for ($i = $siz; $i >= 0; $i--) {
         }
     }
 }
+array_splice($tarr, 16);
 echo render_hands_free($tarr,$siz);
 echo render_search_panel();
 

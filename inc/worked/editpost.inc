@@ -99,8 +99,8 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
 } else {
 	render_error("Это не ваш пост!");
 }
-$script->add(`mk('mq','new');
-document.getElementById("otxt").innerHTML+="<br /><a href='javascript:prv()'>Предпросмотр</a>";
-		document.getElementById("mq").innerHTML+="<a class='tdx' href='javascript:insert(\"[cut]\",\"\",\"new\",\"text\")'>cut</a>"+
-		"<a class='tdx' href='javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")'>fcut</a>";`);
+$script->add('mk(\'mq\',\'new\');
+		document.getElementById("otxt").innerHTML+="<br /><a href=\'javascript:prv()\'>Предпросмотр</a>";
+		document.getElementById("mq").innerHTML+="<a class=\'tdx\' href=\'javascript:insert(\"[cut]\",\"\",\"new\",\"text\")\'>cut</a>"+
+		"<a class=\'tdx\' href=\'javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")\'>fcut</a>";');
 ?>

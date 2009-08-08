@@ -43,9 +43,9 @@
                                                                                alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
                                                 src="style/img/speech_bubble.gif" alt="Комментарии" /></a>
                                         <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
-                                        <a href="draft#"><img
-                                                src="style/n_img/draft.gif" alt="Черновики" /></a>
-                                        <a href="favourite#"><img
+                                        <a class="bbls" href="draft#"><img
+                                                src="style/n_img/draft.png" alt="Черновики" /></a>
+                                        <a class="bbls" href="favourite#"><img
                                                 src="style/n_img/fav.gif" alt="Избранное" /></a>
                                             <?php } ?>
                                     </td>
@@ -62,9 +62,9 @@
                                                     src="style/img/speech_bubble.gif" alt="Комментарии" /></a>
                                             <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
 
-                                            <a href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.gif" alt="Черновики" /></a>
-                                            <a href="javascript:g_plist('favourite')"><img
+                                            <a class="bbls" href="javascript:g_plist('draft')"><img
+                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                            <a class="bbls" href="javascript:g_plist('favourite')"><img
                                                     src="style/n_img/fav.gif" alt="Избранное" /></a>
                                                 <?php } ?>
                                         </td>
@@ -80,9 +80,9 @@
                                                                   href='javascript:hplist()'><img src="style/img/speech_bubble.gif"
                                                                             alt="Комментарии" /></a>
                                             <?php if ($loged) {?><a class="bbls" href='javascript:g_plist("eye")'><img src="style/n_img/eye.gif" alt="Изменения" /></a>
-                                            <a href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.gif" alt="Черновики" /></a>
-                                            <a href="javascript:g_plist('favourite')"><img
+                                            <a class="bbls" href="javascript:g_plist('draft')"><img
+                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                            <a class="bbls" href="javascript:g_plist('favourite')"><img
                                                     src="style/n_img/fav.gif" alt="Избранное" /></a><?php } ?>
                                         </td>
                                     </tr>
@@ -98,9 +98,9 @@
                                                     src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
                                                 class="bbls" style="background: #B6B6B6;" href='javascript:hplist()'><img
                                                     src="style/n_img/eye.gif" alt="Изменения" /></a>
-                                            <a href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.gif" alt="Черновики" /></a>
-                                            <a href="javascript:g_plist('favourite')"><img
+                                            <a class="bbls" href="javascript:g_plist('draft')"><img
+                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                            <a class="bbls" href="javascript:g_plist('favourite')"><img
                                                     src="style/n_img/fav.gif" alt="Избранное" /></a>
                                         </td>
                                     </tr>
@@ -112,12 +112,12 @@
                                         <td class='rsdno'><a class="bbls"
                                                              href='javascript:g_plist("post")'><img src="style/img/document.gif"
                                                                                    alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
-                                                    src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
-                                                href='javascript:hplist()'><img
+                                                    src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a class="bbls"
+                                                href='javascript:g_plist("eye")'><img
                                                     src="style/n_img/eye.gif" alt="Изменения" /></a>
-                                            <a href="javascript:hplist()"><img class="bbls" style="background: #B6B6B6;"
-                                                                               src="style/n_img/draft.gif" alt="Черновики" /></a>
-                                            <a href="javascript:g_plist('favourite')"><img
+                                            <a class="bbls"  style="background: #B6B6B6;" href="javascript:hplist()"><img
+                                                                               src="style/n_img/draft.png" alt="Черновики" /></a>
+                                            <a class="bbls" href="javascript:g_plist('favourite')"><img
                                                     src="style/n_img/fav.gif" alt="Избранное" /></a>
                                         </td>
                                     </tr>
@@ -130,11 +130,11 @@
                                                              href='javascript:g_plist("post")'><img src="style/img/document.gif"
                                                                                    alt="Посты" /></a> <a class="bbls" href='javascript:g_plist("com")'><img
                                                     src="style/img/speech_bubble.gif" alt="Комментарии" /></a> <a
-                                                href='javascript:hplist()'><img
+                                            class="bbls"    href='javascript:g_plist("eye")'><img
                                                     src="style/n_img/eye.gif" alt="Изменения" /></a>
-                                            <a href="javascript:g_plist('draft')"><img
-                                                    src="style/n_img/draft.gif" alt="Черновики" /></a>
-                                            <a href="javascript:hplist()"><img class="bbls" style="background: #B6B6B6;"
+                                            <a class="bbls" href="javascript:g_plist('draft')"><img
+                                                    src="style/n_img/draft.png" alt="Черновики" /></a>
+                                            <a class="bbls" style="background: #B6B6B6;" href="javascript:hplist()"><img
                                                                                src="style/n_img/fav.gif" alt="Избранное" /></a>
                                         </td>
                                     </tr>

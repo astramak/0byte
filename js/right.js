@@ -116,7 +116,7 @@ function g_plist(tp) {
                     if (resp.arr[i].id>fl_pid && tp!='favourite') {
                         fl_pid=resp.arr[i].id;
                     }
-                    what='<li class="pelis"><a href="'+escape(resp.arr[i].url)+'">'+resp.arr[i].who+'</a> &#8212; &laquo;<a href="post/'+resp.arr[i].id+'/">'+resp.arr[i].title+'</a>&raquo; '+rt+'</li>';
+                    what='<li><a href="'+escape(resp.arr[i].url)+'">'+resp.arr[i].who+'</a> &#8212; &laquo;<a href="post/'+resp.arr[i].id+'/">'+resp.arr[i].title+'</a>&raquo; '+rt+'</li>';
                 } else if (tp=='top_user') {
                     what='<li><a href="user/'+resp.arr[i].name+'/">'+resp.arr[i].name+'</a> '+rt+'</li>';
                 } else if (tp=='top_blog') {

@@ -6,7 +6,7 @@
 		</span> <a href='work/newpost'>Новый пост</a>
 			<?php if ($allow_blog) {?> / <a href='work/newblog'>блог</a>. <a href='work/myblog'>Мои блоги</a><?php }?>
 		, у вас <img src='style/img/<?php if ($not_readed>0) {?>mail<?php } else {?>envelope<?php }?>.gif'
-					 alt='' /> <a href='work/pmls'><?php echo $not_readed." / ".$mail;?> ЛС</a>
+					 alt='' /> <a href='work/pmls'><?php echo $not_readed." / ".$mail;?> ЛС</a></div>
 		<div id='inout'><img src='style/img/figure.gif' alt='' />
 			<form id='out' method='post' action='<?php echo $site;?>'><input type='hidden' name='un' value='1' />
 				<input id='outb' type='submit' value='Выйти' /></form></div>

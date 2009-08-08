@@ -33,8 +33,8 @@ if (request::get_get("len",0)>2) {
 //				echo "<option value='".$row['blogid']."'>".$row['bname']."</option>";
 			}
             echo render_new_post($type, $type_, $tp, $blogs, $len);
- $script->add(`mk('mq','new');
-		document.getElementById("otxt").innerHTML+="<br /><a href='javascript:prv()'>Предпросмотр</a>";
-		document.getElementById("mq").innerHTML+="<a class='tdx' href='javascript:insert(\"[cut]\",\"\",\"new\",\"text\")'>cut</a>"+
-		"<a class='tdx' href='javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")'>fcut</a>";`);
+$script->add('mk(\'mq\',\'new\');
+		document.getElementById("otxt").innerHTML+="<br /><a href=\'javascript:prv()\'>Предпросмотр</a>";
+		document.getElementById("mq").innerHTML+="<a class=\'tdx\' href=\'javascript:insert(\"[cut]\",\"\",\"new\",\"text\")\'>cut</a>"+
+		"<a class=\'tdx\' href=\'javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")\'>fcut</a>";');
 		?>
