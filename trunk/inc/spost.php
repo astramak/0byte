@@ -91,7 +91,7 @@ if (!$row) {
 
         //	echo "</div>";
         $favourite=$loged==1?db_num_rows(db_query("SELECT `who`,`pid` FROM `favourite` WHERE `pid` = %d && `who`= %s",$post->id,$usr->login)):0;
-        echo render_template(TPL_FRAMES.'/single_post.tpl.php', array('tags'=>$tags,
+        echo render_template(TPL_FRAMES.'/single_post.tpl.php', array('id'=>$post->id,'tags'=>$tags,
         'allow_edit'=>$allow_edit,'allow_remove'=>$allow_remove,'allow_spy'=>$allow_spy,
         'spy_url'=>@$spy_url,'spyed'=>@$spyed,'block_url'=>$block_url,'blocked'=>$blck,
         'rate'=>$rate,'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,

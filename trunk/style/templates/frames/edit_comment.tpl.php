@@ -11,4 +11,4 @@
 		<input type='submit' value='Редактировать' />
 	</div>
 </form>
-<script type="text/javascript"> mk('mq','new'); </script>
+

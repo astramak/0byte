@@ -1,7 +1,7 @@
 <?php
 $time=time();
 $tz = new dtxt();
-$tz->cut($text);
+$tz->cut(gtext($text));
    $tag = tags_add_list(request::get_post('tag'));
     switch ($tp) {
             case 0:
