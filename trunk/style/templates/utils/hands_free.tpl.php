@@ -8,7 +8,7 @@
 
                             <?php if ($element['type']=='post') {
                                 ?>    <li class='pelis'><?php
-                                    if ($element['blog']=="own") {
+                                    if ($element['blogid']==0) {
                                         ?>
 
                             <a href='user/<?php echo $element['auth']; ?>/'><?php echo $element['auth']; ?></a>
@@ -19,19 +19,19 @@
                                 <?php } else {?>
 
                         <li class='celis'><a href='user/<?php echo $element['who'];?>/'><?php echo $element['who'];?></a> &#8212; &laquo;<a href='post/<?php echo $element['pid'];?>/#cmnt<?php echo $element['id'];?>'>
-                                        <?php if ($element['blog']=="own") {?>
+                                        <?php if ($element['blogid']==0) {?>
 
                                 <a href='user/<?php echo $element['auth']; ?>/'><?php echo $element['auth']; ?></a>
                                         <?php } else { ?>
                                 <a href='blog/<?php echo $element['blogid']; ?>/'><?php echo $element['blog']; ?></a>
                                         <?php }?>
-                                /<a href='post/<?php echo $element['pid']."/#cmnt". $element['id'];?>'><?php echo $element['title'];?></a>&raquo;
+                                / <a href='post/<?php echo $element['pid']."/#cmnt". $element['id'];?>'><?php echo $element['title'];?></a>&raquo;
 
                                     <?php }  if ($element['rate']!=0) {?>
                                 <span class='scb'>(<span class='<?php if ($element['rate']>0) echo 'rp'; else echo 'rm';?>'>
                                                 <?php echo $element['rate'];?>
-                                        )</span>
-                                        <?php }?>
+                                        </span>)
+                                        <?php }?></span>
                                     </li>
                                     <?php endforeach; ?>
 

@@ -33,7 +33,9 @@ if (!$row) {
     } else {
     //spy
         if ($loged == 1) {
-            $v_id = db_result(db_query('SELECT id FROM hist WHERE pid = %d AND who = %s', $post_id, $usr->login));
+            $rw = db_fetch_assoc(db_query('SELECT `id`,`date` FROM hist WHERE `pid` = %d && `who` = %s', $post_id, $usr->login));
+            $v_id=$rw['id'];
+            $v_date=$rw['date'];
         }
         ///spy
         $post=post_echo($row,1);
@@ -96,7 +98,7 @@ if (!$row) {
         'spy_url'=>@$spy_url,'spyed'=>@$spyed,'block_url'=>$block_url,'blocked'=>$blck,
         'rate'=>$rate,'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
         'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,'remove_url'=>$remove_url,
-        'favourite'=>$favourite,'favourite_url'=>'twork.php?wt=favourite&id='.$post->id));
+        'favourite'=>$favourite,'favourite_url'=>'twork.php?wt=favourite&id='.$post->id,'loged'=>$loged,'rate_num'=>($post->ratep+$post->ratem)%100));
         $result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = 0 ORDER BY id', $post_id);
         echo "<a id='cm'></a><div id='cmn'>";
         if (!db_num_rows($result)) {

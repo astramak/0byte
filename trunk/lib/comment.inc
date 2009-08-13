@@ -70,14 +70,13 @@ function rmcom($com) {
 
 function com_echo($com,$noecho=0) {
 	global $usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id,$cedit;
-
+        $post11=$com->krnl;
 	$ech= "<dl class='lvl2'><dt id='cmnt".$com->id."' >";
 	if ($last_com_id<$com->id) {
 		$last_com_id=$com->id;
 	}
 	$cur=$cur;
-        $com->date+=TZ;
-	$alien=new user();
+       	$alien=new user();
 	$alien->find($com->auth);
 	$usr = $usr;
 	if ($loged==1) {
@@ -102,7 +101,7 @@ function com_echo($com,$noecho=0) {
 	} else {
 		$com->new=0;
 	}
-
+        $com->date+=TZ;
 	$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho);
 	$ech.="</dt><dd id='cmadd".$com->id."'>";
 	if (!$noecho) {

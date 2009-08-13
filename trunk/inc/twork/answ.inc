@@ -36,7 +36,7 @@ if ($row['lnk'] == 1) {
 		}
 	}
 } else {
-	if (db_num_rows(db_query('SELECT cid FROM wansw WHERE who = %s, cid = %d', $usr->login, $id))>=1) {
+	if (db_num_rows(db_query('SELECT cid FROM wansw WHERE who = %s && cid = %d', $usr->login, $id))>=1) {
 		jkill();
 		redirect($lst);
 	}

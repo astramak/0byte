@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: text/html; charset=utf-8");
 $type=request::get_get('type',null);
 $out['id']='mn';
 $needle=array('fr'=>request::get_get('fr'),'el'=>request::get_get('el'));

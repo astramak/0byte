@@ -25,6 +25,7 @@ define('TPL_PM', TPL_ROOT . '/pm');
 define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_BOTTOM',TPL_ROOT.'/bottom');
 define('TPL_POST_LIST',TPL_ROOT.'/post_list');
+define('TPL_LISTS',TPL_ROOT.'/lists');
 define('TPL_EDITOR',TPL_ROOT.'/editor');
 define('TPL_MAIN', TPL_ROOT);
 
@@ -59,7 +60,7 @@ $sql = $db_connection;
 
 $pg = request::get_get('pg');
 
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 
 $usr = new user();
 

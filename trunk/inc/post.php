@@ -261,7 +261,7 @@ if ($kol<1 && !isset($_GET['blog'])) {
                             'id'=>$posts[$k]->id,'comments'=>klist($posts[$k]->id),
                         'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=p&amp;from=".$cur,
                     'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=m&amp;from=".$cur,
-                'rate'=>$posts[$k]->rate(),'draft'=>$draft));
+                'rate'=>$posts[$k]->rate(),'draft'=>$draft,'rate_num'=>($posts[$k]->ratep+$posts[$k]->ratem)%100));
 //			echo "<div class='bottom'>".$full."<span class='rate'>".klist($posts[$k]->id);
 //			echo "<noindex><a class='ratep' rel='nofollow' href='twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=p&amp;from=".$cur."'>+</a>
 //            </noindex><span id='rp".$posts[$k]->id."'>".$rt."</span><noindex><a rel='nofollow'
