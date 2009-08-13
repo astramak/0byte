@@ -18,9 +18,9 @@ require_once 'lib/geshi/geshi.php';
 				for ($e = 2; $e <= ($cnt+1); $e++) {
 					$ln .= $e . "<br />";
 				}
-				$i = render_util('code_utils', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i, 'lines' => $ln));
+				$i = render_util('code_lines', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i, 'lines' => $ln));
 			} else {
-				$i = render_util('code', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i));
+				$i = render_util('code_utils', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i));
 			}
 		}
 		$txt .= $i;

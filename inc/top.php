@@ -52,7 +52,11 @@ if ($loged==1) {
 	} else {
 		$top_ar['allow_blog']=0;
 	}
-	$top_ar['not_readed'] = db_result(db_query('SELECT COUNT(id) FROM pm WHERE `to` = %s AND readed = 0 AND dto != 2', $usr->login));
+        if (request::get_get('wt')=='pmread') {
+           $top_ar['not_readed'] = db_result(db_query('SELECT COUNT(id) FROM pm WHERE `to` = %s && `readed` = 0 && `dto` != 2 && `id` != %d', $usr->login,request::get_get('id')));
+        } else {
+            $top_ar['not_readed'] = db_result(db_query('SELECT COUNT(id) FROM pm WHERE `to` = %s && `readed` = 0 && `dto` != 2', $usr->login));
+        }
 	$top_ar['mail'] = db_result(db_query('SELECT COUNT(id) FROM pm WHERE `to` = %s AND dto != 2', $usr->login));
 	$top_ar['user_rate'] = $usr->rate();
 	$top_ar['login']=$usr->login;

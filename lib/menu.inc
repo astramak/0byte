@@ -24,7 +24,6 @@ class mel {
 	function chcur() {
 		global $index,$pg;
 		$frm=request::get_get("frm");
-		echo $frm;
 		if ( (isset($index) && $this->url=="." && strlen($pg)<1) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   /*|| strncmp($this->url,$pg,strlen($pg))==0*/  )) {
 			$this->cur=1;
 		} elseif (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {

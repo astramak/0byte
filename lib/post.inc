@@ -100,7 +100,7 @@ function post_echo($row, $t,$draft=null) {
 		$lnk=$row['lnk'];
 		$result = db_query('SELECT * FROM wansw WHERE who = %s AND cid = %d', $usr->login, $a->id);
 		$row = db_fetch_assoc($result);
-		if ($row['cid'] == $a->id) {
+		if (!$loged || $row['cid'] == $a->id) {
 			$answ .= answ_echo($a->id);
 		} else {
 			$action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;

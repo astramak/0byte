@@ -1,4 +1,5 @@
 <?php
+header("Content-Type: text/html; charset=utf-8");
 $login = request::get_get('login');
 $mail = request::get_get('mail');
 $cap = request::get_get('cap');
