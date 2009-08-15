@@ -257,8 +257,8 @@ function render_edit_post($title,$blogs,$url,$type,$tags,$status,$text=null,$lnk
 function render_edit_user($array) {
     return render_template(TPL_FRAMES.'/edit_user.tpl.php', $array);
 }
-function render_myblog($array,$loged=1) {
-    return render_template(TPL_FRAMES.'/myblog.tpl.php', array('blogs'=>$array,'loged'=>$loged));
+function render_myblog($array,$single=0,$loged=1) {
+    return render_template(TPL_FRAMES.'/myblog.tpl.php', array('blogs'=>$array,'loged'=>$loged,'single'=>$single));
 }
 function render_new_post($type,$type_,$tp,$blogs,$len=0) {
     return render_template(TPL_FRAMES.'/new_post.tpl.php', array('type'=>$type,$type_=>'1','tp'=>$tp,

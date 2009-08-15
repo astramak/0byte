@@ -60,7 +60,7 @@ $sql = $db_connection;
 
 $pg = request::get_get('pg');
 
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 
 $usr = new user();
 

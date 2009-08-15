@@ -35,7 +35,9 @@ function strt() {
                     document.links[i].href="javascript:g_plist('draft')";
                 }  else if (document.links[i].href.indexOf('favourite#')+1) {
                     document.links[i].href=" javascript:g_plist('favourite')";
-                } 
+                }  else if (document.links[i].href.indexOf('twork.php?wt=favourite')+1) {
+			document.links[i].href = "javascript:x_r('twork.php"+document.links[i].search+"&json=1','fav')";
+		}
                
 	}
 
@@ -112,10 +114,14 @@ function r_s(xrs,xs,xrt,tp) {
 					} else if (tp=="m") {
 						document.getElementById("cm"+jr.id).innerHTML+=jr.text;
 					} else if (tp=='f') {
-
 						document.getElementById('sled').href=jr.lnk;
 						document.getElementById('sled').innerHTML=jr.txt;
-					} else if (tp=="newcom") {
+					}
+                                        else if (tp=='fav') {
+						document.getElementById('favor').href=jr.url;
+						document.getElementById('favor').innerHTML=jr.txt;
+					}
+                                        else if (tp=="newcom") {
 						
 						document.getElementById("cmn").innerHTML+=jr.txt;
 						document.location.hash="#cmnt"+jr.id;

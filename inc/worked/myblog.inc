@@ -1,9 +1,14 @@
 
 <?php
-$sql_get="SELECT * FROM `blogs` WHERE owner = '".mysql_escape_string($_SESSION['login'])."'   ";
-$result=mysql_query($sql_get,$sql);
+$single=request::get_get('single',0);
+if ($single && $usr->lvl>=$elvl) {
+    $result=db_query("SELECT * FROM `blogs` WHERE `id` = %d",request::get_get('id'));
+} else if (!$single) {
+    $result=db_query( "SELECT * FROM `blogs` WHERE owner = %s ",$usr->login);
+}
+//$result=mysql_query($sql_get,$sql);
 //echo $sql_get;
-while ( $row = mysql_fetch_assoc($result)) {
+while ( $row = db_fetch_assoc($result)) {
 //	echo "<h3><a href='blog/".$row['id']."'>".$row['name']."</a></h3>";
 	$av=0;
     if (strlen($row['av'])>0) {
@@ -11,12 +16,9 @@ while ( $row = mysql_fetch_assoc($result)) {
 $av=1;
  }
 //		echo "<h4 class='elt'>Участники:</h4><ul>";
-		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($row['id'])."'   ";
-		$resul=mysql_query($sql_get,$sql);
-		if (!$result) {
-			echo  mysql_error();
-		}
-		while ( $rw = mysql_fetch_assoc($resul)) {
+//		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($row['id'])."'   ";
+		$resul=db_query("SELECT * FROM `inblog` WHERE blogid = %d   ",$row['id']);
+		while ( $rw = db_fetch_assoc($resul)) {
             $users[]=$rw['name'];
 //			echo "<li><a href='user/".$rw['name']."'>".$rw['name']."</a></li>";
 		}
@@ -33,5 +35,5 @@ $av=1;
 //<input type='submit' value='Загрузить' />
 //</form><a href='work/rmblog/".$row['id']."'>Удалить</a>";
 }
-echo render_myblog($blogs);
+echo render_myblog($blogs,$single);
 ?>

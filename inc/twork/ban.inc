@@ -4,9 +4,10 @@ $who = request::get_get('who');
 echo $who;
 if ($usr->lvl >= $blvl && strlen($unb)) {
 	db_query('UPDATE users SET lck = %d WHERE name = %s', (1 - $unb), $who);
-
-        if (!$unb) {db_query("INSERT INTO `block_user` (`user` ,`cause` ,`end`) VALUES (%s, %s, %s)",$who,request::get_post('cause'),
-       (time()+request::get_post('end'))); } else {
+        if (!$unb) {
+            $end=request::get_post('end',0)?1:time()+((request::get_post('day')*24+request::get_post('hour'))*60+request::get_post('minut'))*60;
+            db_query("INSERT INTO `block_user` (`user` ,`cause` ,`end`) VALUES (%s, %s, %s)",$who,request::get_post('cause'),
+        $end); } else {
         db_query("DELETE FROM `block_user` WHERE `user` = %d LIMIT 1",$who);
        }
 //   echo "INSERT INTO `block_user` (`user` ,`cause` ,`end`) VALUES ('$who', '".request::get_post('cause')."', '".time()+request::get_post('end')."')";
