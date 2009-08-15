@@ -94,13 +94,14 @@ function com_echo($com,$noecho=0) {
 		$avatar_use=1;
 	}
 
-	if ($com->date>=$v_date && $com->auth!=$usr->login && $loged==1) {
+	if ($loged && $com->date>=$v_date && $com->auth!=$usr->login && $loged==1) {
 		$jstocom.="com_arr[".$num_com."]='#cmnt".$com->id."'; ";
 		$num_com+=1;
 		$com->new=1;
 	} else {
 		$com->new=0;
 	}
+        $com->text=code($com->text);
         $com->date+=TZ;
 	$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho);
 	$ech.="</dt><dd id='cmadd".$com->id."'>";

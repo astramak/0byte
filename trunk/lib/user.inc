@@ -91,8 +91,8 @@ class user {
 	}
 // AND lck = 0
         function check_lock() {
-            $row = db_fetch_assoc(db_query('SELECT *  FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
-            if ($row['end']<time()) {
+            $row = db_fetch_assoc(db_query('SELECT *, COUNT(*) AS `count`  FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
+            if ($row['end']!=1 && $row['end']<time()) {
                 db_query("DELETE FROM `block_user` WHERE `id` = %d LIMIT 1",$row['id']);
                 db_query("UPDATE `users` SET `lck` = '0' WHERE `name` = %s LIMIT 1 ",$this->login);
                 $this->lck=0;
@@ -141,7 +141,7 @@ function unlogin() {
 	}
 }
 function login() {
-	global $usr;
+	global $usr,$db_salt;
 	
 	$login = request::get_cookie('login');
 	$pwd = request::get_cookie('pwd');
@@ -160,7 +160,7 @@ function login() {
 	if (!isset($_SESSION['login'])) return 0;
 
 	$usr->login = $login;
-	$usr->pwd = md5(base64_decode($pwd));
+	$usr->pwd = md5($db_salt.base64_decode($pwd));
 	if ($usr->check()) {
 		return(1);
 	} else {

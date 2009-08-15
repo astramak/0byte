@@ -30,6 +30,7 @@ RewriteRule ^work/pmnew/([^\/]*) worked.php?wt=pmnew&name=$1 [L]
 RewriteRule ^work/pmnew/ worked.php?wt=pmnew [L]
 RewriteRule ^work/comment/([^\/]*)/([^\/]*)/(.*) worked.php?wt=comment&id=$1&lvl=$2&cur=$3 [L]
 RewriteRule ^work/block/([^\/]*)/([^\/]*) worked.php?wt=block&type=$1&name=$2 [L]
+RewriteRule ^work/editblog/([0-9]*) worked.php?wt=myblog&id=$1&single=1 [L]
 RewriteRule ^user/([^\/]*) users.php?name=$1 [L]
 RewriteRule ^work/([^\/]*) worked.php?wt=$1 [L]
 

@@ -71,7 +71,7 @@ class mel {
 					} else {
 						$sql_get .= '0';
 					}
-					$new = db_result(db_query($sql_get));
+					$new = db_result(db_query($sql_get,$dt));
 				} else {
 					$this->show = 0;
 				}
