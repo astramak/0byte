@@ -8,7 +8,7 @@
     <?php } ?>
     <span class='crate'>
         <noindex>
-            <a rel='nofollow' class='ratep' href="<?php if ($js) echo "jabascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=p&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">+</a>
+            <a rel='nofollow' class='ratep' href="<?php if ($js) echo "javascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=p&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">+</a>
         </noindex>
         <span id='rc<?php echo $comment->id;?>'>
             <span class='<?php

@@ -673,3 +673,6 @@ div.required {
 .tag_w1 {
 	font-size:8px;
 }
+.code {
+    font-family:DejaVu Sans Mono, Droid mono, monospace;
+}

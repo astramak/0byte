@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
 	<head>
-		<base href="<?php echo $site; ?>" />
+		<base href="<?php echo $base; ?>" />
 		<title><?php echo $title ?></title>
 		<meta name="keywords" content="<?php echo $kwd ?>" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
