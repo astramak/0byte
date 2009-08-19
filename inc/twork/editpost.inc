@@ -45,7 +45,7 @@ if (request::get_post('draft', 0)) {
                 $lock, $tag, $blog, $blog_id, $lnk, $post_id);
         } else {
             $tz = new dtxt();
-            $tz->cut($text);
+            $tz->cut(gtext($text));
 
             db_query('UPDATE post SET title = %s, text = %s, ftext = %s, `lock` = %d, blog = %s, blogid = %d, tag = %s, lnk = %s  WHERE id = %d',
                 $title, $tz->short_text, $tz->full_text, $lock, $blog, $blog_id, $tag, $lnk, $post_id);
