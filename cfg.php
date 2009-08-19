@@ -65,4 +65,10 @@ ini_set('display_errors', 1);
 $usr = new user();
 
 parse_plugin_array($use);
+
+if (@count($lib_plugins)>0) {
+    foreach($lib_plugins as $plugin) {
+        include('plugins/'.$plugin['name'].'/actions.php');
+    }
+}
 ?>

@@ -68,5 +68,7 @@ RewriteRule ^draft/from/([0-9]*) index.php?draft=1&from=$1 [L]
 RewriteRule ^draft index.php?draft=1 [L]
 
 RewriteRule ^favourite index.php?favourite=1 [L]
+RewriteRule ^like/([0-9]*) index.php?like=$1 [L]
+
 
 RewriteRule ^ajax/(.*) index.php?ajax=$1 [L,QSA]

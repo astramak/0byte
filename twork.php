@@ -28,6 +28,8 @@ if ($loged == 0) {
 		redirect('login.php');
 	}
 } else {
-	include("inc/twork/" . sfin($_GET['wt']) . ".inc");
+    	db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
+        DEFINE('TZ',($usr->timezone-$server_time)*3600);
+	include("inc/twork/" . sfin(request::get_get('wt')) . ".inc");
 }
 ?>
