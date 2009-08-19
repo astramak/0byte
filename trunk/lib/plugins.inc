@@ -71,15 +71,15 @@ function plugin_prerender($plugin) {
  * @param string $name
  */
 function init_plugin($name) {
-    global $block_plugins,$lib_plugins;
+    global $block_plugins,$lib_plugins,$notify_plugins;
     include('plugins/'.$name.'/plugin.php');
     $plugin['name']=$name;
     $plugin['type']=$type;
-//    echo $type
+    //    echo $type
     $plugin['conflict_type']=$conflict_type;
     switch ($type) {
         case 'pre_render':
-//            echo 1;
+        //            echo 1;
             plugin_prerender($plugin);
             break;
         case 'pre_save':
@@ -94,10 +94,13 @@ function init_plugin($name) {
         case 'lib':
             $lib_plugins[]=$plugin;
             break;
+        case 'notify':
+            $notify_plugins[]=$plugin;
+            break;
     }
 }
 /**
- * Parse plugin array and send it to initiale 
+ * Parse plugin array and send it to initiale
  *
  * @param array $array
  */
@@ -107,10 +110,5 @@ function parse_plugin_array($array) {
             init_plugin($name);
         }
     }
-}
-if (@count($lib_plugins)>0) {
-        foreach($lib_plugins as $plugin) {
-            include('plugins/'.$plugin['name'].'/actions.php');
-        }
 }
 ?>

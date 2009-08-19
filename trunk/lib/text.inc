@@ -191,6 +191,7 @@ function utext($text) {
             include('plugins/'.$plugin['name'].'/undo_actions.php');
         }
     }
+
 	return($text);
 }
 
