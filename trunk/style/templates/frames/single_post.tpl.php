@@ -15,6 +15,7 @@
         ?>тслеживать</a>)
     <?php } ?>
     (<a id="favor" href="<?php echo $favourite_url; ?>"><?php if (!$favourite) { ?>В избранное<?php } else { ?>Из избранного<?php } ?></a>) <?php } ?>
+    (<a href="like/<?php echo $id; ?>">Похожие</a>)
 <span class='rate'><a class='ratep' href='<?php echo $ratep_url; ?>'>+</a>
     <span id='rp<?php echo $id; ?>'><?php
     if ($rate>0) {
