@@ -54,6 +54,20 @@ else
         $inser.='favourite/';
         $sql_get="SELECT * FROM `favourite`,`post` WHERE `favourite`.`pid`=`post`.`id` && `favourite`.`who` = '".$usr->login."' ORDER BY  `post`.`id` DESC";
         echo render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
+    } else if (request::get_get('like',0)>0) {
+        $tags=db_result(db_query('SELECT `tag` FROM `post` WHERE `id` = %d',request::get_get('like',0)));
+        $tags_arr=split(",", $tags);
+        $query="SELECT *, ";
+        $where=null;
+        foreach ($tags_arr as $tag) {
+            $query.="IF(`tag` LIKE '%".mysql_escape_string(trim($tag))."%',1,0)+";
+            $where.="`tag` LIKE '%".mysql_escape_string(trim($tag))."%' || ";
+        }
+        $query=substr($query, 0, strlen($query)-1);
+        $where=substr($where, 0, strlen($where)-4);
+        $query.=" AS `rel` FROM `post` WHERE ".$where." ORDER BY `rel` DESC";
+        $sql_get=$query;
+        $inser.='like/'.request::get_get('like',0);
     }
  else
 	if (strlen(request::get_get('tag')>=2)) {

@@ -72,6 +72,7 @@ if ($pg) {
 } else {
 	$vars['rss'] = "rss";
 }
+$vars['base']="http://".$_SERVER['REMOTE_ADDR'].$dir;
 if (!$native_script) {
     $SCRIPT="";
 }
