@@ -19,13 +19,13 @@ include ("inc/head.php");
 include("inc/top.php");
 ?>
 
-	<?php
-	if ($loged==1) {
-		include("inc/worked/".sfin($_GET['wt']).".inc");
-	} else {
-		echo render_error("У вас нет прав на посещение данной страницы!");
-	}
-	?>
+<?php
+if ($loged==1) {
+    include("inc/worked/".sfin(request::get_get('wt')).".inc");
+} else {
+    echo render_error("У вас нет прав на посещение данной страницы!");
+}
+?>
 
 
 <?php

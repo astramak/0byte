@@ -28,6 +28,10 @@ switch ($type) {
         $out['content']=render_template(TPL_FRAMES.'/cause.tpl.php', array('type'=>request::get_get('el'),
     'url'=>"twork.php?wt=ban&who=".request::get_get('fr')."&cur=user/".request::get_get('fr')."&unb=0",'js'=>1));
         break;
+    case "blockpost":
+        $json=1;
+        include 'inc/worked/bpost.inc';
+        break;
 }
 echo json_encode($out);
 ?>

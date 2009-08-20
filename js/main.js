@@ -28,7 +28,7 @@ function strt() {
 		} else if (document.links[i].href.indexOf('work/block/user/')+1) {
 //                        re=/work\/block\/user\//;
 //			var arr=re.exec(document.links[i].href);
-                var txt= document.links[i].href.replace(/(.*?)\/work\/block\/user\//,'');
+                        txt= document.links[i].href.replace(/(.*?)\/work\/block\/user\//,'');
                         
                         document.links[i].href="javascript:cr(); x_r('ajax/editor?type=block&fr="+txt+"&el=user','box');"
                 }  else if (document.links[i].href.indexOf('draft#')+1) {
@@ -37,7 +37,11 @@ function strt() {
                     document.links[i].href=" javascript:g_plist('favourite')";
                 }  else if (document.links[i].href.indexOf('twork.php?wt=favourite')+1) {
 			document.links[i].href = "javascript:x_r('twork.php"+document.links[i].search+"&json=1','fav')";
-		}
+		} else if (document.links[i].href.indexOf('work/blockpost/')+1) {
+                        tt=document.links[i].href.replace(/(.*?)\/work\/blockpost\//,'');
+
+                        document.links[i].href="javascript:cr(); x_r('ajax/editor?type=blockpost&id="+tt+"','box');"
+                }
                
 	}
 

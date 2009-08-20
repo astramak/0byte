@@ -68,8 +68,8 @@ function rmcom($com) {
 	}
 }
 
-function com_echo($com,$noecho=0) {
-	global $usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id,$cedit;
+function com_echo($com,$noecho=0,$allow_comment=0) {
+    	global $usr,$loged,$elvl,$post11,$v_date,$jstocom,$num_com,$cur,$last_com_id,$cedit;
         $post11=$com->krnl;
 	$ech= "<dl class='lvl2'><dt id='cmnt".$com->id."' >";
 	if ($last_com_id<$com->id) {
@@ -103,14 +103,14 @@ function com_echo($com,$noecho=0) {
 	}
         $com->text=code($com->text);
         $com->date+=TZ;
-	$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho);
+	$ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho,$allow_comment);
 	$ech.="</dt><dd id='cmadd".$com->id."'>";
 	if (!$noecho) {
 		echo $ech;
 		$ech="";
 		$result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = %d ORDER BY id ASC', $com->id, ($com->lvl + 1));
 		while ($row = db_fetch_assoc($result)) {
-			com_echo(new comment($row));
+			com_echo(new comment($row),0,$allow_comment);
 		}
 	}
 	$ech.= "</dd><dt id='cm".$com->id."'></dt></dl>";
