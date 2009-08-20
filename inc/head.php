@@ -38,7 +38,7 @@ if ($post_id && !isset($_GET['wt'])) {
 	$vars['title'] = $sl_name."/".$blog." &#8212; ".$row['title'];
 } else {
 // FIXME: why did you removed $ma instance initialization but left this piece of code?
-	$vars['title'] = 'hello bug!';
+	$vars['title'] = $s_name;
 //$ma->gt();
 }
 
