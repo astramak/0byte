@@ -27,11 +27,13 @@
 <div class='ctext' ><?php echo $comment->text; ?></div>
 <?php if ($loged) {?>
 <div class='cbottom'>
+    <?php  if (!$allow_comment) {?>
 	(<a href='<?php if ($js) {?>
         javascript:doit("<?php echo $comment->id; ?>","<?php echo ($comment->lvl+1);?>")
             <?php } else {?>
         work/comment/<?php echo $comment->id."/".$comment->lvl."/".$current;
             }?>'>Ответить</a>)
+            <?php } ?>
             <?php  if ($allow_edit) { ?>
 	(<a href='work/editcom/<?php echo $comment->id;?>/'>Редактировать</a>)
         <?php } if ($allow_delete) { ?>

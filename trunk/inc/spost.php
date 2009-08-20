@@ -47,11 +47,14 @@ if (!$row) {
         //	$bls="";
         $allow_remove=0;
         $blck=$row['blck'];
+        $allow_comment=($blck-$blck%100)/100;
+        $allow_rate=($blck%100-$blck%10)/10;
+        $blck=$blck%10;
         $block_url=null;
         $remove_url=null;
         if ($usr->lvl>=$rlvl) {
             $allow_remove=1;
-            $block_url="twork.php?wt=bpost&id=".$post_id."&unb=".$row['blck'];
+            $block_url="work/blockpost/".$post_id;
             $remove_url="work/rmpost/".$post_id;
         //		$bls="(<a  href='twork.php?wt=bpost&id=".$post_id."&unb=".$row['blck']."'>".$unb."блокировать</a>) (<a href='work/rmpost/".$post_id."'>Удалить</a>) ";
         }
@@ -105,11 +108,11 @@ if (!$row) {
             echo "<span id='nocom'>Комментариев нет</span>";
         } else {
             while ($row = db_fetch_assoc($result)) {
-                com_echo(new comment($row));
+                com_echo(new comment($row),0,$allow_comment);
             }
         }
         echo "</div>";
-        if ($loged==1) {
+        if ($loged==1 && !$allow_comment) {
             echo "	<div class='cprv' id='cprv-1'></div>	<div class='inpt' id='mkt'>
 		 </div>
 		<form onsubmit='s_c(this,\"$post->id\"); klcprv(-1); return false;' class='inpt' id='com' name='com' method='post' action='twork.php?wt=newcom&amp;id=".$post->id."&amp;from=".$cur."'>

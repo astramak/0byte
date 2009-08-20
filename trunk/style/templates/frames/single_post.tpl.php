@@ -3,7 +3,7 @@
         (<a  href="work/editpost/<?php echo $id; ?>">Править</a>)
     <?php }
     if ($allow_remove) { ?>
-        (<a  href='<?php echo $block_url; ?>'><?php if ($blocked) { echo "За"; } else { echo "Раз"; } ?>блокировать</a>)
+        (<a  href='<?php echo $block_url; ?>'>Блокировки</a>)
         (<a href='<?php echo $remove_url; ?>'>Удалить</a>)
     <?php }
     if ($allow_spy) {?>

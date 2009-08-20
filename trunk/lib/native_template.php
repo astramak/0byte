@@ -160,9 +160,9 @@ function render_login($login,$current,$js,$new) {
  * @param numeric $js
  * @return string
  */
-function render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$pid,$js) {
+function render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$pid,$js,$allow_comment=0) {
     $vars=array("comment"=>$com,"avatar_use"=>$avatar_use,"allow_edit"=>$allow_edit,
-"allow_delete"=>$allow_delete,"current"=>$cur,"loged"=>$loged,"pid"=>$pid,"js"=>$js);
+"allow_delete"=>$allow_delete,"current"=>$cur,"loged"=>$loged,"pid"=>$pid,"js"=>$js,"allow_comment"=>$allow_comment);
     return render_template(TPL_FRAMES.'/comment.tpl.php', $vars);
 }
 

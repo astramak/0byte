@@ -35,10 +35,10 @@ if (!$result) {
 }
 
 $raw = mysql_fetch_assoc($result);
-if ($raw['id'] != $krnl || $id == "") {
+if ($raw['id'] != $krnl || $id == "" || ($raw['blck']-$raw['blck']%100)/100==1) {
     redirect($lst);
 }
-
+$title=$raw['title'];
 $pauth=$raw['auth'];
 $pid=$raw['id'];
 $listp=$raw['flw'];
@@ -52,6 +52,7 @@ $result=mysql_query($sql_get,$sql);
 $rw = mysql_fetch_assoc($result);
 $cm=new comment($rw);
 $lst.='#cmnt'.$cm->id;
+$text=code($text);
 if ($ceauth!="" && $ceauth!=$usr->login) {
     $sql_get="SELECT * FROM `users` WHERE `name` = '".$ceauth."'";
     $result=mysql_query($sql_get,$sql);
@@ -63,11 +64,13 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
 
     if ($row['comre']==1) {
         $to = $row['mail'];
-        $subject = "Ответ на ваш комментарий на " . $s_name;
+        $subject = "Ответ на ваш комментарий на " . $sl_name;
         $message = render_mail('comment_reply', array(
             'user' => $usr->login,
             'pid' => $pid,
             'lst' => $lst,
+            'text' => $text,
+            'title'=>$title
         ));
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
         nullbyte_mail($to, $subject, $message, true, $headers);
@@ -86,11 +89,13 @@ if ($pauth!=$usr->login && $lvl==1) {
     $result=mysql_query($sql_get,$sql);
     if ($row['postre']==1) {
         $to = $row['mail'];
-        $subject = "Ответ на ваш пост на ".$s_name;
+        $subject = "Ответ на ваш пост на ".$sl_name;
         $message = render_mail('post_reply', array(
             'user' => $usr->login,
             'pid' => $pid,
             'lst' => $lst,
+            'text' =>$text,
+            'title'=>$title
         ));
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
         nullbyte_mail($to, $subject, $message, true, $headers);
@@ -99,7 +104,7 @@ if ($pauth!=$usr->login && $lvl==1) {
         }
     }
 }
-if ($lvl==0) flsnd($listp,$usr->login,$pid,$cm->id);
+if ($lvl==0) flsnd($listp,$usr->login,$pid,$cm->id,$text,$title);
 if (@count($notify_plugins)>0) {
     foreach($notify_plugins as $plugin) {
         include('plugins/'.$plugin['name'].'/actions.php');

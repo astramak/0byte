@@ -21,7 +21,7 @@ if (isset($_GET['pg'])) {
 if (isset($_GET['blog'])) {
 	$inser.="blog/".$_GET['blog']."/";
 }
-$blck="&& blck = '0'";
+$blck="&& blck != 1";
 if ($usr->lvl>=$rlvl) {
 	$blck="";
 } else if ($loged) {

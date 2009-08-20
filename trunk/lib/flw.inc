@@ -29,8 +29,8 @@ function flrm($list,$user) {
     return (str_replace($user.", ","",$list));
 }
 
-function flsnd($list,$usr,$pid,$comid) {
-    global $eml,$site,$s_name,$notify,$notify_plugins;
+function flsnd($list,$usr,$pid,$comid,$text,$title) {
+    global $eml,$site,$sl_name,$notify,$notify_plugins;
     $arr=split(",",$list);
     $q=sizeof($arr);
     for ($z=0; $z<$q; $z++) {
@@ -41,11 +41,13 @@ function flsnd($list,$usr,$pid,$comid) {
             db_query('INSERT INTO eye SET who = %s, pid = %d', $name, $pid);
 
             $row = db_fetch_assoc(db_query('SELECT `mail`,`jabber` FROM `users` WHERE name = %s', $name));
-            $subject = "Ответ на отслеживаемый вами пост на ".$s_name;
+            $subject = "Ответ на отслеживаемый вами пост на ".$sl_name;
             $message = render_mail('observe_reply', array(
                 'user' => $usr,
                 'pid' => $pid,
                 'comid' => $comid,
+                'text' => $text,
+                'title' => $title
             ));
             $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
             nullbyte_mail($row['to'], $subject, $message, true, $headers);

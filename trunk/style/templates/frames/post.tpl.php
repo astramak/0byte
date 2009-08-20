@@ -5,7 +5,7 @@
 	<?php }?>
 </div>
 <div class='text'>
-	<h2 class='title' <?php if ($blocked) { ?>style='color:red'<?php } ?>>
+	<h2 class='title' <?php if ($blocked==1) { ?>style='color:red'<?php } ?>>
 		<?php
 		if ($type=='link') {?>
 		<a href='<?php echo $link; ?>' rel='nofollow' class='blog'>
