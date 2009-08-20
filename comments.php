@@ -33,7 +33,7 @@ $count=20;
 //				<a class='ratep' href='twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur."'>+</a>
 //				".$rtp."<a class='ratem' href='twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur."'>&ndash;</a></span></div>";
 $frm=request::get_get('frm',0);
-                $all_count=db_query('SELECT COUNT(id) FROM comment WHERE who = %s ORDER BY id DESC',$who);
+                $all_count=db_result(db_query('SELECT COUNT(id) FROM comment WHERE who = %s ORDER BY id DESC',$who));
 		$result = db_query('SELECT * FROM comment WHERE who = %s ORDER BY id DESC LIMIT %d, %d', $who,$frm,$count);
                 if (!$all_count) {
     
