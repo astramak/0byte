@@ -144,7 +144,7 @@ function render_register_page($array) {
  * @param numeric $new
  * @return string
  */
-function render_login($login,$current,$js,$new) {
+function render_login($login,$current,$js,$new,$err=0) {
     return render_template(TPL_FRAMES.'/login.tpl.php',array('login'=>$login,'current'=>$current,'js'=>$js,'new'=>$new));
 }
 /**
