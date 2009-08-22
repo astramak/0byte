@@ -32,6 +32,7 @@ if (strlen($cur) < 3) {
 
 $login = request::get_post('login');
 $pwd = request::get_post('pwd');
+$err=0;
 if (strlen($login) > 2 && strlen($pwd) > 2) {
 	$usr->login = $login;
 	$usr->pwd = md5($pwd);
@@ -50,13 +51,17 @@ if (strlen($login) > 2 && strlen($pwd) > 2) {
 	} else {
 		$err = 1;
 	}
+} else {
+    $err = 1;
 }
 if (!$js) {
 	include ("inc/head.php");
 	include("inc/top.php");
+        if ($err) {
+        echo render_error('Данные введены неверно!');
+    }
 }
-
-echo render_login(request::get_post("login", 0), $cur, $js, (request::get_get("new") && $eml_a));
+echo render_login(request::get_post("login", 0), $cur, $js, (request::get_get("new") && $eml_a),$err);
 
 if (!$js) {
 	include("inc/foot.php");

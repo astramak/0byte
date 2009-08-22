@@ -21,7 +21,7 @@ $db_settings = 'mysql://test:test@localhost/test';
 $elvl=3;
 $rlvl=5;
 $blvl=7;
-
+$hlvl=15;
 // other cfg
 $site="http://localhost/"; //full url like http://site.domain/dir/
 $s_name="test";//site name
