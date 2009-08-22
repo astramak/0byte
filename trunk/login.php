@@ -51,9 +51,7 @@ if (strlen($login) > 2 && strlen($pwd) > 2) {
 	} else {
 		$err = 1;
 	}
-} else {
-    $err = 1;
-}
+} 
 if (!$js) {
 	include ("inc/head.php");
 	include("inc/top.php");
