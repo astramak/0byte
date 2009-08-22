@@ -45,7 +45,7 @@ if ($city['set']) {?>
 if (@$blogs) { ?>
 <br><br>Состоит в
         <?php foreach ($blogs as $blog) {?>
-            <a href='blog/<?php $blog['id']; ?>/'><?php echo $blog['name']; ?></a> 
+        <a href='blog/<?php $blog['id']; ?>/'><?php echo $blog['name']; ?></a><?php if ($blog!=end($blogs)) echo ','; ?>
         <?php } } ?>
  
 <br><br>
@@ -54,7 +54,7 @@ if (@$blogs) { ?>
 <br>
 <?php if (@$friends) { ?>Дружит с
         <?php foreach ($friends as $friend) {?>
-            <a href='user/<?php echo $friend; ?>/'><?php echo $friend; ?></a>
+            <a href='user/<?php echo $friend; ?>/'><?php echo $friend; ?></a><?php if ($friend!=end($friends)) echo ','; ?>
         <?php } ?>
     <?php } ?>
 <br /><br><hr>
