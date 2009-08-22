@@ -1,5 +1,10 @@
-Для продолжения восстановления пароля перейдите
-<a href="<?php print $site ?>all.php?wt=chpwd&user=<?php print $user ?>&ld=<?php print $ld ?>">по этой ссылку</a>
+Для подтверждения восстановления пароля перейдите
+<a href="<?php print $site ?>all.php?wt=chpwd&user=<?php print $user ?>&ld=<?php print $ld ?>">по этой ссылке</a>
 <br /><br />
-Ваш новый пароль:<br />
+После этого вашим новым паролем будет:<br />
 <?php print $psw ?>
+<br /><br />
+Мы старались, генерируя его, постарайтесь не забыдь.
+<br /><br />
+--
+Классный робот-рассыльщик welinux.ru
