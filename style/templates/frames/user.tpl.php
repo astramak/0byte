@@ -54,7 +54,8 @@ if (@$blogs) { ?>
             <a href='user/<?php echo $friend; ?>/'><?php echo $friend; ?></a><?php if ($friend!=end($friends)) echo ','; ?>
         <?php } } } ?>
 <br><br>
-Написал <a href='auth/<?php echo $name; ?>/'><?php echo $post_count; ?> постов</a> и <a href='comment/<?php echo $name; ?>/'><?php echo $comment_count; ?> коментариев</a>
+Написал <a href='auth/<?php echo $name; ?>/'><?php echo $post_count." "; echo inducing($post_count, array('поста','постов','пост'));?> </a> и <a href='comment/<?php echo $name; ?>/'><?php echo $comment_count." ";
+ echo inducing($comment_count, array('комментария','комментариев','комментарий')); ?></a>
 
 <br /><br><hr>
 <?php if ($owner) {?>

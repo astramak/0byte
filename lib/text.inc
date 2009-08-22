@@ -271,4 +271,11 @@ function code($txt) {
 //	$txt = str_replace("<a href", "<a rel='nofollow' href", $txt);
 	return $txt;
 }
+function inducing($num,$variants) {
+    if (($num>1 && $num<=3) || ($num>20 && $num%10>1 && $num%10<=3) ) {
+        return $variants[0];
+    } else if (($num<20 && $num!=1) || ($num>20 && $num%10!=1)) {
+        return $variants[1];
+    } else return $variants[2];
+}
 ?>
