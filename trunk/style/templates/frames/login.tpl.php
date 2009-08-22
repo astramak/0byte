@@ -12,8 +12,8 @@
 					<td><input type="password" name="pwd" /></td>
 				</tr>
 				<tr>
-					<td>Запомнить:</td>
-					<td><input type="checkbox" name="zap" value="1" /></td>
+					<td></td>
+					<td><input type="checkbox" name="zap" value="1" />помнить меня</td>
 				</tr>
 				<tr>
 					<td></td>
@@ -24,6 +24,7 @@
 				</tr>
 			</table>
 		</form>
+		<br/>
 		<?php if ($new) { ?>
 		<b>Перед входом активируйте свою учётную запись, для этого проверьте свою электронную почту и пройдите по полученной ссылке!</b>
 		<?php } else { ?>
