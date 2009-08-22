@@ -22,15 +22,13 @@ if ($blocked) {?>
 <?php }
 if (!$hide_mail) {?>
     <img src='http://img200.imageshack.us/img200/5982/emailh.png'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>, 
-<?php }
-if ($icq['set']) {?>
-    <img src='http://web.icq.com/whitepages/online?icq=<?php echo $icq['text'];?>&img=5'/><?php echo $icq['text'];?>, 
-<?php }
-if ($jabber['set']) {?>
-    <img src='http://img194.imageshack.us/img194/2286/jabberonline.png'/><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a>, 
-<?php }
-if ($usite['set']) { ?>
-    <img src='http://img44.imageshack.us/img44/4667/webbrowser.png'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>, 
+<?php } $not_first=0;
+if ($icq['set']) { $not_first=1; ?>
+    <img src='http://web.icq.com/whitepages/online?icq=<?php echo $icq['text'];?>&img=5'/><?php echo $icq['text'];
+}
+if ($jabber['set']) {  if ($not_first) echo ','; $not_first=1; ?><img src='http://img194.imageshack.us/img194/2286/jabberonline.png'/><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a><?php
+ }
+if ($usite['set']) { if ($not_first) echo ','; ?> <img src='http://img44.imageshack.us/img44/4667/webbrowser.png'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
 <?php }
 echo '- контакты.';
 ?>
@@ -43,11 +41,12 @@ if ($city['set']) {?>
 <br><br/>
 <?php if ($about['set']) {?>
     <?php echo $name; ?> о себе: <br><span class='note'><?php echo $about['text']; ?></span>
-<?php }?>
+<?php }
+if (@$blogs) { ?>
 <br><br>Состоит в
         <?php foreach ($blogs as $blog) {?>
             <a href='blog/<?php $blog['id']; ?>/'><?php echo $blog['name']; ?></a> 
-        <?php } ?>
+        <?php } } ?>
  
 <br><br>
 Написал <a href='auth/<?php echo $name; ?>/'><?php echo $post_count; ?> постов</a> и <a href='comment/<?php echo $name; ?>/'><?php echo $comment_count; ?> коментариев</a>
