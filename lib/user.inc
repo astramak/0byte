@@ -71,14 +71,14 @@ class user {
 
 	function g_j() {
 		if ($this->juse != 0) {
-			if ($this->jdate < (time()-300)) {
+			if ($this->jdate < (time()-30)) {
 				if ($this->juse == 1) {
-					$jurl = "http://rss.juick.com/".$row['jname']."/blog";
+					$jurl = "http://rss.juick.com/".$this->jname."/blog";
 				} else {
-					$jurl = "http://twitter.com/statuses/user_timeline/".$row['jname'].".rss";
+					$jurl = "http://twitter.com/statuses/user_timeline/".$this->jname.".rss";
 				}
 				$xml = simplexml_load_file($jurl);
-				$this->jtext = $xml->channel->item[0]->description;
+                                $this->jtext = $xml->channel->item[0]->description;
 				$this->jdate = time();
 				db_query('UPDATE users SET jdate = %d, jtext = %s WHERE name = %s', time(), $this->jtext, $this->login);
 			}

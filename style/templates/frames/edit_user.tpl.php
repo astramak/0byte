@@ -85,7 +85,7 @@
             <td><select name='juse'>
                     <option value="0">Нет</option>
                     <option <?php echo $juick; ?> value="1">Juick</option>
-                    <option <?php echo $twitter; ?>value="2">Twitter</option>
+                    <option <?php echo $twitter; ?> value="2">Twitter</option>
                 </select> <label><input type='text' name='jname'
                                         value="<?php echo $micro_name; ?>" /></label>
 
