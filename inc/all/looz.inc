@@ -1,6 +1,8 @@
 <?php
-$nick = request::get_get('nick');
-
+$nick = request::get_post('nick',0);
+if (!$nick) {
+    echo render_template(TPL_FRAMES.'/restore.tpl.php', null);
+} else {
 $alien = new user();
 if ($nick && $alien->looser(gtext($nick))) {
 	$psw = nullbute_generate_pwd(8);
@@ -20,5 +22,6 @@ if ($nick && $alien->looser(gtext($nick))) {
 	nullbyte_mail($to, $subject, $message, true, $headers);
 
 	echo "<h2>Проверьте свою электронную почту!</h2>";
+}
 }
 ?>
