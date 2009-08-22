@@ -6,7 +6,11 @@
     <?php foreach ($elements as $element) { ?>
     <tr>
         <td class='avl'><?php echo $element['av']; ?></td>
-        <td class='ulp'><a href='blog/<?php echo $element['id']; ?>'><?php echo $element['name']; ?></a></td>
+        <td class='ulp'><?php if ($edit) {?>
+            <a href="work/editblog/<?php echo $element['id']; ?>"><img src='style/n_img/edit.png' alt='Редактировать' /></a>
+            <?php } ?>
+            <a href='blog/<?php echo $element['id']; ?>'><?php echo $element['name']; ?></a></td>
+
         <td class='lrte'>
             <?php if ($element['rate']>0) { ?>
                 <span class='rp'><?php echo $element['rate']; ?></span>

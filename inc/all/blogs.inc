@@ -37,8 +37,9 @@ while ($row = db_fetch_assoc($result)) {
     //			echo "</td><td class='ulp'><a href='blog/".$row['id']."'>".$row['name']."</a></td><td class='lrte'>";
     $row['av']=$av;
     $row['rate']=$row['ratep']-$row['ratem'];
+
     $elem[]=$row;
 }
-echo render_template(TPL_LISTS.'/blog.tpl.php', array('elements'=>$elem,'fst'=>$fst,'scn'=>$scn));
+echo render_template(TPL_LISTS.'/blog.tpl.php', array('elements'=>$elem,'fst'=>$fst,'scn'=>$scn,'edit'=>@$usr->lvl>=$elvl));
 echo render_paginator($inser, 50, db_result(db_query("SELECT COUNT(`id`) FROM  `blogs`")), $frm);
 ?>

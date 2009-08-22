@@ -7,5 +7,5 @@ if ($owner == $usr->login || $usr->lvl>=$elvl) {
 	db_query('DELETE FROM brate WHERE pid = %d', $id);
 	db_query('UPDATE post SET blog = "own", blogid = 0 WHERE blogid = %d', $id);
 }
-redirect('work/myblog');
+redirect($dir);
 ?>
