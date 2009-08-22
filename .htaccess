@@ -1,6 +1,6 @@
 RewriteEngine On
 
-RewriteRule ^looz/([^\/]*) all.php?wt=looz&nick=$1 [L]
+RewriteRule ^looz/ all.php?wt=looz [L]
 RewriteRule ^refer/([^\/]*) refer.php?who=$1 [L]
 RewriteRule ^all/([^\/]*) all.php?wt=$1 [L]
 RewriteRule ^list/user/from/([0-9]*) all.php?wt=userl&from=$1 [L]
