@@ -1,5 +1,10 @@
-<h2>Вы забыли пароль?</h2>
+<div id="golog">
+<br/><br/>
+<span class='title'>Амнезия?</span><br>
+Введите в поле ваше имя пользователя и мы вернём вам ваш пароль<br><br>
 <form action="looz" method="post">
-    <label>Ваш логин: <input name="nick" type="text" /></label>
-    <br /><input type="submit" value="Отправить запрос" />
+    <input name="nick" type="text"/><input type="submit" value="Уууииии"/>
 </form>
+</div>
+
+

@@ -1,21 +1,18 @@
 <h3>Создание <?php echo $type; ?></h3>
-<a href="work/newpost"> Сообщение </a> | <a href="work/newpost/tr"> Перевод </a> | <a href="work/newpost/lnk"> Сообщение-ссылка </a> |
-<a href="work/newpost/answ"> Опрос </a>
+<a href="work/newpost">Сообщение</a> | <a href="work/newpost/tr">Перевод</a> | <a href="work/newpost/lnk">Ссылка</a> | <a href="work/newpost/answ">Опрос</a><br>
 <form name="new" id='new' method="post"
 	action="twork.php?wt=newpost&tp=<?php echo $tp; ?>">
-<div id='prv'></div>
+<div id='prv'></div><br><br>
 <table border="0" class="fullwidth">
 	<tr>
-		<td>Заголовок</td>
-		<td><input type="text" name="title" class="post-title" /></td>
-	</tr>
-	<tr>
-		<td>Блог</td>
-		<td><select name="blog">
+		<select name="blog">
 		<?php foreach ($blogs as $blog) { ?>
         <option value="<?php echo $blog['value'];?>"><?php echo $blog['text']; ?></option>
         <?php } ?>
-    </select>
+    </select> — <input type="text" name="title" class="post-title" />
+	
+	<tr>
+		<td>
     <?php if(@!$answer) {?>
     <tr><td id='otxt'>Текст</td><td>
 		<div id='mq' class='inpt'></div>
@@ -42,6 +39,6 @@
 		<td><input type="text" name="tag" class="post-tags" /></td>
 	</tr>
 </table>
-<input type="checkbox" name="lock" /> Только для друзей/собложников<br />
-<input type="submit" value="Запостить!" />
-<input type="submit" value="Сохранить!" name="draft" /></form>
+<input type="checkbox" name="lock" /> Только для друзей / участников блога<br />
+<input type="submit" class="tag_w6" value="Опубликовать" />
+<input type="submit" value="Сохранить" name="draft" /></form>
