@@ -53,10 +53,9 @@ if (@$blogs) { ?>
 
 <br>
 <?php if (@$friends) { ?>Дружит с
-        <?php foreach ($friends as $friend) {?>
+        <?php foreach ($friends as $friend) { if (strlen($friend)>1) { ?>
             <a href='user/<?php echo $friend; ?>/'><?php echo $friend; ?></a><?php if ($friend!=end($friends)) echo ','; ?>
-        <?php } ?>
-    <?php } ?>
+        <?php } } } ?>
 <br /><br><hr>
 <?php if ($owner) {?>
     <br /><img src='http://astramak.jino.ru/welinux/edit.png'/> <a href="work/edituser">Редактировать профиль</a> 
