@@ -1,5 +1,6 @@
 <div id="golog">
-	<br/><br/><span class='title'>Регистрация</span><br/><br/>
+	<br/><br/><span class='title'>Регистрация</span><br>
+	Когда нибудь тут будет ссылка на правила и вам нужно будет их читать<br/><br/>
 	<?php if ($error) { ?>
 	<span class='err'>
 			<?php
