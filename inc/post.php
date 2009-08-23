@@ -43,7 +43,7 @@ $pg=request::get_get('pg','');
 $draft=request::get_get('draft',0);
 $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2) ) {
-	$sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
+	$sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
 }
 else 
     if ($loged && $draft) {
@@ -76,7 +76,7 @@ else
 		$inser.="tag/".gtext($_GET['tag'])."/";
 		echo render_template(TPL_POST_LIST.'/tag.tpl.php', array('text'=>gtext(request::get_get('tag'))));
 	} else if (isset($_GET['pg']) && $_GET['pg']=='pers') {
-		$sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck ORDER BY  id DESC ";
+		$sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY  id DESC ";
 	} else {
 		if (isset($_GET['auth'])) {
 			$sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string($_GET['auth'])."' $blck ORDER BY  id DESC ";
@@ -94,28 +94,10 @@ if (isset($_GET['fnd'])) {
 	$sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
 	echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>$fnd));
 }
-if (isset($_GET['pg']) && $_GET['pg']=='lenta') {
+if (isset($_GET['pg']) && $_GET['pg']=='lenta' && $loged==1) {
 //lenta start
-	if ($loged==1) {
-		$sql_get="SELECT * FROM `post` WHERE ";
-		$sl="SELECT * FROM `inblog` WHERE  `name` = '".$usr->login."' &&  `out` = 0 ORDER BY  id DESC ";
-		$rt=mysql_query($sl,$sql);
-		$rwo = mysql_fetch_assoc($rt);
-		$sql_get.="`blogid` = '".$rwo['blogid']."'";
-		while ($rwo = mysql_fetch_assoc($rt)) {
-			$sql_get.=" || `blogid` = '".$rwo['blogid']."'";
-		}
-		$sl="SELECT * FROM `users` WHERE  `name` = '".$usr->login."'";
-		$rt=mysql_query($sl,$sql);
-		$rwo = mysql_fetch_assoc($rt);
-		$arr=split(",",$rwo['frnd']);
-		$q=sizeof($arr);
-		for ($z=1;$z<$q;$z++) {
-			$f=trim($arr[$z]);
-			$sql_get.=" || `auth` = '".$f."'";
-		}
-		$sql_get.=" ORDER BY  id DESC";
-	}
+	
+            $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special();
 //lenta end
 }
 $result=mysql_query($sql_get,$sql);

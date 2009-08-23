@@ -18,7 +18,7 @@
 ob_start("ob_gzhandler");
 $loged=login();
 if ($loged) {
-	db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
+        db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
         DEFINE('TZ',($usr->timezone-$server_time)*3600);
 //        echo $usr->timezone;
 } else {
