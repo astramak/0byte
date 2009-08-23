@@ -1,4 +1,4 @@
-<h2>Пользователи</h2>
+<h2>Пользователи<?php if ($city) { echo ":".$city; } ?></h2>
 <table id='users'>
     <tr>
 	<td></td><td class='mettm'><?php echo $fst; ?></td><td class='mettm'><?php echo $scn; ?></td>

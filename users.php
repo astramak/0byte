@@ -168,7 +168,7 @@ if (!$alien->find($name)) {
     'mail'=>$alien->mail,'icq'=>$icq,'jabber'=>$jabber,'usite'=>$usite,'city'=>$city,
     'rate'=>$alien->rate(),'ratep_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur,
     'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur,
-    'about'=>$about,'blogs'=>$blogs,'friends'=>@$friends,'is_friend'=>$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
+    'about'=>$about,'blogs'=>$blogs,'friends'=>@$friends,'is_friend'=>@$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
     'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>$block_url,
     'owner'=>$own_profile,'micro_name'=>$micro_name,'micro_url'=>$micro_url,'micro_status'=>$alien->jtext));
 }

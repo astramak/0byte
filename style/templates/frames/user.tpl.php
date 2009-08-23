@@ -35,7 +35,7 @@ echo '— контакты.';
 <br><br>
 <?php 
 if ($city['set']) {?>
-Город - <?php echo $city['text']; ?>
+Город - <a href='list/user/city/<?php echo $city['text']; ?>'><?php echo $city['text']; ?></a>
 <?php } ?>
 
 <br><br/>
