@@ -44,7 +44,9 @@ function strt() {
                 }
                
 	}
-
+        if (document.getElementById("view")) {
+            document.getElementById("view").style.display="inline";
+        }
 	if (document.getElementById("lgin")) {
     		document.getElementById("lgin").href="javascript:login()";
 	}

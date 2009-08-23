@@ -41,4 +41,4 @@
 </table>
 <input type="checkbox" name="lock" /> Только для друзей / участников блога<br />
 <input type="submit" class="tag_w6" value="Опубликовать" />
-<input type="submit" value="Сохранить" name="draft" /></form>
+<input type="submit" value="Сохранить" name="draft" /><input style="display:none;" id="view" onClick="javascript:prv()" type="button" value="Предпросмотр" /></form>
