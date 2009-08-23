@@ -1,5 +1,9 @@
 <?php
-
+if ($usr->rate()<$np_rate) {
+    j_err("У вас недостаточно рейтинга для этого действия!");
+    jkill();
+    redirect($dir.'error/not_allow');
+}
 $title = trim(request::get_post('title'));
 $text = trim(request::get_post('text'));
 $len = request::get_post('len');

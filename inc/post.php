@@ -43,7 +43,7 @@ $pg=request::get_get('pg','');
 $draft=request::get_get('draft',0);
 $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2) ) {
-	$sql_get="SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY  id DESC ";
+	$sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
 }
 else 
     if ($loged && $draft) {

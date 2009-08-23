@@ -6,6 +6,9 @@
         (<a  href='<?php echo $block_url; ?>'>Блокировки</a>)
         (<a href='<?php echo $remove_url; ?>'>Удалить</a>)
     <?php }
+    if ($allow_hold) {
+        ?>(<a href="work/hold/<?php echo $id; ?>"><?php if (!$hold) echo 'За'; else echo 'От';?>крепить</a>)<?php
+    }
     if ($allow_spy) {?>
         (<a id='sled' href='<?php echo $spy_url; ?>'><?php if ($spyed) {
             echo "Перестать о";

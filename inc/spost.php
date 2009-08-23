@@ -93,15 +93,15 @@ if (!$row) {
             }
 
         }
-
-        //	echo "</div>";
+               //	echo "</div>";
         $favourite=$loged==1?db_num_rows(db_query("SELECT `who`,`pid` FROM `favourite` WHERE `pid` = %d && `who`= %s",$post->id,$usr->login)):0;
         echo render_template(TPL_FRAMES.'/single_post.tpl.php', array('id'=>$post->id,'tags'=>$tags,
         'allow_edit'=>$allow_edit,'allow_remove'=>$allow_remove,'allow_spy'=>$allow_spy,
         'spy_url'=>@$spy_url,'spyed'=>@$spyed,'block_url'=>$block_url,'blocked'=>$blck,
         'rate'=>$rate,'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
         'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,'remove_url'=>$remove_url,
-        'favourite'=>$favourite,'favourite_url'=>'twork.php?wt=favourite&id='.$post->id,'loged'=>$loged,'rate_num'=>($post->ratep+$post->ratem)%100));
+        'favourite'=>$favourite,'favourite_url'=>'twork.php?wt=favourite&id='.$post->id,'loged'=>$loged,'hold'=>$post->top,'allow_hold'=>$usr->lvl>=$hlvl
+        ,'rate_num'=>($post->ratep+$post->ratem)%100));
         $result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = 0 ORDER BY id', $post_id);
         echo "<a id='cm'></a><div id='cmn'>";
         if (!db_num_rows($result)) {
