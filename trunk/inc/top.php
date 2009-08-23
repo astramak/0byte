@@ -47,11 +47,16 @@ if (strpos($_SERVER['REQUEST_URI'],"?")!=0) {
 $top_ar['current_url']=$cur;
 if ($loged==1) {
 	$top_ar['loged']=1;
-	if ($usr->rate()>=$nb_rate || $usr->lvl>5) {
+	if ($usr->rate()>=$nb_rate || $usr->lvl>$rlvl) {
 		$top_ar['allow_blog']=1;
 	} else {
 		$top_ar['allow_blog']=0;
 	}
+        if ($usr->rate()>=$np_rate || $usr->lvl>$rlvl) {
+            $top_ar['allow_post']=1;
+        } else {
+            $top_ar['allow_post']=0;
+        }
         if (request::get_get('wt')=='pmread') {
            $top_ar['not_readed'] = db_result(db_query('SELECT COUNT(id) FROM pm WHERE `to` = %s && `readed` = 0 && `dto` != 2 && `id` != %d', $usr->login,request::get_get('id')));
         } else {

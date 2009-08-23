@@ -13,9 +13,12 @@
 		<?php } elseif ($type=='translate') {?>
 		<img class='auth' src='style/tr.gif' style='height: 20px;' />
 		<?php }
-		if ($avatar) {?>
+            	if ($avatar) {?>
 		<img class='pav' src='<?php echo $avatar_url; ?>' alt='' />
 		<?php }
+                if ($hold) {
+                    ?><span class='blog'>#</span><?php
+                }
 		if ($not_in_blog) { ?>
 		<a class='blog' href='user/<?php echo $author; ?>/'><?php echo $author; ?></a>
 		<?php } else {?>

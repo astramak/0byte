@@ -31,6 +31,7 @@ class post {
 	var $tp;
 	var $flw;
         var $lnk;
+        var $top;
 	function post($row = null) {
 		if ($row) $this->make($row);
 	}
@@ -152,12 +153,13 @@ function post_echo($row, $t,$draft=null) {
             }
         }
         $array['draft']=$draft;
+        $array['hold']=$a->top;
 	echo render_post($array);
 	return($a);
 }
 
 function chkin($a) {
-	global $usr;
+	global $usr,$loged;
 	if ($a['lock']==0) {
 		return(1);
 	} elseif ($loged==0) {

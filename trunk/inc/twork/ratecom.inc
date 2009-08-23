@@ -1,4 +1,9 @@
 <?php
+if ($usr->rate()<$cr_rate) {
+    j_err("У вас недостаточно рейтинга для этого действия!");
+    jkill();
+    redirect($dir.'error/not_allow');
+}
 $lst = request::get_get('from');
 $lst = str_replace("*amp","&",$lst);
 $lst = str_replace("*qw","?",$lst);

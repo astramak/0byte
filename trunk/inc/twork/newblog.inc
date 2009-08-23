@@ -1,4 +1,9 @@
 <?php
+if ($usr->rate()<$nb_rate) {
+    j_err("У вас недостаточно рейтинга для этого действия!");
+    jkill();
+    redirect($dir.'error/not_allow');
+}
 $btitle = trim(request::get_post('btitle'));
 
 if ($usr->rate() < $nb_rate || strlen($btitle) < 3) {

@@ -1,4 +1,9 @@
 <?php
+if ($usr->rate()<$nc_rate) {
+    j_err("У вас недостаточно рейтинга для этого действия!");
+    jkill();
+    redirect($dir.'error/not_allow');
+}
 if ($json != 1) {
     $lst = request::get_get('from');
     $lst=str_replace("*amp","&",$lst);

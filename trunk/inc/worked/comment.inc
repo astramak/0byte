@@ -5,6 +5,7 @@
 //} else {
 //
 //}
+if ($usr->rate()>=$nc_rate) {
 $sql_get = "SELECT * FROM `comment` WHERE id = '".intval($_GET['id'])."'";
 $result=mysql_query($sql_get,$sql);
 if (!$result) {
@@ -34,4 +35,7 @@ if (!isset($_GET['js'])) {
 	"id" : "'.$_GET['id'].'"
 }';
 	}
+} else {
+ redirect($dir.'error/not_allow');
+}
 	?>

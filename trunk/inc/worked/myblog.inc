@@ -4,36 +4,41 @@ $single=request::get_get('single',0);
 if ($single && $usr->lvl>=$elvl) {
     $result=db_query("SELECT * FROM `blogs` WHERE `id` = %d",request::get_get('id'));
 } else if (!$single) {
-    $result=db_query( "SELECT * FROM `blogs` WHERE owner = %s ",$usr->login);
-}
+        $result=db_query( "SELECT * FROM `blogs` WHERE owner = %s ",$usr->login);
+    }
 //$result=mysql_query($sql_get,$sql);
 //echo $sql_get;
-while ( $row = db_fetch_assoc($result)) {
-//	echo "<h3><a href='blog/".$row['id']."'>".$row['name']."</a></h3>";
-	$av=0;
-    if (strlen($row['av'])>0) {
-//		echo "<img style='float:right' src='res.php?t=bl&img=".$row['av']."' alt='' />";
-$av=1;
- }
-//		echo "<h4 class='elt'>Участники:</h4><ul>";
-//		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($row['id'])."'   ";
-		$resul=db_query("SELECT * FROM `inblog` WHERE blogid = %d   ",$row['id']);
-		while ( $rw = db_fetch_assoc($resul)) {
+if (db_num_rows($result)) {
+    while ( $row = db_fetch_assoc($result)) {
+    //	echo "<h3><a href='blog/".$row['id']."'>".$row['name']."</a></h3>";
+        $av=0;
+        if (strlen($row['av'])>0) {
+        //		echo "<img style='float:right' src='res.php?t=bl&img=".$row['av']."' alt='' />";
+            $av=1;
+        }
+        //		echo "<h4 class='elt'>Участники:</h4><ul>";
+        //		$sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($row['id'])."'   ";
+        $resul=db_query("SELECT * FROM `inblog` WHERE blogid = %d   ",$row['id']);
+        while ( $rw = db_fetch_assoc($resul)) {
             $users[]=$rw['name'];
-//			echo "<li><a href='user/".$rw['name']."'>".$rw['name']."</a></li>";
-		}
+        //			echo "<li><a href='user/".$rw['name']."'>".$rw['name']."</a></li>";
+        }
         $blogs[]=array('name'=>$row['name'],'id'=>$row['id'],'avatar'=>$av,'avatar_url'=>$row['av'],
-        'users'=>$users,'ch_url'=>"twork.php?wt=editblog&bid=".$row['id'],'about'=>$row['about'],
-    'av_ch_url'=>"twork.php?wt=bimg&bid=".$row['id']);
-//		echo "</ul>";
-//		echo "<h4 class='elt'>Описание</h4><form method='post'action='twork.php?wt=editblog&bid=".$row['id']."'>
-//	 	<textarea name='text'>".$row['about']."</textarea><input type='submit' value='Отправить' />
-//	 	</form>";
-//		echo "<h4 class='elt'>Смена картинки:</h4>
-//	 	<form method='post' enctype='multipart/form-data' action='twork.php?wt=bimg&bid=".$row['id']."'>
-//<input type='file' name='img' />
-//<input type='submit' value='Загрузить' />
-//</form><a href='work/rmblog/".$row['id']."'>Удалить</a>";
+            'users'=>$users,'ch_url'=>"twork.php?wt=editblog&bid=".$row['id'],'about'=>$row['about'],
+            'av_ch_url'=>"twork.php?wt=bimg&bid=".$row['id']);
+    //		echo "</ul>";
+    //		echo "<h4 class='elt'>Описание</h4><form method='post'action='twork.php?wt=editblog&bid=".$row['id']."'>
+    //	 	<textarea name='text'>".$row['about']."</textarea><input type='submit' value='Отправить' />
+    //	 	</form>";
+    //		echo "<h4 class='elt'>Смена картинки:</h4>
+    //	 	<form method='post' enctype='multipart/form-data' action='twork.php?wt=bimg&bid=".$row['id']."'>
+    //<input type='file' name='img' />
+    //<input type='submit' value='Загрузить' />
+    //</form><a href='work/rmblog/".$row['id']."'>Удалить</a>";
+    }
+
+    echo render_myblog($blogs,$single);
+} else {
+    echo render_error("У вас нет блогов!");
 }
-echo render_myblog($blogs,$single);
 ?>

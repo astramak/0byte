@@ -1,4 +1,9 @@
 <?php
+if ($usr->rate()<$pr_rate) {
+    j_err("У вас недостаточно рейтинга для этого действия!");
+    jkill();
+    redirect($dir.'error/not_allow');
+}
 $id = request::get_get('id');
 $rate = request::get_get('rate');
 
