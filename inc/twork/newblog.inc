@@ -2,12 +2,12 @@
 $btitle = trim(request::get_post('btitle'));
 
 if ($usr->rate() < $nb_rate || strlen($btitle) < 3) {
-	redirect('index.php');
+	redirect($dir.'error/not_allow');
 }
 
 $exists = db_result(db_query('SELECT COUNT(id) FROM blogs WHERE LOWER(name) = LOWER(%s)', $btitle));
 if ($exists) {
-	redirect('index.php');
+	redirect($dir.'error/new_blog_used');
 }
 
 db_query('INSERT INTO blogs SET name = %s, owner = %s, about = %s', $btitle, $usr->login, request::get_post('about'));

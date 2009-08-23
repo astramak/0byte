@@ -53,8 +53,8 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 		}
 
 		if (request::get_post('kap') == $res) {
-			db_query('INSERT INTO users SET name = %s, mail = %s, icq = %s, jabber = %s, site = %s, lvl = %d, pwd = %s, about = %s, activ = %d, timezone = %d',
-			$name, $mail, $icq, $jabber, $site, 0, $pwd, $about, ($eml_a ? 0 : 1),$server_time);
+			db_query('INSERT INTO users SET name = %s, mail = %s, lvl = %d, pwd = %s,  activ = %d,timezone = %d',
+			$name, $mail,  0, $pwd, ($eml_a ? 0 : 1),$server_time);
 
 			if ($eml_a==1) {
 				$to = $mail;
@@ -85,8 +85,8 @@ include("inc/head.php");
 include 'inc/top.php';
 
 $register_arr=array("reg_login" => $name, "reg_mail" => $mail,
-	"reg_icq" => $icq, "reg_jabber" => $jabber, "reg_site" => $rsite,
-	"reg_about" => $about, "error" => $err, "email_register" => $eml_a);
+	"reg_icq" => @$icq, "reg_jabber" => @$jabber, "reg_site" => @$rsite,
+	"reg_about" => @$about, "error" => $err, "email_register" => $eml_a);
 
 echo render_register_page($register_arr);
 
