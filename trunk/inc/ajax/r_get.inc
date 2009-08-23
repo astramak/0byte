@@ -29,7 +29,7 @@ if (isset ($_GET['noo'])) {
     }
 } elseif (request::get_get('pst',0)) {
     if (!$api) $_SESSION['tp1']='pst';
-    $result=db_query("SELECT * FROM `post` WHERE `blck`='0' && `lock` = 0 ".$aft." ORDER BY id DESC LIMIT ".$limit);
+    $result=db_query("SELECT * FROM `post` WHERE `blck`='0' &&  ( `lock` = 0 || ".get_special()." ) ".$aft." ORDER BY id DESC LIMIT ".$limit);
     while ($row = db_fetch_assoc($result)) {
         $arr[$i]['id']=$row['id'];
         $arr[$i]['title']=$row['title'];
@@ -48,7 +48,7 @@ if (isset ($_GET['noo'])) {
     }
 } elseif (request::get_get('com',0)) {
     if (!$api) $_SESSION['tp1']='com';
-    $result=db_query("SELECT *,`post`.`id` as `pid` FROM `post`,`comment` WHERE `post`.`id`=`comment`.`krnl` && `post`.`blck`='0' ".$aft." ORDER BY `comment`.`id` DESC LIMIT ".$limit);
+    $result=db_query("SELECT *,`post`.`id` as `pid` FROM `post`,`comment` WHERE `post`.`id`=`comment`.`krnl` && `post`.`blck`='0' && (`post`.`lock` = 0 || ".get_special()." ) ".$aft." ORDER BY `comment`.`id` DESC LIMIT ".$limit);
     while ($row = db_fetch_assoc($result)) {
         $arr[$i]['id']=$row['id'];
         $arr[$i]['wid']=$row['pid'];
