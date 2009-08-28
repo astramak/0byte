@@ -237,7 +237,7 @@ if ($kol<1 && !isset($_GET['blog'])) {
 		}
 	}
 	while ($row = mysql_fetch_assoc($result)) {
-		if (chkin($row)==1 || isset($_GET['tag']) || isset($_GET['blog']) || isset($_GET['auth'])) {
+//		if (/*chkin($row)==1 ||*/ isset($_GET['tag']) || isset($_GET['blog']) || isset($_GET['auth'])) {
 
 			if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
 				echo "<a id='hl'></a>";
@@ -263,7 +263,7 @@ if ($kol<1 && !isset($_GET['blog'])) {
 //            </noindex><span id='rp".$posts[$k]->id."'>".$rt."</span><noindex><a rel='nofollow'
 // class='ratem' href='twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></noindex>";
 //			echo "</span></div>";
-			$k++; }
+			$k++; 
 	}
 }
 
