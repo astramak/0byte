@@ -68,16 +68,16 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 			}
 			redirect('login/new');
 		} else {
-			$err=3;
+			echo render_error('Капча введена неверно!');
 		}
 		session_destroy();
 	} else {
-		$err=1;
+		echo render_error('Заполнены не все поля!');
 	}
 
 } else {
 	if (request::get_get('reg')) {
-		$err=2;
+		echo render_error('Заполнены не все поля!');
 	}
 }
 
