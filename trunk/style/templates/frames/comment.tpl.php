@@ -8,19 +8,13 @@
     <?php } ?>
     <span class='crate'>
         <noindex>
-            <a rel='nofollow' class='ratep' href="<?php if ($js) echo "javascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=p&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">+</a>
-        </noindex>
-        <span id='rc<?php echo $comment->id;?>'>
-            <span class='<?php
+            <a rel='nofollow' class='ratep' href="<?php if ($js) echo "javascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=p&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">+</a></noindex><span id='rc<?php echo $comment->id;?>'><span class='<?php
             if ($comment->rate()>0) {
                 echo "rp";
             } elseif ($comment->rate()<0) {
                 echo "rm";
             }
-                  ?>'><?php echo $comment->rate(); ?></span>
-        </span>
-        <noindex>
-            <a rel='nofollow' class='ratem' href="<?php if ($js) echo "javascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=m&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">&ndash;</a>
+                  ?>'><?php echo $comment->rate(); ?></span></span><noindex><a rel='nofollow' class='ratem' href="<?php if ($js) echo "javascript:x_r('"; ?>twork.php?wt=ratecom&id=<?php echo $comment->id; ?>&rate=m&from=<?php echo $current; if ($js) echo "&json=1','c')";?>">&ndash;</a>
         </noindex>
     </span>
 </div>

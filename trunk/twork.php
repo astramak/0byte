@@ -20,16 +20,16 @@ include ("cfg.php");
 $loged = login();
 $json = request::get_get('json');
 if ($json) {
-	header("Content-Type: text/html; charset=utf-8");
+    header("Content-Type: text/html; charset=utf-8");
 }
 
 if ($loged == 0) {
-	if (!$jsons) {
-		redirect('login.php');
-	}
+    j_err("Для совершения этого действия требуется авторизация!");
+    jkill();
+    redirect('login.php');
 } else {
-    	db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
-        DEFINE('TZ',($usr->timezone-$server_time)*3600);
-	include("inc/twork/" . sfin(request::get_get('wt')) . ".inc");
+    db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
+    DEFINE('TZ',($usr->timezone-$server_time)*3600);
+    include("inc/twork/" . sfin(request::get_get('wt')) . ".inc");
 }
 ?>

@@ -58,7 +58,7 @@ if (@$blogs) { ?>
  echo inducing($comment_count, array('комментария','комментариев','комментарий')); ?></a>
 
 <br /><br><hr>
-<?php if ($owner) {?>
+<?php if ($loged) {if ($owner) {?>
     <br /><img src='style/n_img/edit.png'/> <a href="work/edituser">Редактировать профиль</a>
     <img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a>
 <?php } else if (!$is_friend) {?>
@@ -68,5 +68,5 @@ if (@$blogs) { ?>
 <?php }
 if ($allow_block) { ?>
     <br /><br /><a href='<?php echo $block_url; ?>'><?php if ($blocked) echo "Раз"; else echo "За"; ?>блокировать</a>
-<?php } ?>
+<?php } } ?>
 </div>

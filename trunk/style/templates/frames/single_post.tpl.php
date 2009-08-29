@@ -19,8 +19,7 @@
     <?php } ?>
     (<a id="favor" href="<?php echo $favourite_url; ?>"><?php if (!$favourite) { ?>В избранное<?php } else { ?>Из избранного<?php } ?></a>) <?php } ?>
     (<a href="like/<?php echo $id; ?>">Похожие</a>)
-<span class='rate'><a class='ratep' href='<?php echo $ratep_url; ?>'>+</a>
-    <span id='rp<?php echo $id; ?>'><?php
+<span class='rate'><a class='ratep' href='<?php echo $ratep_url; ?>'>+</a><span id='rp<?php echo $id; ?>'><?php
     if ($rate>0) {
         ?><span class='rp' title="Всего <?php echo $rate_num;?> <?php
             echo inducing($rate_num, array('голоса','голосов','голос'));
@@ -33,8 +32,7 @@
         ?><span title="Всего <?php echo $rate_num;?> <?php
             echo inducing($rate_num, array('голоса','голосов','голос'));
             ?>">0</span><?php
-    }?></span>
-    <a class='ratem' href='<?php echo $ratem_url; ?>'>&ndash;</a>
+    }?></span><a class='ratem' href='<?php echo $ratem_url; ?>'>&ndash;</a>
 </span></div>
 <div class='tags'>
     <?php if ($tags) foreach ($tags as $tag)  { ?>
