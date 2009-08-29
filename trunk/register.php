@@ -25,8 +25,8 @@ $mail = request::get_post('mail');
 $kap = request::get_post('kap');
 
 if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
-	&& strlen($mail) > 5 && strlen($pwd) > 3
-	&& chud($name) && chud($pwd) && chud($pwd) && chml($mail)
+	&& strlen($mail) > 3 && strlen($pwd) > 3
+	&& chud($name) &&  chml($mail)
 ) {
 	$pwd = md5($pwd);
 	$icq = request::get_post('icq');
@@ -68,16 +68,28 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 			}
 			redirect('login/new');
 		} else {
-			echo render_error('Капча введена неверно!');
+			$error=render_error('Капча введена неверно!');
 		}
 		session_destroy();
 	} else {
-		echo render_error('Заполнены не все поля!');
+		if ($name_exists) {
+                    $error=render_error('Пользователь с таким именем уже существует!');
+                } else {
+                     $error=render_error('Пользователь с таким e-mail уже существует!');
+                }
 	}
 
 } else {
-	if (request::get_get('reg')) {
-		echo render_error('Заполнены не все поля!');
+	if (request::get_post('reg')) {
+            if (!chud($name)) {
+		$error=render_error('Введён некоректный логин!');
+            } else if ($pwd != $pwd2) {
+                $error=render_error('Введёные пароли не совпадают!');
+            } else if (!chml($mail)) {
+                $error=render_error('Введён некоректный e-mail!');
+            } else {
+                $error=render_error('Заполнены не все поля!');
+            }
 	}
 }
 
@@ -87,8 +99,7 @@ include 'inc/top.php';
 $register_arr=array("reg_login" => $name, "reg_mail" => $mail,
 	"reg_icq" => @$icq, "reg_jabber" => @$jabber, "reg_site" => @$rsite,
 	"reg_about" => @$about, "error" => $err, "email_register" => $eml_a);
-
+echo $error;
 echo render_register_page($register_arr);
-
 include("inc/foot.php");
 ?>

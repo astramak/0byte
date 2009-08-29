@@ -59,8 +59,8 @@ if (@$blogs) { ?>
 
 <br /><br><hr>
 <?php if ($owner) {?>
-    <br /><img src='http://astramak.jino.ru/welinux/edit.png'/> <a href="work/edituser">Редактировать профиль</a> 
-    <img src='http://astramak.jino.ru/welinux/edit.png'/> <a href="work/cpw">Сменить пароль</a>
+    <br /><img src='style/n_img/edit.png'/> <a href="work/edituser">Редактировать профиль</a>
+    <img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a>
 <?php } else if (!$is_friend) {?>
     <br/><a id='ifrn' href='<?php echo $friend_url; ?>'>Добавить в друзья</a>
 <?php } else { ?>

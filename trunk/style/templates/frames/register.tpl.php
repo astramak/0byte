@@ -12,7 +12,7 @@
 			?>
     </span>
 	<?php } ?>
-	<form method="post" action="register.php?reg" id="reg">
+	<form method="post" action="register.php" id="reg">
 		<table border="0">
 			<tr>
 				<td>Логин</td>
@@ -38,6 +38,7 @@
 				<td><input type="text" name="kap" onkeyup="chka(this,'cap')" /></td>
 			</tr>
 			<tr>
+                        <input type="hidden" name="reg" value="1" />
 				<td>&nbsp;</td>
 				<td><input type="submit" value="Зарегистрироваться!" /></td>
 			</tr>
