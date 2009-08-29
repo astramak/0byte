@@ -31,7 +31,7 @@ $native_prerender=1;
  */
 function plugin_script($plugin) {
     global $native_script,$script_plugins;
-    if (strcmp($plugin['conflict_type'],'full_script')==0) {
+    if (strcmp(@$plugin['conflict_type'],'full_script')==0) {
         $native_script=0;
     }
     $script_plugins[]=$plugin;
@@ -45,7 +45,7 @@ function plugin_script($plugin) {
  */
 function plugin_presave($plugin) {
     global $native_presave,$presave_plugins;
-    if (strcmp($plugin['conflict_type'],'pre_save')==0) {
+    if (strcmp(@$plugin['conflict_type'],'pre_save')==0) {
         $native_presave=0;
     }
     $presave_plugins[]=$plugin;
@@ -59,7 +59,7 @@ function plugin_presave($plugin) {
  */
 function plugin_prerender($plugin) {
     global $native_prerender,$prerender_plugins;
-    if (strcmp($plugin['conflict_type'],'pre_render')==0) {
+    if (strcmp(@$plugin['conflict_type'],'pre_render')==0) {
         $native_prerender=0;
     }
     $prerender_plugins[]=$plugin;
