@@ -91,8 +91,8 @@ function gtext($text) {
         $html[] = '<div class="quote">$1</div>';
         $bb[] = "/\[flash\](.*?)\[\/flash\]/is";
         $html[] = '<embed src="$1" />';
-        $bb[] = '/\<a href\="( *)javascript(.*?)"/is';
-        $html[] = '<a href="$1жаваскрипт$2"';
+        $bb[] = '/\<a href\="( *)javascript:(.*?)"/is';
+        $html[] = '<a href="$1жаваскрипт:$2"';
         $bb[] = "/\[flash w\=(.*?) h\=(.*?)\](.*?)\[\/flash\]/is";
         $html[] = '<embed src="$3" width="$1" height="$2" />';
         $bb[] = "/\<ul\>([^\>]*?)\<br \/\>/is";
@@ -107,6 +107,8 @@ function gtext($text) {
         $html[] = '$1<li>';
         $bb[] = '/\<a href\=\"(.*?)\"\>\<\/a\>/is';
         $html[] = '<a href="$1">$1</a>';
+        $bb[] = '/\<a href\=\"([^:]*?)\"\>(.*?)\<\/a\>/is';
+        $html[] = '<a href="http://$1">$2</a>';
         $text = preg_replace ($bb, $html, nl2br($text));
     }
     if (@count($presave_plugins)>0) {
