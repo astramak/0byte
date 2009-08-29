@@ -3,8 +3,7 @@
         <a class='full' href='post/<?php echo $id; ?>/'>Полностью...</a>
     <?php } ?>
 <?php if (!$draft) { ?><span class='rate'><?php echo $comments; ?>
-<noindex><a class='ratep' rel='nofollow' href='<?php echo $ratep_url; ?>'>+</a>
-</noindex><span id='rp<?php echo $id; ?>'><?php if ($rate>0) {
+<noindex><a class='ratep' rel='nofollow' href='<?php echo $ratep_url; ?>'>+</a></noindex><span id='rp<?php echo $id; ?>'><?php if ($rate>0) {
             ?><span class='rp' title="Всего <?php echo $rate_num;?> <?php
             echo inducing($rate_num, array('голоса','голосов','голос'));
             ?>"><?php echo $rate;?></span><?php
