@@ -70,7 +70,7 @@ else
         $inser.='like/'.request::get_get('like',0);
     }
  else
-	if (strlen(request::get_get('tag')>=2)) {
+	if (strlen(request::get_get('tag'))>=2) {
 		$sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
 			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";
 		$inser.="tag/".gtext($_GET['tag'])."/";
