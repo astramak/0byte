@@ -17,10 +17,10 @@
 echo render_template(TPL_BOTTOM."/top.tpl.php", null);
 include("inc/right.php"); 
 $cur=$_SERVER['REQUEST_URI'];
-	$cur=str_replace("&","*amp",$cur);
-	$cur=str_replace("?","*qw",$cur);
-	$script->add("var cur = '$cur';");
-        $loged=$loged?1:0;
+$cur=str_replace("&","*amp",$cur);
+$cur=str_replace("?","*qw",$cur);
+$script->add("var cur = '$cur';");
+$loged=$loged?1:0;
 $script->add("var loged=".$loged."; strt();");
 echo render_template(TPL_BOTTOM.'/main.tpl.php', array('SCRIPT'=>$script->result(),'loged'=>$loged));
 ?>

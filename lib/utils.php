@@ -26,10 +26,10 @@
  * @return bool
  */
 function nullbyte_mail($to, $subject, $message, $html = true, $headers = array()) {
-	$mail_headers = $headers;
-	if ($html) $mail_headers[] = "Content-type: text/html; charset='UTF-8'";
-	$mail_headers[] = 'X-Mailer: PHP/' . phpversion();
-	return mail($to, $subject, $message, implode("\r\n", $mail_headers));
+    $mail_headers = $headers;
+    if ($html) $mail_headers[] = "Content-type: text/html; charset='UTF-8'";
+    $mail_headers[] = 'X-Mailer: PHP/' . phpversion();
+    return mail($to, $subject, $message, implode("\r\n", $mail_headers));
 }
 
 /**
@@ -39,17 +39,17 @@ function nullbyte_mail($to, $subject, $message, $html = true, $headers = array()
  * @return string
  */
 function nullbute_generate_pwd($len) {
-	$pwd = '';
-	// generate random string
-	while (strlen($pwd) < $len) {
-		$pwd .= md5(uniqid());
-	}
-	$pwd = substr($pwd, 0, $len);
-	// more entropy by capitalizing some letters
-	for ($i = 0; $i < $len; $i++) {
-		if (!is_numeric($pwd[$i]) && rand() % 2) $pwd[$i] = strtoupper($pwd[$i]);
-	}
-	return $pwd;
+    $pwd = '';
+    // generate random string
+    while (strlen($pwd) < $len) {
+        $pwd .= md5(uniqid());
+    }
+    $pwd = substr($pwd, 0, $len);
+    // more entropy by capitalizing some letters
+    for ($i = 0; $i < $len; $i++) {
+        if (!is_numeric($pwd[$i]) && rand() % 2) $pwd[$i] = strtoupper($pwd[$i]);
+    }
+    return $pwd;
 }
 
 /**
@@ -59,7 +59,7 @@ function nullbute_generate_pwd($len) {
  * Internet Explorer 6.
  */
 function check_plain($text) {
-	return validate_utf8($text) ? htmlspecialchars($text, ENT_QUOTES) : '';
+    return validate_utf8($text) ? htmlspecialchars($text, ENT_QUOTES) : '';
 }
 
 /**
@@ -92,10 +92,10 @@ function check_plain($text) {
  *   TRUE if the text is valid UTF-8, FALSE if not.
  */
 function validate_utf8($text) {
-	if (strlen($text) == 0) {
-		return TRUE;
-	}
-	return (preg_match('/^./us', $text) == 1);
+    if (strlen($text) == 0) {
+        return TRUE;
+    }
+    return (preg_match('/^./us', $text) == 1);
 }
 
 /**
@@ -105,12 +105,12 @@ function validate_utf8($text) {
  * @param string $apply_function apply additional function to all array values
  */
 function trim_array(array &$list, $apply_function = '') {
-	if ($apply_function) {
-		$func = '$v = ' . $apply_function . '(trim($v));';
-	} else {
-		$func = '$v = trim($v);';
-	}
-	array_walk($list, create_function('&$v,$k', $func));
+    if ($apply_function) {
+        $func = '$v = ' . $apply_function . '(trim($v));';
+    } else {
+        $func = '$v = trim($v);';
+    }
+    array_walk($list, create_function('&$v,$k', $func));
 }
 
 /**
@@ -130,7 +130,7 @@ function trim_array(array &$list, $apply_function = '') {
  *   supported.
  */
 function redirect($location, $http_response_code = 302) {
-	header('Location: '. $location, true, $http_response_code);
-	die;
+    header('Location: '. $location, true, $http_response_code);
+    die;
 }
 ?>

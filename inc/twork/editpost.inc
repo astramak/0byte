@@ -15,10 +15,10 @@ if (request::get_post('draft', 0)) {
     $tp= db_result(db_query('SELECT tp FROM draft WHERE id = %d && auth = %s', $post_id, $usr->login));
     if ($tp!=0) {
         if (request::get_post('write',0)) {
-           db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
-           $len=request::get_post('len');
-           include 'inc/new_post.inc';
-           redirect("post/" . $id);
+            db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
+            $len=request::get_post('len');
+            include 'inc/new_post.inc';
+            redirect("post/" . $id);
         } else {
             if ($tp==3) {
                 $text=null;

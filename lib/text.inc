@@ -79,14 +79,10 @@ function gtext($text) {
         $html[] = '<ul>';
         $bb[] = "/\[\/ul\]/is";
         $html[] = '</ul>';
-//        $bb[] = "/\<ul\>(.*?)\[li\](.*?)\[\/li\]/is";
-//        $html[] = '<ul>$1<li>$2</li>';
         $bb[] = "/\[ol\]/is";
         $html[] = '<ol>';
         $bb[] = "/\[\/ol\]/is";
         $html[] = '</ol>';
-//        $bb[] = "/\<ol\>(.*?)\[li\](.*?)\[\/li\]/is";
-//        $html[] = '<ol>$1<li>$2</li>';
         $bb[] = "/\[li\]/is";
         $html[] = '<li>';
         $bb[] = "/\[\/li\]/is";
@@ -124,7 +120,7 @@ function gtext($text) {
             include('plugins/'.$plugin['name'].'/actions.php');
         }
     }
-	return($text);
+    return($text);
 }
 
 function utext($text) {
@@ -202,90 +198,63 @@ function utext($text) {
         }
     }
 
-	return($text);
+    return($text);
 }
 
 class dtxt {
-	var $short_text;
-	var $full_text;
-	/**
-	 *
-	 * @deprecated
-	 */
-	var $o;
-	/**
-	 *
-	 * @deprecated
-	 */
-	var $t;
+    var $short_text;
+    var $full_text;
+    /**
+     *
+     * @deprecated
+     */
+    var $o;
+    /**
+     *
+     * @deprecated
+     */
+    var $t;
 
-	function cut($text) {
-		if (strpos($text, "[cut]")) {
-			$parts = explode('[cut]', $text);
-			trim_array($parts);
-			$this->short_text = $parts[0];
-			$this->full_text = implode('[cut]', $parts);
-			// depricated
-			$this->t = $parts[0];
-			$this->o = implode('[cut]', $parts);
-		} elseif (strpos($text, "[fcut]")) {
-			$parts = explode('[fcut]', $text);
-			trim_array($parts);
-			$this->short_text = $parts[0];
-			$this->full_text = $parts[1];
-			// depricated
-			$this->t = $parts[0];
-			$this->o = $parts[1];
-		} else {
-			$this->short_text = $this->full_text = $text;
-			// depricated
-			$this->o = $this->t = $text;
-		}
-	}
+    function cut($text) {
+        if (strpos($text, "[cut]")) {
+            $parts = explode('[cut]', $text);
+            trim_array($parts);
+            $this->short_text = $parts[0];
+            $this->full_text = implode('[cut]', $parts);
+            // depricated
+            $this->t = $parts[0];
+            $this->o = implode('[cut]', $parts);
+        } elseif (strpos($text, "[fcut]")) {
+            $parts = explode('[fcut]', $text);
+            trim_array($parts);
+            $this->short_text = $parts[0];
+            $this->full_text = $parts[1];
+            // depricated
+            $this->t = $parts[0];
+            $this->o = $parts[1];
+        } else {
+            $this->short_text = $this->full_text = $text;
+            // depricated
+            $this->o = $this->t = $text;
+        }
+    }
 }
 
 function code($txt) {
     global $native_prerender,$prerender_plugins;
-    
+
     if (count($prerender_plugins)>0) {
-         foreach($prerender_plugins as $plugin) {
+        foreach($prerender_plugins as $plugin) {
             include('plugins/'.$plugin['name'].'/actions.php');
         }
     }
-//	$txt = str_replace("[code]", "[code=]", $txt);
-//	preg_match_all("/\[code\=(.*?)\]/is",$txt, $lang);
-//	$arr = preg_split("/\[(.?)code(.*?)\]/",$txt);
-//	$q = 1;
-//	$txt = "";
-//	$replace = array('<br />' => '', '&lt;' => '<', '&gt;' => '<', '&#39;' => "'", '&#34;' => '"');
-//	foreach ($arr as $i) {
-//		if ($q % 2 == 0) {
-//			$i = str_replace(array_keys($replace), array_values($replace), $i);
-//			$lang[$q / 2 - 1] = preg_replace("/\[code\=(.*?)\]/is", "$1", $lang[$q / 2 - 1]);
-//			$i = geshi_highlight($i, $lang[0][$q / 2 - 1], null, true);
-//			$i = str_replace(array('<code>', '</code>'), '', $i);
-//			$cnt = substr_count($i, "<br />");
-//			$ln = "";
-//			if ($cnt != 0) {
-//				for ($e = 2; $e <= ($cnt+1); $e++) {
-//					$ln .= $e . "<br />";
-//				}
-//				$i = render_util('code_utils', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i, 'lines' => $ln));
-//			} else {
-//				$i = render_util('code', array('lang' => $lang[0][$q / 2 - 1], 'code' => $i));
-//			}
-//		}
-//		$txt .= $i;
-//		$q++;
-//	}
-//	$txt = str_replace("<a href", "<a rel='nofollow' href", $txt);
-	return $txt;
+    return $txt;
 }
 function inducing($num,$variants) {
     if (($num>1 && $num<=4) || ($num>20 && $num%10>1 && $num%10<=3) ) {
         return $variants[0];
     } else if (($num<20 && $num!=1) || ($num>20 && $num%10!=1)) {
-        return $variants[1];
-    } else return $variants[2];
+            return $variants[1];
+        } else return $variants[2];
 }
 ?>

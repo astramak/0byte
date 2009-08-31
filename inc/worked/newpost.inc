@@ -1,7 +1,6 @@
 <?php
 if ($usr->rate()>=$np_rate) {
     $tp=request::get_get("tp",0,0);
-    //if ($tp==0)
     if (strncmp($tp,'lnk',3)==0) {
         $type="поста-ссылки";
         $type_="link";
@@ -31,7 +30,6 @@ if ($usr->rate()>=$np_rate) {
     $blogs[]=array('value'=>'own','text'=>'Персональный');
     while ($row = mysql_fetch_assoc($result)) {
         $blogs[]=array('value'=>$row['blogid'],'text'=>$row['bname']);
-    //				echo "<option value='".$row['blogid']."'>".$row['bname']."</option>";
     }
     echo render_new_post($type, $type_, $tp, $blogs, $len);
     if ($tp!=3) $script->add('mk(\'mq\',\'new\');
@@ -40,4 +38,4 @@ if ($usr->rate()>=$np_rate) {
 } else {
     redirect($dir.'error/not_allow');
 }
-		?>
+?>

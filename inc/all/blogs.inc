@@ -25,16 +25,14 @@ if (request::get_get('order',0)) {
         }}
 }
 
-//		echo $fst.$scn."";
+
 $result=db_query("SELECT * FROM `blogs` ORDER BY ".$order." LIMIT %d,50",$frm);
 while ($row = db_fetch_assoc($result)) {
-//			echo "<tr><td class='avl'>";
     if (strlen($row['av'])>=2) {
         $av="<img class='cauth' src='res.php?t=bl&img=".$row['av']."' alt='' />";
     } else {
         $av=null;
     }
-    //			echo "</td><td class='ulp'><a href='blog/".$row['id']."'>".$row['name']."</a></td><td class='lrte'>";
     $row['av']=$av;
     $row['rate']=$row['ratep']-$row['ratem'];
 

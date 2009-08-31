@@ -114,7 +114,6 @@ function post_echo($row, $t,$draft=null) {
             }
             $i=0;
             $result = db_query('SELECT * FROM `answ` WHERE cid = %d', $a->id);
-            //                        echo 'SELECT * FROM `answ` WHERE cid = '.$a->id;
             while ($ro = db_fetch_assoc($result)) {
                 if ($lnk==1) {
                     $nam=$ro['id'];
@@ -143,7 +142,6 @@ function post_echo($row, $t,$draft=null) {
     $array['title']=$a->title;
     $array['date']=date('d.m.y  H:i',$a->date+TZ);
     $array['link']=$a->lnk;
-    //        echo TZ;
     $array['id']=$a->id;
     if ($draft) {
         if ($a->tp==3) {

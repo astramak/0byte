@@ -15,23 +15,23 @@
  *
  */
 function chml($mail_address) {
-	$pattern = "/^[\w-]+(\.[\w-]+)*@";
-	$pattern .= "([0-9a-z][0-9a-z-]*[0-9a-z]\.)+([a-z]{2,4})$/i";
-	if (preg_match($pattern, $mail_address)) {
-		$parts = explode("@", $mail_address);
-		if (checkdnsrr($parts[1], "MX")){
-			return(1);
-		} else {
-			return(0);
-		}
-	} else {
-		return(0);
-	}
+    $pattern = "/^[\w-]+(\.[\w-]+)*@";
+    $pattern .= "([0-9a-z][0-9a-z-]*[0-9a-z]\.)+([a-z]{2,4})$/i";
+    if (preg_match($pattern, $mail_address)) {
+        $parts = explode("@", $mail_address);
+        if (checkdnsrr($parts[1], "MX")) {
+            return(1);
+        } else {
+            return(0);
+        }
+    } else {
+        return(0);
+    }
 }
 function chud($ud) {
-	if (preg_match("/[^(\w)|(\x7F-\xFF)|(\s)]/", $ud)) {return(0);} else {return(1);}
+    if (preg_match("/[^(\w)|(\x7F-\xFF)|(\s)]/", $ud)) {return(0);} else {return(1);}
 }
 function sfin($a) {
-	return str_replace("/","",$a);
+    return str_replace("/","",$a);
 }
 ?>

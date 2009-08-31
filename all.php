@@ -17,14 +17,6 @@
 include ("cfg.php");
 include ("inc/head.php");
 include("inc/top.php");
-?>
-
-
-	<?php
-	include("inc/all/".sfin($_GET['wt']).".inc");
-	?>
-
-
-<?php
+include("inc/all/".request::get_get('wt').".inc");
 include("inc/foot.php");
 ?>
