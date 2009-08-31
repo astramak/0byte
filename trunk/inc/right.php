@@ -105,8 +105,8 @@ var cd=null;
 }';
 $e=0;
 if (isset($_SESSION['tp1']) && strlen($_SESSION['tp1'])>2) {
-        $scr.="g_plist('".$_SESSION['tp1']."'";
-        $e=1;
+    $scr.="g_plist('".$_SESSION['tp1']."'";
+    $e=1;
 }
 
 if (isset($_SESSION['tp2'])) {

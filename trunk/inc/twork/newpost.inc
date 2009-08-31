@@ -13,11 +13,11 @@ $lnk = request::get_post('lnk');
 $org = request::get_post('org');
 
 if(!$title || (!$text && !$len) || strlen($title) < 2) {
-	redirect('index.php');
+    redirect('index.php');
 } elseif ($blog_id == 0) {
-	$blog = "own";
+    $blog = "own";
 } else {
-	$blog = db_result(db_query('SELECT name FROM blogs WHERE id = %d', $blog_id));
+    $blog = db_result(db_query('SELECT name FROM blogs WHERE id = %d', $blog_id));
 }
 
 
@@ -30,8 +30,8 @@ if (request::get_post('draft', 0)) {
     }
     db_query('INSERT INTO `draft` SET  `title` = %s, `auth` = %s, `text` = %s,
 			 `blog` = %d, `tag` = %s, `lock` = %d, `tp` = %d ',
-			$title, $usr->login, $text,
-			$blog_id, request::get_post('tag'), $lock, $tp);
+        $title, $usr->login, $text,
+        $blog_id, request::get_post('tag'), $lock, $tp);
     $id = db_last_insert_id('draft');
 } else {
     include 'inc/new_post.inc';

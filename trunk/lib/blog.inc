@@ -15,28 +15,28 @@
  *
  */
 class blog {
-	var $id;
-	var $auth;
-	var $name;
-	var $ratep;
-	var $ratem;
-	var $av;
-	var $about;
-	var $owner;
+    var $id;
+    var $auth;
+    var $name;
+    var $ratep;
+    var $ratem;
+    var $av;
+    var $about;
+    var $owner;
 
-	function blog($row = null) {
-		if ($row) $this->make($row);
-	}
+    function blog($row = null) {
+        if ($row) $this->make($row);
+    }
 
-	function make($record) {
-		$alias = array('auth' => 'owner');
-		foreach ($this as $prop => $val) {
-			$this->{$prop} = $record[isset($alias[$prop]) ? $alias[$prop] : $prop];
-		}
-	}
+    function make($record) {
+        $alias = array('auth' => 'owner');
+        foreach ($this as $prop => $val) {
+            $this->{$prop} = $record[isset($alias[$prop]) ? $alias[$prop] : $prop];
+        }
+    }
 
-	function rate() {
-		return($this->ratep - $this->ratem);
-	}
+    function rate() {
+        return($this->ratep - $this->ratem);
+    }
 }
 ?>

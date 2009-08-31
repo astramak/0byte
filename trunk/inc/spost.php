@@ -14,7 +14,6 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-//parse_plugin_array($use);
 $last_com_id=0;
 $jstocom="var com_arr=new Array();";
 $num_com=0;
@@ -39,12 +38,6 @@ if (!$row) {
         }
         ///spy
         $post=post_echo($row,1);
-        //	$ed='';
-        //	$unb="За";
-        //	if ($row['blck']==1) {
-        //		$unb="Раз";
-        //	}
-        //	$bls="";
         $allow_remove=0;
         $blck=$row['blck'];
         $allow_comment=($blck-$blck%100)/100;
@@ -56,12 +49,10 @@ if (!$row) {
             $allow_remove=1;
             $block_url="work/blockpost/".$post_id;
             $remove_url="work/rmpost/".$post_id;
-        //		$bls="(<a  href='twork.php?wt=bpost&id=".$post_id."&unb=".$row['blck']."'>".$unb."блокировать</a>) (<a href='work/rmpost/".$post_id."'>Удалить</a>) ";
         }
         $allow_edit=0;
         if ($usr->login==$row['auth'] || $usr->lvl>=$elvl) {
             $allow_edit=1;
-        //		$ed='(<a  href="work/editpost/'.intval($_GET['post']).'">Править</a>) '.$bls;
         }
         $allow_spy=0;
         if ($usr->login!=$row['auth'] && $loged==1) {
@@ -69,31 +60,21 @@ if (!$row) {
             if (strpos($post->flw,$usr->login)===false) {
                 $spyed=0;
                 $spy_url="twork.php?wt=flw&id=".$post_id;
-            //			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".$post_id."'>Отслеживать</a>)";
             } else {
                 $spyed=1;
                 $spy_url="twork.php?wt=flw&id=".$post_id."&un=1";
-            //			$ed.=" (<a id='sled' href='twork.php?wt=flw&id=".$post_id."&un=1'>Перестать отслеживать</a>)";
             }
         }
-        //	$rt="";
         $rate=$post->rate();
-        //	if ($rate>0) {$rt="<span class='rp'>".$rate."</span>";}
-        //	else if ($rate<0) {$rt="<span class='rm'>".$rate."</span>";} else {$rt=0;}
-        //	echo "<div class='bottom'>$ed<span class='rate'><a class='ratep' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur."'>+</a>
-        //<span id='rp".$post->id."'>".$rt."</span><a class='ratem' href='twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur."'>&ndash;</a></span></div>";
-        //	echo "<div class='tags'>";
         $tags=null;
         if (strlen($row['tag'])>2) {
             $arr=split(",", $row['tag']);
             $q=sizeof($arr);
             for ($z=0; $z<$q; $z++) {
                 $tags[] = trim($arr[$z]);
-            //			echo "<a href='tag/".$tag."' rel='tag'>".$tag."</a>   ";
             }
 
         }
-               //	echo "</div>";
         $favourite=$loged==1?db_num_rows(db_query("SELECT `who`,`pid` FROM `favourite` WHERE `pid` = %d && `who`= %s",$post->id,$usr->login)):0;
         echo render_template(TPL_FRAMES.'/single_post.tpl.php', array('id'=>$post->id,'tags'=>$tags,
         'allow_edit'=>$allow_edit,'allow_remove'=>$allow_remove,'allow_spy'=>$allow_spy,

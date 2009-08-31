@@ -10,8 +10,6 @@ if ($usr->lvl >= $blvl && strlen($unb)) {
         $end); } else {
         db_query("DELETE FROM `block_user` WHERE `user` = %d LIMIT 1",$who);
        }
-//   echo "INSERT INTO `block_user` (`user` ,`cause` ,`end`) VALUES ('$who', '".request::get_post('cause')."', '".time()+request::get_post('end')."')";
-// echo 1;
 }
 
 $lst = request::get_get('cur');

@@ -80,7 +80,7 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
         nullbyte_mail($to, $subject, $message, true, $headers);
         if (@count($notify_plugins)>0) {
-           $notify[]=array('to'=>$row['jabber'],'msg'=>$message);
+            $notify[]=array('to'=>$row['jabber'],'msg'=>$message);
         }
     }
 }
@@ -105,7 +105,7 @@ if ($pauth!=$usr->login && $lvl==1) {
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
         nullbyte_mail($to, $subject, $message, true, $headers);
         if (@count($notify_plugins)>0) {
-           $notify[]=array('to'=>$row['jabber'],'msg'=>$message);
+            $notify[]=array('to'=>$row['jabber'],'msg'=>$message);
         }
     }
 }

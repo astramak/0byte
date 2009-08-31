@@ -17,33 +17,33 @@ $row = db_fetch_assoc($result);
 $nr = $row['pid'] == $name ? 2 : 1;
 
 if ($row['pid'] == $name && $row['type'] == $type) {
-	j_err("Нельзя дважды поднимать или опускать рейтинг!");
-	jkill();
-	redirect($lst);
+    j_err("Нельзя дважды поднимать или опускать рейтинг!");
+    jkill();
+    redirect($lst);
 } else {
-	$result = db_query('SELECT * FROM users WHERE name = %s', $name);
-	$row = db_fetch_assoc($result);
-	if ($row['name'] == $usr->login) {
-		j_err("Нельзя голосовать за себя!");
-		jkill();
-		redirect($lst);
-	} else {
-		if ($type == 1) {
-			db_query('UPDATE users SET ratep = ratep + %d WHERE name = %s', $nr, $name);
-		} else {
-			db_query('UPDATE users SET ratem = ratem + %d WHERE name = %s', $nr, $name);
-		}
-		db_query('DELETE FROM urate WHERE who = %s AND pid = %s LIMIT 1', $usr->login, $name);
-		db_query('INSERT INTO urate SET who = %s, pid = %s, type = %d', $usr->login, $name, $type);
+    $result = db_query('SELECT * FROM users WHERE name = %s', $name);
+    $row = db_fetch_assoc($result);
+    if ($row['name'] == $usr->login) {
+        j_err("Нельзя голосовать за себя!");
+        jkill();
+        redirect($lst);
+    } else {
+        if ($type == 1) {
+            db_query('UPDATE users SET ratep = ratep + %d WHERE name = %s', $nr, $name);
+        } else {
+            db_query('UPDATE users SET ratem = ratem + %d WHERE name = %s', $nr, $name);
+        }
+        db_query('DELETE FROM urate WHERE who = %s AND pid = %s LIMIT 1', $usr->login, $name);
+        db_query('INSERT INTO urate SET who = %s, pid = %s, type = %d', $usr->login, $name, $type);
 
-		if ($json == 1) {
-			$rr = $type == 1 ? $nr : (0 - $nr);
-			$otr = $row['ratep'] - $row['ratem'] + $rr;
-			$otr += $row['brate'] / $blog_r + $row['crate'] / $com_r + $row['prate'] / $post_r;
-			cmpl($name, $otr);
-			die;
-		}
-		redirect($lst);
-	}
+        if ($json == 1) {
+            $rr = $type == 1 ? $nr : (0 - $nr);
+            $otr = $row['ratep'] - $row['ratem'] + $rr;
+            $otr += $row['brate'] / $blog_r + $row['crate'] / $com_r + $row['prate'] / $post_r;
+            cmpl($name, $otr);
+            die;
+        }
+        redirect($lst);
+    }
 }
 ?>

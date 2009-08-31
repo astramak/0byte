@@ -17,10 +17,6 @@ switch ($type) {
     case "list":
         $out['content']=render_template(TPL_EDITOR.'/list.tpl.php',$needle);
         break;
-//    case "head":
-//        $out['content']=render_template(TPL_EDITOR.'/head.tpl.php',$needle);
-//        $out['id']=request::get_get('el');
-//    break;
     case "color":
         $out['content']=render_template(TPL_EDITOR.'/color.tpl.php',$needle);
         break;

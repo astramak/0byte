@@ -23,16 +23,16 @@
  * @return string
  */
 function render_template($tpl_path, $variables) {
-	global $site, $s_name, $sl_name,$nb_rate,$nc_rate,$np_rate,$cr_rate,$pr_rate,$ur_rate,$br_rate;
+    global $site, $s_name, $sl_name,$nb_rate,$nc_rate,$np_rate,$cr_rate,$pr_rate,$ur_rate,$br_rate;
 
-	$variables['site'] = $site;
-	$variables['s_name'] = $s_name;
-	$variables['sl_name'] = $sl_name;
+    $variables['site'] = $site;
+    $variables['s_name'] = $s_name;
+    $variables['sl_name'] = $sl_name;
 
-	extract($variables, EXTR_SKIP);
-	ob_start();
-	include $tpl_path;
-	return ob_get_clean();
+    extract($variables, EXTR_SKIP);
+    ob_start();
+    include $tpl_path;
+    return ob_get_clean();
 }
 
 /**
@@ -43,7 +43,7 @@ function render_template($tpl_path, $variables) {
  * @return string
  */
 function render_mail($mail_name, $variables) {
-	return render_template(TPL_MAIL . '/' . $mail_name . '.tpl.php', $variables);
+    return render_template(TPL_MAIL . '/' . $mail_name . '.tpl.php', $variables);
 }
 
 /**
@@ -56,12 +56,12 @@ function render_mail($mail_name, $variables) {
  * @return string
  */
 function render_rss($type, $title, $link, $items) {
-	$vars = array(
-		'title' => $title,
-		'link' => $link,
-		'items' => $items,
-	);
-	return render_template(TPL_RSS . '/posts.tpl.php', $vars);
+    $vars = array(
+        'title' => $title,
+        'link' => $link,
+        'items' => $items,
+    );
+    return render_template(TPL_RSS . '/posts.tpl.php', $vars);
 }
 
 /**
@@ -72,7 +72,7 @@ function render_rss($type, $title, $link, $items) {
  * @return string
  */
 function render_util($name, $variables) {
-	return render_template(TPL_UTILS . '/' . $name . '.tpl.php', $variables);
+    return render_template(TPL_UTILS . '/' . $name . '.tpl.php', $variables);
 }
 /**
  * Render menu
@@ -82,9 +82,9 @@ function render_util($name, $variables) {
  * @return string
  */
 function render_menu($menu_arr,$count) {
-	$vars = array('elements'=>$menu_arr,
-	'count'=>$count);
-	return render_template(TPL_TOP.'/menu.tpl.php',$vars);
+    $vars = array('elements'=>$menu_arr,
+        'count'=>$count);
+    return render_template(TPL_TOP.'/menu.tpl.php',$vars);
 }
 /**
  * Render top of the page
@@ -92,17 +92,17 @@ function render_menu($menu_arr,$count) {
  * @return string
  */
 function render_top() {
-	return render_template(TPL_TOP.'/top.tpl.php',null);
+    return render_template(TPL_TOP.'/top.tpl.php',null);
 }
 /**
  * Render bottom of the top
- * 
+ *
  * @param array $var
- * @return string 
+ * @return string
  */
 
 function render_bottom_of_top($var) {
-	return render_template(TPL_TOP.'/bottom.tpl.php',$var);
+    return render_template(TPL_TOP.'/bottom.tpl.php',$var);
 }
 
 /**
@@ -162,7 +162,7 @@ function render_login($login,$current,$js,$new,$err=0) {
  */
 function render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$pid,$js,$allow_comment=0) {
     $vars=array("comment"=>$com,"avatar_use"=>$avatar_use,"allow_edit"=>$allow_edit,
-"allow_delete"=>$allow_delete,"current"=>$cur,"loged"=>$loged,"pid"=>$pid,"js"=>$js,"allow_comment"=>$allow_comment);
+        "allow_delete"=>$allow_delete,"current"=>$cur,"loged"=>$loged,"pid"=>$pid,"js"=>$js,"allow_comment"=>$allow_comment);
     return render_template(TPL_FRAMES.'/comment.tpl.php', $vars);
 }
 
@@ -210,9 +210,9 @@ function render_new_comment($old_comment,$lvl,$current,$id) {
 }
 /**
  * Render change password page
- * 
+ *
  * @param string $login
- * @return string 
+ * @return string
  */
 function render_change_password($login) {
     return render_template(TPL_FRAMES.'/change_password.tpl.php', array("login"=>$login));
@@ -248,11 +248,11 @@ function render_post($array) {
  */
 function render_answer($array,$answered,$id=0,$loged=1,$action="") {
     return render_template(TPL_FRAMES.'/answer.tpl.php',
-        array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));
+    array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));
 }
 function render_edit_post($title,$blogs,$url,$type,$tags,$status,$text=null,$lnk=null,$draft=null) {
     return render_template(TPL_FRAMES.'/edit_post.tpl.php', array('title'=>$title,'blogs'=>$blogs,
-        'url'=>$url,$type=>'1','text'=>$text,'tags'=>$tags,'lnk'=>$lnk,'status'=>$status,'draft'=>$draft));
+    'url'=>$url,$type=>'1','text'=>$text,'tags'=>$tags,'lnk'=>$lnk,'status'=>$status,'draft'=>$draft));
 }
 function render_edit_user($array) {
     return render_template(TPL_FRAMES.'/edit_user.tpl.php', $array);
@@ -262,72 +262,72 @@ function render_myblog($array,$single=0,$loged=1) {
 }
 function render_new_post($type,$type_,$tp,$blogs,$len=0) {
     return render_template(TPL_FRAMES.'/new_post.tpl.php', array('type'=>$type,$type_=>'1','tp'=>$tp,
-        'blogs'=>$blogs,'len'=>$len));
+    'blogs'=>$blogs,'len'=>$len));
 }
 
 function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
-        $k=1;
-        $pages=null;
-        $prev=0;
-        $prev_url=null;
-        if ($current_num>=$count) {
-        //	echo "<a class='nomnm' id='prev' href='".$inser."from/".($current_num-$count).$fnd."'>&#8592; </a>";
-            $prev=1;
-            $prev_url=$start."from/".($current_num-$count).$end;
-            if ($current_num-$count==0) {
-                $prev_url=$start.$end;
+    $k=1;
+    $pages=null;
+    $prev=0;
+    $prev_url=null;
+    if ($current_num>=$count) {
+    //	echo "<a class='nomnm' id='prev' href='".$inser."from/".($current_num-$count).$fnd."'>&#8592; </a>";
+        $prev=1;
+        $prev_url=$start."from/".($current_num-$count).$end;
+        if ($current_num-$count==0) {
+            $prev_url=$start.$end;
+        }
+    }
+    $numb=0;
+    while ($all_count>0 && $numb<10) {
+        if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
+            if ($current_num==($k-1)*$count) {
+            //			echo "<span class='nmn'>$k</span> ";
+                $current=1;
+            } else {
+            //			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
+                $current=0;
             }
-        }
-        $numb=0;
-        while ($all_count>0 && $numb<10) {
-                if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
-                        if ($current_num==($k-1)*$count) {
-        //			echo "<span class='nmn'>$k</span> ";
-                                $current=1;
-                        } else {
-        //			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
-                                $current=0;
-                        }
-                        $numb++;
-                        $url=$start."from/".(($k-1)*$count).$end;
-                        if ($k-1==0) {
-                            $url=$start.$end;
-                        }
-                        $pages[]=array('current'=>$current,'number'=>$numb,'url'=>$url);
+            $numb++;
+            $url=$start."from/".(($k-1)*$count).$end;
+            if ($k-1==0) {
+                $url=$start.$end;
+            }
+            $pages[]=array('current'=>$current,'number'=>$numb,'url'=>$url);
 
 
-                }
-                $k++;
-                $all_count-=$count;
         }
-        $next=0;
-        $next_url=null;
-        if ($current_num<($k-2)*$count) {
-        //	echo "<a class='nomnm' id='next' href='".$inser."from/".($current_num+$count).$fnd."'> &#8594;</a>";
-            $next=1;
-            $next_url=$start."from/".($current_num+$count).$end;
-        }
-        //echo "<br />";
-        $wtch=0;
-        $show_first=0;
-        $first_url=null;
-        if ($current_num>=5*$count) {
-        //	echo "<a class='nomnm' href='".$inser."from/0".$fnd."'>&#8612; Начало</a>";
-                $show_first=1;
-                $first_url=$start.$end;
-        //	$wtch=1;
-        }
-        $show_last=0;
-        $last_url=null;
-        if ($current_num<($k-6)*$count) {
-        //	if ($wtch==1) {echo "||";}
-                $show_last=1;
-                $last_url=$start."from/".($k-2)*$count.$end;
-        //        echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
-        }
-        return render_template(TPL_FRAMES.'/paginator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,
-            'next'=>$next,'next_url'=>$next_url,'pages'=>$pages,'show_first'=>$show_first,'first_url'=>$first_url,
-        'show_last'=>$show_last,'last_url'=>$last_url));
+        $k++;
+        $all_count-=$count;
+    }
+    $next=0;
+    $next_url=null;
+    if ($current_num<($k-2)*$count) {
+    //	echo "<a class='nomnm' id='next' href='".$inser."from/".($current_num+$count).$fnd."'> &#8594;</a>";
+        $next=1;
+        $next_url=$start."from/".($current_num+$count).$end;
+    }
+    //echo "<br />";
+    $wtch=0;
+    $show_first=0;
+    $first_url=null;
+    if ($current_num>=5*$count) {
+    //	echo "<a class='nomnm' href='".$inser."from/0".$fnd."'>&#8612; Начало</a>";
+        $show_first=1;
+        $first_url=$start.$end;
+    //	$wtch=1;
+    }
+    $show_last=0;
+    $last_url=null;
+    if ($current_num<($k-6)*$count) {
+    //	if ($wtch==1) {echo "||";}
+        $show_last=1;
+        $last_url=$start."from/".($k-2)*$count.$end;
+    //        echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
+    }
+    return render_template(TPL_FRAMES.'/paginator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,
+    'next'=>$next,'next_url'=>$next_url,'pages'=>$pages,'show_first'=>$show_first,'first_url'=>$first_url,
+    'show_last'=>$show_last,'last_url'=>$last_url));
 }
 function render_error($text,$id=null) {
     return render_template(TPL_FRAMES.'/error.tpl.php', array('text'=>$text,'id'=>$id));

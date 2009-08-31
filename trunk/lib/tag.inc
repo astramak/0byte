@@ -22,11 +22,11 @@
  * @return string
  */
 function tags_add_list($tags) {
-	$list = array();
-	foreach (tags_explode($tags) as $tag) {
-		if (tags_add($tag)) $list[] = $tag;
-	}
-	return implode(', ', $list);
+    $list = array();
+    foreach (tags_explode($tags) as $tag) {
+        if (tags_add($tag)) $list[] = $tag;
+    }
+    return implode(', ', $list);
 }
 
 /**
@@ -36,11 +36,11 @@ function tags_add_list($tags) {
  * @return string
  */
 function tags_remove_list($tags) {
-	$list = array();
-	foreach (tags_explode($tags) as $tag) {
-		if (tags_remove($tag)) $list[] = $tag;
-	}
-	return implode(', ', $list);
+    $list = array();
+    foreach (tags_explode($tags) as $tag) {
+        if (tags_remove($tag)) $list[] = $tag;
+    }
+    return implode(', ', $list);
 }
 
 /**
@@ -50,14 +50,14 @@ function tags_remove_list($tags) {
  * @return bool
  */
 function tags_add($tag) {
-	if (!tags_is_valid($tag)) return false;
-	$id = tags_get_id($tag);
-	if ($id) {
-		db_query('UPDATE tags SET num = num + 1 WHERE id = %d', $id);
-	} else {
-		db_query('INSERT INTO tags SET name = %s, num = 1', $tag);
-	}
-	return true;
+    if (!tags_is_valid($tag)) return false;
+    $id = tags_get_id($tag);
+    if ($id) {
+        db_query('UPDATE tags SET num = num + 1 WHERE id = %d', $id);
+    } else {
+        db_query('INSERT INTO tags SET name = %s, num = 1', $tag);
+    }
+    return true;
 }
 
 /**
@@ -67,12 +67,12 @@ function tags_add($tag) {
  * @return bool
  */
 function tags_remove($tag) {
-	if (!tags_is_valid($tag)) return false;
-	$id = tags_get_id($tag);
-	if ($id) {
-		db_query('UPDATE tags SET num = num - 1 WHERE id = %d', $id);
-	}
-	return true;
+    if (!tags_is_valid($tag)) return false;
+    $id = tags_get_id($tag);
+    if ($id) {
+        db_query('UPDATE tags SET num = num - 1 WHERE id = %d', $id);
+    }
+    return true;
 }
 
 /**
@@ -82,9 +82,9 @@ function tags_remove($tag) {
  * @return array
  */
 function tags_explode($tags) {
-	$list = explode(',', $tags);
-	trim_array($list);
-	return $list;
+    $list = explode(',', $tags);
+    trim_array($list);
+    return $list;
 }
 
 /**
@@ -94,7 +94,7 @@ function tags_explode($tags) {
  * @return int
  */
 function tags_get_id($tag) {
-	return db_result(db_query('SELECT id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
+    return db_result(db_query('SELECT id FROM tags WHERE LOWER(name) = LOWER(%s)', $tag));
 }
 
 /**
@@ -104,7 +104,7 @@ function tags_get_id($tag) {
  * @return bool
  */
 function tags_is_valid($tag) {
-	$len = strlen($tag);
-	return ($len > 2 && $len < 40 && strpos($tag, '>')===false && strpos($tag, '<')===false && strpos($tag, '/')===false && strpos($tag, '#')===false);
+    $len = strlen($tag);
+    return ($len > 2 && $len < 40 && strpos($tag, '>')===false && strpos($tag, '<')===false && strpos($tag, '/')===false && strpos($tag, '#')===false);
 }
 ?>

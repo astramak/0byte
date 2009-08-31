@@ -1,5 +1,5 @@
 <h3>Создание <?php echo $type; ?></h3>
-<a href="work/newpost">Сообщение</a> | <a href="work/newpost/tr">Перевод</a> | <a href="work/newpost/lnk">Ссылка</a> | <a href="work/newpost/answ">Опрос</a><br>
+<?php if (!@$post) { ?><a href="work/newpost">Сообщение</a> <?php } if (!@$translate) { if (!@$post) { ?> |<?php } ?> <a href="work/newpost/tr">Перевод</a> <?php } if (!@$link) { ?>| <a href="work/newpost/lnk">Ссылка</a> <?php } if (!@$answer) { ?>| <a href="work/newpost/answ">Опрос</a><?php } ?><br>
 <form name="new" id='new' method="post"
 	action="twork.php?wt=newpost&tp=<?php echo $tp; ?>">
 <div id='prv'></div><br><br>

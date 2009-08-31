@@ -32,27 +32,15 @@ if (request::get_get('order',0)) {
                     $inser.="ratedesc/";
         }}
 }
-//		$sql_get="SELECT * FROM `users` ORDER BY ".$order." LIMIT ".$frm.",50";
-//		echo $fst.$scn."</tr>";
 $result=db_query("SELECT * FROM `users` WHERE 1=1 ".$sql_ins." ORDER BY ".$order." LIMIT %d,50",$frm);
 while ($row = db_fetch_assoc($result)) {
-//			echo "<tr><td class='avl'>";
     if (strlen($row['av'])>=2) {
         $av= "<img class='cauth' src='res.php?t=av&img=".$row['av']."' alt='' />";
     } else {
         $av= '<img class="cnoauth" src="style/img/figure.gif" />';
     }
-    //			echo "</td><td class='ulp'><a href='user/".$row['name']."'>".$row['name']."</a></td><td class='lrte'>";
     $otr=$row['brate']/$blog_r+$row['crate']/$com_r+$row['prate']/$post_r;
     $otr+=$row['ratep']-$row['ratem'];
-    //			if ($otr==0) {
-    //				echo 0;
-    //			} else if ($otr>0) {
-    //				echo "<span class='rp'>".$otr."</span>";
-    //			} else {
-    //				echo "<span class='rm'>".$otr."</span>";
-    //			}
-    //			echo "</td></tr>";
     $row['av']=$av;
     $row['rate']=$otr;
     $elem[]=$row;
