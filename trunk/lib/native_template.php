@@ -23,13 +23,8 @@
  * @return string
  */
 function render_template($tpl_path, $variables) {
-    global $site, $s_name, $sl_name,$nb_rate,$nc_rate,$np_rate,$cr_rate,$pr_rate,$ur_rate,$br_rate,$no_user_rate;
-
-    $variables['site'] = $site;
-    $variables['s_name'] = $s_name;
-    $variables['sl_name'] = $sl_name;
-
-    extract($variables, EXTR_SKIP);
+    global $site,$loged, $s_name, $sl_name,$nb_rate,$nc_rate,$np_rate,$cr_rate,$pr_rate,$ur_rate,$br_rate,$no_user_rate;
+    @extract($variables, EXTR_SKIP);
     ob_start();
     include $tpl_path;
     return ob_get_clean();
