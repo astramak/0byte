@@ -54,6 +54,7 @@ RewriteRule ^post/([0-9]*) index.php?post=$1 [L]
 RewriteRule ^blog/([0-9]*) index.php?blog=$1 [L]
 RewriteRule ^auth/([^\/]*) index.php?auth=$1 [L]
 RewriteRule ^tag/(.*) index.php?tag=$1 [L]
+RewriteRule ^tags all.php?wt=tags [L]
 
 RewriteRule ^login/new login.php?new=1 [L]
 RewriteRule ^login/(.*) login.php?cur=$1 [L]

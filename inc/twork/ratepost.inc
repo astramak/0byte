@@ -54,8 +54,9 @@ if ($voted) {
 
             if ($json == 1) {
                 $rr = $rate == 'p' ? 1 : -1;
-                cmpl($id, $row['ratep'] - $row['ratem'] + $rr);
-            }
+                echo json_encode(array('id'=>$id,'rate'=> $row['ratep'] - $row['ratem'] + $rr,'title'=>
+                        'Всего '.($row['ratep']+$row['ratem']+1).' '.inducing($row['ratep']+$row['ratem']+1, array('голоса','голосов','голос'))));
+                }
             jkill();
             redirect($lst);
         }

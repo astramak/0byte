@@ -22,13 +22,10 @@ if ($js) {
 }
 
 $cur = request::get_get("cur");
-if (strlen($cur) < 3) {
-    $lst = $site;
-} else {
+
     $lst = $cur;
     $lst = str_replace("*amp", "&", $lst);
     $lst = str_replace("*qw", "?", $lst);
-}
 
 $login = request::get_post('login');
 $pwd = request::get_post('pwd');
@@ -59,8 +56,10 @@ if (!$js) {
         echo render_error('Данные введены неверно!');
     }
 }
+if (@$err>0) {
+    $cur=$site;
+}
 echo render_login(request::get_post("login", 0), $cur, $js, (request::get_get("new") && $eml_a),$err);
-
 if (!$js) {
     include("inc/foot.php");
 }

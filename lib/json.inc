@@ -14,7 +14,7 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
-function cmpl($id,$rate) {
+function cmpl($id,$rate) { #deprecated
     echo '{"id" : "'.$id.'", "rate" : "'.$rate.'"}';
 }
 

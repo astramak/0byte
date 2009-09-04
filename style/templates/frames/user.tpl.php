@@ -1,11 +1,11 @@
 <br/><span class='title'><?php echo $name; ?>  <a href='work/pmnew/<?php echo $name; ?>'>
-        <img alt='ЛС' src='style/img/envelope.gif' title='Написать личное сообщение этому пользователю'/></a>  <a class='ratep' href='<?php echo $ratep_url;?>'>+</a>
+        <img alt='ЛС' src='style/img/envelope.gif' title='Написать личное сообщение этому пользователю'/></a>  <?php if (!$no_user_rate) { ?><a class='ratep' href='<?php echo $ratep_url;?>'>+</a><?php } ?>
         <span id='ru<?php echo $name; ?>'><?php if ($rate>0) {
             ?><span class='rp'><?php echo $rate; ?></span><?php
         } else if ($rate<0) {
             ?><span class='rm'><?php echo $rate; ?></span><?php
         } else echo 0;?></span>
-			<a class='ratem' href='<?php echo $ratem_url;?>'>&ndash;</a></span>
+			<?php if (!$no_user_rate) { ?><a class='ratem' href='<?php echo $ratem_url;?>'>&ndash;</a><?php } ?></span>
 
 <?php if ($avatar) {?>
     <img class='photo' style='float:right' src='<?php echo $avatar_url; ?>' alt='' />

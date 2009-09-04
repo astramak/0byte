@@ -91,9 +91,9 @@ function r_s(xrs,xs,xrt,tp) {
                                         } else
 					if (tp=="p") {
 						if (parseInt(jr.rate)>0) {
-							jr.rate="<span class='rp'>"+jr.rate+"</span>";
+							jr.rate="<span class='rp' title='"+jr.title+"'>"+jr.rate+"</span>";
 						} else if (parseInt(jr.rate)<0) {
-							jr.rate="<span class='rm'>"+jr.rate+"</span>";
+							jr.rate="<span class='rm' title='"+jr.title+"'>"+jr.rate+"</span>";
 						}
 						document.getElementById("rp"+jr.id).innerHTML=jr.rate;
 					} else if (tp=="u") {
