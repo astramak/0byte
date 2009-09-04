@@ -55,14 +55,7 @@ echo render_search_panel();
 if (!($tops = readCache('tops.cache', 30))) {
     $tops = '';
     $result = db_query('SELECT * FROM tags WHERE num > 0 ORDER BY num DESC LIMIT 40');
-    $tags = array();
-    while ($row = db_fetch_assoc($result)) {
-        if (!isset($max)) $max = $row['num'];
-        $row['weight'] = ceil($row['num'] / $max * 10);
-        $tags[] = $row;
-    }
-    shuffle($tags);
-    $tops .= render_tags($tags);
+    $tops .= render_tags(generate_tag_array($result));
 
     $result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT 10');
     $blogs = array();

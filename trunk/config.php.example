@@ -44,6 +44,7 @@ $ur_rate=5;//rate for rating user
 $pr_rate=1;//rate for rating post
 $cr_rate=-1;//rate for rating comment
 $br_rate=1;//rate for rating blog
+$no_user_rate=1;//disable users rate
 // plugins
 $user = array();
 $use['geshi'] = 1;

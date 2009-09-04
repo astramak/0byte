@@ -23,7 +23,7 @@
  * @return string
  */
 function render_template($tpl_path, $variables) {
-    global $site, $s_name, $sl_name,$nb_rate,$nc_rate,$np_rate,$cr_rate,$pr_rate,$ur_rate,$br_rate;
+    global $site, $s_name, $sl_name,$nb_rate,$nc_rate,$np_rate,$cr_rate,$pr_rate,$ur_rate,$br_rate,$no_user_rate;
 
     $variables['site'] = $site;
     $variables['s_name'] = $s_name;

@@ -107,4 +107,23 @@ function tags_is_valid($tag) {
     $len = strlen($tag);
     return ($len > 2 && $len < 40 && strpos($tag, '>')===false && strpos($tag, '<')===false && strpos($tag, '/')===false && strpos($tag, '#')===false);
 }
+/**
+ * Generate shuffled array of tags with size
+ *
+ * @param db_query result $result
+ * @return array
+ */
+function generate_tag_array($result) {
+    $font_size=32;
+    $min_font=8;
+    $num=db_num_rows($result);
+    $count=($font_size-$min_font)/$num;
+    $tags=null;
+    while ($row=db_fetch_assoc($result)) {
+        $tags[]=array('name'=>$row['name'],'size'=>$font_size);
+        $font_size-=$count;
+    }
+    shuffle($tags);
+    return($tags);
+}
 ?>

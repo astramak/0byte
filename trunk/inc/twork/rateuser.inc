@@ -1,5 +1,5 @@
 <?php
-if ($usr->rate()<$ur_rate) {
+if ($usr->rate()<$ur_rate || $no_user_rate) {
     j_err("У вас недостаточно рейтинга для этого действия!");
     jkill();
     redirect($dir.'error/not_allow');
