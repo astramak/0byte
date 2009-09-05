@@ -17,7 +17,7 @@
 function gtext($text) {
     global $native_presave,$presave_plugins;
     if ($native_presave) {
-        $replace = array("'" => '&#39;', '"' => '&#34;', '<' => '&lt;', '<' => '&gt;');
+        $replace = array("'" => '&#39;', '"' => '&#34;', '<' => '&lt;', '>' => '&gt;');
         $text = str_replace(array_keys($replace), array_values($replace), $text);
         $bb[] = "#\[b\](.*?)\[/b\]#si";
         $html[] = "<b>\\1</b>";
@@ -126,7 +126,8 @@ function gtext($text) {
 function utext($text) {
     global $native_presave,$presave_plugins;
     if ($native_presave) {
-        $replace = array('<br />' => '', '<' => '&lt;', '<' => '&gt;');
+        $text=str_replace('<br />', '', $text);
+        $replace = array('<' => '&lt;', '>' => '&gt;');
         $text = str_replace(array_values($replace), array_keys($replace), $text);
         $bb[] = "#\<b\>(.*?)\</b\>#si";
         $html[] = "[b]\\1[/b]";

@@ -13,8 +13,8 @@
 			<link><?php echo $site, 'post/', $item['id'], '/' ?></link>
 			<description><?php print htmlspecialchars($item['descr']) ?></description>
 			<pubDate><?php print date('r', $item['date']) ?></pubDate>
-			<author><? print $item['auth'] ?></author>
-			<guid><?php echo $site, 'post/', $item['id'], '/' ?></guid>
+			<author><?php print $item['auth'] ?></author>
+			<guid><?php echo $site. 'post/'. $item['id']. '/'; ?></guid>
 		</item>
 		<?php endforeach; ?>
 	</channel>

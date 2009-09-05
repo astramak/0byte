@@ -83,7 +83,7 @@ if (!$row) {
         'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,'remove_url'=>$remove_url,
         'favourite'=>$favourite,'favourite_url'=>'twork.php?wt=favourite&id='.$post->id,'loged'=>$loged,'hold'=>$post->top,'allow_hold'=>$usr->lvl>=$hlvl
         ,'rate_num'=>($post->ratep+$post->ratem)%100));
-        $result = db_query('SELECT * FROM comment WHERE cid = %d ORDER BY id', $post_id);
+        $result = db_query('SELECT * FROM comment WHERE krnl = %d && lvl = 0 ORDER BY id', $post_id);
         echo "<a id='cm'></a><div id='cmn'>";
         if (!db_num_rows($result)) {
             echo "<span id='nocom'>Комментариев нет</span>";

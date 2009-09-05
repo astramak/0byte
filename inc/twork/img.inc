@@ -13,7 +13,7 @@ if (strncmp($_FILES['img']['type'],"image",5)==0 && $sz[0]<=70 && $sz[1]<=70
     $uploaddir = "tmp/av/";
     move_uploaded_file($_FILES['img']['tmp_name'],$uploaddir.$usr->login.time().".".substr($_FILES['img']['type'],6));
     $lst="users.php";
-    $sqlg="UPDATE `$sql_db`.`users` SET `av` = '".$usr->login.time().".".substr($_FILES['img']['type'],6)."' WHERE `users`.`name` ='"
+    $sqlg="UPDATE `users` SET `av` = '".$usr->login.time().".".substr($_FILES['img']['type'],6)."' WHERE `users`.`name` ='"
         .$usr->login."'";
     $resul=mysql_query($sqlg,$sql);
     redirect($lst);

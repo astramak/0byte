@@ -67,7 +67,7 @@ if (request::get_get('pg')) {
 	$lnk = $site;
 }
 
-$result = db_query($sql_get . ' LIMIT 100');
+$result = db_query($sql_get . ' LIMIT 30');
 $items = array();
 while ($row = db_fetch_assoc($result)) {
 	$items[] = prepare_rss_post_item($row);
