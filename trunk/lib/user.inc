@@ -58,6 +58,9 @@ class user {
 		$result = db_query('SELECT * FROM `users` WHERE LOWER(name) = LOWER(%s)', $name);
 		$row = db_fetch_assoc($result);
 		if ($row) {
+                        $this->pr=$row['postre'];
+                        $this->cr=$row['comre'];
+                        $this->pmr=$row['pmre'];
 			$this->uotr = 0;
 			$this->login = $name;
 			foreach ($row as $key => $val) {
