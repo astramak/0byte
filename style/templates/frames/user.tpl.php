@@ -11,14 +11,14 @@
 <img class='photo' style='float:right' src='<?php echo $avatar_url; ?>' alt='' />
 <?php }
 if ($use_micro) { ?>
-<br/><i><span class='grey'><?php echo $micro_status;?><a href="<?php echo $micro_url;?>" title='<?php echo $micro_name;?>' style='text-decoration:none'>...</a></span></i>
+<br/><i><span class='grey'><a href="<?php echo $micro_url;?>" title='<?php echo $micro_name;?>' style='text-decoration:none'><?php echo $micro_status;?></a></span></i>
 <?php }
 if ($blocked) {?>
-<br><h3>Пoльзователь заблокирован</h3>
+<br /><h3>Пoльзователь заблокирован</h3>
 <?php } ?>
-<br><br>
+<br /><br />
 <?php if ($lvl>0) {?>
-    <?php echo $lvl; ?>-й уровень доступа<br><br>
+    <?php echo $lvl; ?>-й уровень доступа<br /><br />
 <?php }
 if (!$hide_mail) {?>
 <img src='style/n_img/mail.png'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>, 
@@ -32,32 +32,32 @@ if ($usite['set']) { if ($not_first) echo ','; ?> <img src='style/n_img/www.png'
 <?php }
 echo '— контакты.';
 ?>
-<br><br>
+<br /><br />
 <?php 
 if ($city['set']) {?>
 Город - <a href='list/user/city/<?php echo $city['text']; ?>'><?php echo $city['text']; ?></a>
 <?php } ?>
 
-<br><br/>
+<br /><br/>
 <?php if ($about['set']) {?>
-О себе: <br><span class='note'><?php echo $about['text']; ?></span>
+О себе: <br /><span class='note'><?php echo $about['text']; ?></span>
 <?php }
 if (@$blogs) { ?>
-<br><br>Состоит в
+<br /><br />Состоит в
     <?php foreach ($blogs as $blog) {?>
-<a href='blog/<?php $blog['id']; ?>/'><?php echo $blog['name']; ?></a><?php if ($blog!=end($blogs)) echo ','; ?>
+<a href='blog/<?php echo $blog['id']; ?>/'><?php echo $blog['name']; ?></a><?php if ($blog!=end($blogs)) echo ','; ?>
     <?php } } ?>
 
-<br>
-<?php if (@$friends) { ?>Дружит с
+<br />
+<?php if (@$friends) { ?><br />Дружит с
     <?php foreach ($friends as $friend) { if (strlen($friend)>1) { ?>
 <a href='user/<?php echo $friend; ?>/'><?php echo $friend; ?></a><?php if ($friend!=end($friends)) echo ','; ?>
         <?php } } } ?>
-<br><br>
+<br /><br />
 Написал <a href='auth/<?php echo $name; ?>/'><?php echo $post_count." "; echo inducing($post_count, array('поста','постов','пост'));?> </a> и <a href='comment/<?php echo $name; ?>/'><?php echo $comment_count." ";
 echo inducing($comment_count, array('комментария','комментариев','комментарий')); ?></a>
 
-<br /><br><hr>
+<br /><br /><hr>
 <?php if ($loged) {if ($owner) {?>
 <br /><img src='style/n_img/edit.png'/> <a href="work/edituser">Редактировать профиль</a>
 <img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a>
