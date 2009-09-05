@@ -1,5 +1,5 @@
 <div class='<?php if ($comment->new) {?>cntop<?php } else { ?>ctop<?php } ?>'>
-    <img class='cauth' src='<?php echo $avatar_use ? ("res.php?t=av&amp;img=".$avatar) : 'style/img/figure.gif'?>' alt="" />
+    <img class='<?php echo $avatar_use ? ("cauth") : 'cnoauth';?>' src='<?php echo $avatar_use ? ("res.php?t=av&amp;img=".$avatar) : 'style/img/figure.gif';?>' alt="" />
     <a class='cauth' href='user/<?php echo $comment->auth; ?>'><?php echo $comment->auth; ?></a>
     <span class='date'><?php echo date('d.m.y  H:i', $comment->date); ?></span>
     <a title='Ссылка на комментарий' class='clnk' href='post/<?php echo $pid; ?>/#cmnt<?php echo $comment->id;?>'>#</a>
