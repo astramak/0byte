@@ -28,7 +28,7 @@ define('TPL_POST_LIST',TPL_ROOT.'/post_list');
 define('TPL_LISTS',TPL_ROOT.'/lists');
 define('TPL_EDITOR',TPL_ROOT.'/editor');
 define('TPL_MAIN', TPL_ROOT);
-
+ini_set('display_errors', 0);
 //lib load
 include("lib/blog.inc");
 include("lib/comment.inc");
@@ -60,7 +60,7 @@ $sql = $db_connection;
 
 $pg = request::get_get('pg');
 
-ini_set('display_errors', 0);
+
 
 $usr = new user();
 
