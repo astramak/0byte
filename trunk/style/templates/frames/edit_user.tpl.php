@@ -91,7 +91,8 @@
 
     </table>
     <input type="submit" value="Править!" /></form>
-Аватар:
+Аватар:<?php if ($av_use) {?>
+<img src="res.php?t=av&img=<?php echo $av; ?>" alt="" /><?php } ?>
 <form method="post" enctype="multipart/form-data"
       action="twork.php?wt=img"><input type="file" name="img" /> <input
         type="submit" value="Загрузить" /></form>
