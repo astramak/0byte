@@ -7,7 +7,7 @@
         (<a href='<?php echo $remove_url; ?>'>Удалить</a>)
     <?php }
     if ($allow_hold) {
-        ?>(<a href="work/hold/<?php echo $id; ?>"><?php if (!$hold) echo 'За'; else echo 'От';?>крепить</a>)<?php
+        ?>(<a href="work/hold/<?php echo $id; ?>"><?php if (!$hold) echo 'За'; else echo 'От';?>крепить вверху главной</a>)<?php
     }
     if ($allow_spy) {?>
         (<a id='sled' href='<?php echo $spy_url; ?>'><?php if ($spyed) {
