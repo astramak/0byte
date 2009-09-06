@@ -1,23 +1,23 @@
-<h3>Создание <?php echo $type; ?></h3>
+<span class="title">Создание <?php echo $type; ?></span><br>
 <?php if (!@$post) { ?><a href="work/newpost">Сообщение</a> <?php } if (!@$translate) { if (!@$post) { ?> |<?php } ?> <a href="work/newpost/tr">Перевод</a> <?php } if (!@$link) { ?>| <a href="work/newpost/lnk">Ссылка</a> <?php } if (!@$answer) { ?>| <a href="work/newpost/answ">Опрос</a><?php } ?><br>
 <form name="new" id='new' method="post"
 	action="twork.php?wt=newpost&tp=<?php echo $tp; ?>">
 <div id='prv'></div><br><br>
-<table border="0" class="fullwidth">
-	<tr>
+<nobr>
 		<select name="blog">
 		<?php foreach ($blogs as $blog) { ?>
         <option value="<?php echo $blog['value'];?>"><?php echo $blog['text']; ?></option>
         <?php } ?>
-    </select> — <input type="text" name="title" class="post-title" />
-	
-	<tr>
-		<td>
+        </select> <input type="text" name="title" class="post-title" />
+</nobr>
+
+			<table border="0" class="fullwidth">
+
     <?php if(@!$answer) {?>
-    <tr><td id='otxt'>Текст</td><td>
+
 		<div id='mq' class='inpt'></div>
 		<textarea onkeypress='do_key(this.form,"new",event);' onkeydown='if("\v"=="v") {do_key(this.form,"new",event);}' name='text' rows='15' cols='70' class='post-body'></textarea>
-		</td></tr>
+		
         <?php } else {?>
 <tr><td>Ответы:
 			<br /> <a id='adda' href='work/newpost/answ/<?php echo($len+1); ?>'>Добавить</a>
