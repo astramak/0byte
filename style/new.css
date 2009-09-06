@@ -21,6 +21,13 @@ table * {
 img {
     border: none;
 }
+hr {
+    color: #A6A6A6;
+    height: 0px;
+	border-style: solid;
+	border-width: 1px 0 0;
+    clear: both;
+}
 input {
     font-size: 12px;
 }
@@ -263,13 +270,14 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
     //height:14px;
     margin-top: 15px;
     padding-top: 10px;
-    border-top:	#2669A6 1px solid;
+    border-top:	#A6A6A6 1px solid;
 }
 .auth {
     float: right;
 }
 .date {
     float: left;
+	color: #999999;
 }
 .mtxt {
     padding-left:10px;
