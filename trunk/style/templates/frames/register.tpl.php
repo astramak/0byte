@@ -1,6 +1,6 @@
 <div id="golog">
 	<br/><br/><span class='title'>Регистрация</span><br>
-	Прерд регистрацией рекомендуется прочитать <a href="all/ar">правила</a>.<br/><br/>
+	Заполняя эти поля, вы подтверждаете, что прочитали <a href="http://welinux.ru/all/ar">наши правила</a><br/><br/>
 	<?php if ($error) { ?>
 	<span class='err'>
 			<?php
