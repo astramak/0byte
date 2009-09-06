@@ -9,7 +9,7 @@ db_query('UPDATE users SET icq = %s, hml = %d, mail = %s, jabber = %s,
 	juse = %d, jname = %s, jdate = "", city = %s, timezone = %d WHERE name = %s',
     request::get_post('icq'), $hml, request::get_post('mail'),
     request::get_post('jabber'), request::get_post('site'),
-    request::get_post('about'), $pr, $cr, $pmr, request::get_post('juse'),
+    gtext(request::get_post('about')), $pr, $cr, $pmr, request::get_post('juse'),
     request::get_post('jname'), request::get_post('city'),request::get_post('timezone'), $usr->login);
 
 redirect('user/');
