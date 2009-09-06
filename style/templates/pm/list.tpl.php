@@ -5,7 +5,7 @@
     <?php foreach ($pms as $pm) {?>
     <tr <?php echo $pm['class']; ?> id='pm<?php echo $pm['id']; ?>'><td class='avl'>
     <?php if ($pm['avatar']){ ?>
-    }
+    
 <img class='cauth' src='<?php echo $pm['av_url']; ?>' alt='' />
     <?php } else {?>
     <img class="cnoauth" src="style/img/figure.gif" />
