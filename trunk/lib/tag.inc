@@ -113,7 +113,7 @@ function tags_is_valid($tag) {
  * @param db_query result $result
  * @return array
  */
-function generate_tag_array($result,$font_size=32,$min_font=8) {
+function generate_tag_array($result,$font_size=22,$min_font=4) {
     $num=db_num_rows($result);
     $count=($font_size-$min_font)/$num;
     $tags=null;
