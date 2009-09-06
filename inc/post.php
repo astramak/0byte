@@ -25,7 +25,7 @@ $blck="&& blck != 1";
 if ($usr->lvl>=$rlvl) {
     $blck="";
 } else if ($loged) {
-        $blck.='|| `auth` = "'.$usr->login.'"';
+        $blck='&& (`blck` != 1 || `auth` = "'.$usr->login.'")';
     }
 if (isset($_GET['count'])) {
     $count=$_GET['count'];
