@@ -36,7 +36,8 @@ $favourite=request::get_get('favourite',0);
 $pg=request::get_get('pg','');
 $draft=request::get_get('draft',0);
 $frm=request::get_get("frm",0,0);
-if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2) ) {
+if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2 && !request::get_get('like',0) && !$favourite && !$draft && !request::get_get('tag',0) 
+        && !request::get_get('auth',0) && !request::get_get('blog',0) && !request::get_get('fnd',0))) {
     $sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
 }
 else 
@@ -64,7 +65,7 @@ else
                 $inser.='like/'.request::get_get('like',0);
             }
             else
-                if (strlen(request::get_get('tag'))>=2) {
+                if (request::get_get('tag',0)) {
                     $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
 			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";
                     $inser.="tag/".gtext($_GET['tag'])."/";
@@ -72,18 +73,18 @@ else
                 } else if (isset($_GET['pg']) && $_GET['pg']=='pers') {
                         $sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY  id DESC ";
                     } else {
-                        if (isset($_GET['auth'])) {
+                        if (request::get_get('auth',0)) {
                             $sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string($_GET['auth'])."' $blck ORDER BY  id DESC ";
                             $inser.="auth/".$_GET['auth']."/";
                             $au=1;
-                        } else if (isset($_GET['blog'])) {
+                        } else if (request::get_get('blog',0)) {
                                 $sql_get="SELECT * FROM `post` WHERE blogid = '".intval($_GET['blog'])."' $blck ORDER BY  id DESC ";
                                 $bl=1;
                             } else {
                                 $sql_get="SELECT * FROM `post` WHERE blog != 'own' $blck ORDER BY  id DESC ";
                             }
                     }
-if (isset($_GET['fnd'])) {
+if (request::get_get('fnd',0)) {
     $fnd=trim(str_replace(" ", "%", $_GET['fnd']));
     $sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
     echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>$fnd));
