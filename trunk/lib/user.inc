@@ -94,16 +94,16 @@ class user {
 	}
 // AND lck = 0
         function check_lock() {
-            $row = db_fetch_assoc(db_query('SELECT *, COUNT(*) AS `count`  FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
+            $row = db_fetch_assoc(db_query('SELECT * FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
             if ($row['end']!=1 && $row['end']<time()) {
                 db_query("DELETE FROM `block_user` WHERE `id` = %d LIMIT 1",$row['id']);
                 db_query("UPDATE `users` SET `lck` = '0' WHERE `name` = %s LIMIT 1 ",$this->login);
                 $this->lck=0;
-                return false;
+                return 0;
             } else {
                 $this->lck=1;
                 $this->block_cause=$row['cause'];
-                return true;
+                return 1;
             }
         }
 	function check() {
