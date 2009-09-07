@@ -15,9 +15,9 @@
     <a href="looz/">восстановление</a>
 
 	</td></tr></table>
-	<br><input type="checkbox" name="zap" value="1" /><span class="grey">помнить меня</span><br><br>
+	<br><input type="checkbox" name="zap" id="zap" value="1" /><span class="grey"><label for="zap">помнить меня</label></span><br><br>
 			
-	<input type="submit" value="Войти" class="tag_w7" tabindex="3" /> <?php
+	<input type="submit" value="Войти" class="tag_w6" tabindex="3" /> <?php
 						if ($js) {
 							?><input type='button' onblur='onBlur(this)' onfocus='onFocus(this)' onclick='unlogin()' value='&larr; Вернуться' class="tag_w4"/>
 					<?php }	?>

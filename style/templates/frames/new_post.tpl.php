@@ -8,37 +8,40 @@
 		<?php foreach ($blogs as $blog) { ?>
         <option value="<?php echo $blog['value'];?>"><?php echo $blog['text']; ?></option>
         <?php } ?>
-        </select> <input type="text" name="title" class="post-title" />
+        </select> <input type="text" name="title" class="post-title" tabindex="1"/>
 </nobr>
 
-			<table border="0" class="fullwidth">
+
 
     <?php if(@!$answer) {?>
 
 		<div id='mq' class='inpt'></div>
-		<textarea onkeypress='do_key(this.form,"new",event);' onkeydown='if("\v"=="v") {do_key(this.form,"new",event);}' name='text' rows='15' cols='70' class='post-body'></textarea>
-		
+		<textarea onkeypress='do_key(this.form,"new",event);' onkeydown='if("\v"=="v") {do_key(this.form,"new",event);}' name='text' rows='15' cols='70' class='post-body' tabindex="2"></textarea>
+
         <?php } else {?>
-<tr><td>Ответы:
-			<br /> <a id='adda' href='work/newpost/answ/<?php echo($len+1); ?>'>Добавить</a>
-			<br /> <a id='rma'  href='work/newpost/answ/<?php echo($len-1); ?>'>Убрать</a>
-			</td><td id='nw'>
+
+<br><br>Варианты можно <a id='adda' href='work/newpost/answ/<?php echo($len+1); ?>'>добавлять</a> и <a id='rma'  href='work/newpost/answ/<?php echo($len-1); ?>'>удалять</a><br><br>
+
+			<td id='nw'>
             <?php for ($x=1;$x<=$len;$x++) {?>
                 <label id='an<?php echo $x; ?>'><input type='text' id='fst'  name='an<?php echo $x; ?>' /><br /></label>
             <?php } ?>
-        <input type='hidden' id='len' name='len' value='<?php echo $len ?>' /></td></tr>
-			<tr><td>Несколько ответов</td><td><input type='checkbox' name='mng'  /></td></tr>
+        <input type='hidden' id='len' name='len' value='<?php echo $len ?>' /></td>
+	<br>
+	<input type='checkbox' name='mng' id="mng" /><label for="mng">Разрешить выбирать несколько вариантов</label>
+	<br>
         <?php }
     if (@$translate) { ?>
-        <tr><td>Оригинал</td><td><input type='text' name='org' /></td></tr>
+        <input type='text' name='org' class="post-tags" tabindex="3" /><span class="grey"> - <b>оригинал</b></span><br/>
     <?php } else if (@$link) {?>
-<tr><td>Ссылка</td><td><input type='text' name='lnk' /></td></tr>
+<input type='text' name='lnk' class="post-tags" tabindex="3"/><span class="grey"> - <b>ссылка</b></span><br/>
     <?php } ?>
-<tr>
-		<td>Тэги</td>
-		<td><input type="text" name="tag" class="post-tags" /></td>
-	</tr>
-</table>
-<input type="checkbox" name="lock" /> Только для друзей / участников блога<br />
-<input type="submit" class="tag_w6" value="Опубликовать" />
-<input type="submit" value="Сохранить" name="draft" /><input style="display:none;" id="view" onClick="javascript:prv()" type="button" value="Предпросмотр" /></form>
+
+
+
+<input type="text" name="tag" class="post-tags" tabindex="4" /><span class="grey"> - теги</span><br/><br/>
+
+<input type="checkbox" name="lock" id="lock" tabindex="5"/> <label for="lock">Показать только друзьям и участникам блога</label><br/><br/>
+<input type="submit" class="tag_w6" value="Опубликовать" tabindex="6" />
+<input type="submit" value="Сохранить" name="draft" tabindex="7" />
+<input style="display:none;" id="view" onClick="javascript:prv()" type="button" value="Предпросмотр" tabindex="8"/></form>
