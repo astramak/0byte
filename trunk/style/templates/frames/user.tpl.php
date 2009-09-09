@@ -11,7 +11,7 @@
 <img class='photo' style='float:right' src='<?php echo $avatar_url; ?>' alt='' />
 <?php }
 if ($use_micro) { ?>
-<br/><i><span class='grey'><?php echo $micro_status;?> <a href="<?php echo $micro_url;?>" title='<?php echo $micro_name;?>' style='text-decoration:none'>&#8230;</a></span></i>
+<br/><i><span class='grey'><a href="<?php echo $micro_url;?>" title='<?php echo $micro_name;?>' style='text-decoration:none'><?php echo $micro_status;?></a></span></i>
 <?php }
 if ($blocked) {?>
 <br /><h3>Пoльзователь заблокирован</h3>
