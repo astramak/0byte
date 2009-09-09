@@ -30,7 +30,7 @@ $cur = request::get_get("cur");
 $login = request::get_post('login');
 $pwd = request::get_post('pwd');
 $err=0;
-if (strlen($login) > 2 && strlen($pwd) > 2) {
+if (strlen($login) >= 2 && strlen($pwd) >= 2) {
     $usr->login = $login;
     $usr->pwd = md5($pwd);
     if ($usr->check()) {
