@@ -85,6 +85,7 @@ else
                             }
                     }
 if (request::get_get('fnd',0)) {
+
     $fnd=trim(str_replace(" ", "%", $_GET['fnd']));
     $sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
     echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>$fnd));
@@ -175,5 +176,5 @@ if ($kol<1 && !isset($_GET['blog'])) {
 }
 
 $fnd=request::get_get('fnd',null);
-echo render_paginator($inser, $count, $kol, $frm, $fnd);
+echo render_paginator($inser, $count, $kol, $frm, '/'.$fnd);
 ?>
