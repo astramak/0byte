@@ -14,17 +14,17 @@ if ($use_micro) { ?>
 <br/><i><span class='grey'><a href="<?php echo $micro_url;?>" title='<?php echo $micro_name;?>' style='text-decoration:none'><?php echo $micro_status;?></a></span></i>
 <?php }
 if ($blocked) {?>
-<br /><h3>Пoльзователь заблокирован</h3>
+<br /><h3>Пoльзователь заблокированне надо</h3>
 <?php } ?>
 <br /><br />
 <?php if ($lvl>0) {?>
     <?php echo $lvl; ?>-й уровень доступа<br /><br />
 
-<?php 
+<?php }
 if ($city['set']) {?>
 <img src='style/n_img/city.png'/> <a href='list/user/city/<?php echo $city['text']; ?>'><?php echo $city['text']; ?></a>, 
 <?php } ?>
-<?php }
+<?php 
 if (!$hide_mail) {?>
 <img src='style/n_img/mail.png'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>, 
 <?php } $not_first=0;
