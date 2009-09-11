@@ -3,7 +3,7 @@
         <a class='nomnm' id='prev' href='<?php echo $prev_url; ?>'>&#8592; </a>
     <?php }
     foreach ($pages as $page) {
-        if ($page['current']) {?>
+        if ($page['current']==1) {?>
              <span class='nmn'><?php echo $page['number']; ?></span>
          <?php } else { ?>
              <a class='nmn' href='<?php echo $page['url']; ?>'><?php echo $page['number']; ?></a>

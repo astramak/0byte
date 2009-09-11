@@ -110,9 +110,8 @@ if (isset ($_GET['noo'])) {
         $i++;
     }
     if ($loged==1) {
-        $result=db_query("SELECT id FROM `hist` WHERE `pid` = %d && `who`= %s  ",request::get_get('pid'),$usr->login);
-        $sql_get="UPDATE `hist` SET `date` = '".time()."' WHERE `hist`.`id` =".$rw['id']." LIMIT 1";
-        $result=mysql_query($sql_get,$sql);
+        $id=db_result(db_query("SELECT id FROM `hist` WHERE `pid` = %d && `who`= %s  ",request::get_get('pid'),$usr->login));
+        db_query( "UPDATE `hist` SET `date` = '".time()."' WHERE `hist`.`id` =".$id." LIMIT 1");
     }
 
 } else if (request::get_get('draft',0) && $loged) {
@@ -155,7 +154,7 @@ if (isset ($_GET['noo'])) {
                 }
             }
 $out=new out;
-$out->arr=$arr;
+@$out->arr=$arr;
 $out->num=$i;
 echo json_encode($out);
 ?>
