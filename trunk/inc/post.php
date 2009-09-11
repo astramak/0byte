@@ -176,5 +176,5 @@ if ($kol<1 && !isset($_GET['blog'])) {
 }
 
 $fnd=request::get_get('fnd',null);
-echo render_paginator($inser, $count, $kol, $frm, '/'.$fnd);
+echo render_paginator($inser, $count, $kol, request::get_get('frm',0), '/'.$fnd);
 ?>

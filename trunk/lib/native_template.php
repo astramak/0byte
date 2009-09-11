@@ -275,23 +275,24 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     }
     $numb=0;
     while ($all_count>0 && $numb<10) {
+         $current=0;
+         
         if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
             if ($current_num==($k-1)*$count) {
             //			echo "<span class='nmn'>$k</span> ";
                 $current=1;
-            } else {
+            } 
             //			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
-                $current=0;
-            }
             $numb++;
             $url=$start."from/".(($k-1)*$count).$end;
             if ($k-1==0) {
                 $url=$start.$end;
             }
-            $pages[]=array('current'=>$current,'number'=>$numb,'url'=>$url);
+            $pages[]=array('current'=>$current,'number'=>$k,'url'=>$url);
 
 
         }
+        
         $k++;
         $all_count-=$count;
     }

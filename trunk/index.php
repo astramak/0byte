@@ -18,6 +18,12 @@ $index=1;
 include("cfg.php");
 $ajax = request::get_get('ajax');
 if ($ajax) {
+    if (login()) {
+        db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
+        DEFINE('TZ',($usr->timezone-$server_time)*3600);
+    } else {
+        DEFINE('TZ',0);
+    }
     include("inc/ajax/" . sfin($ajax) . ".inc");
     die;
 }
