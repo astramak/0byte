@@ -22,11 +22,11 @@
 
 <br><br>Варианты можно <a id='adda' href='work/newpost/answ/<?php echo($len+1); ?>'>добавлять</a> и <a id='rma'  href='work/newpost/answ/<?php echo($len-1); ?>'>удалять</a><br><br>
 
-			<td id='nw'>
+			<div id='nw'>
             <?php for ($x=1;$x<=$len;$x++) {?>
                 <label id='an<?php echo $x; ?>'><input type='text' id='fst'  name='an<?php echo $x; ?>' /><br /></label>
             <?php } ?>
-        <input type='hidden' id='len' name='len' value='<?php echo $len ?>' /></td>
+        <input type='hidden' id='len' name='len' value='<?php echo $len ?>' /></div>
 	<br>
 	<input type='checkbox' name='mng' id="mng" /><label for="mng">Разрешить выбирать несколько вариантов</label>
 	<br>
