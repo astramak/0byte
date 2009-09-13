@@ -21,7 +21,7 @@ $result = db_query('SELECT * FROM `post` WHERE `blck` = 0 && `lock` = 0 ORDER BY
 $e += db_num_rows($result);
 while ($row = db_fetch_assoc($result)) {
     $row['type'] = 'post';
-    $row['rate'] = $row['ratep'] = $row['ratem'];
+    $row['rate'] = $row['ratep'] - $row['ratem'];
     $tarr[] = $row;
 }
 
