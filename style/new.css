@@ -142,9 +142,9 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
     border-left: #a6a6a6 1px solid;
 }
 .rsd {
-    padding: 7px;
-    padding-left: 6px;
-    padding-right: 3px;
+    padding: 4px;
+    padding-left: 4px;
+    padding-right: 1px;
     height: 30px;
     background: #eceeef url('img/ergt.png') no-repeat left top;
     width: 20px;
@@ -195,7 +195,7 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
     margin-top:8px;
 }
 #plist li,#clist li,#alist li, #blist li,.ulist li , #eblist li, #drlist li, #fvlist li{
-    padding-bottom: 4px;
+    padding-bottom: 5px;
 }
 #drlist  {
     life-style-image: url('n_img/draft.png');
@@ -568,7 +568,7 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
 .bbls {
     display:block;
     text-align: center;
-    margin-bottom: 3px;
+    margin-bottom: 6px;
 }
 .ttl {
     font-size: 14px;

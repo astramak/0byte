@@ -3,7 +3,7 @@
 		<tbody>
 			<tr id ='bltop' class='sd'>
 				<td class='lsd'>
-					<span class='ttl'>Top блогов (<a href='list/blog/'>все</a>)</span>
+					<span class='ttl'>Лучшие блоги (<a href='list/blog/'>все</a>)</span>
 					<ul id='blist'>
 						<?php foreach ($blogs as $blog): ?>
 						<li><a href='blog/<?php echo $blog['id']; ?>/'><?php echo $blog['name']; ?></a>
@@ -35,7 +35,7 @@
 			</tr>
 			<tr id ='ustop' class='sd'>
 				<td class='lsd'>
-					<span class='ttl'>Top пользователей (<a href='list/user/'>все</a>)</span>
+					<span class='ttl'>Элита (<a href='list/user/'>все</a>)</span>
 					<ul class='ulist' id='ulister'>
 						<?php foreach ($users as $user):?>
 						<li><a href='user/<?php echo $user['name'];?>/'><?php echo $user['name'];?></a>

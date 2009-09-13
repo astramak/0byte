@@ -18,10 +18,10 @@
 	 <option value='1' onClick='clr("<?php echo $el; ?>","<?php echo $fr; ?>")' >Другой</option>
 	 </select>
 	 <select onchange="insert('[h'+this.value+']','[/h'+this.value+']','<?php echo $fr; ?>','text'); this.value=0;">
-	 <option value='0' selected disabled>Заголовки</option>
-	 <option value='1'>Заголовок 1</option>
-	 <option value='2'>Заголовок 2</option>
-	 <option value='3'>Заголовок 3</option>
+	 <option value='0' selected disabled>H1</option>
+	 <option value='1'>H1</option>
+	 <option value='2'>H2</option>
+	 <option value='3'>H3</option>
 	 </select>
 	 <select onchange="insert('[size:'+this.value+']','[/size]','<?php echo $fr; ?>','text'); this.value=0;">"+
 	 <option value='0' selected disabled>Размер</option>
@@ -32,6 +32,6 @@
 	 <option value='22' style='font-size: 22px;'>22</option>
 	 <option value='24' style='font-size: 24px;'>24</option>
 	 <option value='36' style='font-size: 36px;'>36</option>
-	 </select><br />
+	 </select>
 	 <a class='tdx' href='javascript:code_d("<?php echo $fr; ?>","text")'>code</a>
-	 <a class='tdx' href='javascript:quote("<?php echo $fr; ?>","text")'>Цитировать</a>
+	 <a class='tdx' href='javascript:quote("<?php echo $fr; ?>","text")'>quote</a>
