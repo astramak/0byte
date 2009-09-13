@@ -34,7 +34,7 @@ $result = db_query('SELECT *, p.id AS pid, p.date as pate
 $e += db_num_rows($result);
 while ($row = db_fetch_assoc($result)) {
     $row['type'] = 'comment';
-    $row['rate'] = $row['ratep'] = $row['ratem'];
+    $row['rate'] = $row['ratep'] - $row['ratem'];
     $tarr[] = $row;
 }
 
