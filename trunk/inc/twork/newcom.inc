@@ -74,7 +74,7 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
             'user' => $usr->login,
             'pid' => $pid,
             'lst' => $lst,
-            'text' => $text,
+            'text' => gtext($text),
             'title'=>$title
         ));
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
@@ -99,7 +99,7 @@ if ($pauth!=$usr->login && $lvl==1) {
             'user' => $usr->login,
             'pid' => $pid,
             'lst' => $lst,
-            'text' =>$text,
+            'text' =>gtext($text),
             'title'=>$title
         ));
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);

@@ -46,7 +46,7 @@ function flsnd($list,$usr,$pid,$comid,$text,$title) {
                 'user' => $usr,
                 'pid' => $pid,
                 'comid' => $comid,
-                'text' => $text,
+                'text' => gtext($text),
                 'title' => $title
             ));
             $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);

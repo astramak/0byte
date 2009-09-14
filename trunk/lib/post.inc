@@ -43,7 +43,7 @@ class post {
     }
 
     function havecut() {
-        if (strstr($this->text,"[cut]")===false && strstr($this->text,"[fcut]")===false) {
+        if (strstr($this->ftext,"[cut]")===false && strstr($this->ftext,"[fcut]")===false) {
             return 0;
         } else {
             return 1;
