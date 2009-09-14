@@ -5,23 +5,23 @@ $lst = str_replace("*qw","?",$lst);
 
 $id = request::get_get('id');
 $answ = request::get_post('answ',0);
-if ($answ==0) {
-    jkill();
-    redirect($lst);
-}
+
 if (request::get_post('nox')) {
-    if (db_result(db_query('SELECT COUNT(id) FROM wansw WHERE who = %s && cid = %d', $usr->login, $id))) {
+    if (db_result(db_query('SELECT COUNT(`id`) FROM `wansw` WHERE `who` = %s && `cid` = %d GROUP BY `id`', $usr->login, $id))) {
         jkill();
         redirect($lst);
     }
-    db_query('INSERT INTO wansw SET who = %s && cid = %d', $usr->login, $id);
+    db_query('INSERT INTO `wansw` SET `who` = %s && `cid` = %d', $usr->login, $id);
     if ($json == 1) {
         echo answ_echo($id);
     }
     jkill();
     redirect($lst);
 }
-
+if ($answ==0) {
+    jkill();
+    redirect($lst);
+}
 $row = db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $id));
 if (!$answ && $row['lnk'] == 0) {
     jkill();

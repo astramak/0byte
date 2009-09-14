@@ -26,7 +26,7 @@
          <?php } ?>
             <span class='date'><?php echo $comment['date']; ?></span>
       <span class='cauth'>&nbsp;<a href='<?php echo $comment['blog_url']; ?>'><?php echo $comment['blog']; ?></a>  &#8212;  
-              <a href='post/<?php echo $comment['url']; ?>'><?php echo $comment['post_title']; ?></a></span>
+              <a href='<?php echo $comment['url']; ?>'><?php echo $comment['post_title']; ?></a></span>
             <span class='crate rateonly'>
              <?php if ($comment['rate']>0) { ?>
                 <span class='rp'><?php echo $comment['rate'];?></span>
