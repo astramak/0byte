@@ -22,7 +22,7 @@ if(!$title || (!$text && !$len) || strlen($title) < 2) {
 
 
 $lock = request::get_post('lock') == 'on' ? 1 : 0;
-if (request::get_post('draft', 0)) {
+if (request::get_post('draft', 0)!=0 || request::get_post('nodraft',0)==0) {
     if ($tp==3) {
         for ($i = 0; $i < $len; $i++) {
             $text.=base64_encode(trim(request::get_post('an' . ($i + 1)))).' ';
@@ -36,7 +36,7 @@ if (request::get_post('draft', 0)) {
 } else {
     include 'inc/new_post.inc';
 }
-if (request::get_post('draft', 0)) {
+if (request::get_post('draft', 0)  || request::get_post('nodraft',0)==0) {
     redirect("draft/" . $id);
 } else redirect("post/" . $id);
 ?>
