@@ -177,8 +177,9 @@ function render_tags($tags) {
  * @param array $blogs
  * @return string
  */
-function render_tops($users,$blogs) {
-    return render_template(TPL_UTILS.'/tops.tpl.php', array("users"=>$users, "blogs"=>$blogs));
+function render_tops($users,$blogs,$city_num,$users_num,$blogs_num) {
+    return render_template(TPL_UTILS.'/tops.tpl.php', array("users"=>$users, "blogs"=>$blogs,'city_num'=>$city_num,
+            'users_num'=>$users_num,'blogs_num'=>$blogs_num));
 }
 /**
  * Render online and new users list
