@@ -42,12 +42,10 @@
 <input type="text" name="tag" class="post-tags" tabindex="4" /><span class="grey"> - теги</span><br/><br/>
 
 <input type="checkbox" name="lock" id="lock" tabindex="5"/> <label for="lock">Показать только друзьям и участникам блога</label><br/><br/>
-<input type="submit" class="tag_w6" value="Опубликовать" tabindex="6" />
+<input type="submit" name="nodraft" class="tag_w6" value="Опубликовать" tabindex="6" />
  
   
 <button type="submit" name="draft" tabindex="7">
 <img src="/style/n_img/draft.png" style="vertical-align: middle"> Сохранить
 </button>
-<!-- nvbn, разбери эту какашку, я не помню как верно, если честно =)) -->
-
 <input style="display:none;" id="view" onClick="javascript:prv()" type="button" value="Предпросмотр" tabindex="8"/></form>

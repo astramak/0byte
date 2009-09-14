@@ -13,7 +13,8 @@ if ($blog_id) {
 $lock = request::get_post('lock') == 'on' ? 1 : 0;
 if (request::get_post('draft', 0)) {
     $tp= db_result(db_query('SELECT tp FROM draft WHERE id = %d && auth = %s', $post_id, $usr->login));
-    if ($tp!=0) {
+//    if ($tp!=0) {
+          
         if (request::get_post('write',0)) {
             db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
             $len=request::get_post('len');
@@ -31,8 +32,9 @@ if (request::get_post('draft', 0)) {
                 $title, $text, $lock, $blog,request::get_post('tag'), $lnk, $post_id, $usr->login);
             redirect("draft/" . $post_id);
         }
-    }
+//    }
 } else {
+
     $row= db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $post_id));
     if (($usr->lvl > $elvl || $usr->login == $row['auth']) && (($title && $text) || $row['tp'] == 3)) {
 

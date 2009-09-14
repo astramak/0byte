@@ -7,7 +7,7 @@ $id = request::get_get('id');
 $answ = request::get_post('answ',0);
 
 if (request::get_post('nox')) {
-    if (db_result(db_query('SELECT COUNT(`id`) FROM `wansw` WHERE `who` = %s && `cid` = %d GROUP BY `id`', $usr->login, $id))) {
+    if (db_result(db_query('SELECT `id` FROM `wansw` WHERE `who` = %s && `cid` = %d GROUP BY `id`', $usr->login, $id))>0) {
         jkill();
         redirect($lst);
     }
