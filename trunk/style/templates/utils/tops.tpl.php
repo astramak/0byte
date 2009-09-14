@@ -35,7 +35,7 @@
 			</tr>
 			<tr id ='ustop' class='sd'>
 				<td class='lsd'>
-					<span class='ttl'>Элита (<a href='list/user/'>все <?php echo $users_num; ?> </a> из <a href="list/city/"><?php
+					<span class='ttl'>Элита (<a href='list/user/'>все <?php echo $users_num; ?></a> из <a href="list/city/"><?php
                                                 echo $city_num.' '.inducing($city_num, array('городов','городов','города')); ?></a>)</span>
 					<ul class='ulist' id='ulister'>
 						<?php foreach ($users as $user):?>
