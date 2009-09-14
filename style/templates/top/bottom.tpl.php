@@ -9,7 +9,7 @@
 					 alt='' /> --> <a href='work/pmls' title='<?php echo $not_readed." / ".$mail;?>'>ЛС</a><span class='grey'> (<?php echo $not_readed."/".$mail;?>)</span> </div>
 		<div id='inout'><img src='style/img/figure.gif' alt='' />
 			<form id='out' method='post' action='<?php echo $site;?>'><input type='hidden' name='un' value='1' />
-				<input id='outb' type='submit' value='Выйти' /></form></div>
+				<input style="cursor: pointer;"  id='outb' type='submit' value='Выйти' /></form></div>
 		<?php } else {?>
 		<a href='register'>Зарегистрироваться</a></div>
 	<div id='inout'><a id='lgin' href='login/<?php echo $current_url; ?>'>Войти</a></div>
