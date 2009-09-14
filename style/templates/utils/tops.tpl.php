@@ -3,7 +3,7 @@
 		<tbody>
 			<tr id ='bltop' class='sd'>
 				<td class='lsd'>
-					<span class='ttl'>Лучшие блоги (<a href='list/blog/'>все</a>)</span>
+					<span class='ttl'>Лучшие блоги (<a href='list/blog/'>все <?php echo $blogs_num; ?></a>)</span>
 					<ul id='blist'>
 						<?php foreach ($blogs as $blog): ?>
 						<li><a href='blog/<?php echo $blog['id']; ?>/'><?php echo $blog['name']; ?></a>
@@ -35,7 +35,8 @@
 			</tr>
 			<tr id ='ustop' class='sd'>
 				<td class='lsd'>
-					<span class='ttl'>Элита (<a href='list/user/'>все</a>)</span>
+					<span class='ttl'>Элита (<a href='list/user/'>все <?php echo $users_num; ?> </a><a href="list/city/"> из <?php
+                                                echo $city_num.' '.inducing($city_num, array('городов','городов','города')); ?></a>)</span>
 					<ul class='ulist' id='ulister'>
 						<?php foreach ($users as $user):?>
 						<li><a href='user/<?php echo $user['name'];?>/'><?php echo $user['name'];?></a>

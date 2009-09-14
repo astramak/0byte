@@ -15,7 +15,7 @@ $fst="<a href='list/user/".$ins."namedesc'>&#8593; Ник</a> &#8595;";
 $scn="<a href='list/user/".$ins."ratedesc'>&#8593; Рейтинг</a> <a href='list/user/".$ins."rate'>&#8595;</a>";
 
 if (request::get_get('order',0)) {
-	if ($_GET['order']=='namedesc') {
+	if (request::get_get('order')=='namedesc') {
 		$order="name DESC";
 		$fst="&#8593; <a href='list/user/".$ins."'>Ник &#8595;</a>";
 		$inser.="namedesc/";

@@ -56,20 +56,21 @@ if (!($tops = readCache('tops.cache', 30))) {
     $tops = '';
     $result = db_query('SELECT * FROM tags WHERE num > 0 ORDER BY num DESC LIMIT 40');
     $tops .= render_tags(generate_tag_array($result,28,6));
-
+    $city_num=db_num_rows(db_query('SELECT `city` as `name`, COUNT(`city`) as `cnt` FROM `users` WHERE `city`!="" GROUP BY `city`'));
+    $users_num=db_num_rows(db_query('SELECT `id` FROM `users`'));
     $result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT 10');
     $blogs = array();
     while ($row = db_fetch_assoc($result)) {
         $blogs[] = $row;
     }
-
+    $blogs_num=db_num_rows(db_query('SELECT `id` FROM `blogs`'));
     $result = db_query('SELECT *, (ratep - ratem + prate / %d + crate / %d + brate / %d) AS rate  FROM users WHERE lvl = 0 ORDER BY rate DESC LIMIT 10', $post_r, $com_r, $blog_r);
     $users = array();
     while ($row = db_fetch_assoc($result)) {
         $row['rate']=(float) $row['rate'];
         $users[] = $row;
     }
-    $tops .= render_tops($users, $blogs);
+    $tops .= render_tops($users, $blogs,$city_num,$users_num,$blogs_num);
     writeCache($tops,'tops.cache');
 }
 echo $tops;
