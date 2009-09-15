@@ -124,7 +124,7 @@ function g_plist(tp) {
                 } else if (tp=='eye') {
                     what='<li><a href="'+escape(resp.arr[i].url)+'">'+resp.arr[i].who+'</a> &#8212; &laquo;<a href="post/'+resp.arr[i].id+'/">'+resp.arr[i].title+'</a>&raquo;</li>';
                 } else if (tp=='draft') {
-                    what='<li><a href="'+escape(resp.arr[i].url)+'">'+escape(resp.arr[i].title)+'</a></li>';
+                    what='<li><a href="'+escape(resp.arr[i].url)+'">'+resp.arr[i].title+'</a></li>';
                 }
                 if (nw==0) {
                     xy.innerHTML=what+xy.innerHTML;
