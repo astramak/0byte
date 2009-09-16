@@ -22,16 +22,16 @@
 <?php if ($loged) {?>
 <div class='cbottom'>
     <?php  if (!$allow_comment) {?>
-	(<a href='<?php if ($js) {?>
+	<a href='<?php if ($js) {?>
         javascript:doit("<?php echo $comment->id; ?>","<?php echo ($comment->lvl+1);?>")
             <?php } else {?>
         work/comment/<?php echo $comment->id."/".$comment->lvl."/".$current;
-            }?>'>Ответить</a>)
+            }?>'><img src="style/n_img/comment_reply.gif"/>Ответить</a>
             <?php } ?>
             <?php  if ($allow_edit) { ?>
-	(<a href='work/editcom/<?php echo $comment->id;?>/'>Редактировать</a>)
+	<a href='work/editcom/<?php echo $comment->id;?>/' class='supragrey'><img src="style/n_img/pen_t.gif"/>Редактировать</a>
         <?php } if ($allow_delete) { ?>
-	(<a href='work/rmcom/<?php echo $comment->id; ?>/'>Удалить</a>)
+	<a href='work/rmcom/<?php echo $comment->id; ?>/' class='supragrey'><img src="style/n_img/trash_t.gif"/>Удалить</a>
         <?php } ?>
 </div>
  <?php } ?>

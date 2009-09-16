@@ -11,8 +11,28 @@
 							<span class='scb'>(<span class='r<?php if ($blog['rate']>0) echo 'p'; else echo 'm';?>'><?php echo $blog['rate']; ?></span>)</span>
 								<?php }?>
 						</li>
-						<?php endforeach; ?>
+						<?php 
+						endforeach; ?>
 					</ul>
+    
+
+	            	<?php if ($loged) {?>
+                    
+					<?php if ($allow_blog) {?>
+					<ul id='glist'>
+					  <li><a href='work/newblog'>Новый блог</a></li>
+                    </ul>
+
+					<ul id='alist'><!-- lol style -->
+					  <li><a href='work/myblog'>Ваши блоги</a></li>
+					</ul>
+				    <?php }?>
+
+					<?php } else {?>
+					<!-- register and create your tematic blog about linux!, example -->
+                    <?php }?>
+
+
 				</td>
 				<td class='rsdno'>
 					<div id='shall'>
@@ -35,7 +55,7 @@
 			</tr>
 			<tr id ='ustop' class='sd'>
 				<td class='lsd'>
-					<span class='ttl'>Элита (<a href='list/user/'>все <?php echo $users_num; ?></a> из <a href="list/city/"><?php
+					<span class='ttl'>Элита (<a href='list/user/'><?php echo $users_num; ?></a> из <a href="list/city/"><?php
                                                 echo $city_num.' '.inducing($city_num, array('городов','городов','города')); ?></a>)</span>
 					<ul class='ulist' id='ulister'>
 						<?php foreach ($users as $user):?>

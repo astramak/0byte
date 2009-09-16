@@ -17,7 +17,7 @@
 		<img class='pav' src='<?php echo $avatar_url; ?>' alt='' />
 		<?php }
                 if ($hold) {
-                    ?><span class='blog'>#</span><?php
+                    ?><img src='style/n_img/chain.gif'/><?php
                 }
 		if ($not_in_blog) { ?>
 		<a class='blog' href='user/<?php echo $author; ?>/'><?php echo $author; ?></a>
