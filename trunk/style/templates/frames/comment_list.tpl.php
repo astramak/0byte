@@ -40,6 +40,6 @@
 <div class='ctext'><?php echo $comment['text']; ?></div>
 <?php } ?>
 <?php } else {?>
-<h2>Комментариев нет</h2>
+<br/>Положите начало беседе :)<br/>
 <?php } ?>
 </div>

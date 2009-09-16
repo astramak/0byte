@@ -1,5 +1,5 @@
 <?php if ($num==0) {?>
-    <span id='nocom'>Сообщений нет</span>
+    <span id='nocom'><br>Прямо сейчас, <?php echo $login; ?>, сообщений тут нет.<br></span>
 <?php } else { ?>
 <table id='users'><tbody>
     <?php foreach ($pms as $pm) {?>

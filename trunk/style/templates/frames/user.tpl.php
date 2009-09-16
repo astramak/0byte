@@ -14,7 +14,7 @@ if ($use_micro) { ?>
 <br/><i><span class='grey'><a href="<?php echo $micro_url;?>" title='<?php echo $micro_name;?>' style='text-decoration:none'><?php echo $micro_status;?></a></span></i>
 <?php }
 if ($blocked) {?>
-<br /><h3>Пoльзователь заблокированне надо<?php if ($block_cause) echo ' : '.$block_cause; ?></h3>
+<br /><h3>Пoльзователь заблокирован. <?php if ($block_cause) echo ' : '.$block_cause; ?></h3>
 <?php } ?>
 <br /><br />
 <?php if ($lvl>0) {?>
