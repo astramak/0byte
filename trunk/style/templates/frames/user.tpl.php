@@ -1,5 +1,5 @@
-<br/><span class='title'><?php echo $name; ?>  <a href='work/pmnew/<?php echo $name; ?>'>
-        <img alt='ЛС' src='style/img/envelope.gif' title='Написать личное сообщение этому пользователю'/></a>  <?php if (!$no_user_rate) { ?><a class='ratep' href='<?php echo $ratep_url;?>'>+</a><?php } ?>
+<br/><span class='title'><?php echo $name; ?> 
+          <?php if (!$no_user_rate) { ?><a class='ratep' href='<?php echo $ratep_url;?>'>+</a><?php } ?>
     <span id='ru<?php echo $name; ?>'><?php if ($rate>0) {
             ?><span class='rp'><?php echo $rate; ?></span><?php
         } else if ($rate<0) {
@@ -24,17 +24,18 @@ if ($blocked) {?>
 if ($city['set']) {?>
 <img src='style/n_img/city.png'/> <a href='list/user/city/<?php echo $city['text']; ?>'><?php echo $city['text']; ?></a>, 
 <?php } ?>
+<img src='style/n_img/envelope.gif'/> <a href='work/pmnew/<?php echo $name; ?>'>личное сообщение</a>,
 <?php
 
 if (!$hide_mail) {?>
-<img src='style/n_img/mail.png'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>, 
+<img src='style/n_img/mailing.gif'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>, 
 <?php } $not_first=0;
 if ($icq['set']) { $not_first=1; ?>
 <img src='style/n_img/icq.png'/> <?php echo $icq['text'];
 }
 if ($jabber['set']) {  if ($not_first) echo ','; $not_first=1; ?> <img src='style/n_img/jabber.png'/><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a><?php
 }
-if ($usite['set']) { if ($not_first) echo ','; ?> <img src='style/n_img/www.png'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
+if ($usite['set']) { if ($not_first) echo ','; ?> <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
 <?php }
 echo '';
 ?>
@@ -43,7 +44,7 @@ echo '';
 О себе: <br /><span class='note'><?php echo $about['text']; ?></span>
 <?php }
 if (@$blogs) { ?>
-<br/><br/><br/></br><hr><br/>Состоит в
+<br/></br><hr><br/>Состоит в
     <?php foreach ($blogs as $blog) {?>
 <a href='blog/<?php echo $blog['id']; ?>/'><?php echo $blog['name']; ?></a><?php if ($blog!=end($blogs)) echo ','; ?>
     <?php } } ?>
