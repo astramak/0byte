@@ -5,11 +5,10 @@
         <span <?php if ($user_rate>0) echo "class='rp'"; else  if ($user_rate<0)  echo "class='rm'";?>><?php echo $user_rate;?>
         </span><?php }?>
 
-		<?php if ($not_readed=0)
-			echo "<a href='work/pmls' title='<?php echo $not_readed." / ".$mail;?>'><img src='style/n_img/envelope.gif' alt='ЛС'/></a>"; ?>
-
-        <?php if ($not_readed>0)
-			echo "<a href='work/pmls' title='<?php echo $not_readed." / ".$mail;?>'><img src='style/n_img/envelope.png' alt='ЛС'/></a>"; ?>
+		<?php if ($not_readed==0) {
+			echo "<a href='work/pmls' title='$not_readed / $mail'><img src='style/n_img/envelope.gif' alt='ЛС'/></a>";  }
+ else if ($not_readed>0)
+	{		echo "<a href='work/pmls' title='$not_readed / $mail'><img src='style/n_img/envelope.png' alt='ЛС'/></a>"; } ?>
 
 </span> </div>
     <div id='inout'><img src='style/img/figure.gif' alt='' />
