@@ -291,6 +291,7 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
     padding-left:10px;
     padding-right:10px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 .title {
     font-family: dejavu-sans, Trebuchet MS;
