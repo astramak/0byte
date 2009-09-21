@@ -1,7 +1,3 @@
-/* ������� ��������!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-��-�� ������ ������� �������� � ����� ��������� ������ �����!
-��� ��� �������� ���� �� ��� ��������� ��������� � �������� � ��������� �����!
-*/
 body {
     font-family: dejavu-serif, Verdana;
     font-size: 12px;
@@ -505,10 +501,13 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
     border-bottom: 1px dashed;
 }
 .quote {
-    border-left: dashed 1px #2669A6;
-    border-bottom: dashed 1px #2669A6;
+    //border-left: dashed 1px #2669A6;
+    //border-bottom: dashed 1px #2669A6;
+	background-color: #F0F0F0;
+	color: #999999;
     padding-left: 5px;
     margin:5px;
+	font-style: italic;
 }
 .ctext, .ctop, .cbottom {
     display:block;
