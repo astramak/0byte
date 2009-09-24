@@ -1,5 +1,5 @@
 <span class="title">Создание <?php echo $type; ?></span><br>
-<?php if (!@$post) { ?><a href="work/newpost">Сообщение</a> <?php } if (!@$translate) { if (!@$post) { ?> |<?php } ?> <a href="work/newpost/tr">Перевод</a> <?php } if (!@$link) { ?>| <a href="work/newpost/lnk">Ссылка</a> <?php } if (!@$answer) { ?>| <a href="work/newpost/answ">Опрос</a><?php } ?><br>
+<?php if (!@$post) { ?><a href="work/newpost" class='om'><img src='/style/img/document.gif'/> Сообщение</a> <?php } if (!@$translate) { if (!@$post) { ?> |<?php } ?> <a href="work/newpost/tr" class='om'><img src='/style/n_img/album.gif'/>Перевод</a> <?php } if (!@$link) { ?>| <a href="work/newpost/lnk" class='om'><img src='/style/n_img/world.gif'/>Ссылка</a> <?php } if (!@$answer) { ?>| <a href="work/newpost/answ" class='om'><img src='/style/n_img/symbol_question.gif'/>Опрос</a><?php } ?><br>
 <form name="new" id='new' method="post"
 	action="twork.php?wt=newpost&tp=<?php echo $tp; ?>">
 <div id='prv'></div><br><br>
