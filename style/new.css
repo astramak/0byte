@@ -504,13 +504,16 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
     //border-left: dashed 1px #2669A6;
     //border-bottom: dashed 1px #2669A6;
 	background-color: #F0F0F0;
-	color: #999999;
-    padding-left: 5px;
-    margin:5px;
+	color: #666666;
+    padding: 10px;
+    margin:10px;
 	font-style: italic;
 }
-.ctext, .ctop, .cbottom {
+.ctext, .ctop {
     display:block;
+}
+.cbottom {
+	margin-top: 10px;
 }
 .ctop, .cbottom {
     //height:15px;
@@ -704,7 +707,15 @@ div.required {
 }
 .supragrey, .supragrey:visited {
     color: #CCCCCC;
+	text-decoration: none;
 }
 #tag_list {
     margin-top:10px;
+}
+.om, .om:visited {
+    text-decoration: none;
+	color: #464646!important;
+}
+.om:hover {
+	color: #000000;
 }

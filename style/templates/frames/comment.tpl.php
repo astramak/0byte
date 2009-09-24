@@ -26,7 +26,7 @@
         javascript:doit("<?php echo $comment->id; ?>","<?php echo ($comment->lvl+1);?>")
             <?php } else {?>
         work/comment/<?php echo $comment->id."/".$comment->lvl."/".$current;
-            }?>'><img src="style/n_img/comment_reply.gif"/>Ответить</a>
+            }?>' class='om'><img src="style/n_img/comment_reply.gif"/>Ответить</a>
             <?php } ?>
             <?php  if ($allow_edit) { ?>
 	<a href='work/editcom/<?php echo $comment->id;?>/' class='supragrey'><img src="style/n_img/pen_t.gif"/>Редактировать</a>
