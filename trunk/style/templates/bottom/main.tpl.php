@@ -11,7 +11,7 @@
 </div>
 <?php echo $SCRIPT;
 $end_time = microtime(); 
-echo "<br>Время: " . round ($end_time - $start_time, 3);
- ?>
+echo "<!-- time: " . round ($end_time - $start_time, 3) . "-->";
+?>
 </body>
 </html>
