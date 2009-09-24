@@ -8,6 +8,8 @@
 <div class='menuel'><a href="all/ar">Правила</a></div>
 <div class='menuel'><a href="all/act">Цели и задачи</a></div> 
 <div class='menuel'><a href="all/help">Справка</a></div>
+<div class='menuel'><a href="xmpp:welinux@conference.jabber.ru">Конференция</a></div>
+
 </div>
 <?php echo $SCRIPT;
 $end_time = microtime(); 
