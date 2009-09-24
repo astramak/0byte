@@ -9,6 +9,9 @@
 <div class='menuel'><a href="all/act">Цели и задачи</a></div> 
 <div class='menuel'><a href="all/help">Справка</a></div>
 </div>
-<?php echo $SCRIPT; ?>
+<?php echo $SCRIPT;
+$end_time = microtime(); 
+echo "<br>Время: " . round ($end_time - $start_time, 3);
+ ?>
 </body>
 </html>
