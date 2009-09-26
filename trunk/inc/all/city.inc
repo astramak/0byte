@@ -5,7 +5,7 @@ $ins=null;
 $sql_ins=null;
 $order="`city`";
 $fst="<a href='list/city/".$ins."namedesc'>&#8593; Название</a> &#8595;";
-$scn="<a href='list/city/".$ins."countdesc'>&#8593; Жителей</a> <a href='list/user/".$ins."count'>&#8595;</a>";
+$scn="<a href='list/city/".$ins."countdesc'>&#8593; Жителей</a> <a href='list/city/".$ins."count'>&#8595;</a>";
 
 if (request::get_get('order',0)) {
     if (request::get_get('order')=='namedesc') {
