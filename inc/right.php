@@ -88,7 +88,7 @@ while ($row = db_fetch_assoc($result)) {
 echo render_online_and_new($onlines, $news);
 
 $scr='var ulist=document.getElementById("ulister").innerHTML;
-	var blist=document.getElementById("blist").innerHTML;
+var blist=document.getElementById("blist").innerHTML;
 if (document.getElementById("ped")) {
 var pd=document.getElementById("ped").innerHTML; } else {
 var pd=null;

@@ -91,7 +91,7 @@ if (request::get_get('fnd',0)) {
     echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>$fnd));
 }
 if (isset($_GET['pg']) && $_GET['pg']=='lenta' && $loged==1) {
-    $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special();
+    $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special().' ORDER BY `id` DESC';
 }
 $result=mysql_query($sql_get,$sql);
 $i=0; $k=0;
