@@ -1,6 +1,6 @@
 <?php
 if (request::get_get('draft',0)) {
-    $row=db_fetch_assoc(db_query('SELECT * FROM `draft` WHERE id = %d',request::get_get('post')));
+    $row=db_fetch_assoc(db_query('SELECT * FROM `draft` WHERE `id` = %d && `auth` = %s',request::get_get('post'),$usr->login));
     $row['blogid']=$row['blog'];
 } else {
     $row=db_fetch_assoc(db_query('SELECT * FROM `post` WHERE id = %d',request::get_get('post')));
