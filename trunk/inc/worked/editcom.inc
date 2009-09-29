@@ -16,10 +16,12 @@
  */
 
 $id = request::get_get('id');
-$result = db_query('SELECT* FROM comment WHERE id = %d', $id);
-$row = db_fetch_assoc($result);
+if ($usr->lvl>=$elvl) {
+    $result = db_query('SELECT* FROM comment WHERE id = %d', $id);
+    $row = db_fetch_assoc($result);
 
-$cm = new comment($row);
-echo render_edit_comment($id, utext($cm->text));
-$script->add("mk('mq','new');");
+    $cm = new comment($row);
+    echo render_edit_comment($id, utext($cm->text));
+    $script->add("mk('mq','new');");
+}
 ?>
