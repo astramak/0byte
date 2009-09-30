@@ -37,7 +37,11 @@ if ($jabber['set']) {  if ($not_first) echo ','; $not_first=1; ?> <img src='styl
 }
 if ($usite['set']) { if ($not_first) echo ','; ?> <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
 <?php }
-echo '';
+if ($me_on_count>0) {
+    foreach ($me_on as $me_on_name => $me_on_url) {
+        ?>, <img src="<?php echo get_favicon_url($me_on_url);?>" alt="" /> <a href='<?php echo $me_on_url; ?>'><?php echo $me_on_name ?></a><?php
+    }
+}
 ?>
 <br/><br/><br/>
 <?php if ($about['set']) {?>
