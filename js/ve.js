@@ -64,11 +64,11 @@ function img_d(fr,el) {
 
 function urla(i,fr,el) {
 	a_cr();
-	insert("[url="+i.url.value+"]","[/url]",fr,el);
+	insert("<a href='"+i.url.value+"'>","</a>",fr,el);
 }
 function codea(i,fr,el) {
 	a_cr();
-	insert("[code="+i.code.value+"]","[/code]",fr,el);
+	insert("<code lang='"+i.code.value+"'>","</code>",fr,el);
 }
 function imga(i,fr,el) {
 	a_cr();
@@ -76,7 +76,7 @@ function imga(i,fr,el) {
 	if (i.alt.value!='') {
 		alt="="+i.alt.value;
 	}
-	insert("[img"+alt+"]"+i.url.value+"[/img]","",fr,el);
+	insert("<img alt='"+alt+"' src='"+i.url.value+"' />","",fr,el);
 }
 function quote(fr,el) {
 	if (document.getSelection) {
@@ -84,7 +84,7 @@ function quote(fr,el) {
 	} else if (document.selection && document.selection.createRange) {
 		text = document.selection.createRange().text;
 	}
-	insert("[quote]"+text+"[/quote]","",fr,el);	
+	insert("<quote>"+text+"</quote>","",fr,el);
 }
 var last=null;
 var cmn=null;
@@ -198,14 +198,14 @@ function main_a() {
 }
 var sli="ul";
 function li_a(a,id,fg) {
-	s="["+sli+"]";
-	e="[/"+sli+"]";
+	s="<"+sli+">";
+	e="</"+sli+">";
 	tins=s;
 	for (k=1;k<=parseInt(a.nm.value);k++) {
 		if (document.getElementById("n"+k)) {
-			tins+="[li]"+document.getElementById("na"+k).value+"[/li]";
+			tins+="<li>"+document.getElementById("na"+k).value+"</li>";
 		} else {
-			tins+="[li][/li]";
+			tins+="<li></li>";
 		}
 	}
 	tins+=e;
@@ -225,19 +225,25 @@ function list(id,fg) {
 //	"<input type='submit' value='Создать' />" +
 //	"<input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 }
+function change_color(val,fr) {
+    if (val!='1') {insert('<span style=\'color:'+val+'\'>','</span>',fr,'text');}
+}
+function insert_font(size,fr) {
+    insert('<span style="font-size:'+size+'px">','</span>',fr,'text');
+}
 function mk(id,fr) {
 //     x_r('ajax/editor?type=lis&fr='+id+'&el='+fg,'box');
-	document.getElementById(id).innerHTML="<a class='tdx' href='javascript:insert(\"[b]\",\"[/b]\",\""+fr+"\",\"text\")'><b>Ж</b></a>"+
-	" <a class='tdx' href='javascript:insert(\"[i]\",\"[/i]\",\""+fr+"\",\"text\")'><i>К</i></a>"+
-	" <a class='tdx' href='javascript:insert(\"[u]\",\"[/u]\",\""+fr+"\",\"text\")'><u>Ч</u></a>"+
-	" <a class='tdx' href='javascript:insert(\"[del]\",\"[/del]\",\""+fr+"\",\"text\")'><del>П</del></a>"+
-	" <a class='tdx' href='javascript:insert(\"[ins]\",\"[/ins]\",\""+fr+"\",\"text\")'><ins>Д</ins></a>"+
-	" <a class='tdx' href='javascript:insert(\"[left]\",\"[/left]\",\""+fr+"\",\"text\")'>←</a>"+
-	" <a class='tdx' href='javascript:insert(\"[right]\",\"[/right]\",\""+fr+"\",\"text\")'>→</a>"+
+	document.getElementById(id).innerHTML="<a class='tdx' href='javascript:insert(\"<b>\",\"</b>\",\""+fr+"\",\"text\")'><b>Ж</b></a>"+
+	" <a class='tdx' href='javascript:insert(\"<i>\",\"</i>\",\""+fr+"\",\"text\")'><i>К</i></a>"+
+	" <a class='tdx' href='javascript:insert(\"<u>\",\"</u>\",\""+fr+"\",\"text\")'><u>Ч</u></a>"+
+	" <a class='tdx' href='javascript:insert(\"<del>\",\"</del>\",\""+fr+"\",\"text\")'><del>П</del></a>"+
+	" <a class='tdx' href='javascript:insert(\"<ins>\",\"</ins>\",\""+fr+"\",\"text\")'><ins>Д</ins></a>"+
+	" <a class='tdx' href='javascript:insert(\"<span style=&#39;float:left;&#39>\",\"</span>\",\""+fr+"\",\"text\")'>←</a>"+
+	" <a class='tdx' href='javascript:insert(\"<span style=&#39;float:right;&#39;>\",\"</span>\",\""+fr+"\",\"text\")'>→</a>"+
 	" <a class='tdx' href='javascript:list(\""+fr+"\",\"text\")'>Список</a>"+
 	" <a class='tdx' href='javascript:cr_d(\""+fr+"\",\"text\")'>url</a>"+
 	" <a class='tdx' href='javascript:img_d(\""+fr+"\",\"text\")'>img</a>"+
-	" <select onchange=\" if (this.value!='1') {insert('[color:'+this.value+']','[/color]','"+fr+"','text');} this.value=0; \">"+
+	" <select onchange=\"change_color(this.value,'"+fr+"')\">"+
 	" <option value='0' selected disabled>Цвет</option>"+
 	" <option value='#000000' style='background-color: #000000; color:#ffffff;'>Чёрный</option>"+
 	" <option value='#ffffff'style='background-color: #ffffff;'>Белый</option>"+
@@ -246,13 +252,13 @@ function mk(id,fr) {
 	" <option value='#0000ff' style='background-color: #0000ff; color:#ffffff;'>Синий</option>" +
 	" <option value='1' onClick='clr("+'"'+id+'",'+'"'+fr+'"'+")' >Другой</option>"+
 	" </select>"+
-	" <select onchange=\"insert('[h'+this.value+']','[/h'+this.value+']','"+fr+"','text'); this.value=0;\">"+
+	" <select onchange=\"insert('<h'+this.value+'>','</h'+this.value+'>','"+fr+"','text'); this.value=0;\">"+
 	" <option value='0' selected disabled>Заголовки</option>"+
 	" <option value='1'>Заголовок 1</option>"+
 	" <option value='2'>Заголовок 2</option>"+
 	" <option value='3'>Заголовок 3</option>"+
 	" </select>"+
-	" <select onchange=\"insert('[size:'+this.value+']','[/size]','"+fr+"','text'); this.value=0;\">"+
+	" <select onchange=\"insert_font(this.value,'"+fr+"'); this.value=0;\">"+
 	" <option value='0' selected disabled>Размер</option>"+
 	" <option value='8' style='font-size: 8px;'>8</option>"+
 	" <option value='12' style='font-size: 12px;'>12</option>"+
@@ -346,7 +352,7 @@ function clr(id,fg) {
 //	'</form> </td></tr></table><br />';
 }
 function clr_s(id,fg) {
-	insert("[color:"+selcol+"]","[/color]",fg,"text");
+	insert("<span style='color:"+selcol+";'>","</color>",fg,"text");
 	a_cr();	
 }
 function klprv() {
