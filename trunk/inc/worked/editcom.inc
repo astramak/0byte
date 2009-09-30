@@ -23,5 +23,7 @@ if ($usr->lvl>=$elvl) {
     $cm = new comment($row);
     echo render_edit_comment($id, utext($cm->text));
     $script->add("mk('mq','new');");
+} else {
+    redirect($dir.'error/not_allow');
 }
 ?>

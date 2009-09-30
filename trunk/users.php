@@ -30,7 +30,7 @@ if (strlen(request::get_get('name'))) {
 }
 $alien = new user();
 if (!$alien->find($name)) {
-	echo render_error("Пользователь с данным именем не существует!");
+	redirect($dir.'error/not_found');
 } else {
 	$cur = $_SERVER['REQUEST_URI'];
 	$cur = str_replace("&","*amp",$cur);
