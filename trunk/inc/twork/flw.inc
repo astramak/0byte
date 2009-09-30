@@ -16,8 +16,8 @@ if (request::get_get('un')) {
     $txt = "Перестать отслеживать";
 }
 
-db_query('UPDATE post SET flw = %s WHERE id = %d', $id);
-if ($json) echo json_encode(array('lnk'=>"javascript: x_r(\'twork.php?wt=flw&id='.$id.$lnk.'&json=1\',\'f\')",
+db_query('UPDATE post SET flw = %s WHERE id = %d',$lst, $id);
+if ($json) echo json_encode(array('lnk'=>"javascript: x_r('twork.php?wt=flw&id='.$id.$lnk.'&json=1','f')",
     'txt'=>$txt));
 jkill();
 redirect($site . 'post/' . $id);
