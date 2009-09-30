@@ -16,5 +16,5 @@ if ($ro['owner'] != $usr->login) {
         db_query('INSERT INTO inblog SET blogid = %d, name = %s, bname = %s', $id, $usr->login, $ro['name']);
     }
 }
-redirect('index.php?blog=' . $id);
+redirect('blog/' . $id.'/');
 ?>

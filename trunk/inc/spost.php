@@ -28,8 +28,8 @@ $row = db_fetch_assoc(db_query('SELECT * FROM post WHERE id = %d', $post_id));
 if (!$row) {
     redirect($dir.'error/not_found');
 } else if ($row['blck']==1 && $usr->lvl<$blvl) {
-//        echo render_error("У вас недостаточно прав для просмотра данной страницы!");
-redirect($dir.'error/not_allow');
+    //        echo render_error("У вас недостаточно прав для просмотра данной страницы!");
+        redirect($dir.'error/not_allow');
     } else {
     //spy
         if ($loged == 1) {

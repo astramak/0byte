@@ -17,9 +17,11 @@ if (request::get_post('draft', 0)) {
           
         if (request::get_post('write',0)) {
             db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
+            $post_writed=1;
             $len=request::get_post('len');
+            $return_draft=1;
             include 'inc/new_post.inc';
-            redirect("post/" . $id);
+            if ($post_writed) redirect("post/".db_last_insert_id('post'));
         } else {
             if ($tp==3) {
                 $text=null;
@@ -54,7 +56,7 @@ if (request::get_post('draft', 0)) {
         }
         redirect("post/" . $post_id);
     } else {
-        redirect('index.php');
+        redirect($dir.'error/not_allow');
     }
 }
 ?>
