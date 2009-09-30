@@ -6,6 +6,9 @@ if ($owner == $usr->login || $usr->lvl>=$elvl) {
     db_query('DELETE FROM inblog WHERE blogid = %d', $id);
     db_query('DELETE FROM brate WHERE pid = %d', $id);
     db_query('UPDATE post SET blog = "own", blogid = 0 WHERE blogid = %d', $id);
+    redirect($dir);
+} else {
+    redirect($dir.'error/not_allow');
 }
-redirect($dir);
+
 ?>
