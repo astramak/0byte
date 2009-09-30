@@ -49,7 +49,7 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
         $type, $row['tag'], $h, utext($zz), $row['lnk'],$draft=request::get_get('draft',0));
 
 } else {
-    render_error("Это не ваш пост!");
+   redirect($dir.'error/not_allow');
 }
 $script->add('mk(\'mq\',\'new\');
 		document.getElementById("otxt").innerHTML+="<br /><a href=\'javascript:prv()\'>Предпросмотр</a>";

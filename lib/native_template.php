@@ -246,21 +246,68 @@ function render_answer($array,$answered,$id=0,$loged=1,$action="") {
     return render_template(TPL_FRAMES.'/answer.tpl.php',
     array('elements'=>$array,'answered'=>$answered,'id'=>$id,'loged'=>$loged,'action'=>$action));
 }
+/**
+ * Render form for editing post
+ *
+ * @param string $title
+ * @param numeric $blogs
+ * @param string $url
+ * @param numeric $type
+ * @param array $tags
+ * @param string $status
+ * @param string $text
+ * @param string $lnk
+ * @param numeric $draft
+ * @return string
+ */
 function render_edit_post($title,$blogs,$url,$type,$tags,$status,$text=null,$lnk=null,$draft=null) {
     return render_template(TPL_FRAMES.'/edit_post.tpl.php', array('title'=>$title,'blogs'=>$blogs,
     'url'=>$url,$type=>'1','text'=>$text,'tags'=>$tags,'lnk'=>$lnk,'status'=>$status,'draft'=>$draft));
 }
+/**
+ * Render form for editing user personal settings
+ *
+ * @param array $array
+ * @return string
+ */
 function render_edit_user($array) {
     return render_template(TPL_FRAMES.'/edit_user.tpl.php', $array);
 }
+/**
+ *  Render list of user blog
+ *
+ * @param array $array
+ * @param numeric $single
+ * @param numeric $loged
+ * @return string
+ */
 function render_myblog($array,$single=0,$loged=1) {
     return render_template(TPL_FRAMES.'/myblog.tpl.php', array('blogs'=>$array,'loged'=>$loged,'single'=>$single));
 }
+/**
+ *  Render post creation form
+ *
+ * @param numeric $type
+ * @param numeric $type_
+ * @param numeric $tp
+ * @param array $blogs
+ * @param numeric $len
+ * @return string
+ */
 function render_new_post($type,$type_,$tp,$blogs,$len=0) {
     return render_template(TPL_FRAMES.'/new_post.tpl.php', array('type'=>$type,$type_=>'1','tp'=>$tp,
     'blogs'=>$blogs,'len'=>$len));
 }
-
+/**
+ *  Render page changer
+ *
+ * @param numeric $start
+ * @param numeric $count
+ * @param numericc $all_count
+ * @param numeric $current_num
+ * @param numeric $end
+ * @return string
+ */
 function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     $k=1;
     $pages=null;
@@ -326,6 +373,13 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     'next'=>$next,'next_url'=>$next_url,'pages'=>$pages,'show_first'=>$show_first,'first_url'=>$first_url,
     'show_last'=>$show_last,'last_url'=>$last_url));
 }
+/**
+ *  Render errors
+ *
+ * @param string $text
+ * @param numeric $id
+ * @return string
+ */
 function render_error($text,$id=null) {
     return render_template(TPL_FRAMES.'/error.tpl.php', array('text'=>$text,'id'=>$id));
 }
