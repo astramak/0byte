@@ -45,6 +45,7 @@ class user {
 	var $city;
         var $timezone;
         var $block_cause;
+        var $other;
 	function rate() {
 		global $blog_r,$com_r,$post_r;
 		if ($this->uotr==0) {
@@ -71,6 +72,10 @@ class user {
 		}
 		return false;
 	}
+
+        function get_me_on() {
+            return(json_decode($this->other));
+        }
 
 	function g_j() {
 		if ($this->juse != 0) {

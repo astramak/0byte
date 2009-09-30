@@ -133,4 +133,14 @@ function redirect($location, $http_response_code = 302) {
     header('Location: '. $location, true, $http_response_code);
     die;
 }
+/**
+ * Get favicon of requested url
+ *
+ * @param string $url
+ * @return url
+ */
+function get_favicon_url($url) {
+    $out=explode('/',$url);
+    return 'http://'.$out[2].'/favicon.ico';
+}
 ?>

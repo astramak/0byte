@@ -1,9 +1,8 @@
 <?php
 $id = request::get_get('id');
 
-if ($usr->lvl < $elvl ) {
-    redirect('post/' . $id);
-}
+if ($usr->lvl >= $elvl ) {
+
 
 tags_remove_list(db_result(db_query('SELECT tag FROM post WHERE id = %d', $id)));
 db_query('DELETE FROM post WHERE id = %d', $id);
@@ -13,4 +12,7 @@ while ($row = db_fetch_object($result)) {
 }
 
 redirect($site);
+} else {
+    redirect($dir.'error/not_allow');
+}
 ?>

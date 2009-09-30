@@ -88,11 +88,26 @@
                     <option <?php echo $twitter; ?> value="2">Twitter</option>
                 </select> <label><input type='text' name='jname'
                                         value="<?php echo $micro_name; ?>" /></label>
-
+            </td>
+        </tr>
+        <tr>
+            <td>Я в</td><td><div id="me_on"><?php if ($me_on_count==0) {?>
+                <input type="text" name="me_on_name1" id="me_on_name1" value="Название сервиса"/>
+                <input type="text" name="me_on_url1" id="me_on_url1" value="Адрес вашей страницы" /><br id="br_1" />
+                </div>
+                <input type="hidden" name="me_on_count" id="me_on_count" value="1" />
+                <?php } else { $i=1; foreach ($me_on as $name=>$url) {?>
+                <input type="text" name="me_on_name<?php echo $i; ?>" id="me_on_name<?php echo $i; ?>" value="<?php echo $name; ?>"/>
+                <input type="text" name="me_on_url<?php echo $i; ?>" id="me_on_url<?php echo $i; ?>" value="<?php echo $url; ?>" /><br id="br_<?php echo $i; ?>" />
+                    <?php $i++; }?></div><input type="hidden" id="me_on_count" name="me_on_count" value="<?php echo $i-1; ?>" /> <?php } ?>
+<a href="javascript:add_me_on()">Добавить</a> <a href="javascript:rm_me_on()">Убрать</a> 
+            </td>
+        </tr>
     </table>
     <input type="submit" value="Править!" /></form>
 Аватар:<?php if ($av_use) {?>
 <img src="res.php?t=av&img=<?php echo $av; ?>" alt="" /><?php } ?>
+Изображение резрешением не больше, чем 70х70 пикселей. Максимальный объём 100кб.
 <form method="post" enctype="multipart/form-data"
       action="twork.php?wt=img"><input type="file" name="img" /> <input
         type="submit" value="Загрузить" /></form>

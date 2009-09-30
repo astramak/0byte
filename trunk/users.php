@@ -117,7 +117,8 @@ if (!$alien->find($name)) {
 	} else {
 		$block_url="work/block/user/".$name;
 	}
-	echo render_template(TPL_FRAMES.'/user.tpl.php', array('name'=>$alien->login,
+        $me_on=$alien->get_me_on();
+        echo render_template(TPL_FRAMES.'/user.tpl.php', array('name'=>$alien->login,
 	'avatar'=>$avatar,'avatar_url'=>$avatar_url,'use_micro'=>$use_micro,
 	'blocked'=>$alien->lck,'lvl'=>$alien->lvl,'hide_mail'=>$alien->hml,
 	'mail'=>$alien->mail,'icq'=>$icq,'jabber'=>$jabber,'usite'=>$usite,'city'=>$city,
@@ -125,7 +126,7 @@ if (!$alien->find($name)) {
 	'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur,
 	'about'=>$about,'blogs'=>$blogs,'friends'=>@$friends,'is_friend'=>@$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
 	'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>$block_url,
-	'owner'=>$own_profile,'micro_name'=>@$micro_name,'micro_url'=>@$micro_url,'micro_status'=>$alien->jtext,'block_cause'=>$alien->block_cause));
+	'owner'=>$own_profile,'micro_name'=>@$micro_name,'micro_url'=>@$micro_url,'micro_status'=>$alien->jtext,'block_cause'=>$alien->block_cause,'me_on'=>$me_on,'me_on_count'=>count($me_on)));
 }
 
 include ("inc/foot.php");
