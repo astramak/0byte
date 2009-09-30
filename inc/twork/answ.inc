@@ -23,9 +23,7 @@ if (!$answ && $row['lnk'] == 0) {
     jkill();
     redirect($lst);
 }
-print_r($_POST);
 if ($row['lnk'] == 1) {
-    echo 1;
     $result = db_query('SELECT * FROM answ WHERE cid = %d', $id);
     while ($raw = db_fetch_assoc($result)) {
         if (request::get_post($raw['id']) == 'on') {

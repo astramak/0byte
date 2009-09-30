@@ -121,11 +121,11 @@ function r_s(xrs,xs,xrt,tp) {
 						document.getElementById("cm"+jr.id).innerHTML+=jr.text;
 					} else if (tp=='f') {
 						document.getElementById('sled').href=jr.lnk;
-						document.getElementById('sled').innerHTML=jr.txt;
+						document.getElementById('sled').innerHTML='<img src="style/n_img/eye.gif"/>'+jr.txt;
 					}
                                         else if (tp=='fav') {
 						document.getElementById('favor').href=jr.url;
-						document.getElementById('favor').innerHTML=jr.txt;
+						document.getElementById('favor').innerHTML='<img src="style/n_img/fav.gif"/>'+jr.txt;
 					}
                                         else if (tp=="newcom") {
 						
