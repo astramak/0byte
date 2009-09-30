@@ -1,15 +1,15 @@
 <?php
 require_once 'lib/geshi/geshi.php';
-	$txt = str_replace("[code]", "[code=]", $txt);
-	preg_match_all("/\[code\=(.*?)\]/is",$txt, $lang);
-	$arr = preg_split("/\[(.?)code(.*?)\]/",$txt);
+	$txt = str_replace("<code>", '<code lang="">', $txt);
+	preg_match_all('/\<code lang\="(.*?)"\>/is',$txt, $lang);
+	$arr = preg_split("/\<(.?)code(.*?)\>/",$txt);
 	$q = 1;
 	$txt = "";
 	$replace = array('<br />' => '', '&lt;' => '<', '&gt;' => '>', '&#39;' => "'", '&#34;' => '"');
 	foreach ($arr as $i) {
 		if ($q % 2 == 0) {
 			$i = str_replace(array_keys($replace), array_values($replace), $i);
-			$lang[$q / 2 - 1] = preg_replace("/\[code\=(.*?)\]/is", "$1", $lang[$q / 2 - 1]);
+			$lang[$q / 2 - 1] = preg_replace('/\<code lang\="(.*?)"\>/is', "$1", $lang[$q / 2 - 1]);
 			$i = geshi_highlight($i, $lang[0][$q / 2 - 1], null, true);
 			$i = str_replace(array('<code>', '</code>'), '', $i);
 			$cnt = substr_count($i, "<br />");
