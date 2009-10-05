@@ -250,6 +250,13 @@ a.you:ACTIVE, a.you:HOVER, a.you:VISITED, a.you {
 #tags, .tagsa {
     border-left:1px solid #a6a6a6;
     padding: 7px;
+	// background: url('img/ads.jpg') no-repeat;
+}
+.google {  
+	border-left:1px solid #a6a6a6;
+    padding: 7px;
+	background: url('img/ads.jpg') no-repeat;
+	min-height: 40px;
 }
 #tags, #tag_list {
     text-align: center;
@@ -336,16 +343,6 @@ a.ratem , a.ratem:ACTIVE, a.ratem:VISITED, .mcl {
 a.ratem:HOVER {
     color: #ffffff;
     background: #C36A5A;
-}
-#list {
-    margin-top:60px;
-    text-align: center;
-}
-.nmn {
-    font-size:18px;
-}
-.nomnm {
-    text-decoration: none;
 }
 #btop {
     overflow: hidden;
@@ -500,15 +497,6 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
     text-decoration: none;
     border-bottom: 1px dashed;
 }
-.quote {
-    //border-left: dashed 1px #2669A6;
-    //border-bottom: dashed 1px #2669A6;
-	background-color: #F0F0F0;
-	color: #666666;
-    padding: 10px;
-    margin:10px;
-	font-style: italic;
-}
 .ctext, .ctop {
     display:block;
 }
@@ -612,6 +600,7 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
     width: auto;
 }
 #ebaa {
+    z-index: 666;
     position: fixed;
     right: 0px;
     top:50%;
@@ -718,4 +707,59 @@ div.required {
 }
 .om:hover {
 	color: #000000;
+}
+
+/* BEGIN 28.09.2009 1:45 */
+
+
+
+
+
+
+
+/* === 3. bottom */
+
+/* == 3.1 pagenavi */
+
+#list {
+    margin-top: 60px;
+    text-align: center;
+	font-size: 18px;
+}
+.nmn {
+    border: 1px solid #f0f0f0;
+	color: #f0f0f0;
+	margin-right: 1px;
+	padding: 2px 5px 2px 5px;
+	text-decoration: none;
+}
+a.nmn {
+	color: #999;
+	text-decoration: none;
+}
+a:hover.nmn {
+	background-color: #eee;
+	text-decoration: none;
+}
+.nomnm {
+	color: #000;
+    text-decoration: none;
+}
+a.nomnm {
+	color: #000;
+}
+
+
+
+
+/* === 4. text */
+
+.quote {
+	background-color: #E8F0FA;
+	color: #666;
+    padding: 10px;
+    margin:10px 0px 5px 0px;
+	font-style: italic;
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px;
 }
