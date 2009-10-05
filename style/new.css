@@ -497,11 +497,16 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
     text-decoration: none;
     border-bottom: 1px dashed;
 }
-.ctext, .ctop {
+.ctop {
     display:block;
+}
+.ctext {
+    display:block;
+	margin: 5px;
 }
 .cbottom {
 	margin-top: 10px;
+	margin-left: 5px;
 }
 .ctop, .cbottom {
     //height:15px;
@@ -762,4 +767,10 @@ a.nomnm {
 	font-style: italic;
 	-moz-border-radius: 10px; 
 	-webkit-border-radius: 10px;
+}
+
+/* == 4.1 comments */
+
+.lvl2 {
+	border-left: #f1f1f1 1px solid;
 }
