@@ -1,3 +1,16 @@
+<div class='rtblb'><div id='promo' class='google'>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3461478191377314";
+/* 300x250, создано 04.10.09 */
+google_ad_slot = "9485153032";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
 <div class='rtblb'>
 	<div id='tags'>
 		<?php foreach ($tags as $tag): ?>
