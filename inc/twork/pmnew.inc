@@ -3,10 +3,12 @@ $to = request::get_post('to');
 $title = request::get_post('title');
 $text = request::get_post('text');
 
-if (!isset($title{2}) || !isset ($text{2}) || !isset($to{2})) {
+if (!isset ($text{2}) || !isset($to{2})) {
     redirect('work/pmls');
 }
-
+if (!isset($title{2})) {
+    $title='no-title';
+}
 $alien=new user();
 if (!$alien->find($to) || $alien->login == $usr->login) {
     redirect('work/pmls');
@@ -49,5 +51,5 @@ if ($row['pmre'] == 1) {
     $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
     nullbyte_mail($to, $subject, $message, true, $headers);
 }
-redirect('work/pmls/1');
+redirect('work/pmls/out');
 ?>
