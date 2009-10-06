@@ -387,13 +387,13 @@ function d_key(e) {
 function do_key(wh,id,e) {
 	e = e || window.event;
 	if (e.ctrlKey && (e.keyCode == 66 || e.charCode == 98))  {
-		insert("[b]","[/b]",id,"text");
+		insert("<b>","</b>",id,"text");
 		d_key(e);
 	} else if (e.ctrlKey && (e.keyCode == 73 || e.charCode == 105))  {
-		insert("[i]","[/i]",id,"text");
+		insert("<i>","</i>",id,"text");
 		d_key(e);
 	} else if (e.ctrlKey && (e.keyCode == 85 || e.charCode == 117))  {
-		insert("[u]","[/u]",id,"text");
+		insert("<u>","</u>",id,"text");
 		d_key(e);
 	} else if (e.keyCode==9) {
 		insert("	","",id,"text");

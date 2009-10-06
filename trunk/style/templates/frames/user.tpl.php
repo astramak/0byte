@@ -39,7 +39,7 @@ if ($usite['set']) { if ($not_first) echo ','; ?> <img src='style/n_img/world.gi
 <?php }
 if ($me_on_count>0) {
     foreach ($me_on as $me_on_name => $me_on_url) {
-        ?>, <img src="<?php echo get_favicon_url($me_on_url);?>" alt="" /> <a href='<?php echo $me_on_url; ?>'><?php echo $me_on_name ?></a><?php
+        ?>, <img src="<?php echo get_favicon_url($me_on_url);?>" alt="" /> <a rel="nofollow" href='<?php echo $me_on_url; ?>'><?php echo $me_on_name ?></a><?php
     }
 }
 ?>

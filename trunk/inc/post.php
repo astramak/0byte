@@ -105,7 +105,7 @@ if ($kol<1 && !isset($_GET['blog'])) {
     if (isset($_GET['fnd'])) {
         echo render_error("Ничего не найдено!");
     } else {
-        echo render_error("Страница не существует");
+        redirect($dir.'error/not_found');
     }
 } else {
     if (isset($bl) && $bl==1) {
