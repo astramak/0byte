@@ -19,7 +19,7 @@ include 'cfg.php';
 $name = request::get_get('name');
 $id = request::get_get('id');
 if ($name && $id) {
-    $result = db_query('SELECT * FROM users WHERE id = %d AND name = %s', $id, $name);
+    $result = db_query('SELECT * FROM users WHERE id = %d && name = %s', $id, $name);
     $row = db_fetch_assoc($result);
     if ($row) {
         db_query('UPDATE users SET activ = 1 WHERE id = %d', $id);

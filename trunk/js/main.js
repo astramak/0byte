@@ -211,7 +211,7 @@ function rma() {
 }
 var w="";
 function answe(a,tp) {
-    if (tp==1 && a.answ.value==null) {
+    if (tp==1 && w==null) {
         make_err('Вы не выбрали вариант ответа!');
     } else {
         a.nox.type='button';
@@ -233,14 +233,14 @@ function answe(a,tp) {
         } else if (a_type==1) {
             ts=w;
         } else {
-            ts="answ="+a.answ.value;
+            ts="answ="+w;
         }
         xmlhttp.send(ts);
     }
     return false;
 }
 function set_a(a,val) {
-    a.answ.value=val;
+    w=val;
 }
 function set_b(val) {
     if (w.indexOf(val+"=on&")+1) {

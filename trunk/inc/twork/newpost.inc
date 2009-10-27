@@ -40,6 +40,6 @@ if ($post_writed==0 || (request::get_post('draft', '0')!='0' || request::get_pos
 if ($post_writed==0 || (request::get_post('draft', 0)  || request::get_post('nodraft','0')=='0')) {
     redirect("draft/" . $id);
 } else {
-    redirect("post/".db_last_insert_id('post'));
+    redirect("post/".$id);
 }
 ?>

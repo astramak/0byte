@@ -17,7 +17,7 @@
 		<div>
 			<label><input <?php echo $element['options']; ?> /><?php echo $element['title']; ?></label>
 		</div>
-			<?php endforeach; ?>
+               		<?php endforeach; ?>
 			<?php if ($loged) {?>
 		<div>
 			<input type='submit' name='nax' onClick='answe(this.form,1); return false;' value='Голосовать' />
