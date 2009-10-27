@@ -28,7 +28,6 @@ function gtext($text) {
     }
     return($text);
 }
-
 function utext($text) {
     global $native_presave,$presave_plugins;
     if ($native_presave) {

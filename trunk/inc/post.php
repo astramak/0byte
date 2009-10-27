@@ -88,7 +88,7 @@ if (request::get_get('fnd',0)) {
 
     $fnd=trim(str_replace(" ", "%", $_GET['fnd']));
     $sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
-    echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>$fnd));
+    echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>gtext($fnd)));
 }
 if (isset($_GET['pg']) && $_GET['pg']=='lenta' && $loged==1) {
     $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special().' ORDER BY `id` DESC';

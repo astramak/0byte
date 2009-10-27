@@ -1,7 +1,7 @@
 <?php
 $post_id = request::get_get('post');
 $blog_id = request::get_post('blog');
-$title = request::get_post('title');
+$title = gtext(request::get_post('title'));
 $text = request::get_post('text');
 $lnk = request::get_post('lnk');
 

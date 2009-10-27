@@ -19,10 +19,10 @@ if (request::get_post('me_on_url1')!="Адрес вашей страницы") {
 db_query('UPDATE users SET icq = %s, hml = %d, mail = %s, jabber = %s,
 	site = %s, about = %s, postre = %d, comre = %d, pmre = %d,
 	juse = %d, jname = %s, jdate = "", city = %s, timezone = %d, other = %s WHERE name = %s',
-    request::get_post('icq'), $hml, request::get_post('mail'),
-    request::get_post('jabber'), request::get_post('site'),
+    gtext(request::get_post('icq')), $hml, gtext(request::get_post('mail')),
+    gtext(request::get_post('jabber')), gtext(request::get_post('site')),
     gtext(request::get_post('about')), $pr, $cr, $pmr, request::get_post('juse'),
-    request::get_post('jname'), request::get_post('city'),request::get_post('timezone'), $other, $usr->login);
+    gtext(request::get_post('jname')), gtext(request::get_post('city')),gtext(request::get_post('timezone')), $other, $usr->login);
 
 redirect('user/');
 ?>
