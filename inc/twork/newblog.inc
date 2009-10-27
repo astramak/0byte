@@ -4,7 +4,7 @@ if ($usr->rate()<$nb_rate) {
     jkill();
     redirect($dir.'error/not_allow');
 }
-$btitle = trim(request::get_post('btitle'));
+$btitle = gtext(trim(request::get_post('btitle')));
 
 if ($usr->rate() < $nb_rate || strlen($btitle) < 3) {
     redirect($dir.'error/not_allow');
@@ -15,7 +15,7 @@ if ($exists) {
     redirect($dir.'error/new_blog_used');
 }
 
-db_query('INSERT INTO blogs SET name = %s, owner = %s, about = %s', $btitle, $usr->login, request::get_post('about'));
+db_query('INSERT INTO blogs SET name = %s, owner = %s, about = %s', $btitle, $usr->login, gtext(request::get_post('about')));
 $id = db_last_insert_id('blogs');
 db_query('INSERT INTO inblog SET blogid = %d, name = %s, bname = %s', $id, $usr->login, $btitle);
 

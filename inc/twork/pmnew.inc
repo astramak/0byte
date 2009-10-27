@@ -1,6 +1,6 @@
 <?php
-$to = request::get_post('to');
-$title = request::get_post('title');
+$to = gtext(request::get_post('to'));
+$title = gtext(request::get_post('title'));
 $text = request::get_post('text');
 
 if (!isset ($text{2}) || !isset($to{2})) {
