@@ -11,7 +11,8 @@ if (request::get_post('nox',0)) {
         jkill();
         redirect($lst);
     }
-    db_query('INSERT INTO `wansw` SET `who` = %s && `cid` = %d', $usr->login, $id);
+    echo db_result(db_query('SELECT `id` FROM `wansw` WHERE `who` = %s && `cid` = %d GROUP BY `id`', $usr->login, $id));
+    db_query('INSERT INTO `wansw` SET `who` = %s, `cid` = %d', $usr->login, $id);
     if ($json == 1) {
         echo answ_echo($id);
     }

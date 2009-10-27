@@ -5,7 +5,7 @@ require_once 'lib/geshi/geshi.php';
 	$arr = preg_split("/\[(.?)code(.*?)\]/",$txt);
 	$q = 1;
 	$txt = "";
-	$replace = array('<br />' => "\n", '&lt;' => '<', '&gt;' => '>', '&#39;' => "'", '&#34;' => '"');
+	$replace = array('<br />' => "\n", '&lt;' => '<', '&gt;' => '>', '&#39;' => "'", '&#34;' => '"','&amp;'=>'&');
 	foreach ($arr as $i) {
 		if ($q % 2 == 0) {
 			$i = str_replace(array_keys($replace), array_values($replace), $i);
