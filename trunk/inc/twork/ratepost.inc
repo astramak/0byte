@@ -30,6 +30,14 @@ if ($voted) {
 } else {
     $result = db_query('SELECT * FROM post WHERE id = %d', $id);
     $row = db_fetch_assoc($result);
+    if (time()-$row['date']>$post_rate_time_limit) {
+        db_query("DELETE FROM `rate` WHERE `pid` = %d", $id);
+        if ($json==1) {
+            j_err("Время голосования за этот пост истекло");
+        }
+        jkill();
+        redirect($lst);
+    }
     if (($row['blck']-$row['blck']%10)/10==1 || ($row['blck']-$row['blck']%10)/10==11) {
         if ($json==1) {
             j_err("За этот пост запрещено голосовать!");
