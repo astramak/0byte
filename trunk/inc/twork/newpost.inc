@@ -40,6 +40,11 @@ if ($post_writed==0 || (request::get_post('draft', '0')!='0' || request::get_pos
 if ($post_writed==0 || (request::get_post('draft', 0)  || request::get_post('nodraft','0')=='0')) {
     redirect("draft/" . $id);
 } else {
+     if ($blog_id==0) {
+        user_post_to_lenta($usr->login, $id, $time);
+    } else {
+        blog_post_to_lenta($blog, $id, $time);
+    }
     redirect("post/".$id);
 }
 ?>

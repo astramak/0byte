@@ -31,7 +31,7 @@ if ($voted) {
     $result = db_query('SELECT * FROM post WHERE id = %d', $id);
     $row = db_fetch_assoc($result);
     if (time()-$row['date']>$post_rate_time_limit) {
-        db_query("DELETE FROM `rate` WHERE `pid` = %d", $id);
+//        db_query("DELETE FROM `rate` WHERE `pid` = %d", $id);
         if ($json==1) {
             j_err("Время голосования за этот пост истекло");
         }

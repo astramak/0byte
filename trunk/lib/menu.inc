@@ -51,8 +51,19 @@ class mel {
                 break;
             case 'lenta':
                 if ($loged==1) {
-                    $sql_get = 'SELECT COUNT(`id`) FROM `post` WHERE `date` > %d && `blck` = 0 && `auth` != %s && '.get_special();
-                    $new = db_result(db_query($sql_get,$dt,$usr->login));
+                    $frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
+                    $where="1 = 0";
+                    if ($frnd) {
+                        $arr = explode(',', $frnd);
+                        trim_array($arr, '_db_escape_string');
+                        if ($arr) $where = '`lenta`.`who` IN (' . implode(',', $arr) . ')';
+                    }
+                    $new=db_result(db_query("SELECT COUNT(`lenta`.`id`) FROM `post`,`lenta`,`inblog`
+                    WHERE `lenta`.`date` > %d && (`lenta`.`who` = %s && `lenta`.`type` = 0) ||
+                    (`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
+                    (`lenta`.`type` = 2 && ".$where." ) GROUP BY `lenta`.`id`
+                     ",$dt,$usr->login,$usr->login,$usr->login));
+
                 } else {
                     $this->show = 0;
                 }

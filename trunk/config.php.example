@@ -48,6 +48,7 @@ $no_user_rate=1;//disable users rate
 ////rates time limit in second
 $post_rate_time_limit=604800;
 $comment_rate_time_limit=604800;
+$use_cron=0;
 // plugins
 $user = array();
 $use['geshi'] = 1;

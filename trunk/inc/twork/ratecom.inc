@@ -26,7 +26,7 @@ if ($voted) {
     redirect($lst);
 } else {
     $row = db_fetch_assoc(db_query('SELECT * FROM comment WHERE id = %d', $id));
-    db_query("DELETE FROM `crate` WHERE `pid` = %d", $id);
+//    db_query("DELETE FROM `crate` WHERE `pid` = %d", $id);
     if (time()-$row['date']>$comment_rate_time_limit) {
         if ($json==1) {
             j_err("Время голосования за этот комментарий истекло");
