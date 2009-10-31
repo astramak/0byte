@@ -37,7 +37,7 @@ if (!$who) {
                 $blog_url='user/'.$post['auth'];
             }
             $comments[]=array('blog'=>$blog,'blog_url'=>$blog_url,'date'=>date('d.m.y H:i',$com->date),'text'=>code($com->text),
-                "rate"=>$com->rate(),'post_title'=>$post['title'],'url'=>'post/'.$post['id']);
+                "rate"=>$com->rate(),'post_title'=>$post['title'],'url'=>'post/'.$post['id'].'/', 'full_url' => 'post/'.$post['id'].'/#cmnt'.$com->id);
         }
         echo render_template(TPL_FRAMES.'/comment_list.tpl.php',array('comments'=>$comments,
         'avatar'=>$avatar,'avatar_url'=>$avatar_url,'name'=>$name,'rate'=>$rate,'yes'=>1));

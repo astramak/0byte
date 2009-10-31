@@ -37,9 +37,10 @@ function flsnd($list,$usr,$pid,$comid,$text,$title) {
         $name = trim($arr[$z]);
         if ($name != $usr) {
         // TOFIX: why do we need to delete record and then add the same record?
-            db_query('DELETE FROM eye WHERE pid = %d AND who = %s LIMIT 1', $pid,$name);
-            db_query('INSERT INTO eye SET who = %s, pid = %d', $name, $pid);
-
+            add_eye($pid, $name, time());
+//            db_query('DELETE FROM eye WHERE pid = %d AND who = %s LIMIT 1', $pid,$name);
+//            db_query('INSERT INTO eye SET who = %s, pid = %d', $name, $pid);
+            comment_to_lenta($name, $comid);
             $row = db_fetch_assoc(db_query('SELECT `mail`,`jabber` FROM `users` WHERE name = %s', $name));
             $subject = "Ответ на отслеживаемый вами пост на ".$sl_name;
             $message = render_mail('observe_reply', array(
@@ -56,5 +57,66 @@ function flsnd($list,$usr,$pid,$comid,$text,$title) {
             }
         }
     }
+}
+
+/**
+ * Re-new status of post in eye-spy list
+ * 
+ * @param int $id post id
+ * @param string $author follower
+ */
+function add_eye($id,$author) {
+    db_query("DELETE FROM `eye` WHERE `pid`= %d && `who` = %s LIMIT 1",$id,$author);
+    db_query("INSERT INTO `eye` ( `who` ,`pid`) VALUES ( %s , %d )",$author,$id);
+}
+/**
+ * Add elemnt to lenta list
+ *
+ * @param string $who
+ * @param int $id
+ * @param int $type type of element: 0 -comment, 1 - post
+ * @param timestamp $date
+ */
+function to_lenta($who,$id,$type,$date) {
+    db_query("DELETE FROM `lenta` WHERE `uid`= %d && `who` = %s && `type` = %d LIMIT 1",$id,$who,$type);
+    db_query("INSERT INTO `lenta` ( `who` ,`uid`, `type`, `date`) VALUES ( %s , %d, %d, %s )",$who,$id,$type,$date);
+}
+/**
+ * Add comment to lenta list
+ *
+ * @param string $who follower
+ * @param int $id comment id
+ * @param timestamp $date posting date
+ */
+function comment_to_lenta($who,$id,$date) {
+    to_lenta($who, $id, 0,$date);
+}
+/**
+ * Add user post to lenta list
+ *
+ * @param string $who follower
+ * @param int $id post id
+ * @param timestamp $date posting date
+ */
+function user_post_to_lenta($who,$id,$date) {
+    to_lenta($who, $id, 2,$date);
+}
+/**
+ * Add blog post to lenta list
+ *
+ * @param string $blog blog
+ * @param int $id post id
+ * @param timestamp $date posting date
+ */
+function blog_post_to_lenta($blog,$id,$date) {
+    to_lenta($blog, $id, 1,$date);
+}
+/**
+ * Delete post from lenta list
+ * 
+ * @param int $id post id
+ */
+function delete_post_from_lenta($id) {
+    db_query('DELETE FROM `lenta` WHERE `uid` = %d && `type` != 0 LIMIT 1',$id);
 }
 ?>

@@ -65,7 +65,7 @@ RewriteRule ^login/new login.php?new=1 [L]
 RewriteRule ^login/(.*) login.php?cur=$1 [L]
 RewriteRule ^main index.php?pg=main [L]
 RewriteRule ^pers index.php?pg=pers [L]
-RewriteRule ^lenta index.php?pg=lenta [L]
+RewriteRule ^lenta worked.php?wt=lenta [L]
 RewriteRule ^register register.php [L]
 RewriteRule ^login login.php [L]
 
