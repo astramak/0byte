@@ -3,7 +3,7 @@
             <img class='cauth' src='<?php echo $avatar_url; ?>' style='float:left;' alt='' />
          <?php } else { ?>
             <img class='cnoauth' src='style/img/figure.gif' alt="" />
-         <?php } ?>
+         <?php } ?><a class='cauth' href='user/<?php echo $name; ?>'><?php echo $name; ?></a>
             <span class='date'><?php echo $comment['date']; ?></span>
       <span class='cauth'>&nbsp;<a href='<?php echo $comment['blog_url']; ?>'><?php echo $comment['blog']; ?></a>  &#8212;
               <a href='<?php echo $comment['url']; ?>'><?php echo $comment['post_title']; ?></a> <a href="<?php echo $comment['full_url']; ?>">#</a></span>

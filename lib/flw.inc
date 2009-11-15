@@ -78,8 +78,9 @@ function add_eye($id,$author) {
  * @param timestamp $date
  */
 function to_lenta($who,$id,$type,$date) {
-    db_query("DELETE FROM `lenta` WHERE `uid`= %d && `who` = %s && `type` = %d LIMIT 1",$id,$who,$type);
-    db_query("INSERT INTO `lenta` ( `who` ,`uid`, `type`, `date`) VALUES ( %s , %d, %d, %s )",$who,$id,$type,$date);
+    db_query("DELETE FROM `lenta` WHERE `uid`= %d && `who` = %s && `type` = %d && `date` = %s LIMIT 1",$id,$who,$type,$date);
+    db_query("INSERT INTO `lenta` ( `uid`, `type`, `date`, `who`) VALUES (%d, %d, %s, %s )",$id,$type,$date,$who);
+//   printf("INSERT INTO `lenta` ( `uid`, `type`, `date`, `who`) VALUES (%d, %d, %s, %s )",$id,$type,$date,$who);
 }
 /**
  * Add comment to lenta list
