@@ -26,7 +26,7 @@ $kap = request::get_post('kap');
 
 if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
     && strlen($mail) > 3 && strlen($pwd) > 3
-    && chud($name) &&  chml($mail)
+ #   && chud($name) &&  chml($mail)
 ) {
     $pwd = md5($pwd);
     $icq = request::get_post('icq');

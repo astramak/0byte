@@ -58,11 +58,16 @@ class mel {
                         trim_array($arr, '_db_escape_string');
                         if ($arr) $where = '`lenta`.`who` IN (' . implode(',', $arr) . ')';
                     }
-                    $new=db_result(db_query("SELECT COUNT(`lenta`.`id`) FROM `post`,`lenta`,`inblog`
-                    WHERE `lenta`.`date` > %d && (`lenta`.`who` = %s && `lenta`.`type` = 0) ||
+//                    $new=db_result(db_query("SELECT COUNT(`type`) FROM `post`,`lenta`,`inblog`
+//                    WHERE `lenta`.`date` > %d && ( (`lenta`.`who` = %s && `lenta`.`type` = 0) ||
+//                    (`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
+//                    (`lenta`.`type` = 2 && ".$where."))  GROUP BY `lenta`.`id`
+//                     ",$dt,$usr->login,$usr->login,$usr->login));
+                    $new=db_num_rows(db_query("SELECT `lenta`.*,`inblog`.`bname` FROM `post`,`lenta`,`inblog`
+                    WHERE (`lenta`.`who` = %s && `lenta`.`type` = 0) ||
                     (`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
-                    (`lenta`.`type` = 2 && ".$where." ) GROUP BY `lenta`.`id`
-                     ",$dt,$usr->login,$usr->login,$usr->login));
+                    (`lenta`.`type` = 2 && ".$where." ) && `lenta`.`date` > %d GROUP BY `lenta`.`id`
+                     ORDER BY `date` DESC  ",$usr->login,$usr->login,$usr->login,$dt));
 
                 } else {
                     $this->show = 0;

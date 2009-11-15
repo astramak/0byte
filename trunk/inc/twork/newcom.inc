@@ -54,11 +54,12 @@ $cm=new comment(db_fetch_assoc(db_query("SELECT * FROM `comment` WHERE `cid` = %
 $lst.='#cmnt'.$cm->id;
 $text=code($text);
 if ($ceauth!="" && $ceauth!=$usr->login) {
+    echo $ceauth;
 //    $sql_get="SELECT * FROM `users` WHERE `name` = '".$ceauth."'";
 //    $result=mysql_query($sql_get,$sql);
     $row = db_fetch_assoc(db_query("SELECT * FROM `users` WHERE `name` = %s",$ceauth));
     add_eye($pid,$ceauth);
-    comment_to_lenta($ceauth, $id,$date);
+    comment_to_lenta($ceauth, $cm->id,$date);
     if ($row['comre']==1) {
         $to = $row['mail'];
 
@@ -78,11 +79,11 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
         }
     }
 }
+if (strcmp($usr->login,$pauth)!=0 && $lvl==0) {
 
-if (strcmp($usr->login,$pauth)!=0 && $lvl==1) {
     $row = db_fetch_assoc(db_query("SELECT * FROM `users` WHERE `name` = %s",$pauth));
     add_eye($pid,$pauth);
-    comment_to_lenta($pauth, $id,$date);
+    comment_to_lenta($pauth, $cm->id,$date);
     //    $sql_get="DELETE FROM `eye` WHERE `pid`='".$pid."' && `who`='".$pauth."' LIMIT 1";
     //    $result=mysql_query($sql_get,$sql);
     //    $sql_get="INSERT INTO `eye` ( `who` ,`pid`) VALUES ('".$pauth."','".$pid."')";
@@ -104,6 +105,7 @@ if (strcmp($usr->login,$pauth)!=0 && $lvl==1) {
         }
     }
 }
+
 if ($lvl==1) {flsnd($listp,$usr->login,$pid,$cm->id,$text,$title);}
 if (@count($notify_plugins)>0) {
     foreach($notify_plugins as $plugin) {
@@ -120,5 +122,5 @@ if ($json == 1) {
     $out['txt']=com_echo($cm,1);
     die(json_encode($out));
 }
-//redirect($lst);
+redirect($lst);
 ?>

@@ -64,7 +64,7 @@ if (!($tops = readCache('tops.cache', 30))) {
         $blogs[] = $row;
     }
     $blogs_num=db_num_rows(db_query('SELECT `id` FROM `blogs`'));
-    $result = db_query('SELECT *, (ratep - ratem + prate / %d + crate / %d + brate / %d) AS rate  FROM users WHERE lvl = 0 ORDER BY rate DESC LIMIT 10', $post_r, $com_r, $blog_r);
+    $result = db_query('SELECT *, (ratep - ratem + prate / %d + crate / %d + brate / %d) AS rate  FROM users WHERE lvl = 0 && lck = 0 ORDER BY rate DESC LIMIT 10', $post_r, $com_r, $blog_r);
     $users = array();
     while ($row = db_fetch_assoc($result)) {
         $row['rate']=(float) $row['rate'];
