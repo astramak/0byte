@@ -8,8 +8,9 @@ if (request::get_get('draft',0)) {
 if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
     if (!request::get_get('draft',0)) {
         $zz=$row['ftext'];
-        if (strpos($row['text'],"[fcut]")) {
-            $zz=$row['text'].$row['ftext'];
+
+        if (strpos($row['ftext'],$row['text'])===false) {
+            $zz=$row['text'].'[fcut]'.$row['ftext'];
         }
     } else {
         $zz=$row['text'];
