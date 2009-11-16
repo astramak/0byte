@@ -86,7 +86,11 @@ class dtxt {
 
 function code($txt) {
     global $native_prerender,$prerender_plugins;
-
+    $txt = preg_replace(
+        "/\[user\](.*?)\[\/user\]/ise",
+        " render_user_tag('$1')",
+        $txt
+    );
     if (count($prerender_plugins)>0) {
         foreach($prerender_plugins as $plugin) {
             include('plugins/'.$plugin['name'].'/actions.php');
