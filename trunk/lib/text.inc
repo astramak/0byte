@@ -101,4 +101,13 @@ function inducing($num,$variants) {
             return $variants[1];
         } else return $variants[2];
 }
+/**
+ * Prepare text to code tag
+ * @param string $text
+ * @return string
+ */
+function prepare_code($text) {
+    $replace = array(  '\"' => '&#34;','"' => '&#34;', '<' => '&lt;', '>' => '&gt;',   "\'" => '&#39;',   "'" => '&#39;' );
+    return str_replace(array_keys($replace), array_values($replace),$text);
+}
 ?>
