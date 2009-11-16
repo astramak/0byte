@@ -774,3 +774,10 @@ a.nomnm {
 .lvl2 {
 	border-left: #f1f1f1 1px solid;
 }
+/*  tag <user /> */
+.user_tag {
+    text-decoration: none;
+}
+.user_tag img {
+    height: 10px;
+}

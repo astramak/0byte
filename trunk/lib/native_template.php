@@ -383,4 +383,16 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
 function render_error($text,$id=null) {
     return render_template(TPL_FRAMES.'/error.tpl.php', array('text'=>$text,'id'=>$id));
 }
+/**
+ * Render result of tag <user />
+ * 
+ * @param string $name 
+ * @return string
+ */
+function render_user_tag($name) {
+    $usr=new user();
+    $usr->find($name);
+    if ($usr->av) {$avatar="res.php?t=av&img=".$usr->av;} else {$avatar="style/img/figure.gif";}
+    return render_template(TPL_EDITOR.'/user.tpl.php', array('name' => $name, 'blocked' => $usr->lck, 'avatar' => $avatar));
+}
 ?>
