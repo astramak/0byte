@@ -24,10 +24,14 @@ define('TPL_FRAMES', TPL_ROOT . '/frames');
 define('TPL_PM', TPL_ROOT . '/pm');
 define('TPL_TOP',TPL_ROOT.'/top');
 define('TPL_BOTTOM',TPL_ROOT.'/bottom');
+define('TPL_DELETED',TPL_ROOT.'/deleted');
 define('TPL_POST_LIST',TPL_ROOT.'/post_list');
 define('TPL_LISTS',TPL_ROOT.'/lists');
 define('TPL_EDITOR',TPL_ROOT.'/editor');
 define('TPL_MAIN', TPL_ROOT);
+define('COUNT_TAG',40);
+define("TOP_COUNT", 10);
+define("CACHE_TIME_LIMIT", 30);
 //ini_set('display_errors', 1);
 //lib load
 include("lib/blog.inc");

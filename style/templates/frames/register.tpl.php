@@ -33,7 +33,7 @@
 
 			<tr>
 				<td>
-					<img src="cap/kap.php?rand=<?php echo rand(); ?>" alt="капча" onclick="this.src='cap/kap.php?rand='+Math.random()" />
+					<img src="cap/kap.php?rand=<?php echo rand(); ?>" alt="Это капча. Не увидив её, вы потеряете многое!" title="Это капча. Не увидив её, вы потеряете многое!" onclick="this.src='cap/kap.php?rand='+Math.random()" />
 				</td>
 				<td><input type="text" name="kap" onkeyup="chka(this,'cap')" /></td>
 			</tr>

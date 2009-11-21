@@ -32,6 +32,7 @@ class post {
     var $flw;
     var $lnk;
     var $top;
+    var $visible;
     function post($row = null) {
         if ($row) $this->make($row);
     }
@@ -69,91 +70,98 @@ function post_echo($row, $t,$draft=null) {
     $bls="";
     $array['blocked'] = $a->blck;
     $array['avatar']=0;
-    if ($a->blogid==0) {
-        $alien->find($a->auth);
-        $array['not_in_blog']=1;
-        if (strlen($alien->av)>2) {
-            $array['avatar']=1;
-            $array['avatar_url']='res.php?t=av&amp;img='.$alien->av;
-        }
+    $alien->find($a->auth);
+    if ($alien->lck==3) {
+        $a->visible=0;
+        echo render_template(TPL_DELETED.'/post.tpl.php', null);
     } else {
-        $array['not_in_blog']=0;
-        $result = db_query('SELECT * FROM `blogs` WHERE id = %d', $a->blogid);
-        $rowa = db_fetch_assoc($result);
-        $blg = new blog($rowa);
-        if (strlen($blg->av)>0) {
-            $array['avatar']=1;
-            $array['avatar_url']='res.php?t=bl&amp;img='.$blg->av;
-        }
-        $array['blog_name']=$blg->name;
-        $array['blog_id']=$a->blogid;
-    }
-    if ($a->tp==1) {
-        $array['type'] = 'link';
-    } elseif ($a->tp==2) {
-        $txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
-        $array['type']='translate';
-    } else {
-        $array['type']='other';
-    }
-    $answ="";
-    if (!$draft && $a->is_voting()) {
-        $lnk=$row['lnk'];
-        $result = db_query('SELECT * FROM wansw WHERE who = %s AND cid = %d', $usr->login, $a->id);
-        $row = db_fetch_assoc($result);
-        if (!$loged || $row['cid'] == $a->id) {
-            $answ .= answ_echo($a->id);
+        $a->visible=1;
+        if ($a->blogid==0) {
+
+            $array['not_in_blog']=1;
+            if (strlen($alien->av)>2) {
+                $array['avatar']=1;
+                $array['avatar_url']='res.php?t=av&amp;img='.$alien->av;
+            }
         } else {
-            $action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;
-            if ($lnk==1) {
-                $ttp="checkbox";
-                $script->add("var a_type=1;");
+            $array['not_in_blog']=0;
+            $result = db_query('SELECT * FROM `blogs` WHERE id = %d', $a->blogid);
+            $rowa = db_fetch_assoc($result);
+            $blg = new blog($rowa);
+            if (strlen($blg->av)>0) {
+                $array['avatar']=1;
+                $array['avatar_url']='res.php?t=bl&amp;img='.$blg->av;
+            }
+            $array['blog_name']=$blg->name;
+            $array['blog_id']=$a->blogid;
+        }
+        if ($a->tp==1) {
+            $array['type'] = 'link';
+        } elseif ($a->tp==2) {
+            $txt="<a href='".$a->lnk."' rel='nofollow'>Оригинал</a><br />".$txt;
+            $array['type']='translate';
+        } else {
+            $array['type']='other';
+        }
+        $answ="";
+        if (!$draft && $a->is_voting()) {
+            $lnk=$row['lnk'];
+            $result = db_query('SELECT * FROM wansw WHERE who = %s AND cid = %d', $usr->login, $a->id);
+            $row = db_fetch_assoc($result);
+            if (!$loged || $row['cid'] == $a->id) {
+                $answ .= answ_echo($a->id);
             } else {
-                $ttp="radio";
-                $script->add("var a_type=2;");
-            }
-            $i=0;
-            $result = db_query('SELECT * FROM `answ` WHERE cid = %d', $a->id);
-            while ($ro = db_fetch_assoc($result)) {
+                $action="twork.php?wt=answ&cur=".$cur."&id=".$a->id;
                 if ($lnk==1) {
-                    $nam=$ro['id'];
-                    $vl="";
-                    $fn="onClick=\"set_b('".$ro['id']."')\"";
+                    $ttp="checkbox";
+                    $script->add("var a_type=1;");
                 } else {
-                    $nam="answ";
-                    $vl=" value='".$ro['id']."'";
-                    $fn="onClick=\"set_a(this.form,'".$ro['id']."')\"";
+                    $ttp="radio";
+                    $script->add("var a_type=2;");
                 }
-                $answer_ar[$i]['options']=" type='".$ttp."' name='".$nam."' ".$fn." ".$vl;
-                $answer_ar[$i]['title']=$ro['title'];
-                $i++;
+                $i=0;
+                $result = db_query('SELECT * FROM `answ` WHERE cid = %d', $a->id);
+                while ($ro = db_fetch_assoc($result)) {
+                    if ($lnk==1) {
+                        $nam=$ro['id'];
+                        $vl="";
+                        $fn="onClick=\"set_b('".$ro['id']."')\"";
+                    } else {
+                        $nam="answ";
+                        $vl=" value='".$ro['id']."'";
+                        $fn="onClick=\"set_a(this.form,'".$ro['id']."')\"";
+                    }
+                    $answer_ar[$i]['options']=" type='".$ttp."' name='".$nam."' ".$fn." ".$vl;
+                    $answer_ar[$i]['title']=$ro['title'];
+                    $i++;
+                }
+                $answ.=render_answer( $answer_ar, 0, $a->id, $loged,$action);
             }
-            $answ.=render_answer( $answer_ar, 0, $a->id, $loged,$action);
         }
-    }
-    if ($fst_post==1) {
-        $fst_post=0;
-        $array['first']=1;
-    } else {
-        $array['first']=0;
-    }
-    $array['text']=str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ;
-    $array['author']=$a->auth;
-    $array['title']=$a->title;
-    $array['date']=date('d.m.y  H:i',$a->date+TZ);
-    $array['link']=$a->lnk;
-    $array['id']=$a->id;
-    if ($draft) {
-        if ($a->tp==3) {
-            $array['text']=null;
+        if ($fst_post==1) {
+            $fst_post=0;
+            $array['first']=1;
         } else {
-            $array['text']=gtext($txt);
+            $array['first']=0;
         }
+        $array['text']=str_replace("[cut]"," ",str_replace("[fcut]"," ",$txt)).$answ;
+        $array['author']=$a->auth;
+        $array['title']=$a->title;
+        $array['date']=date('d.m.y  H:i',$a->date+TZ);
+        $array['link']=$a->lnk;
+        $array['id']=$a->id;
+        if ($draft) {
+            if ($a->tp==3) {
+                $array['text']=null;
+            } else {
+                $array['text']=gtext($txt);
+            }
+        }
+        $array['draft']=$draft;
+        $array['hold']=$a->top;
+        echo render_post($array);
+        return($a);
     }
-    $array['draft']=$draft;
-    $array['hold']=$a->top;
-    echo render_post($array);
-    return($a);
 }
 
 function chkin($a) {

@@ -106,7 +106,11 @@ function com_echo($com,$noecho=0,$allow_comment=0) {
     $ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho,$allow_comment,$alien->av);
     $ech.="</dt><dd id='cmadd".$com->id."'>";
     if (!$noecho) {
-        echo $ech;
+        if ($alien->lck!=3) {
+            echo $ech;
+        } else {
+            echo render_template(TPL_DELETED.'/comment.tpl.php', null);
+        }
         $ech="";
         $result = db_query('SELECT * FROM comment WHERE cid = %d AND lvl = %d ORDER BY id ASC', $com->id, ($com->lvl + 1));
         while ($row = db_fetch_assoc($result)) {

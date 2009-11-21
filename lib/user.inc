@@ -100,7 +100,9 @@ class user {
 // AND lck = 0
         function check_lock() {
             $row = db_fetch_assoc(db_query('SELECT * FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
-            if ($row['end']!=1 && $row['end']<time()) {
+            if (db_result(db_query('SELECT `lck` FROM `users` WHERE `name` = %s',$this->login))>=2) {
+                return 2;
+            } else if ($row['end']!=1 && $row['end']<time()) {
                 db_query("DELETE FROM `block_user` WHERE `id` = %d LIMIT 1",$row['id']);
                 db_query("UPDATE `users` SET `lck` = '0' WHERE `name` = %s LIMIT 1 ",$this->login);
                 $this->lck=0;

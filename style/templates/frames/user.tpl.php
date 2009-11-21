@@ -64,7 +64,7 @@ echo inducing($comment_count, array('комментария','комментар
 <br /><br /><hr>
 <?php if ($loged) {if ($owner) {?>
 <br /><img src='style/n_img/edit.png'/> <a href="work/edituser">Редактировать профиль</a>
-<img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a>
+<img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a> <a href="work/delete_user">Убить себя</a>
     <?php } else if (!$is_friend) {?>
 <br/><a id='ifrn' href='<?php echo $friend_url; ?>'>Добавить в друзья</a>
         <?php } else { ?>
