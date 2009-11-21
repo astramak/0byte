@@ -89,9 +89,16 @@ if (!$row) {
         if (!db_num_rows($result)) {
             echo "<span id='nocom'>Комментариев нет</span>";
         } else {
-            while ($row = db_fetch_assoc($result)) {
-                com_echo(new comment($row),0,$allow_comment);
+            if (!($out = readCache('comment_tree_'.$post_id.'.cache', CACHE_TIME_LIMIT/2))) {
+                ob_start();
+                while ($row = db_fetch_assoc($result)) {
+                    com_echo(new comment($row),0,$allow_comment);
+                }
+                $out=ob_get_clean();
+                writeCache($out,'comment_tree_'.$post_id.'.cache');
             }
+            echo post_render_comment($out,$v_date);
+            
         }
         echo "</div>";
         if ($loged==1 && !$allow_comment) {

@@ -1,6 +1,6 @@
  <div class='ctop'>
          <?php if ($avatar) { ?>
-            <img class='cauth' src='<?php echo $avatar_url; ?>' style='float:left;' alt='' />
+            <img class='cauth' src='res.php?t=av&img=<?php echo $avatar; ?>' style='float:left;' alt='' />
          <?php } else { ?>
             <img class='cnoauth' src='style/img/figure.gif' alt="" />
          <?php } ?><a class='cauth' href='user/<?php echo $name; ?>'><?php echo $name; ?></a>
