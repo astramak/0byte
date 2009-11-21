@@ -427,7 +427,8 @@ function render_user_tag($name) {
 function post_render_comment($text,$view_date=0) {
     function check_date($text,$date) {
 //        echo $text
-        global $v_date;
+        global $v_date,$usr;
+         if ($name==$usr->login) {return null;} else
         if ($v_date==0) { return null;}
         else if ($date>$v_date) { return $text;}
         return null;
@@ -450,8 +451,8 @@ function post_render_comment($text,$view_date=0) {
         remove_tpl_tag_content($text, 'loged');
     }
     $text = preg_replace(
-    "/\<date=(\d*?)\>(.*?)\<\/date\>/ise",
-    " check_date('$2',$1)",
+    "/\<date user\='([^']*?)' time\='(\d*?)'\>(.*?)\<\/date\>/ise",
+    " check_date('$3',$2,'$1')",
     $text
     );
     return $text;

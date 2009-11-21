@@ -1,4 +1,4 @@
-<div class='c<date=<?php echo $comment->date; ?>>n</date>top'>
+<div class="c<date user='<?php echo $comment->auth; ?>' time='<?php echo $comment->date; ?>'>n</date>top">
     <img class='<?php echo $avatar_use ? ("cauth") : 'cnoauth';?>' src='<?php echo $avatar_use ? ("res.php?t=av&amp;img=".$avatar) : 'style/img/figure.gif';?>' alt="" />
     <a class='cauth' href='user/<?php echo $comment->auth; ?>'><?php echo $comment->auth; ?></a>
     <span class='date'><?php echo date('d.m.y  H:i', $comment->date); ?></span>
