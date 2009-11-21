@@ -29,7 +29,28 @@ function render_template($tpl_path, $variables) {
     include $tpl_path;
     return ob_get_clean();
 }
-
+/**
+ *  Remove templter tag from text
+ *
+ * @param string $text -> templated text
+ * @param string $tag
+ * @return string
+ */
+function remove_tpl_tag($text,$tag) {
+    $text=str_replace('<'.$tag.'>', '', $text);
+    $text=str_replace('</'.$tag.'>', '', $text);
+    return $text;
+}
+/**
+ * Remove templater tag with content
+ *
+ * @param string $text -> templated text
+ * @param string $tag
+ * @return string
+ */
+function remove_tpl_tag_content($text,$tag) {
+    return preg_replace("/\<".$tag."\>(.*?)\<\/".$tag."\>/s", "", $text);
+}
 /**
  * Renders mail template
  *
@@ -394,5 +415,45 @@ function render_user_tag($name) {
     $usr->find($name);
     if ($usr->av) {$avatar="res.php?t=av&img=".$usr->av;} else {$avatar="style/img/figure.gif";}
     return render_template(TPL_EDITOR.'/user.tpl.php', array('name' => $name, 'blocked' => $usr->lck, 'avatar' => $avatar));
+}
+/**
+ * Render comment after rendering
+ *
+ * @global int $loged
+ * @global user $usr
+ * @param string $text
+ * @return string
+ */
+function post_render_comment($text,$view_date=0) {
+    function check_date($text,$date) {
+//        echo $text
+        global $v_date;
+        if ($v_date==0) { return null;}
+        else if ($date>$v_date) { return $text;}
+        return null;
+//        echo 'n';
+    }
+    global $loged,$usr,$elvl;
+       if ($loged==1) {
+        $text=remove_tpl_tag($text, 'loged');
+        if ($usr->lvl>=$elvl /*|| ($com->auth == $usr->login && $cedit==1)*/) {
+            $text=remove_tpl_tag($text, 'allow_edit');
+        } else {
+            remove_tpl_tag_content($text, 'allow_edit');
+        }
+        if ($usr->lvl>=$elvl) {
+            $text=remove_tpl_tag($text, 'allow_delete');
+        } else {
+            remove_tpl_tag_content($text, 'allow_delete');
+        }
+    } else {
+        remove_tpl_tag_content($text, 'loged');
+    }
+    $text = preg_replace(
+    "/\<date=(\d*?)\>(.*?)\<\/date\>/ise",
+    " check_date('$2',$1)",
+    $text
+    );
+    return $text;
 }
 ?>

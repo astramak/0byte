@@ -119,7 +119,7 @@ if ($json == 1) {
     $v_date=0;
     $out['id']=$pid;
     $out['cid']=intval($id);
-    $out['txt']=com_echo($cm,1);
+    $out['txt']=post_render_comment(com_echo($cm,1),0);
     die(json_encode($out));
 }
 redirect($lst);

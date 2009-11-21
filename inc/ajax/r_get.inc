@@ -106,7 +106,7 @@ if (isset ($_GET['noo'])) {
         $arr[$i]['id']=$row['id'];
         $arr[$i]['lvl']=$row['lvl'];
         $arr[$i]['cid']=$row['cid'];
-        $arr[$i]['txt'] = com_echo(new comment($row), 1);
+        $arr[$i]['txt'] = post_render_comment(com_echo(new comment($row), 1),1);
         $i++;
     }
     if ($loged==1) {

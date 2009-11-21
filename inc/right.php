@@ -55,7 +55,7 @@ if (!($tops = readCache('tops.cache', CACHE_TIME_LIMIT))) {
     $tops = '';
     $result = db_query('SELECT * FROM `tags` WHERE `num` > 0 ORDER BY `num` DESC LIMIT %d',COUNT_TAG); //get tags from db
     $tops .= render_tags(generate_tag_array($result,28,6)); //render tag-cloud
-    $city_num = db_result(db_query('SELECT COUNT(`city`)  FROM `users` WHERE `city`!="" GROUP BY `city`'));//get city count
+    $city_num = db_num_rows(db_query('SELECT `id`  FROM `users` WHERE `city`!="" GROUP BY `city`'));//get city count
     $users_num = db_result(db_query('SELECT COUNT(`id`) FROM `users`'));//get users count
     $result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT %d',TOP_COUNT);//get top blog
     $blogs = array();

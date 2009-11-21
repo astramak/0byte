@@ -1,4 +1,4 @@
-<div class='<?php if ($comment->new) {?>cntop<?php } else { ?>ctop<?php } ?>'>
+<div class='c<date=<?php echo $comment->date; ?>>n</date>top'>
     <img class='<?php echo $avatar_use ? ("cauth") : 'cnoauth';?>' src='<?php echo $avatar_use ? ("res.php?t=av&amp;img=".$avatar) : 'style/img/figure.gif';?>' alt="" />
     <a class='cauth' href='user/<?php echo $comment->auth; ?>'><?php echo $comment->auth; ?></a>
     <span class='date'><?php echo date('d.m.y  H:i', $comment->date); ?></span>
@@ -19,7 +19,7 @@
     </span>
 </div>
 <div class='ctext' ><?php echo $comment->text; ?></div>
-<?php if ($loged) {?>
+<loged>
 <div class='cbottom'>
     <?php  if (!$allow_comment) {?>
 	<a href='<?php if ($js) {?>
@@ -28,10 +28,10 @@
         work/comment/<?php echo $comment->id."/".$comment->lvl."/".$current;
             }?>' class='om'><img src="style/n_img/comment_reply.gif"/>Ответить</a>
             <?php } ?>
-            <?php  if ($allow_edit) { ?>
+    <allow_edit>
 	<a href='work/editcom/<?php echo $comment->id;?>/' class='supragrey'><img src="style/n_img/pen_t.gif"/>Редактировать</a>
-        <?php } if ($allow_delete) { ?>
+    </allow_edit><allow_delete>
 	<a href='work/rmcom/<?php echo $comment->id; ?>/' class='supragrey'><img src="style/n_img/trash_t.gif"/>Удалить</a>
-        <?php } ?>
+    </allow_delte>
 </div>
- <?php } ?>
+</loged>
