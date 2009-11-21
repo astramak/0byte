@@ -82,12 +82,11 @@ function r_s(xrs,xs,xrt,tp) {
             if (jr) {
                 if (!jr.err) {
                     if (tp=="box") {
-                        if (jr.clean) {
-                            document.getElementById(jr.id).innerHTML=jr.content;
-                        } else {
-                            document.getElementById(jr.id).innerHTML=jr.content;
+                        document.getElementById(jr.id).innerHTML=jr.content;
+                        if (jr.select) {
+                            document.getElementById(jr.select).focus();
                         }
-                    //put cache here
+                      //put cache here
                     } else
                     if (tp=="p") {
                         if (parseInt(jr.rate)>0) {

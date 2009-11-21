@@ -39,7 +39,8 @@
 
 
 
-<input type="text" name="tag" class="post-tags" tabindex="4" /><span class="grey"> - теги</span><br/><br/>
+<div class="tag_auto"<input type="text" name="tag" onkeyup="changer(this.value,event,'tag'); return false;"  onkeypress="if (event.keyCode == 13 || event.keyCode == 10) return false;"  autocomplete="off"  id="taglang" class="post-tags" tabindex="4" />
+    <span class="grey"> - теги</span><br/><div id="tagarea"></div><br/>
 
 <input type="checkbox" name="lock" id="lock" tabindex="5"/> <label for="lock">Показать только друзьям и участникам блога</label><br/><br/>
 <input type="submit" name="nodraft" class="tag_w6" value="Опубликовать" tabindex="6" />

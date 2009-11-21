@@ -88,4 +88,5 @@ RewriteRule ^like/([0-9]*) index.php?like=$1 [L]
 RewriteRule ^error/(.*) all.php?wt=error&err=$1 [L]
 
 RewriteRule ^ajax/code/(.*) index.php?ajax=autocomplete&code=1&query=$1 [L,QSA]
+RewriteRule ^ajax/tag/(.*) index.php?ajax=autocomplete&tag=1&query=$1 [L,QSA]
 RewriteRule ^ajax/(.*) index.php?ajax=$1 [L,QSA]
