@@ -271,7 +271,8 @@ function mk(id,fr) {
     " <option value='36' style='font-size: 36px;'>36</option>"+
     " </select><br />"+
     " <a class='tdx' href='javascript:code_d(\""+fr+"\",\"text\")'>code</a>" +
-    " <a class='tdx' href='javascript:quote(\""+fr+"\",\"text\")'>Цитировать</a>";
+    " <a class='tdx' href='javascript:quote(\""+fr+"\",\"text\")'>Цитировать</a>"+
+    " <a class='tdx' href='javascript:insert(\"<user>\",\"</user>\",\""+fr+"\",\"text\")'>Пользователь</a>";
 }
 
 function toHex(dec) {
@@ -477,6 +478,7 @@ function klcprv(cid) {
 function set(what,prefix) {
     document.getElementById(prefix+'lang').value=what;
     document.getElementById(prefix+'area').innerHTML=null;
+    length=0;
 }
 var active=-1;
 function unhover_changer(prefix) {
@@ -498,14 +500,21 @@ function changer(value,event,prefix) {
             active=length-1;
         }
         unhover_changer(prefix);
-        
         document.getElementById(prefix+'changer_'+active).style.backgroundColor="#B6B6B6";
     } else if (active!=-1 && length!=0 && (event.keyCode == 13 || event.keyCode == 10)) {
         document.getElementById(prefix+'lang').value=document.getElementById(prefix+'changer_'+active).innerHTML;
         document.getElementById(prefix+'area').innerHTML=null;
+        length=0;
+    } else  if ((active==-1 || length==0) && (event.keyCode == 13 || event.keyCode == 10)) {
+        return 1;
     } else if (value.length>0) {
-        x_r('ajax/code/'+value,'ac');
+        if (prefix=='code') {
+            x_r('ajax/code/'+value,'ac');
+        } else {
+            x_r('ajax/tag/'+value,'ac');
+        }
     } else {
         document.getElementById(prefix+'area').innerHTML=null;
     }
+    return 0;
 }

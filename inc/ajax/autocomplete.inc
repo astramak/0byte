@@ -10,6 +10,15 @@ if (request::get_get('code',0)) { //get autocompletion to code hightliting templ
 //    $query=str_replace($tag_part, '', $query); //get data before new tag
 //    $array=get_tags_array($tag_part,5,$query); //get array of full tag string with variant of completion new tag
 //}
+} else if (request::get_get('tag')) {
+     $tag_part=preg_replace("/(.*?),/s", "",request::get_get('query'));
+     $query=str_replace($tag_part, '',request::get_get('query') );
+     $result=db_query("SELECT `name` FROM `tags` WHERE `name` LIKE %s ORDER BY `num` DESC LIMIT 5",trim($tag_part)."%");
+     $array=NULL;
+     while ($tag=db_result($result)) {
+         $array[]=$query.$tag;
+      }
+     $prefix="tag";
 }
 echo json_encode(array('elements' => $array, 'length' => count($array),'prefix'=>$prefix));//print answer in json
 ?>

@@ -6,12 +6,15 @@ $needle=array('fr'=>request::get_get('fr'),'el'=>request::get_get('el'));
 $out['clean']=1;
 switch ($type) {
     case "link":
+        $out['select']='ins_url';
         $out['content']=render_template(TPL_EDITOR.'/link.tpl.php',$needle);
         break;
     case "code":
+        $out['select']="codelang";
         $out['content']=render_template(TPL_EDITOR.'/code.tpl.php',$needle);
         break;
     case "image":
+        $out['select']='img_url';
         $out['content']=render_template(TPL_EDITOR.'/image.tpl.php',$needle);
         break;
     case "list":
