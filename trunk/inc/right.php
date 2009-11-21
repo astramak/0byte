@@ -51,26 +51,25 @@ for ($i = $siz; $i >= 0; $i--) {
 array_splice($tarr, 16);
 echo render_hands_free($tarr,$siz);
 echo render_search_panel();
-
-if (!($tops = readCache('tops.cache', 30))) {
+if (!($tops = readCache('tops.cache', CACHE_TIME_LIMIT))) {
     $tops = '';
-    $result = db_query('SELECT * FROM tags WHERE num > 0 ORDER BY num DESC LIMIT 40');
-    $tops .= render_tags(generate_tag_array($result,28,6));
-    $city_num=db_num_rows(db_query('SELECT `city` as `name`, COUNT(`city`) as `cnt` FROM `users` WHERE `city`!="" GROUP BY `city`'));
-    $users_num=db_num_rows(db_query('SELECT `id` FROM `users`'));
-    $result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT 10');
+    $result = db_query('SELECT * FROM `tags` WHERE `num` > 0 ORDER BY `num` DESC LIMIT %d',COUNT_TAG); //get tags from db
+    $tops .= render_tags(generate_tag_array($result,28,6)); //render tag-cloud
+    $city_num = db_result(db_query('SELECT COUNT(`city`)  FROM `users` WHERE `city`!="" GROUP BY `city`'));//get city count
+    $users_num = db_result(db_query('SELECT COUNT(`id`) FROM `users`'));//get users count
+    $result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT %d',TOP_COUNT);//get top blog
     $blogs = array();
     while ($row = db_fetch_assoc($result)) {
         $blogs[] = $row;
     }
-    $blogs_num=db_num_rows(db_query('SELECT `id` FROM `blogs`'));
-    $result = db_query('SELECT *, (ratep - ratem + prate / %d + crate / %d + brate / %d) AS rate  FROM users WHERE lvl = 0 && lck = 0 ORDER BY rate DESC LIMIT 10', $post_r, $com_r, $blog_r);
+    $blogs_num = db_result(db_query('SELECT COUNT(`id`) FROM `blogs`'));//get blogs count
+    $result = db_query('SELECT *, (ratep - ratem + prate / %d + crate / %d + brate / %d) AS rate  FROM users WHERE lvl = 0 && lck = 0 ORDER BY rate DESC LIMIT %d', $post_r, $com_r, $blog_r,TOP_COUNT); //get top users from db
     $users = array();
     while ($row = db_fetch_assoc($result)) {
         $row['rate']=(float) $row['rate'];
         $users[] = $row;
     }
-    $tops .= render_tops($users, $blogs,$city_num,$users_num,$blogs_num);
+    $tops .= render_tops($users, $blogs,$city_num,$users_num,$blogs_num);//render user and blog top
     writeCache($tops,'tops.cache');
 }
 echo $tops;

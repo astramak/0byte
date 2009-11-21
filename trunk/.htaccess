@@ -46,6 +46,7 @@ RewriteRule ^work/blockpost/([0-9]*) worked.php?wt=bpost&id=$1 [L]
 RewriteRule ^work/editblog/([0-9]*) worked.php?wt=myblog&id=$1&single=1 [L]
 RewriteRule ^user/([^\/]*) users.php?name=$1 [L]
 RewriteRule ^work/([^\/]*) worked.php?wt=$1 [L]
+RewriteRule ^work/delete_user/error worked.php?wt=delete_user&error=1 [L]
 
 RewriteRule ^blog/([0-9]*)/from/([0-9]*) index.php?blog=$1&frm=$2 [L]
 RewriteRule ^from/([0-9]*)/(.*) index.php?frm=$1&fnd=$2 [L]
@@ -86,4 +87,5 @@ RewriteRule ^favourite index.php?favourite=1 [L]
 RewriteRule ^like/([0-9]*) index.php?like=$1 [L]
 RewriteRule ^error/(.*) all.php?wt=error&err=$1 [L]
 
+RewriteRule ^ajax/code/(.*) index.php?ajax=autocomplete&code=1&query=$1 [L,QSA]
 RewriteRule ^ajax/(.*) index.php?ajax=$1 [L,QSA]

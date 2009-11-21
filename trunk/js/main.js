@@ -1,5 +1,6 @@
 var hash=location.hash;
 var nw=0;
+var  length=-1;
 function strt() {
     for (var i=0; i<(document.links.length); i++) {
         if (document.links[i].href.indexOf('twork.php?wt=ratep')+1) {
@@ -26,11 +27,10 @@ function strt() {
         } else if (document.links[i].href.indexOf('twork.php?wt=flw')+1) {
             document.links[i].href = "javascript:x_r('twork.php"+document.links[i].search+"&json=1','f')";
         } else if (document.links[i].href.indexOf('work/block/user/')+1) {
-            //                        re=/work\/block\/user\//;
-            //			var arr=re.exec(document.links[i].href);
             txt= document.links[i].href.replace(/(.*?)\/work\/block\/user\//,'');
-                        
             document.links[i].href="javascript:cr(); x_r('ajax/editor?type=block&fr="+txt+"&el=user','box');"
+        } else if (document.links[i].href.indexOf('work/delete_user')+1) {
+            document.links[i].href="javascript:cr(); x_r('ajax/editor?type=delete_user','box');"
         }  else if (document.links[i].href.indexOf('draft#')+1) {
             document.links[i].href="javascript:g_plist('draft')";
         }  else if (document.links[i].href.indexOf('favourite#')+1) {
@@ -135,6 +135,13 @@ function r_s(xrs,xs,xrt,tp) {
                     }  else if (tp=='scom') {
                         document.getElementById('cmadd'+jr.cid).innerHTML+=jr.txt;
                         document.location.hash="#cmnt"+jr.id;
+                    } else if (tp=='ac') {
+                        length=jr.length;
+                        out="<ul class='changer'>";
+                        for (i=0;i<jr.length;i++) {
+                            out=out+'<li onmousemove="unhover_changer(); this.style.backgroundColor='+"'#B6B6B6'"+'; active='+i+';" id="'+jr.prefix+'changer_'+i+'" onclick="set('+"'"+jr.elements[i]+"','"+jr.prefix+"'"+')">'+jr.elements[i]+'</li>';
+                        }
+                        document.getElementById(jr.prefix+'area').innerHTML=out+'</ul>';
                     }
                 } else {
                     make_err(jr.err);

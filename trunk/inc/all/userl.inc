@@ -38,7 +38,7 @@ if (request::get_get('order',0)) {
 }
 
 $per_page = 50;
-$sql = "SELECT * FROM users WHERE 1 = 1 " . $sql_ins;
+$sql = "SELECT * FROM users WHERE `lck` <2  " . $sql_ins;
 $count_total = db_result(db_query(str_replace('SELECT * FROM', 'SELECT COUNT(id) FROM', $sql)));
 $result = db_query($sql . " ORDER BY " . $order . " LIMIT %d,%d", $frm, $per_page);
 while ($row = db_fetch_assoc($result)) {

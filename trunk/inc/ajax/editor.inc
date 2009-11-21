@@ -28,6 +28,10 @@ switch ($type) {
         $json=1;
         include 'inc/worked/bpost.inc';
         break;
+    case "delete_user":
+        $json=1;
+        include 'inc/worked/delete_user.inc';
+        break;
 }
 echo json_encode($out);
 ?>

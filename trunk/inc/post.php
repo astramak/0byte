@@ -37,7 +37,7 @@ $pg=request::get_get('pg','');
 $draft=request::get_get('draft',0);
 $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2 && !request::get_get('like',0) && !$favourite && !$draft && !request::get_get('tag',0) 
-        && !request::get_get('auth',0) && !request::get_get('blog',0) && !request::get_get('fnd',0))) {
+    && !request::get_get('auth',0) && !request::get_get('blog',0) && !request::get_get('fnd',0))) {
     $sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
 }
 else 
@@ -161,16 +161,18 @@ if ($kol<1 && !isset($_GET['blog'])) {
             echo "<a id='hl'></a>";
         }
         $posts[$k]=post_echo($row,0,$draft);
-        if ($posts[$k]->tp==1 || ($posts[$k]->tp!=3 && $posts[$k]->havecut()==1)) {
-            $full=1;
-        } else {
-            $full=0;
+        if ($posts[$k]->visible) {
+            if ($posts[$k]->tp==1 || ($posts[$k]->tp!=3 && $posts[$k]->havecut()==1)) {
+                $full=1;
+            } else {
+                $full=0;
+            }
+            echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
+            'id'=>$posts[$k]->id,'comments'=>klist($posts[$k]->id),
+            'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=p&amp;from=".$cur,
+            'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=m&amp;from=".$cur,
+            'rate'=>$posts[$k]->rate(),'draft'=>$draft,'rate_num'=>($posts[$k]->ratep+$posts[$k]->ratem)%100));
         }
-        echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
-        'id'=>$posts[$k]->id,'comments'=>klist($posts[$k]->id),
-        'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=p&amp;from=".$cur,
-        'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$posts[$k]->id."&amp;rate=m&amp;from=".$cur,
-        'rate'=>$posts[$k]->rate(),'draft'=>$draft,'rate_num'=>($posts[$k]->ratep+$posts[$k]->ratem)%100));
         $k++;
     }
 }

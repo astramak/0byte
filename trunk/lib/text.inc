@@ -46,6 +46,7 @@ function utext($text) {
 }
 
 class dtxt {
+
     var $short_text;
     var $full_text;
     /**

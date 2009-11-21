@@ -26,6 +26,7 @@ require_once 'lib/geshi/geshi.php';
 		$txt .= $i;
 		$q++;
 	}
+
 	$txt = str_replace("<a href", "<a rel='nofollow' href", $txt);
 
 ?>
