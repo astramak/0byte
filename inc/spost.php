@@ -116,10 +116,10 @@ onkeydown='if(\"\v\"==\"v\") {do_key(this.form,\"com\",event); }' name='text'  r
 
 //spy
 if ($loged == 1) {
-    if (!$v_id) {
-        db_query('INSERT INTO `hist` SET `pid` = %d, `who` = %s, `date` = %d', $post_id, $usr->login, time());
-    } else {
+    if ($v_id>0) {
         db_query('UPDATE `hist` SET `date` = %s WHERE `id` = %d', time(), $v_id);
+    } else {
+        db_query('INSERT INTO `hist` SET `pid` = %d, `who` = %s, `date` = %d', $post_id, $usr->login, time());
     }
 }
 ///spy

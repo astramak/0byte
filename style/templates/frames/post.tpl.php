@@ -8,7 +8,7 @@
 	<h2 class='title' <?php if ($blocked==1) { ?>style='color:red'<?php } ?>>
 		<?php
 		if ($type=='link') {?>
-		<a href='<?php echo $link; ?>' rel='nofollow' class='blog'>
+		<a href='<?php echo $link; ?>' class='blog'>
 			<img class='auth' src='style/lnk.gif' style='height: 20px;' /></a>
 		<?php } elseif ($type=='translate') {?>
 		<img class='auth' src='style/tr.gif' style='height: 20px;' />

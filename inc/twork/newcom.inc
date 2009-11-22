@@ -54,7 +54,7 @@ $cm=new comment(db_fetch_assoc(db_query("SELECT * FROM `comment` WHERE `cid` = %
 $lst.='#cmnt'.$cm->id;
 $text=code($text);
 if ($ceauth!="" && $ceauth!=$usr->login) {
-    echo $ceauth;
+//    echo $ceauth;
 //    $sql_get="SELECT * FROM `users` WHERE `name` = '".$ceauth."'";
 //    $result=mysql_query($sql_get,$sql);
     $row = db_fetch_assoc(db_query("SELECT * FROM `users` WHERE `name` = %s",$ceauth));

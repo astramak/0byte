@@ -102,7 +102,7 @@ function com_echo($com,$noecho=0,$allow_comment=0) {
         $com->new=0;
     }
     $com->text=code($com->text);
-    $com->date+=TZ;
+
     $ech.=render_comment($com,$avatar_use,$allow_edit,$allow_delete,$cur,$loged,$post11,$noecho,$allow_comment,$alien->av);
     $ech.="</dt><dd id='cmadd".$com->id."'>";
     if (!$noecho) {
