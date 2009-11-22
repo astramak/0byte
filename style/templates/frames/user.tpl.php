@@ -24,19 +24,15 @@ if ($blocked) {?>
 if ($city['set']) {?>
 <img src='style/n_img/city.png'/> <a href='list/user/city/<?php echo $city['text']; ?>'><?php echo $city['text']; ?></a>, 
 <?php } ?>
-<img src='style/n_img/envelope.gif'/> <a href='work/pmnew/<?php echo $name; ?>'>личное сообщение</a>
-<?php
+<img src='style/n_img/envelope.gif'/> <a href='work/pmnew/<?php echo $name; ?>'>личное сообщение</a><?php
 
-if (!$hide_mail) {?>
-, <img src='style/n_img/mailing.gif'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>
+if (!$hide_mail) {?>, <img src='style/n_img/mailing.gif'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>
 <?php } $not_first=0;
-if ($icq['set']) { $not_first=1; ?>
-,<img src='style/n_img/icq.png'/> <?php echo $icq['text'];
+if ($icq['set']) { $not_first=1; ?>, <img src='style/n_img/icq.png'/> <?php echo $icq['text'];
 }
 if ($jabber['set']) { ?>, <img src='style/n_img/jabber.png'/><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a><?php
 }
-if ($usite['set']) {  ?>, <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
-<?php }
+if ($usite['set']) {  ?>, <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex><?php }
 if ($me_on_count>0) {
     foreach ($me_on as $me_on_name => $me_on_url) {
         ?>, <img src="<?php echo get_favicon_url($me_on_url);?>" alt="" /> <a rel="nofollow" href='<?php echo $me_on_url; ?>'><?php echo $me_on_name ?></a><?php
