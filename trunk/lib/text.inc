@@ -92,12 +92,13 @@ function code($txt) {
         " render_user_tag('$1')",
         $txt
     );
+    $text=$txt;
     if (count($prerender_plugins)>0) {
         foreach($prerender_plugins as $plugin) {
             include('plugins/'.$plugin['name'].'/actions.php');
         }
     }
-    return $txt;
+    return $text;
 }
 function inducing($num,$variants) {
     if (($num>1 && $num<=4) || ($num>20 && $num%10>1 && $num%10<=3) ) {
