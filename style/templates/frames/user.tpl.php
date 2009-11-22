@@ -24,18 +24,18 @@ if ($blocked) {?>
 if ($city['set']) {?>
 <img src='style/n_img/city.png'/> <a href='list/user/city/<?php echo $city['text']; ?>'><?php echo $city['text']; ?></a>, 
 <?php } ?>
-<img src='style/n_img/envelope.gif'/> <a href='work/pmnew/<?php echo $name; ?>'>личное сообщение</a>,
+<img src='style/n_img/envelope.gif'/> <a href='work/pmnew/<?php echo $name; ?>'>личное сообщение</a>
 <?php
 
 if (!$hide_mail) {?>
-<img src='style/n_img/mailing.gif'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>, 
+, <img src='style/n_img/mailing.gif'/> <a href='mailto:<?php echo $mail;?>' class='email'><?php echo $mail;?></a>
 <?php } $not_first=0;
 if ($icq['set']) { $not_first=1; ?>
-<img src='style/n_img/icq.png'/> <?php echo $icq['text'];
+,<img src='style/n_img/icq.png'/> <?php echo $icq['text'];
 }
-if ($jabber['set']) {  if ($not_first) echo ','; $not_first=1; ?> <img src='style/n_img/jabber.png'/><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a><?php
+if ($jabber['set']) { ?>, <img src='style/n_img/jabber.png'/><a href='xmpp:<?php echo $jabber['text']; ?>'><?php echo $jabber['text']; ?></a><?php
 }
-if ($usite['set']) { if ($not_first) echo ','; ?> <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
+if ($usite['set']) {  ?>, <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex>
 <?php }
 if ($me_on_count>0) {
     foreach ($me_on as $me_on_name => $me_on_url) {
@@ -64,7 +64,7 @@ echo inducing($comment_count, array('комментария','комментар
 <br /><br /><hr>
 <?php if ($loged) {if ($owner) {?>
 <br /><img src='style/n_img/edit.png'/> <a href="work/edituser">Редактировать профиль</a>
-<img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a> <a href="work/delete_user">Убить себя</a>
+<img src='style/n_img/edit.png'/> <a href="work/cpw">Сменить пароль</a> <span style="float: right; color: #C0B62A; opacity: 0.5;"><a href="work/delete_user" title="Удаление аккаунта" style="color: #802021">Будка самоубийства</a> (25 &cent;)</span>
     <?php } else if (!$is_friend) {?>
 <br/><a id='ifrn' href='<?php echo $friend_url; ?>'>Добавить в друзья</a>
         <?php } else { ?>
