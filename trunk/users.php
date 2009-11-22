@@ -29,7 +29,7 @@ if (strlen(request::get_get('name'))) {
 	$name = "";
 }
 $alien = new user();
-if (!$alien->find($name)) {
+if (!$alien->find($name) || $alien->lck>1) {
 	redirect($dir.'error/not_found');
 } else {
 	$cur = $_SERVER['REQUEST_URI'];

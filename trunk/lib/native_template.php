@@ -37,8 +37,8 @@ function render_template($tpl_path, $variables) {
  * @return string
  */
 function remove_tpl_tag($text,$tag) {
-    $text=str_replace('<'.$tag.'>', '', $text);
-    $text=str_replace('</'.$tag.'>', '', $text);
+    $text=str_replace('{'.$tag.'}', '', $text);
+    $text=str_replace('{/'.$tag.'}', '', $text);
     return $text;
 }
 /**
@@ -49,7 +49,7 @@ function remove_tpl_tag($text,$tag) {
  * @return string
  */
 function remove_tpl_tag_content($text,$tag) {
-    return preg_replace("/\<".$tag."\>(.*?)\<\/".$tag."\>/s", "", $text);
+    return preg_replace("/{".$tag."}(.*?){\/".$tag."}/si", '', $text);
 }
 /**
  * Renders mail template
@@ -200,7 +200,7 @@ function render_tags($tags) {
  */
 function render_tops($users,$blogs,$city_num,$users_num,$blogs_num) {
     return render_template(TPL_UTILS.'/tops.tpl.php', array("users"=>$users, "blogs"=>$blogs,'city_num'=>$city_num,
-            'users_num'=>$users_num,'blogs_num'=>$blogs_num));
+    'users_num'=>$users_num,'blogs_num'=>$blogs_num));
 }
 /**
  * Render online and new users list
@@ -344,13 +344,13 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     }
     $numb=0;
     while ($all_count>0 && $numb<10) {
-         $current=0;
-         
+        $current=0;
+
         if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
             if ($current_num==($k-1)*$count) {
             //			echo "<span class='nmn'>$k</span> ";
                 $current=1;
-            } 
+            }
             //			echo ("<a class='nmn' href='".$inser."from/".(($k-1)*$count).$fnd."'>$k</a> ");
             $numb++;
             $url=$start."from/".(($k-1)*$count).$end;
@@ -361,7 +361,7 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
 
 
         }
-        
+
         $k++;
         $all_count-=$count;
     }
@@ -406,8 +406,8 @@ function render_error($text,$id=null) {
 }
 /**
  * Render result of tag <user />
- * 
- * @param string $name 
+ *
+ * @param string $name
  * @return string
  */
 function render_user_tag($name) {
@@ -424,37 +424,77 @@ function render_user_tag($name) {
  * @param string $text
  * @return string
  */
-function post_render_comment($text,$view_date=0) {
-    function check_date($text,$date) {
-//        echo $text
+function post_render_comment($text,$v_date=0) {
+
+    function check_date($text,$date,$name) {
+    //        echo $text
         global $v_date,$usr;
-         if ($name==$usr->login) {return null;} else
-        if ($v_date==0) { return null;}
-        else if ($date>$v_date) { return $text;}
-        return null;
-//        echo 'n';
+        if ($name==$usr->login) {return null;} else
+            if ($v_date==0) { return null;}
+            else if ($date>$v_date) { return $text;}
+    //        return null;
+    //        echo 'n';
+    }
+    function return_time($time) {
+       return date('d.m.y  H:i', $time+TZ);
     }
     global $loged,$usr,$elvl;
-       if ($loged==1) {
+      $text = preg_replace(
+        "/{date user\='([^']*?)' time\='([^']*?)'}(.*?){\/date}/ise",
+        "check_date('$3','$2','$1')",
+        $text
+        );
+    if ($loged==1) {
+       
         $text=remove_tpl_tag($text, 'loged');
         if ($usr->lvl>=$elvl /*|| ($com->auth == $usr->login && $cedit==1)*/) {
             $text=remove_tpl_tag($text, 'allow_edit');
         } else {
-            remove_tpl_tag_content($text, 'allow_edit');
+            $text=remove_tpl_tag_content($text, 'allow_edit');
         }
         if ($usr->lvl>=$elvl) {
+
             $text=remove_tpl_tag($text, 'allow_delete');
         } else {
-            remove_tpl_tag_content($text, 'allow_delete');
+
+            $text=remove_tpl_tag_content($text, 'allow_delete');
         }
     } else {
-        remove_tpl_tag_content($text, 'loged');
+        $text=remove_tpl_tag_content($text, 'loged');
+         $text=remove_tpl_tag_content($text, 'allow_edit');
+         $text=remove_tpl_tag_content($text, 'allow_delete');
+    }
+     $text = preg_replace(
+        "/{time}(\d*?){\/time}/ise",
+        "return_time($1)",
+        $text
+        );
+
+    return $text;
+}
+function post_render_menu($text) {
+    function menu_active($url,$text) {
+        global $menu_active;
+        if ($url==$menu_active) {
+            return $text;
+        } else return null;
+    }
+    function before_active($url,$text) {
+        global $menu_active,$menu_before_active;
+        if ($url==$menu_before_active && $menu_active!='.') {
+            return $text;
+        } else return null;
     }
     $text = preg_replace(
-    "/\<date user\='([^']*?)' time\='(\d*?)'\>(.*?)\<\/date\>/ise",
-    " check_date('$3',$2,'$1')",
-    $text
-    );
-    return $text;
+        "/{active\='([^']*?)'}(.*?){\/active}/ise",
+        "menu_active('$1','$2')",
+        $text
+     );
+     $text = preg_replace(
+        "/{before_active\='([^']*?)'}(.*?){\/before_active}/ise",
+        "before_active('$1','$2')",
+        $text
+     );
+     return $text;
 }
 ?>

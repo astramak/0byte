@@ -8,7 +8,7 @@ if ($usr->rate()>=$nc_rate) {
     $row = mysql_fetch_assoc($result);
     $lvl=$row['lvl']+1;
     if (!isset($_GET['js'])) {
-        $old=com_echo(new comment($row),1);
+        $old=post_render_comment(com_echo(new comment($row),1));
     }
     else {
         echo "{";

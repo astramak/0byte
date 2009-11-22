@@ -26,7 +26,9 @@ class mel {
         $frm=request::get_get("frm");
         if ( (isset($index) && $this->url=="." && strlen($pg)<1) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   /*|| strncmp($this->url,$pg,strlen($pg))==0*/  )) {
             $this->cur=1;
-        } elseif (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
+        } else if (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
+            $this->cur=1;
+        } else if (request::get_get('wt',0)=='lenta' && $this->url=='lenta') {
             $this->cur=1;
         } else {
             $this->cur=0;
@@ -63,12 +65,13 @@ class mel {
 //                    (`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
 //                    (`lenta`.`type` = 2 && ".$where."))  GROUP BY `lenta`.`id`
 //                     ",$dt,$usr->login,$usr->login,$usr->login));
-                    $new=db_num_rows(db_query("SELECT `lenta`.*,`inblog`.`bname` FROM `post`,`lenta`,`inblog`
+                   db_query("SET SQL_BIG_SELECTS=1 ");
+                  $new=db_num_rows(db_query("SELECT `lenta`.*,`inblog`.`bname` FROM `post`,`lenta`,`inblog`
                     WHERE (`lenta`.`who` = %s && `lenta`.`type` = 0) ||
                     (`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
                     (`lenta`.`type` = 2 && ".$where." ) && `lenta`.`date` > %d GROUP BY `lenta`.`id`
                      ORDER BY `date` DESC  ",$usr->login,$usr->login,$usr->login,$dt));
-
+                      db_query("SET SQL_BIG_SELECTS=0 ");
                 } else {
                     $this->show = 0;
                 }
