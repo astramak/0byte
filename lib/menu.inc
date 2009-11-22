@@ -24,14 +24,15 @@ class mel {
     function chcur() {
         global $index,$pg;
         $frm=request::get_get("frm");
-        if ( (isset($index) && $this->url=="." && strlen($pg)<1) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   /*|| strncmp($this->url,$pg,strlen($pg))==0*/  )) {
+
+//        if ( (isset($index) && $this->url=="." && strlen($pg)<1) && (sizeof($_GET)==0 || sizeof($_GET)==sizeof($frm)   /*|| strncmp($this->url,$pg,strlen($pg))==0*/  )) {
+//            $this->cur=1;
+//        } else if (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
+//            $this->cur=1;
+//        } else
+         $this->cur=0;
+        if ((strcmp(request::get_get('wt',0),'lenta')==0 && strcmp($this->url,'lenta')==0) || (request::get_get('pg',0)==$this->url && $index)) {
             $this->cur=1;
-        } else if (strlen($pg)>2 && strncmp($this->url,$pg,strlen($pg))==0 ) {
-            $this->cur=1;
-        } else if (request::get_get('wt',0)=='lenta' && $this->url=='lenta') {
-            $this->cur=1;
-        } else {
-            $this->cur=0;
         }
         return $this->cur;
     }
