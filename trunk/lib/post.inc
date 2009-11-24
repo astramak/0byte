@@ -70,7 +70,7 @@ function post_echo($row, $t,$draft=null) {
     $bls="";
     $array['blocked'] = $a->blck;
     $array['avatar']=0;
-    $alien->find($a->auth);
+    $alien->find($a->auth,"av, lck",0);
     if ($alien->lck==3) {
         $a->visible=0;
         echo render_template(TPL_DELETED.'/post.tpl.php', null);

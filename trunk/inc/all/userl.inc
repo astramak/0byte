@@ -5,8 +5,8 @@ $inser="list/user/";
 $ins=null;
 $sql_ins=null;
 if (request::get_get('city',0)) {
-	$ins="city/".gtext(request::get_get('city',0)).'/';
-	$sql_ins='AND `city`="'.gtext(request::get_get('city',0)).'" ';
+	$ins="city/".htmlspecialchars(request::get_get('city',0)).'/';
+	$sql_ins='AND `city`="'.htmlspecialchars(request::get_get('city',0)).'" ';
 	$inser.=$ins;
 } else if (request::get_get('banned') && $loged && @$usr->lvl>$blvl) {
     $ins="banned/";
