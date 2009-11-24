@@ -4,7 +4,7 @@ if (!$nick) {
     echo render_template(TPL_FRAMES.'/restore.tpl.php', null);
 } else {
     $alien = new user();
-    if ($nick && $alien->looser(gtext($nick))) {
+    if ($nick && $alien->find($nick,'mail')) {
         $psw = nullbute_generate_pwd(8);
         if (db_result(db_query('SELECT COUNT(*) FROM `restore` WHERE `user` = %s',$nick))>=1) {
             db_query('DELTE FROM `restore` WHERE `user` = %s LIMIT 1',$nick);

@@ -61,12 +61,12 @@ if ($pg) {
     if ($pg == 'lenta' && $loged == 1) {
         $vars['rss'] = "rss/lenta/" . base64_encode($usr->login);
     } else {
-        $vars['rss'] = "rss/" . gtext($pg);
+        $vars['rss'] = "rss/" . htmlspecialchars($pg);
     }
 } elseif ($blog) {
     $vars['rss'] = "rss/blog/" . $blog;
 } elseif ($auth) {
-    $vars['rss'] = "rss/auth/" . gtext($auth);
+    $vars['rss'] = "rss/auth/" . htmlspecialchars($auth);
 } else {
     $vars['rss'] = "rss";
 }

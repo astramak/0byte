@@ -42,7 +42,7 @@ $title=$raw['title'];
 $pauth=$raw['auth'];
 $pid=$raw['id'];
 $listp=$raw['flw'];
-$text=mysql_escape_string(gtext($text));
+$text=gtext($text);
 $date=time();
 db_query("INSERT INTO `comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
 VALUES ( %s , %s , %s ,%d , %d , %d)",$date,$text,$usr->login,$id,$lvl,$krnl);
@@ -69,7 +69,7 @@ if ($ceauth!="" && $ceauth!=$usr->login) {
             'user' => $usr->login,
             'pid' => $pid,
             'lst' => $lst,
-            'text' => gtext($text),
+            'text' => $text,
             'title'=>$title
         ));
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
@@ -95,7 +95,7 @@ if (strcmp($usr->login,$pauth)!=0 && $lvl==0) {
             'user' => $usr->login,
             'pid' => $pid,
             'lst' => $lst,
-            'text' =>gtext($text),
+            'text' =>$text,
             'title'=>$title
         ));
         $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);

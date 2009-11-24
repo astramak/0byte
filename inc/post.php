@@ -15,11 +15,11 @@
  *
  */
 $inser='';
-if (isset($_GET['pg'])) {
-    $inser.=$_GET['pg']."/";
+if (request::get_get('pg',0)) {
+    $inser.=request::get_get('pg',0)."/";
 }
-if (isset($_GET['blog'])) {
-    $inser.="blog/".$_GET['blog']."/";
+if (request::get_get('blog',0)) {
+    $inser.="blog/".request::get_get('blog',0)."/";
 }
 $blck="&& blck != 1";
 if ($usr->lvl>=$rlvl) {
@@ -27,8 +27,8 @@ if ($usr->lvl>=$rlvl) {
 } else if ($loged) {
         $blck='&& (`blck` != 1 || `auth` = "'.$usr->login.'")';
     }
-if (isset($_GET['count'])) {
-    $count=$_GET['count'];
+if (request::get_get('count',0)) {
+    $count=request::get_get('count',0);
 } else {
     $count=10;
 }
@@ -39,6 +39,8 @@ $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2 && !request::get_get('like',0) && !$favourite && !$draft && !request::get_get('tag',0) 
     && !request::get_get('auth',0) && !request::get_get('blog',0) && !request::get_get('fnd',0))) {
     $sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
+
+
 }
 else 
     if ($loged && $draft) {
@@ -66,19 +68,19 @@ else
             }
             else
                 if (request::get_get('tag',0)) {
-                    $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".gtext($_GET['tag']).",%' || LOWER(tag) = LOWER('".gtext($_GET['tag'])."')
-			|| tag = '".gtext($_GET['tag'])."' || tag LIKE '%,".gtext($_GET['tag'])."%'  $blck ORDER BY  id DESC";
-                    $inser.="tag/".gtext($_GET['tag'])."/";
-                    echo render_template(TPL_POST_LIST.'/tag.tpl.php', array('text'=>gtext(request::get_get('tag'))));
-                } else if (isset($_GET['pg']) && $_GET['pg']=='pers') {
-                        $sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY  id DESC ";
+                    $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".mysql_escape_string(request::get_get('tag')).",%' || LOWER(tag) = LOWER('".mysql_escape_string(request::get_get('tag'))."')
+			|| tag = '".mysql_escape_string(request::get_get('tag'))."' || tag LIKE '%,".mysql_escape_string(request::get_get('tag'))."%'  $blck ORDER BY  id DESC";
+                    $inser.="tag/".htmlspecialchars(request::get_get('tag'))."/";
+                    echo render_template(TPL_POST_LIST.'/tag.tpl.php', array('text'=>htmlspecialchars(request::get_get('tag'))));
+                } else if (request::get_get('pg','null')==='pers') {
+                          $sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY  id DESC ";
                     } else {
                         if (request::get_get('auth',0)) {
-                            $sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string($_GET['auth'])."' $blck ORDER BY  id DESC ";
-                            $inser.="auth/".$_GET['auth']."/";
+                            $sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string(request::get_get('auth'))."' $blck ORDER BY  id DESC ";
+                            $inser.="auth/".request::get_get('auth')."/";
                             $au=1;
                         } else if (request::get_get('blog',0)) {
-                                $sql_get="SELECT * FROM `post` WHERE blogid = '".intval($_GET['blog'])."' $blck ORDER BY  id DESC ";
+                                $sql_get="SELECT * FROM `post` WHERE blogid = '".intval(request::get_get('blog'))."' $blck ORDER BY  id DESC ";
                                 $bl=1;
                             } else {
                                 $sql_get="SELECT * FROM `post` WHERE blog != 'own' $blck ORDER BY  id DESC ";
@@ -88,7 +90,7 @@ if (request::get_get('fnd',0)) {
 
     $fnd=trim(str_replace(" ", "%", request::get_get('fnd')));
     $sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
-    echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>gtext(request::get_get('fnd'))));
+    echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>htmlspecialchars(request::get_get('fnd'))));
 }
 if (isset($_GET['pg']) && $_GET['pg']=='lenta' && $loged==1) {
     $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special().' ORDER BY `id` DESC';
@@ -100,7 +102,6 @@ $cur=str_replace("&","*amp",$cur);
 $cur=str_replace("?","*qw",$cur);
 $kol=mysql_num_rows($result);
 $result=mysql_query($sql_get." LIMIT ".$frm." , ".$count,$sql);
-
 if ($kol<1 && !isset($_GET['blog'])) {
     if (isset($_GET['fnd'])) {
         echo render_error("Ничего не найдено!");
@@ -141,9 +142,9 @@ if ($kol<1 && !isset($_GET['blog'])) {
             echo render_error("Блог пуст!");
         }
     } else {
-        if (isset($au) && $au==1) {
+        if (@$au==1) {
             $alien=new user;
-            $alien->find(request::get_get('auth'));
+            $alien->find(request::get_get('auth'),'av, ratep, ratem',1);
             $avatar=0;
             $avatar_url=null;
             if (strlen($alien->av)>2) {

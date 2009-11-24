@@ -1,7 +1,7 @@
 <?php
-$to = gtext(request::get_post('to'));
+$to = htmlspecialchars(request::get_post('to'));
 $title = gtext(request::get_post('title'));
-$text = request::get_post('text');
+$text = gtext(request::get_post('text'));
 
 if (!isset ($text{2}) || !isset($to{2})) {
     redirect('work/pmls');
@@ -10,20 +10,15 @@ if (!isset($title{2})) {
     $title='no-title';
 }
 $alien=new user();
-if (!$alien->find($to) || $alien->login == $usr->login) {
+if (!$alien->find($to,'mail, pmre',1) || $alien->login == $usr->login) {
     redirect('work/pmls');
 }
 
-$sql_get="SELECT * FROM `users` WHERE `name` = '".mysql_escape_string($to)."' ORDER BY  id DESC  ";
-$result=mysql_query($sql_get,$sql);
-if (!$result) {
-    echo  mysql_error();
-}
-
-$row = mysql_fetch_assoc($result);
-if (strlen($row['name'])<1) {
-    redirect('work/pmls');
-}
+//$result=db_query("SELECT * FROM `users` WHERE `name` = '".mysql_escape_string($to)."' ORDER BY  id DESC  ");
+//$row = mysql_fetch_assoc($result);
+//if (strlen($row['name'])<1) {
+//    redirect('work/pmls');
+//}
 if (request::get_get('lock') == "on" ) {
     $lock=1;
 } else {
@@ -31,22 +26,16 @@ if (request::get_get('lock') == "on" ) {
 }
 
 $time=time();
-$sl="INSERT INTO `pm` (`date` ,`title`,`auth`, `text` ,`to` )
-VALUES ( '".$time."', '".mysql_escape_string(gtext($title))."' ,
-'".$usr->login."' ,'".mysql_escape_string(gtext($text))."'
-,'$to' )";
-$result=mysql_query($sl,$sql);
 
-$sl="SELECT * FROM `pm` WHERE `date` = '".$time."'";
-$result=mysql_query($sl,$sql);
-$rw = mysql_fetch_assoc($result);
+$result=db_query("INSERT INTO `pm` (`date` ,`title`,`auth`, `text` ,`to` )
+VALUES ( %s , % ,%s , %s, %s )",$time, $title, $usr->login, $text, $to);
 
-if ($row['pmre'] == 1) {
-    $to = $row['mail'];
+if ($usr->pmr == 1) {
+    $to = $usr->mail;
     $subject = "Личное сообщение на ".$s_name;
     $message = render_mail('new_pm', array(
         'user' => $usr->login,
-        'pm_id' =>$rw['id'],
+        'pm_id' =>db_last_insert_id('pm'),
     ));
     $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
     nullbyte_mail($to, $subject, $message, true, $headers);

@@ -51,7 +51,7 @@ for ($i = $siz; $i >= 0; $i--) {
 array_splice($tarr, 16);
 echo render_hands_free($tarr,$siz);
 echo render_search_panel();
-if (!($tops = readCache('tops.cache', CACHE_TIME_LIMIT))) {
+if (!($tops = readCache('tops.cache', CACHE_TIME_LIMIT*10))) {
     $tops = '';
     $result = db_query('SELECT * FROM `tags` WHERE `num` > 0 ORDER BY `num` DESC LIMIT %d',COUNT_TAG); //get tags from db
     $tops .= render_tags(generate_tag_array($result,28,6)); //render tag-cloud
