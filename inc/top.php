@@ -32,7 +32,7 @@ $ma=cmenu($ma);
         if ($i<$ma->menu_c-1 && $enu_arr[$i+1]['active']) {$enu_arr[$i]['before_active']=1; $menu_before_active=$mk->url; } else $enu_arr[$i]['before_active']=0;
     }
 $act=0;
-if(!($out = readCache($path, CACHE_TIME_LIMIT*10))) {
+if(!($out = readCache($path, CACHE_TIME_LIMIT))) {
     ob_start();
    
 
