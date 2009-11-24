@@ -8,15 +8,16 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
     if ($frnd) {
         $arr = explode(',', $frnd);
         trim_array($arr, '_db_escape_string');
-        if ($arr) $where = '`lenta`.`who` IN (' . implode(',', $arr) . ')';
+        if ($arr) $where = '`_lenta`.`who` IN (' . implode(',', $arr) . ')';
+
     }
-    $result=db_query("SELECT `lenta`.*,`inblog`.`bname` FROM `post`,`lenta`,`inblog`
-WHERE `lenta`.`date`> %d && `post`.`date` > %d && ((`lenta`.`who` = %s && `lenta`.`type` = 0) ||
-(`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
-(`lenta`.`type` = 2 && ".$where." )) GROUP BY `lenta`.`id`
- ORDER BY `date` DESC  LIMIT %d , %d",time()-7*24*60*60,time()-7*24*60*60,$usr->login,$usr->login,$usr->login,$frm,20);
-    //'SELECT `blogid` FROM `inblog` WHERE `name` = %s && `out` = 0 ORDER BY id DESC'
-    db_query("SET SQL_BIG_SELECTS=0 ");
+    $result=db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
+    (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,
+    (SELECT `inblog`.`name`,`inblog`.`bname` FROM `inblog` WHERE `inblog`.`out` = 0 && `inblog`.`name` = %s ) as `_inblog`
+    WHERE (`_lenta`.`who` = %s && `_lenta`.`type` = 0) ||
+    (`_lenta`.`who` = `_inblog`.`bname` && `_lenta`.`type` = 1  && `_post`.`id`=`_lenta`.`uid`) ||
+    (`_lenta`.`type` = 2 && '.$where.' ) GROUP BY `_lenta`.`id` ORDER BY `_lenta`.`date` DESC  LIMIT %d , %d',
+    time()-7*24*60*60, time()-7*24*60*60, $usr->login, $usr->login, $usr->login, $frm, 20);
     $com=new comment;
     while ($row=db_fetch_assoc($result)) {
     //    echo $row['type'];
