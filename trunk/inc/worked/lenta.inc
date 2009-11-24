@@ -1,7 +1,7 @@
 <?php
 if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT))) {
     ob_start();
-    db_query("SET SQL_BIG_SELECTS=1 ");
+
     $frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
     $where="1 = 0";
     $frm=request::get_get('frm',0);
@@ -57,11 +57,13 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
     }
 
     echo render_paginator('lenta/', 20,
-    db_num_rows(db_query("SELECT `lenta`.*,`inblog`.`bname` FROM `post`,`lenta`,`inblog`
-WHERE (`lenta`.`who` = %s && `lenta`.`type` = 0) ||
-(`lenta`.`who`= `inblog`.`bname` && `lenta`.`type`= 1 && `inblog`.`name` = %s && `inblog`.`out` = 0 && `post`.`id`=`lenta`.`uid` && `post`.`auth`!= %s) ||
-(`lenta`.`type` = 2 && ".$where." ) GROUP BY `lenta`.`id`
- ORDER BY `date` DESC ",$usr->login,$usr->login,$usr->login))
+    db_num_rows(db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
+    (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,
+    (SELECT `inblog`.`name`,`inblog`.`bname` FROM `inblog` WHERE `inblog`.`out` = 0 && `inblog`.`name` = %s ) as `_inblog`
+    WHERE (`_lenta`.`who` = %s && `_lenta`.`type` = 0) ||
+    (`_lenta`.`who` = `_inblog`.`bname` && `_lenta`.`type` = 1  && `_post`.`id`=`_lenta`.`uid`) ||
+    (`_lenta`.`type` = 2 && '.$where.' ) GROUP BY `_lenta`.`id` ORDER BY `_lenta`.`date` DESC  ',
+    time()-7*24*60*60, time()-7*24*60*60, $usr->login, $usr->login, $usr->login))
     , $frm);
 $out=ob_get_clean();
 writeCache($out,'lenta_'.$usr->login.'_'.$frm.'.cache');
