@@ -92,33 +92,35 @@ if (request::get_get('fnd',0)) {
     $sql_get="SELECT * FROM `post` WHERE ( title LIKE '%".mysql_escape_string($fnd)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($fnd)."%' )  $blck ORDER BY  id DESC";
     echo render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>htmlspecialchars(request::get_get('fnd'))));
 }
-if (isset($_GET['pg']) && $_GET['pg']=='lenta' && $loged==1) {
+if (request::get_get('pg',0)!=0 && request::get_get('pg',0)=='lenta' && $loged==1) {
     $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special().' ORDER BY `id` DESC';
 }
-$result=mysql_query($sql_get,$sql);
+$result=db_query($sql_get);
 $i=0; $k=0;
 $cur=$_SERVER['REQUEST_URI'];
 $cur=str_replace("&","*amp",$cur);
 $cur=str_replace("?","*qw",$cur);
-$kol=mysql_num_rows($result);
-$result=mysql_query($sql_get." LIMIT ".$frm." , ".$count,$sql);
-if ($kol<1 && !isset($_GET['blog'])) {
-    if (isset($_GET['fnd'])) {
+$kol=db_num_rows($result);
+$result=db_query($sql_get." LIMIT ".$frm." , ".$count);
+if ($kol<1 && request::get_get('blog',0)==0) {
+    if (request::get_get('fnd',0)!=0) {
         echo render_error("Ничего не найдено!");
     } else {
         redirect($dir.'error/not_found');
     }
 } else {
     if (isset($bl) && $bl==1) {
-        $sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
-        $resul=mysql_query($sql_get,$sql);
-        $rowa = mysql_fetch_assoc($resul);
+//        $sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
+//        $resul=mysql_query($sql_get,$sql);
+//        $rowa = mysql_fetch_assoc($resul);
+        $rowa= db_fetch_assoc(db_query("SELECT * FROM `blogs` WHERE id = %d ",request::get_get('blog')));
         $blg=new blog;
         $blg->make($rowa);
-        $sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($_GET['blog'])."' && name =
-			'".$usr->login."'";
-        $res=mysql_query($sql_get,$sql);
-        $ro = mysql_fetch_assoc($res);
+//        $sql_get="SELECT * FROM `inblog` WHERE blogid = '".intval($_GET['blog'])."' && name =
+//			'".$usr->login."'";
+//        $res=mysql_query($sql_get,$sql);
+//        $ro = mysql_fetch_assoc($res);
+        $ro=db_fetch_assoc(db_query("SELECT * FROM `inblog` WHERE blogid = %d && name = %s",request::get_get('blog'),$usr->login));
         $avatar=0;
         $avatar_url=null;
         if (strlen($blg->av)>0) {
@@ -157,10 +159,10 @@ if ($kol<1 && !isset($_GET['blog'])) {
             'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur));
         }
     }
-    while ($row = mysql_fetch_assoc($result)) {
-        if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
-            echo "<a id='hl'></a>";
-        }
+    while ($row = db_fetch_assoc($result)) {
+//        if (isset($_GET['hl']) && $_GET['hl']==$row['id']) {
+//            echo "<a id='hl'></a>";
+//        }
         $posts[$k]=post_echo($row,0,$draft);
         if ($posts[$k]->visible) {
             if ($posts[$k]->tp==1 || ($posts[$k]->tp!=3 && $posts[$k]->havecut()==1)) {

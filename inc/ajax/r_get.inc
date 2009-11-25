@@ -12,17 +12,17 @@ if (request::get_get('com',0)) {
     $tp="`comment`.";
 }
 if (request::get_get('aft',0)) {
-    $aft=" && ".$tp."`id` > ".intval($_GET['aft']);
+    $aft=" && ".$tp."`id` > ".intval(request::get_get('aft'));
 } elseif (request::get_get('bef',0)) {
-    $aft=" && ".$tp."`id` < ".intval($_GET['bef']);
+    $aft=" && ".$tp."`id` < ".intval(request::get_get('bef'));
 }
 $limit=8;
 if (request::get_get('lm',0)) {
-    $limit=intval($_GET['lm']);
+    $limit=intval(request::get_get('lm'));
 }
 $i=0;
-if (isset ($_GET['noo'])) {
-    if ($_GET['noo']==1) {
+if (request::get_get('noo',0)) {
+    if (request::get_get('noo',0)==1) {
         $_SESSION['tp1']=0;
     } else {
         $_SESSION['tp2']=0;
@@ -68,7 +68,7 @@ if (isset ($_GET['noo'])) {
 
 } elseif (request::get_get('top_user',0)) {
     if (!$api) $_SESSION['tp2']='us';
-   $result=db_query(" SELECT * FROM `users` WHERE `lvl`='0'  ORDER BY (ratep - ratem + prate / $post_r + crate / $com_r + brate / $blog_r) DESC LIMIT ".$limit);
+   $result=db_query(" SELECT * FROM `users` WHERE `lvl`='0'  ORDER BY (ratep - ratem + prate / %d + crate / %d + brate / %d) DESC LIMIT %d",$post_r,$com_r,$blog_r,$limit);
    while ($row = db_fetch_assoc($result)) {
         $arr[$i]['name']=$row['name'];
         $arr[$i]['rate']=$row['ratep']-$row['ratem']+$row['prate']/$post_r+$row['crate']/$com_r+$row['brate']/$blog_r;
@@ -76,7 +76,7 @@ if (isset ($_GET['noo'])) {
     }
 } elseif (request::get_get('top_blog',0)) {
     if (!$api) $_SESSION['tp2']='bl';
-   $result=db_query(" SELECT * FROM `blogs` ORDER BY ratep - ratem DESC LIMIT ".$limit);
+   $result=db_query(" SELECT * FROM `blogs` ORDER BY ratep - ratem DESC LIMIT %d",$limit);
    while ($row = db_fetch_assoc($result)) {
         $arr[$i]['id']=$row['id'];
         $arr[$i]['name']=$row['name'];
@@ -86,7 +86,7 @@ if (isset ($_GET['noo'])) {
 } elseif (request::get_get('eye',0) && $loged) {
     if (!$api) $_SESSION['tp1']='eye';
     if (!request::get_get('no',0)) {
-        $result=db_query(" SELECT * FROM `eye`,`post` WHERE `eye`.`pid`=`post`.`id` && `eye`.`who`='".$usr->login."' ORDER BY  `eye`.`id` DESC LIMIT ".$limit);
+        $result=db_query(" SELECT * FROM `eye`,`post` WHERE `eye`.`pid`=`post`.`id` && `eye`.`who`= %s ORDER BY  `eye`.`id` DESC LIMIT %d",$usr->login,$limit);
         while ($row = db_fetch_assoc($result)) {
             $arr[$i]['id']=$row['id'];
             $arr[$i]['title']=$row['title'];
@@ -100,8 +100,8 @@ if (isset ($_GET['noo'])) {
             $i++;
         } }
 } elseif (request::get_get('last_com_id',0) && request::get_get('pid',0)) {
-    $post11=intval($_GET['pid']);
-    $result=db_query("SELECT * FROM `comment` WHERE `id`>'".intval($_GET['last_com_id'])."' && `krnl`='".intval($_GET['pid'])."' ORDER by `id`");
+    $post11=request::get_get('pid');
+    $result=db_query("SELECT * FROM `comment` WHERE `id`> %d && `krnl`= %d ORDER by `id`",request::get_get('last_com_id'),$post11);
     while ($row = db_fetch_assoc($result)) {
         $arr[$i]['id']=$row['id'];
         $arr[$i]['lvl']=$row['lvl'];
@@ -111,7 +111,7 @@ if (isset ($_GET['noo'])) {
     }
     if ($loged==1) {
         $id=db_result(db_query("SELECT id FROM `hist` WHERE `pid` = %d && `who`= %s  ",request::get_get('pid'),$usr->login));
-        db_query( "UPDATE `hist` SET `date` = '".time()."' WHERE `hist`.`id` =".$id." LIMIT 1");
+        db_query( "UPDATE `hist` SET `date` = %d WHERE `hist`.`id` = %d LIMIT 1",time(),$id);
     }
 
 } else if (request::get_get('draft',0) && $loged) {

@@ -1,3 +1,3 @@
 <?php
-echo code(gtext($_POST['text']));
+echo code(gtext(request::get_post('text')));
 ?>

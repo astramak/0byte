@@ -59,8 +59,6 @@ include("config.php");
 session_start();
 unlogin();
 $db_connection = db_connect();
-// depricated and should be removed after DB code update
-$sql = $db_connection;
 
 $pg = request::get_get('pg');
 

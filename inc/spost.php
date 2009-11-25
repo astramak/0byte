@@ -125,5 +125,5 @@ if ($loged == 1) {
 ///spy
 if ($num_com==0) {$nam="&#8212;";} else {$nam=$num_com;}
 echo "<div id='ebaa'><img onClick='upd_com()' style='cursor:pointer' src='style/n_img/refr.gif' /><br /><a href='javascript:upd_ls()' id='ln_doe'>".$nam."</a></div>";
-$script->add("var last_com_id=".$last_com_id."; var post_id_com=".intval($_GET['post'])."; ".$jstocom." var num_com=".$num_com.";");
+$script->add("var last_com_id=".$last_com_id."; var post_id_com=".intval(request::get_get('post'))."; ".$jstocom." var num_com=".$num_com.";");
 ?>

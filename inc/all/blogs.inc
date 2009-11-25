@@ -3,12 +3,12 @@
 $frm=0;
 $inser="list/blog/";
 if (request::get_get('from',0)) {
-    $frm=intval($_GET['from']);
+    $frm=intval(request::get_get('from'));
 }	$order="name";
 $fst="<a href='list/blog/namedesc'>&#8593; Название</a> &#8595;";
 $scn="<a href='list/blog/ratedesc'>&#8593; Рейтинг</a> <a href='list/blog/rate'>&#8595;</a>";
 if (request::get_get('order',0)) {
-    if ($_GET['order']=='namedesc') {
+    if (request::get_get('order')=='namedesc') {
         $order="name DESC";
         $fst="&#8593; <a href='list/blog/'>Название &#8595;</a>";
         $inser.="namedesc/";

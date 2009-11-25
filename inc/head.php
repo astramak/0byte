@@ -28,7 +28,7 @@ $post_id = intval(request::get_get('post'));
 
 $vars = array();
 
-if ($post_id && !isset($_GET['wt'])) {
+if ($post_id && request::get_get('wt',0)!=0) {
     $row = db_fetch_assoc(db_query('SELECT `blogid`,`auth`,`blog`,`title` FROM `post` WHERE `id` = %d', $post_id));
     if ($row['blogid'] == 0) {
         $blog = $row['auth'];

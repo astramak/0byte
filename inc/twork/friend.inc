@@ -1,32 +1,36 @@
 <?php
-$who=$_GET['who'];
-if (isset($who)) {
+$who=request::get_get('who',0);
+if ($who!=0) {
 
-    $sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && ( frnd LIKE  '%, ".mysql_escape_string($_GET['who'])."%' || frnd LIKE  '%".mysql_escape_string($_GET['who']).",%' ) ORDER BY  id DESC ";
-    $result=mysql_query($sql_get,$sql);
-    if (!$result) {
-        echo  mysql_error();
-    }
-    $row = mysql_fetch_assoc($result);
+//    $sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."' && ( frnd LIKE  '%, ".mysql_escape_string($_GET['who'])."%' || frnd LIKE  '%".mysql_escape_string($_GET['who']).",%' ) ORDER BY  id DESC ";
+//    $result=mysql_query($sql_get,$sql);
+//    if (!$result) {
+//        echo  mysql_error();
+//    }
+//    $row = mysql_fetch_assoc($result);
+    $row=db_fetch_assoc(db_query("SELECT * FROM `users` WHERE name = %s && ( frnd LIKE  %s
+|| frnd LIKE  %s ) ORDER BY  id DESC ",$usr->login,'%,'.$who.'%','%'.$who.',%'));
     if ($row['name']!=$usr->login) {
-        $sl="UPDATE `users` SET `frnd` = CONCAT(`frnd`,', ".mysql_escape_string($_GET['who'])."')
-	WHERE `users`.`name` = '".$usr->login."'";
-        $result=mysql_query($sl,$sql);
+        db_query("UPDATE `users` SET `frnd` = CONCAT(`frnd`,', %s)
+	WHERE `users`.`name` = %s",$who,$usr->login);
+        
     } else {
-        $sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."'
-		ORDER BY  id DESC ";
-        $result=mysql_query($sql_get,$sql);
-        if (!$result) {
-            echo  mysql_error();
-        }
-        $row = mysql_fetch_assoc($result);
+//        $sql_get="SELECT * FROM `users` WHERE name = '".$usr->login."'
+//		ORDER BY  id DESC ";
+//        $result=mysql_query($sql_get,$sql);
+//        if (!$result) {
+//            echo  mysql_error();
+//        }
+//        $row = mysql_fetch_assoc($result);
+        $row=db_fetch_assoc(db_query("SELECT * FROM `users` WHERE name = %s ORDER BY  id DESC ",$usr->login));
         $frnd=str_replace(", ".$who,"",$row['frnd']);
-        $sl="UPDATE `users` SET `frnd` = '".$frnd."'
-	WHERE `users`.`name` = '".$usr->login."'";
-        $result=mysql_query($sl,$sql);
+//        $sl="UPDATE `users` SET `frnd` = '".$frnd."'
+//	WHERE `users`.`name` = '".$usr->login."'";
+//        $result=mysql_query($sl,$sql);
+        db_query("UPDATE `users` SET `frnd` = '%s WHERE `users`.`name` = %s",$frnd,$usr->login);
     }
 }
-$lst=$_GET['cur'];
+$lst=request::get_get('cur');
 $lst=str_replace("*amp","&",$lst);
 $lst=str_replace("*qw","?",$lst);
 redirect($lst);
