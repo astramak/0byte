@@ -22,13 +22,14 @@ if ($usr->rate()>=$np_rate) {
         $len=request::get_get("len",0);
     } else {$len=2;}
 
-    $sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
-    $result=mysql_query($sql_get,$sql);
-    if (!$result) {
-        echo  mysql_error();
-    }
+//    $sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
+//    $result=mysql_query($sql_get,$sql);
+//    if (!$result) {
+//        echo  mysql_error();
+//    }
+    $result=db_query("SELECT * FROM `inblog` WHERE name = %s",$usr->login);
     $blogs[]=array('value'=>'own','text'=>'Персональный');
-    while ($row = mysql_fetch_assoc($result)) {
+    while ($row = db_fetch_assoc($result)) {
         $blogs[]=array('value'=>$row['blogid'],'text'=>$row['bname']);
     }
     echo render_new_post($type, $type_, $tp, $blogs, $len);
