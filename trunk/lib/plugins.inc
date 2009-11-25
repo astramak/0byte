@@ -19,6 +19,8 @@ $SCRIPT='<script type="text/javascript" src="js/js.php?js=main.js"></script>
 		<script type="text/javascript" src="js/js.php?js=login.js"></script>
 		<script type="text/javascript" src="js/js.php?js=ve.js"></script>
 		<script type="text/javascript" src="js/js.php?js=pm.js"></script>';
+//use compiled
+//$SCRIPT='<script type="text/javascript" src="js/js.php?js=compiled.js"></script>';
 $native_script=1;
 $native_presave=1;
 $native_prerender=1;

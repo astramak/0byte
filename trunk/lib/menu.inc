@@ -59,16 +59,20 @@ class mel {
                     if ($frnd) {
                         $arr = explode(',', $frnd);
                         trim_array($arr, '_db_escape_string');
-                        if ($arr) $where = '`_lenta`.`who` IN (' . implode(',', $arr) . ')';
+                        if ($arr) $where = '`lenta`.`who` IN (' . implode(',', $arr) . ')';
 
                     }
-                    $new=db_num_rows(db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
-    (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,
-    (SELECT `inblog`.`name`,`inblog`.`bname` FROM `inblog` WHERE `inblog`.`out` = 0 && `inblog`.`name` = %s ) as `_inblog`
-    WHERE (`_lenta`.`who` = %s && `_lenta`.`type` = 0) ||
-    (`_lenta`.`who` = `_inblog`.`bname` && `_lenta`.`type` = 1  && `_post`.`id`=`_lenta`.`uid`) ||
-    (`_lenta`.`type` = 2 && '.$where.' ) GROUP BY `_lenta`.`id` ORDER BY `_lenta`.`date` DESC  ',
-                        time()-12*60*60, time()-12*60*60, $usr->login, $usr->login, $usr->login));
+                    //                    $new=db_num_rows(db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
+                    //    (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,
+                    //    (SELECT `inblog`.`name`,`inblog`.`bname` FROM `inblog` WHERE `inblog`.`out` = 0 && `inblog`.`name` = %s ) as `_inblog`
+                    //    WHERE (`_lenta`.`who` = %s && `_lenta`.`type` = 0) ||
+                    //    (`_lenta`.`who` = `_inblog`.`bname` && `_lenta`.`type` = 1  && `_post`.`id`=`_lenta`.`uid`) ||
+                    //    (`_lenta`.`type` = 2 && '.$where.' ) GROUP BY `_lenta`.`id` ORDER BY `_lenta`.`date` DESC  ',
+                    //                        time()-12*60*60, time()-12*60*60, $usr->login, $usr->login, $usr->login));
+                  $new=db_result(db_query("SELECT (`l`.`cn`+`p`.`cn`) as `cnt` FROM (SELECT COUNT(`id`) as `cn` FROM`lenta` WHERE `lenta`.`date` > %d &&
+`lenta`.`who`=%s && `lenta`.`type`= 0 ) as `l`, (SELECT COUNT(`id`) as `cn` FROM `post`
+ WHERE `date` > %d && `blck` = 0 && `auth` != %s && ".get_special().") as `p`"
+,time()-12*60*60,$usr->login,time()-12*60*60,$usr->login));
                 } else {
                     $this->show = 0;
                 }

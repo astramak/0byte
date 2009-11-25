@@ -16,6 +16,7 @@
  */
 
 ob_start("ob_gzhandler");
+header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 10) . 'GMT');
 $loged=login();
 if ($loged) {
     db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
