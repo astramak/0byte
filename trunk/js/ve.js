@@ -167,9 +167,9 @@ function main_h() {
         document.getElementById('mkt').style.display="none";
         document.getElementById('com').style.display="none";
         document.getElementById('it').insertBefore(newi,document.getElementById('mkt'));
-        if (document.getElementById("com").text.value!=null) {
+        if (document.getElementById("com").text.value!="") {
             cmn=document.getElementById("com").text.value;
-            document.getElementById("com").text.value=null;
+            document.getElementById("com").text.value="";
         }
                  
     } else {
@@ -191,7 +191,7 @@ function main_a() {
     if (last!=null) {
         document.getElementById("f"+last).style.display="none";
         document.getElementById("wy"+last).style.display="none";
-        document.getElementById('com').text=document.getElementById("f"+last).text;
+        document.getElementById('com').text.value=document.getElementById("f"+last).text.value;
         cmn=document.getElementById("f"+last).text.value;
     }
     document.getElementById("com").text.value=cmn;
@@ -503,7 +503,7 @@ function changer(value,event,prefix) {
         document.getElementById(prefix+'changer_'+active).style.backgroundColor="#B6B6B6";
     } else if (active!=-1 && length!=0 && (event.keyCode == 13 || event.keyCode == 10)) {
         document.getElementById(prefix+'lang').value=document.getElementById(prefix+'changer_'+active).innerHTML;
-        document.getElementById(prefix+'area').innerHTML=null;
+        document.getElementById(prefix+'area').innerHTML="";
         length=0;
     } else  if ((active==-1 || length==0) && (event.keyCode == 13 || event.keyCode == 10)) {
         return 1;
@@ -514,7 +514,7 @@ function changer(value,event,prefix) {
             x_r('ajax/tag/'+value,'ac');
         }
     } else {
-        document.getElementById(prefix+'area').innerHTML=null;
+        document.getElementById(prefix+'area').innerHTML="";
     }
     return 0;
 }
