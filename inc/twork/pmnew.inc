@@ -28,7 +28,7 @@ if (request::get_get('lock') == "on" ) {
 $time=time();
 
 $result=db_query("INSERT INTO `pm` (`date` ,`title`,`auth`, `text` ,`to` )
-VALUES ( %s , % ,%s , %s, %s )",$time, $title, $usr->login, $text, $to);
+VALUES ( %s , %s ,%s , %s, %s )",$time, $title, $usr->login, $text, $to);
 
 if ($usr->pmr == 1) {
     $to = $usr->mail;
