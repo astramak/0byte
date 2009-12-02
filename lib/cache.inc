@@ -22,7 +22,9 @@ function writeCache($content, $filename) {
     fclose($fp);
     return true;
 }
-
+function deleteCache($filename) {
+    unlink('./tmp/html/'.$filename);
+}
 function readCache($filename, $expiry) {
     $filepath = './tmp/html/' . $filename;
     if (is_file($filepath)) {

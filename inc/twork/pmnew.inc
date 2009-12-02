@@ -40,5 +40,6 @@ if ($usr->pmr == 1) {
     $headers = array('From: reply'.$eml, 'Reply-To: reply'.$eml);
     nullbyte_mail($to, $subject, $message, true, $headers);
 }
+deleteCache('top_'.$to.'.cache');
 redirect('work/pmls/out');
 ?>
