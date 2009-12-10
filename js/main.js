@@ -44,6 +44,12 @@ function strt() {
         }
                
     }
+    for (i=0;i<document.getElementById('it').getElementsByTagName('img').length;i++){
+        if (document.getElementById('it').getElementsByTagName('img')[i].width>document.body.clientWidth/2) {
+            document.getElementById('it').getElementsByTagName('img')[i].width=document.body.clientWidth/2;
+            document.getElementById('it').getElementsByTagName('img')[i].onclick=function(){show_full(this)};
+        }
+    }
     if (document.getElementById("view")) {
         document.getElementById("view").style.display="inline";
     }
@@ -190,10 +196,9 @@ function cr() {
     if (!document.getElementById("bs")) {
         var bs=document.createElement('div');
 	
-        bs.innerHTML="<div id='bs'><div id='wd'><b class='b1'></b>" +
-        "<b class='b2'></b><b class='b3'></b><b class='b4'></b>" +
+        bs.innerHTML="<div id='bs'><div id='wd'>" +
         "<div id='mn'></div>" +
-        "<b class='b4'></b><b class='b3'></b><b class='b2'></b><b class='b'></b></div></div>";
+        "</div></div>";
         document.getElementsByTagName('body')[0].appendChild(bs);
     } else {
         document.getElementById("bs").style.display='block';
@@ -338,4 +343,13 @@ function rm_me_on() {
     document.getElementById('me_on').removeChild(document.getElementById('me_on_name'+num));
     document.getElementById('me_on').removeChild(document.getElementById('me_on_url'+num));
     document.getElementById('me_on').removeChild(document.getElementById('br_'+num));
+}
+function show_full(image) {
+    cr();
+    document.getElementById('wd').style.margin=0;
+    document.getElementById('mn').innerHTML='<img src="'+image.src+'" onclick="img_cr()" alt="'+image.alt+'" />';
+}
+function img_cr() {
+    document.getElementById('wd').style.margin="10% 0 0 0";
+    a_cr();
 }
