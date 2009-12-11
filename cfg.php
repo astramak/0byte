@@ -31,8 +31,8 @@ define('TPL_EDITOR',TPL_ROOT.'/editor');
 define('TPL_MAIN', TPL_ROOT);
 define('COUNT_TAG',40);
 define("TOP_COUNT", 10);
-define("CACHE_TIME_LIMIT", 30);
-ini_set('display_errors', 1);
+define("CACHE_TIME_LIMIT", 0);
+//ini_set('display_errors', 1);
 //lib load
 include("lib/blog.inc");
 include("lib/comment.inc");
