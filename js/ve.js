@@ -39,26 +39,15 @@ function insert(aTag, eTag,form,el) {
 
 function cr_d(fr,el) {
     cr();
-    //        alert('ajax/editor?type=link&fr='+fr+'&el='+el);
     x_r('ajax/editor?type=link&fr='+fr+'&el='+el,'box');
-//	document.getElementById('mn').innerHTML="<h3>Ссылка</h3>" +
-//	"<form onsubmit=\"urla(this,'"+fr+"','"+el+"'); return false;\"><label>Адрес <input type='text' name='url' /></label>" +
-//	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 }
 function code_d(fr,el) {
     cr();
-    x_r('ajax/editor?type=code&fr='+fr+'&el='+el,'box');
-//	document.getElementById('mn').innerHTML="<h3>Код</h3>" +
-//	"<form onsubmit=\"codea(this,'"+fr+"','"+el+"'); return false;\"><label>Язык для подсветки: <input type='text' name='code' /></label>" +
-//	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
+  x_r('ajax/editor?type=code&fr='+fr+'&el='+el,'box');
 }
 function img_d(fr,el) {
     cr();
     x_r('ajax/editor?type=image&fr='+fr+'&el='+el,'box');
-//	document.getElementById('mn').innerHTML="<h3>Изображение</h3>" +
-//	"<form onsubmit=\"imga(this,'"+fr+"','"+el+"'); return false;\"><label>Адрес <input type='text' name='url' /></label>" +
-//	"<label>Текст <input type='text' name='alt' /></label>" +
-//	"<input type='submit' value='Создать' /><input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 
 }
 
@@ -89,7 +78,6 @@ function quote(fr,el) {
 var last=null;
 var cmn=null;
 function doit(id,lvl) {
-    //    var last;
     if (loged==1) {
         if (!document.getElementById("f"+id)) {
                   
@@ -215,15 +203,6 @@ function li_a(a,id,fg) {
 function list(id,fg) {
     cr();
     x_r('ajax/editor?type=list&fr='+id+'&el='+fg,'box');
-//	document.getElementById('mn').innerHTML="<h3>Список</h3><form id='list' onsubmit=\"li_a(this,'"+id+"','"+fg+"'); return false;\">" +
-//	"<label><input type='radio' value='ul' name='lst' onClick=\"sli='ul';\" checked />Ненумерованный</label>" +
-//	"<label><input type='radio' value='ol' name='lst' onClick=\"sli='ol';\" />Нумерованный</label><br />" +
-//	"<input type='hidden' name='nm' value='1' />" +
-//	"<label id='n1'><input type='text' id='na1' /><br /></label>" +
-//	"<input type='button' id='ad' onClick='nadd(this.form)' value='Добавить' />"+
-//	"<input type='button' id='rm' onClick='nrm(this.form)' value='Удалить' />"+
-//	"<input type='submit' value='Создать' />" +
-//	"<input type='button' onClick='a_cr()' value='Отмена' /></form>" ;
 }
 function change_color(val,fr) {
     if (val!='1') {
@@ -272,7 +251,8 @@ function mk(id,fr) {
     " </select><br />"+
     " <a class='tdx' href='javascript:code_d(\""+fr+"\",\"text\")'>code</a>" +
     " <a class='tdx' href='javascript:quote(\""+fr+"\",\"text\")'>Цитировать</a>"+
-    " <a class='tdx' href='javascript:insert(\"<user>\",\"</user>\",\""+fr+"\",\"text\")'>Пользователь</a>";
+    " <a class='tdx' href='javascript:insert(\"<user>\",\"</user>\",\""+fr+"\",\"text\")'>Пользователь</a>"+
+    " <a class='tdx' href='javascript:insert(\"<spoiler>\",\"</spoiler>\",\""+fr+"\",\"text\")'>Спойлерр</a>";
 }
 
 function toHex(dec) {
@@ -517,4 +497,20 @@ function changer(value,event,prefix) {
         document.getElementById(prefix+'area').innerHTML="";
     }
     return 0;
+}
+function show_spoiler(node) {
+    element =  getElementsByClassName('inner_spoiler',node.parentNode)[0];
+    element.style.display = 'block';
+    node.innerHTML='Скрыть';
+    node.onclick = function () {
+        hide_spoiler(this);
+    };
+}
+function hide_spoiler(node) {
+    element =  getElementsByClassName('inner_spoiler',node.parentNode)[0];
+    element.style.display = 'none';
+    node.innerHTML='Показать';
+    node.onclick = function () {
+        show_spoiler(this);
+    };
 }

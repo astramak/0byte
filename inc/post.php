@@ -68,7 +68,9 @@ else
             }
             else
                 if (request::get_get('tag',0)) {
-                    $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".mysql_escape_string(request::get_get('tag')).",%' || LOWER(tag) = LOWER('".mysql_escape_string(request::get_get('tag'))."')
+                    $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".mysql_escape_string(request::get_get('tag')).",%' ||
+ tag LIKE '%, ".mysql_escape_string(request::get_get('tag'))."%'
+|| LOWER(tag) = LOWER('".mysql_escape_string(request::get_get('tag'))."')
 			|| tag = '".mysql_escape_string(request::get_get('tag'))."' || tag LIKE '%,".mysql_escape_string(request::get_get('tag'))."%'  $blck ORDER BY  id DESC";
                     $inser.="tag/".htmlspecialchars(request::get_get('tag'))."/";
                     echo render_template(TPL_POST_LIST.'/tag.tpl.php', array('text'=>htmlspecialchars(request::get_get('tag'))));
