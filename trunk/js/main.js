@@ -31,11 +31,11 @@ function strt() {
             document.links[i].href="javascript:cr(); x_r('ajax/editor?type=block&fr="+txt+"&el=user','box');"
         } else if (document.links[i].href.indexOf('work/delete_user')+1) {
             document.links[i].href="javascript:cr(); x_r('ajax/editor?type=delete_user','box');"
-        }  else if (document.links[i].href.indexOf('draft#')+1) {
+        } else if (document.links[i].href.indexOf('draft#')+1) {
             document.links[i].href="javascript:g_plist('draft')";
-        }  else if (document.links[i].href.indexOf('favourite#')+1) {
+        } else if (document.links[i].href.indexOf('favourite#')+1) {
             document.links[i].href=" javascript:g_plist('favourite')";
-        }  else if (document.links[i].href.indexOf('twork.php?wt=favourite')+1) {
+        } else if (document.links[i].href.indexOf('twork.php?wt=favourite')+1) {
             document.links[i].href = "javascript:x_r('twork.php"+document.links[i].search+"&json=1','fav')";
         } else if (document.links[i].href.indexOf('work/blockpost/')+1) {
             tt=document.links[i].href.replace(/(.*?)\/work\/blockpost\//,'');
@@ -47,8 +47,16 @@ function strt() {
     for (i=0;i<document.getElementById('it').getElementsByTagName('img').length;i++){
         if (document.getElementById('it').getElementsByTagName('img')[i].width>document.body.clientWidth/2) {
             document.getElementById('it').getElementsByTagName('img')[i].width=document.body.clientWidth/2;
-            document.getElementById('it').getElementsByTagName('img')[i].onclick=function(){show_full(this)};
+            document.getElementById('it').getElementsByTagName('img')[i].onclick=function(){
+                show_full(this)
+            };
         }
+    }
+    elements = getElementsByClassName('spoiler',document.getElementById('xy'));
+    for (i=0;i<elements.length;i++) {
+        into = elements[i].innerHTML;
+        elements[i].innerHTML='<a onclick="show_spoiler(this)">Показать</a>'+
+        '<div class="inner_spoiler">'+into+"</div>";
     }
     if (document.getElementById("view")) {
         document.getElementById("view").style.display="inline";
@@ -92,7 +100,7 @@ function r_s(xrs,xs,xrt,tp) {
                         if (jr.select) {
                             document.getElementById(jr.select).focus();
                         }
-                      //put cache here
+                    //put cache here
                     } else
                     if (tp=="p") {
                         if (parseInt(jr.rate)>0) {
@@ -108,7 +116,7 @@ function r_s(xrs,xs,xrt,tp) {
                             jr.rate="<span class='rm'>"+jr.rate+"</span>";
                         }
                         document.getElementById("ru"+jr.id).innerHTML=jr.rate;
-                    }  else	if (tp=="b") {
+                    } else	if (tp=="b") {
                         if (parseInt(jr.rate)>0) {
                             jr.rate="<span class='rp'>"+jr.rate+"</span>";
                         } else if (parseInt(jr.rate)<0) {
@@ -137,7 +145,7 @@ function r_s(xrs,xs,xrt,tp) {
                         document.getElementById("cmn").innerHTML+=jr.txt;
                         document.location.hash="#cmnt"+jr.id;
 			
-                    }  else if (tp=='scom') {
+                    } else if (tp=='scom') {
                         document.getElementById('cmadd'+jr.cid).innerHTML+=jr.txt;
                         document.location.hash="#cmnt"+jr.id;
                     } else if (tp=='ac') {
@@ -296,6 +304,15 @@ function make_err(txt) {
     err.id="err_"+date.getTime();
     document.getElementsByTagName("body")[0].appendChild(err);
     setTimeout("kill_err('"+err.id+"')",5000);
+}
+function getElementsByClassName(classname, node)  {
+    if(!node) node = document.getElementsByTagName("body")[0];
+    var a = [];
+    var re = new RegExp('\\b' + classname + '\\b');
+    var els = node.getElementsByTagName("*");
+    for(var i=0,j=els.length; i<j; i++)
+        if(re.test(els[i].className))a.push(els[i]);
+    return a;
 }
 function kill_err(id) {
     document.getElementsByTagName("body")[0].removeChild(document.getElementById(id));

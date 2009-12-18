@@ -759,7 +759,7 @@ a.nomnm {
 
 /* === 4. text */
 
-.quote {
+.quote,.inner_spoiler {
     background-color: #E8F0FA;
     color: #666;
     padding: 10px;
@@ -801,4 +801,7 @@ a.nomnm {
 }
 .changer li:hover {
     background-color: #B6B6B6;
+}
+.inner_spoiler {
+    display:none;
 }

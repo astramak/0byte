@@ -3,6 +3,7 @@ require_once 'htmlpurifier-4.0.0/library/HTMLPurifier.auto.php';
 $text = str_replace('<cut/>', '[cut]', $text);
 $text = str_replace('<fcut/>', '[fcut]', $text);
 $text = preg_replace('/\<user\>(.*?)\<\/user\>/is', '[user]$1[/user]', $text);
+$text = preg_replace('/\<spoiler\>(.*?)\<\/spoiler\>/is', '<div class="spoiler">$1</div>', $text);
 $text = preg_replace ("/\<quote\>(.*?)\<\/quote\>/is", '<div class="quote">$1</div>', $text);
 $text = preg_replace ("/\<code\>(.*?)\<\/code\>/is", '[code]$1[/code]', $text);
 $text = preg_replace ("/\<code lang='([^']*)'\>(.*?)\<\/code\>/is", '[code=$1]$2[/code]', $text);
