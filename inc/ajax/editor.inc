@@ -35,6 +35,12 @@ switch ($type) {
         $json=1;
         include 'inc/worked/delete_user.inc';
         break;
+    case "new_post":
+        $json=1;
+        include 'inc/worked/newpost.inc';
+        $out['text']=$text;
+        $out['js']=$js;
+        break;
 }
 echo json_encode($out);
 ?>

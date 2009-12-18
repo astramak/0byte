@@ -41,6 +41,10 @@ function strt() {
             tt=document.links[i].href.replace(/(.*?)\/work\/blockpost\//,'');
 
             document.links[i].href="javascript:cr(); x_r('ajax/editor?type=blockpost&id="+tt+"','box');"
+        } else if (document.links[i].href.indexOf('work/newpost/')+1) {
+            tt=document.links[i].href.replace(/(.*?)\/work\/newpost\//,'');
+
+            document.links[i].href="javascript:merge_form('"+tt+"','new'); "
         }
                
     }
@@ -155,6 +159,23 @@ function r_s(xrs,xs,xrt,tp) {
                             out=out+'<li onmousemove="unhover_changer(); this.style.backgroundColor='+"'#B6B6B6'"+'; active='+i+';" id="'+jr.prefix+'changer_'+i+'" onclick="set('+"'"+jr.elements[i]+"','"+jr.prefix+"'"+')">'+jr.elements[i]+'</li>';
                         }
                         document.getElementById(jr.prefix+'area').innerHTML=out+'</ul>';
+                    } else if (tp=='new_post') {
+                        document.getElementById('it').innerHTML=jr.text;
+                        eval(jr.js);
+                        
+                        for (var i=0; i<(document.links.length); i++) {
+                            if (document.links[i].href.indexOf('work/newpost/')+1) {
+                                tt=document.links[i].href.replace(/(.*?)\/work\/newpost\//,'');
+                                document.links[i].href="javascript:merge_form('"+tt+"','new'); "
+                            } else if (document.links[i].href.indexOf('work/newpos')+1) {
+                                document.links[i].href="javascript:merge_form('pst','new'); "
+                            }
+                        }
+                        if (document.getElementById('rma')) {
+                                document.getElementById('adda').href='javascript:adda()';
+                                document.getElementById('rma').href='javascript:rma()';
+                        }
+                        complite_form('new');
                     }
                 } else {
                     make_err(jr.err);
