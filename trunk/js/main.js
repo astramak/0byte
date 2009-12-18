@@ -116,6 +116,7 @@ function r_s(xrs,xs,xrt,tp) {
                                 send_pm(this);
                                 return false;
                             };
+                            document.getElementById('mn').innerHTML+='<input type="button" onclick="a_cr()" value="Отмена" />';
                         }
                     //put cache here
                     } else
