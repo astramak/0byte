@@ -4,6 +4,7 @@ $type=request::get_get('type',null);
 $out['id']='mn';
 $needle=array('fr'=>request::get_get('fr'),'el'=>request::get_get('el'));
 $out['clean']=1;
+$out['type']=$type;
 switch ($type) {
     case "link":
         $out['select']='ins_url';
@@ -46,7 +47,7 @@ switch ($type) {
         include "inc/worked/pmnew.inc";
         $out['content']=$text;
         $out['js']=$js;
-        $out['select']='pm-new';
+        $out['select']='pm_title';
     break;
 }
 echo json_encode($out);

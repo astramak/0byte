@@ -41,5 +41,7 @@ if ($usr->pmr == 1) {
     nullbyte_mail($to, $subject, $message, true, $headers);
 }
 deleteCache('top_'.$to.'.cache');
+if (!request::get_get('json',0)) {
 redirect('work/pmls/out');
+}
 ?>
