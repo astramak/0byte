@@ -5,6 +5,10 @@ if (request::get_get('name',0)) {
     if ($alien->find(request::get_get('name'))!=0 ) {
         $name=request::get_get('name'); }
 }
-echo render_template(TPL_PM.'/new.tpl.php', array('name'=>$name));
-$script->add(`mk("rd","pm");`);
+$text=render_template(TPL_PM.'/new.tpl.php', array('name'=>$name));
+$js='mk("rd","pm");';
+if (@$script && !@$json) $script->add($js);
+if (!@$json) {
+    echo $text;
+}
 ?>
