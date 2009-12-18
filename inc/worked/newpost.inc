@@ -39,7 +39,8 @@ if ($usr->rate()>=$np_rate) {
     $js='mk(\'mq\',\'new\');
 		document.getElementById("mq").innerHTML+="<a class=\'tdx\' href=\'javascript:insert(\"[cut]\",\"\",\"new\",\"text\")\'>cut</a>"+
 		"<a class=\'tdx\' href=\'javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")\'>fcut</a>";';
-    if ($tp!=3 && @$script) $script->add($js); else $js=null;
+    if ($tp!=3 && !@$json) $script->add($js); else if ($tp==3) $js=null;
+
 } else {
     if (!@$json) {
         redirect($dir.'error/not_allow');
