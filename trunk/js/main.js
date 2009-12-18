@@ -45,6 +45,10 @@ function strt() {
             tt=document.links[i].href.replace(/(.*?)\/work\/newpost\//,'');
 
             document.links[i].href="javascript:merge_form('"+tt+"','new'); "
+        } else if (document.links[i].href.indexOf('work/pmnew/')+1) {
+            tt=document.links[i].href.replace(/(.*?)\/work\/pmnew\//,'');
+
+            document.links[i].href="javascript:cr(); x_r('ajax/editor?type=new_pm&name="+tt+"','box'); "
         }
                
     }
@@ -103,6 +107,9 @@ function r_s(xrs,xs,xrt,tp) {
                         document.getElementById(jr.id).innerHTML=jr.content;
                         if (jr.select) {
                             document.getElementById(jr.select).focus();
+                        }
+                        if (jt.js) {
+                            eval(jr.js);
                         }
                     //put cache here
                     } else

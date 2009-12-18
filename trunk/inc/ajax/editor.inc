@@ -41,6 +41,13 @@ switch ($type) {
         $out['text']=$text;
         $out['js']=$js;
         break;
+    case "new_pm":
+        $json=1;
+        include "inc/worked/pmnew.inc";
+        $out['content']=$text;
+        $out['js']=$js;
+        $out['select']='pm-new';
+    break;
 }
 echo json_encode($out);
 ?>
