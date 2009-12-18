@@ -511,7 +511,7 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
 .ctop, .cbottom {
     //height:15px;
 }
-.err_bbl {
+.err_bbl,.notify_bbl {
     position: fixed;
     height:80px;
     width: 25%;
@@ -521,7 +521,12 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
     color:#ECEEEF;
     font-size: 120%;vertical-align:middle;
     padding-left: 25px;
-    background:  #C36A5A url('img/er.png') left no-repeat;
+}
+.err_bbl {
+     background:  #C36A5A url('img/er.png') left no-repeat;
+}
+.notify_bbl {
+    background:  #73bf60 url('img/notify.png') left no-repeat;
 }
 #users {
     width: 100%;

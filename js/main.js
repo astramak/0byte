@@ -108,8 +108,14 @@ function r_s(xrs,xs,xrt,tp) {
                         if (jr.select) {
                             document.getElementById(jr.select).focus();
                         }
-                        if (jt.js) {
+                        if (jr.js) {
                             eval(jr.js);
+                        }
+                        if (jr.type=='new_pm') {
+                            document.getElementById('pm').onsubmit=function(){
+                                send_pm(this);
+                                return false;
+                            };
                         }
                     //put cache here
                     } else
@@ -179,8 +185,8 @@ function r_s(xrs,xs,xrt,tp) {
                             }
                         }
                         if (document.getElementById('rma')) {
-                                document.getElementById('adda').href='javascript:adda()';
-                                document.getElementById('rma').href='javascript:rma()';
+                            document.getElementById('adda').href='javascript:adda()';
+                            document.getElementById('rma').href='javascript:rma()';
                         }
                         complite_form('new');
                     }
@@ -214,6 +220,20 @@ function s_c(a,id) {
     xmlhttp.send("text="+encodeURIComponent(a.text.value));
 
     a.text.value="";
+}
+
+function send_pm(form) {
+    var xmlhttp = getXmlHttp();
+    xmlhttp.open('POST', "twork.php?wt=pmnew&json=1", true);
+    xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4) {
+            make_notify('Сообщение отправлено!','pm','5000');
+            a_cr();
+        }
+    };
+    xmlhttp.send("text="+encodeURIComponent(form.text.value)+'&to='+encodeURIComponent(form.to.value)+'&title='+encodeURIComponent(form.title.value));
+
 }
 
 function ljs(fl){
@@ -325,13 +345,20 @@ function ifrnd(url) {
     }
 }
 function make_err(txt) {
+    make_notify(txt,'err', 5000);
+}
+function make_notify(txt,type,time) {
     err=document.createElement("div");
     err.innerHTML="<p>"+txt+"</p>";
-    err.className="err_bbl";
+    if (type=='err') {
+        err.className="err_bbl";
+    } else {
+        err.className="notify_bbl";
+    }
     date=new Date();
     err.id="err_"+date.getTime();
     document.getElementsByTagName("body")[0].appendChild(err);
-    setTimeout("kill_err('"+err.id+"')",5000);
+    setTimeout("kill_err('"+err.id+"')",time);
 }
 function getElementsByClassName(classname, node)  {
     if(!node) node = document.getElementsByTagName("body")[0];
