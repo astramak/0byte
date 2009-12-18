@@ -314,25 +314,6 @@ function col(c,w) {
 function clr(id,fg) {
     cr();
     x_r('ajax/editor?type=color&fr='+id+'&el='+fg,'box');
-//	document.getElementById('mn').innerHTML='<table><tr><td>'+
-//	'<div id="ex" style="width: 50px; height: 50px; "></div></td><td>'+
-//	'<form onsubmit="clr_s(\''+id+'\',\''+fg+'\'); return false;">'+
-//	'<table><tr><td>Красный</td><td>'+
-//	'<input onClick="col(\'r\',1)" type="button" value="+" />'+
-//	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="r" value="0" />'+
-//	'<input onClick="col(\'r\',0)" type="button" value="&ndash;" />'+
-//	'</td></tr><tr><td>Зелёный</td><td>'+
-//	'<input onClick="col(\'g\',1)" type="button" value="+" />'+
-//	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="g" value="0" />'+
-//	'<input onClick="col(\'g\',0)" type="button" value="&ndash;" />'+
-//	'</td></tr><tr><td>Голубой</td><td>'+
-//	'<input onClick="col(\'b\',1)" type="button" value="+" />'+
-//	'<input onkeypress="setTimeout(\'mkcol()\',100)" type="text" style="width: 40px;" name="b" value="0" />'+
-//	'<input onClick="col(\'b\',0)" type="button" value="&ndash;" />'+
-//	'</td></tr></table>'+
-//	'<input type="submit" value="Выбрать" />' +
-//	'<input type="button" value="Отмена" onClick="a_cr()" />' +
-//	'</form> </td></tr></table><br />';
 }
 function clr_s(id,fg) {
     insert("<span style='color:"+selcol+";'>","</color>",fg,"text");
@@ -513,4 +494,35 @@ function hide_spoiler(node) {
     node.onclick = function () {
         show_spoiler(this);
     };
+}
+var saved_form=new Array;
+saved_form['text']='';
+saved_form['tag']='';
+saved_form['blog']='';
+saved_form['title']='';
+saved_form['lock']='';
+saved_form['mng']='';
+saved_form['nw']='<label id="an1"><input id="fst" type="text" name="an1"/><br/></label>\n\
+<label id="an2"><input id="fst" type="text" name="an2"/><br/></label>\n\
+<input type="hidden" id="len" name="len" value="2" />';
+function merge_form(type,id) {
+    form = document.getElementById(id);
+    if (form.text) saved_form['text']=form.text.value;
+    if (form.tag) saved_form['tag']=form.tag.value;
+    if (form.blog) saved_form['blog']=form.blog.value;
+    if (form.title) saved_form['title']=form.title.value;
+    if (form.lock) saved_form['lock']=form.lock.value;
+    if (form.mng) saved_form['mng']=form.lock.value;
+    if (document.getElementById('nw')) saved_form['nw']=document.getElementById('nw').innerHTML;
+    x_r('ajax/editor?type=new_post&tp='+type,'new_post');
+}
+function complite_form(id) {
+    form = document.getElementById(id);
+    if (form.text) form.text.value=saved_form['text'];
+    if (form.tag) form.tag.value=saved_form['tag'];
+    if (form.blog) form.blog.value=saved_form['blog'];
+    if (form.title) form.title.value=saved_form['title'];
+    if (form.lock) form.lock.value=saved_form['lock'];
+    if (form.mng) form.mng.value=saved_form['mng'];
+    if (document.getElementById('nw')) document.getElementById('nw').innerHTML=saved_form['nw'];
 }

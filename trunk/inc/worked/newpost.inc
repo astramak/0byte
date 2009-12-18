@@ -32,11 +32,17 @@ if ($usr->rate()>=$np_rate) {
     while ($row = db_fetch_assoc($result)) {
         $blogs[]=array('value'=>$row['blogid'],'text'=>$row['bname']);
     }
-    echo render_new_post($type, $type_, $tp, $blogs, $len);
-    if ($tp!=3) $script->add('mk(\'mq\',\'new\');
+    $text=render_new_post($type, $type_, $tp, $blogs, $len);
+    if (!@$json) {
+        echo $text;
+    }
+    $js='mk(\'mq\',\'new\');
 		document.getElementById("mq").innerHTML+="<a class=\'tdx\' href=\'javascript:insert(\"[cut]\",\"\",\"new\",\"text\")\'>cut</a>"+
-		"<a class=\'tdx\' href=\'javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")\'>fcut</a>";');
+		"<a class=\'tdx\' href=\'javascript:insert(\"[fcut]\",\"\",\"new\",\"text\")\'>fcut</a>";';
+    if ($tp!=3 && @$script) $script->add($js); else $js=null;
 } else {
-    redirect($dir.'error/not_allow');
+    if (!@$json) {
+        redirect($dir.'error/not_allow');
+    }
 }
 ?>
