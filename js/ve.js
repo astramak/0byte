@@ -43,7 +43,7 @@ function cr_d(fr,el) {
 }
 function code_d(fr,el) {
     cr();
-  x_r('ajax/editor?type=code&fr='+fr+'&el='+el,'box');
+    x_r('ajax/editor?type=code&fr='+fr+'&el='+el,'box');
 }
 function img_d(fr,el) {
     cr();
@@ -252,7 +252,7 @@ function mk(id,fr) {
     " <a class='tdx' href='javascript:code_d(\""+fr+"\",\"text\")'>code</a>" +
     " <a class='tdx' href='javascript:quote(\""+fr+"\",\"text\")'>Цитировать</a>"+
     " <a class='tdx' href='javascript:insert(\"<user>\",\"</user>\",\""+fr+"\",\"text\")'>Пользователь</a>"+
-    " <a class='tdx' href='javascript:insert(\"<spoiler>\",\"</spoiler>\",\""+fr+"\",\"text\")'>Спойлерр</a>";
+    " <a class='tdx' href='javascript:insert(\"<spoiler>\",\"</spoiler>\",\""+fr+"\",\"text\")'>Спойлер</a>";
 }
 
 function toHex(dec) {
@@ -331,6 +331,7 @@ function prv() {
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState==4) {
             document.getElementById('prv').innerHTML="<h2>Предпросмотр  <a href='javascript:klprv()'>X</a></h2>"+xmlhttp.responseText;
+            make_spoiler('prv');
         }
     };
     xmlhttp.send("text="+encodeURIComponent(a.text.value));
@@ -427,6 +428,7 @@ function prw_com(txt,cid) {
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState==4) {
             document.getElementById('cprv'+cid).innerHTML="<h4>Предпросмотр  <a href='javascript:klcprv("+cid+")'>X</a></h4>"+xmlhttp.responseText;
+            make_spoiler('cprv'+cid);
         }
     };
     xmlhttp.send("text="+encodeURIComponent(txt));

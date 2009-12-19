@@ -60,12 +60,7 @@ function strt() {
             };
         }
     }
-    elements = getElementsByClassName('spoiler',document.getElementById('xy'));
-    for (i=0;i<elements.length;i++) {
-        into = elements[i].innerHTML;
-        elements[i].innerHTML='<a onclick="show_spoiler(this)">Показать</a>'+
-        '<div class="inner_spoiler">'+into+"</div>";
-    }
+    make_spoiler('it');
     if (document.getElementById("view")) {
         document.getElementById("view").style.display="inline";
     }
@@ -77,6 +72,14 @@ function strt() {
         document.getElementById('rma').href='javascript:rma()';
     }
 
+}
+function make_spoiler(where) {
+       elements = getElementsByClassName('spoiler',document.getElementById(where));
+    for (i=0;i<elements.length;i++) {
+        into = elements[i].innerHTML;
+        elements[i].innerHTML='<a onclick="show_spoiler(this)">Показать</a>'+
+        '<div class="inner_spoiler">'+into+"</div>";
+    }
 }
 function getXmlHttp(){
     var xmlhttp;
@@ -162,10 +165,12 @@ function r_s(xrs,xs,xrt,tp) {
 						
                         document.getElementById("cmn").innerHTML+=jr.txt;
                         document.location.hash="#cmnt"+jr.id;
+                        make_spoiler('cmnt'+jr.id);
 			
                     } else if (tp=='scom') {
                         document.getElementById('cmadd'+jr.cid).innerHTML+=jr.txt;
                         document.location.hash="#cmnt"+jr.id;
+                        make_spoiler('cmnt'+jr.id);
                     } else if (tp=='ac') {
                         length=jr.length;
                         out="<ul class='changer'>";
