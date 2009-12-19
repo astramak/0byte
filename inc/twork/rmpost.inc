@@ -5,6 +5,8 @@ if ($usr->lvl >= $elvl ) {
 
 
 tags_remove_list(db_result(db_query('SELECT tag FROM post WHERE id = %d', $id)));
+db_query("DELETE FROM `lenta` WHERE `uid`= %d && `type` = 1 LIMIT 1",$id);
+db_query("DELETE FROM `lenta` WHERE `uid`= %d && `type` = 2 LIMIT 1",$id);
 db_query('DELETE FROM post WHERE id = %d', $id);
 $result = db_query('SELECT id FROM comment WHERE krnl = %d', $id);
 while ($row = db_fetch_object($result)) {

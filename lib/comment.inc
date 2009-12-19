@@ -60,7 +60,9 @@ function klist($pid) {
 
 function rmcom($com) {
 // remove comment itself
+    deleteCache('comment_tree_'.$com->krnl.'.cache');
     db_query('DELETE FROM comment WHERE id = %d', $com->id);
+    db_query("DELETE FROM `lenta` WHERE `uid`= %d && `type` = 0 LIMIT 1",$id);
     // and remove all comment children
     $result = db_query('SELECT id FROM comment WHERE cid = %d', $com->id);
     while ($row = db_fetch_object($result)) {
