@@ -1,28 +1,7 @@
 <h2>Пользователи<?php if ($city) { echo ":".$city; } ?></h2><?php if ($city) { ?>
-<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAAq54shBqWZuPxx6GprepxwRTqd41vcF2VE2ddc7UQSKTm2eikrRSkesAkf1xTgiBwL0mexmXNtp44KQ&lang=ru" type="text/javascript"></script>
-<div id="map_canvas" style="width:640px; height:320px;"></div>
-<script type="text/javascript">
-var map = new GMap2(document.getElementById("map_canvas"), { size: new GSize(640,320) });
-var geocoder = new GClientGeocoder();
-   var customUI = map.getDefaultUI();
-        // Remove MapType.G_HYBRID_MAP
-        customUI.maptypes.hybrid = false;
-        map.setUI(customUI);
 
-function showAddress(address) {
-  geocoder.getLatLng(
-    address,
-    function(point) {
-        map.setCenter(point, 13);
-        var marker = new GMarker(point);
-        map.addOverlay(marker);
-        marker.openInfoWindowHtml(address);
-      
-    }
-  );
-}
-showAddress('<?php echo $city; ?>');
-</script>
+<div id="map_canvas" style="width:640px; height:320px;"></div>
+
 <br /><?php } ?>
 <table id='users'>
     <tr>
@@ -42,3 +21,30 @@ showAddress('<?php echo $city; ?>');
         </tr>
     <?php } ?>
 </table>
+<?php if ($city) { ?>
+<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAAq54shBqWZuPxx6GprepxwRTqd41vcF2VE2ddc7UQSKTm2eikrRSkesAkf1xTgiBwL0mexmXNtp44KQ&lang=ru" type="text/javascript"></script>
+<?php
+  $fnc='var map = new GMap2(document.getElementById("map_canvas"), { size: new GSize(640,320) });
+var geocoder = new GClientGeocoder();
+   var customUI = map.getDefaultUI();
+        // Remove MapType.G_HYBRID_MAP
+        customUI.maptypes.hybrid = false;
+        map.setUI(customUI);
+
+function showAddress(address) {
+  geocoder.getLatLng(
+    address,
+    function(point) {
+        map.setCenter(point, 10);
+        var marker = new GMarker(point);
+        map.addOverlay(marker);
+        marker.openInfoWindowHtml("<html><body><b>'.$city.'</b><br /><br />Отсюда '.count($elements).' '.inducing(count($elements), array('пользователя','пользователей','пользователь')).'.</body></html>");
+
+    }
+  );
+}
+showAddress("'.$city.'");';
+
+echo '<script>'.$fnc.'</script>';
+}
+?>
