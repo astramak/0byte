@@ -33,11 +33,11 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
                 $blog=$com_arr['auth'];
                 $blog_url='user/'.$com_arr['auth'];
             }
-
-            echo render_template(TPL_FRAMES.'/comment2.tpl.php', array('name'=>$com_arr['who'],'comment'=>array('blog'=>$blog,'blog_url'=>$blog_url,'date'=>date('d.m.y H:i',$com->date),'text'=>code($com->text),
-                    "rate"=>$com->rate(),'post_title'=>$com_arr['title'],'url'=>'post/'.$com_arr['krnl'].'/', 'full_url' => 'post/'.$com_arr['krnl'].'/#cmnt'.$com->id)
-            ,'avatar'=>db_result(db_query('SELECT `av` FROM `users` WHERE `name` = %s',$com_arr['who']))));
-
+            if (strlen($com->name)>1) {
+                echo render_template(TPL_FRAMES.'/comment2.tpl.php', array('name'=>$com_arr['who'],'comment'=>array('blog'=>$blog,'blog_url'=>$blog_url,'date'=>date('d.m.y H:i',$com->date),'text'=>code($com->text),
+                        "rate"=>$com->rate(),'post_title'=>$com_arr['title'],'url'=>'post/'.$com_arr['krnl'].'/', 'full_url' => 'post/'.$com_arr['krnl'].'/#cmnt'.$com->id)
+                ,'avatar'=>db_result(db_query('SELECT `av` FROM `users` WHERE `name` = %s',$com_arr['who']))));
+            }
         } else {
             $post=db_fetch_assoc(db_query("SELECT * FROM `post` WHERE `id`=%d",$row['uid']));
             if (strlen($post['auth'])>1) {
