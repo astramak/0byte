@@ -39,7 +39,7 @@ if (strlen($login) >= 2 && strlen($pwd) >= 2) {
     if ($usr->check()) {
         session_start();
         if (request::get_post('zap')) {
-            $dt = mktime(0, 0, 0, 1, 1, 2010);
+            $dt = mktime(0, 0, 0, 1, 1, date('Y')+2);
             setcookie('login', request::get_post('login'), $dt);
             // TOFIX: very-very-very unsecure, use md5 or sha1
             setcookie('pwd', base64_encode(request::get_post('pwd')), $dt);
