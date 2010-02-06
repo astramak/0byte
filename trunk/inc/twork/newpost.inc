@@ -4,7 +4,7 @@ if ($usr->rate()<$np_rate) {
     jkill();
     redirect($dir.'error/not_allow');
 }
-$title = gtext(trim(request::get_post('title')));
+$title = htmlspecialchars(trim(request::get_post('title')));
 $text = trim(request::get_post('text'));
 $len = request::get_post('len');
 $blog_id = request::get_post('blog');
