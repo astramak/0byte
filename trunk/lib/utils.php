@@ -143,4 +143,13 @@ function get_favicon_url($url) {
     $out=explode('/',$url);
     return 'http://'.$out[2].'/favicon.ico';
 }
+/**
+ * Check numeric and return it
+ * 
+ * @param int $value
+ * @return int
+ */
+function get_int($value) {
+    return is_numeric($value) && !preg_match('/x/i', $value) ? $value : '0';
+}
 ?>

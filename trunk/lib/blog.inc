@@ -13,7 +13,7 @@
  *
  *  See <http://www.gnu.org/licenses/>.
  *
- */
+*/
 class blog {
     var $id;
     var $auth;
@@ -37,6 +37,24 @@ class blog {
 
     function rate() {
         return($this->ratep - $this->ratem);
+    }
+    /**
+     * Make sql expression for special blogs
+     *
+     * @global array $special_blogs
+     * @param string $id
+     * @param string $operation
+     * @param string $action
+     * @return string
+     */
+    static function make_special_blogs($id='id',$operation='=',$action=' && ') {
+        global $special_blogs;
+        $sql=null;
+        foreach ($special_blogs as $value) {
+            $sql.='`'.$id.'` '.$operation.' '.get_int($value);
+            if ($value!=end($special_blogs)) $sql.=$action;
+        }
+        return $sql;
     }
 }
 ?>

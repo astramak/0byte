@@ -14,11 +14,13 @@ if (request::get_get('tp',0)!=0) {
 //if (!$result) {
 //    echo  mysql_error();
 //}
+$ids=array();
 $result=db_query("SELECT * FROM `pm` WHERE `".$e."` = %s && ".$in."   ORDER BY  id DESC  ",$usr->login);
 if ($id=db_num_rows($result)==0) {
     $num=0;
     $pm=null;
 } else {
+
     $num=1;
     $alien=new user;
     while($row = db_fetch_assoc($result)) {
@@ -37,8 +39,9 @@ if ($id=db_num_rows($result)==0) {
             $klr=" href='twork.php?wt=pmdel&id=".$row['id']."&cur=".$cur."'";
         }
         $pm[]=array('class'=>$cls,'killer'=>$klr,'id'=>$row['id'],'avatar'=>$av,'av_url'=>$av_url,
-            'usr'=>$row[$ae],'title'=>$row['title']);
+                'usr'=>$row[$ae],'title'=>$row['title']);
+        $ids[]=$row['id'];
     }
 }
-echo render_template(TPL_PM."/list.tpl.php", array('pms'=>$pm,'num'=>$num));
+echo render_template(TPL_PM."/list.tpl.php", array('pms'=>$pm,'num'=>$num,'ids'=>base64_encode(json_encode($ids)),'type'=>$e));
 ?>

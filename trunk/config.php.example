@@ -52,4 +52,9 @@ $use_cron=0;
 // plugins
 $user = array();
 $use['geshi'] = 1;
+//special blogs
+$special_blogs=array();
+$special_blogs[]=35;
+$special_blogs[]=38;
+$special_blogs[]=169;
 ?>

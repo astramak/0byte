@@ -5,7 +5,7 @@
 	
 	<input type="text" class="post-pm" name="to" value="<?php echo @$name; ?>" /><span class="grey"> - получатель</span><br>
 
-    <input type="text" id="pm_title" class="post-pm" name="title" /><span class="grey"> - заголовок</span>
+    <input type="text" id="pm_title" class="post-pm" name="title" value="<?php echo @$title; ?>" /><span class="grey"> - заголовок</span>
 	
 
 	<div id="rd" class='inpt'></div>

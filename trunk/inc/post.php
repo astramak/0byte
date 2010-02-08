@@ -111,7 +111,7 @@ if ($kol<1 && request::get_get('blog',0)==0) {
         redirect($dir.'error/not_found');
     }
 } else {
-    if (isset($bl) && $bl==1) {
+    if (isset($bl) && $bl==1 && !in_array(request::get_get('blog'), $special_blogs)) {
 //        $sql_get="SELECT * FROM `blogs` WHERE id = '".intval($_GET['blog'])."' ";
 //        $resul=mysql_query($sql_get,$sql);
 //        $rowa = mysql_fetch_assoc($resul);
