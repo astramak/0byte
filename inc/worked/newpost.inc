@@ -27,10 +27,18 @@ if ($usr->rate()>=$np_rate) {
 //    if (!$result) {
 //        echo  mysql_error();
 //    }
-    $result=db_query("SELECT * FROM `inblog` WHERE name = %s",$usr->login);
-    $blogs[]=array('value'=>'own','text'=>'Персональный');
+    $result=db_query('SELECT `name` as `text`, `id` as `value` FROM `blogs` WHERE '.blog::make_special_blogs('id','=',' || '));
+//    echo 'SELECT `name`, `id` FROM `blogs` WHERE '.blog::make_special_blogs();
+//    echo db_error();
     while ($row = db_fetch_assoc($result)) {
-        $blogs[]=array('value'=>$row['blogid'],'text'=>$row['bname']);
+      $blogs[]=$row;
+    }
+    $blogs[]=0;
+    $result=db_query("SELECT `blogid` as `value`, `bname` as `text` FROM `inblog` WHERE `bname` != '' && `name` = %s &&".blog::make_special_blogs('blogid','!='),$usr->login);
+    $blogs[]=array('value'=>'own','text'=>'Персональный');
+    $blogs[]=0;
+    while ($row = db_fetch_assoc($result)) {
+        $blogs[]=$row;
     }
     $text=render_new_post($type, $type_, $tp, $blogs, $len);
     if (!@$json) {

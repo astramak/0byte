@@ -46,6 +46,7 @@ $text=gtext($text);
 $date=time();
 db_query("INSERT INTO `comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
 VALUES ( %s , %s , %s ,%d , %d , %d)",$date,$text,$usr->login,$id,$lvl,$krnl);
+db_query("UPDATE `post` SET `last` =  %s WHERE `id` = %d",$date,$krnl);
 //$result=mysql_query($sl,$sql);
 //$sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($id)."' && `date`= '".$date."'   ";
 //$result=mysql_query($sql_get,$sql);

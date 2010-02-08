@@ -67,7 +67,7 @@ function _db_query_callback($match, $init = FALSE) {
         // Numeric values have arbitrary precision, so can't be treated as float.
         // is_numeric() allows hex values (0xFF), but they are not valid.
             $value = trim(array_shift($args));
-            return is_numeric($value) && !preg_match('/x/i', $value) ? $value : '0';
+            return get_int($value);
         case '%%':
             return '%';
         case '%f':

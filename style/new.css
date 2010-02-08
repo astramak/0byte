@@ -791,7 +791,8 @@ a.nomnm {
     list-style: none;
     padding-left: 0px;
     margin-top:0px;
-    width: 200px;
+    min-width: 200px;
+    width: auto;
     border-top: 1px solid black;
 }
 .changer li {
@@ -809,4 +810,10 @@ a.nomnm {
 }
 .inner_spoiler {
     display:none;
+}
+.select {
+    width: 30px;
+}
+#select_all {
+    display: none;
 }

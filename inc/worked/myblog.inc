@@ -4,7 +4,7 @@ $single=request::get_get('single',0);
 if ($single && $usr->lvl>=$elvl) {
     $result=db_query("SELECT * FROM `blogs` WHERE `id` = %d",request::get_get('id'));
 } else if (!$single) {
-        $result=db_query( "SELECT * FROM `blogs` WHERE owner = %s ",$usr->login);
+        $result=db_query( "SELECT * FROM `blogs` WHERE owner = %s && ".blog::make_special_blogs('id','!='),$usr->login);
     }
 if (db_num_rows($result)) {
     while ( $row = db_fetch_assoc($result)) {
@@ -12,7 +12,7 @@ if (db_num_rows($result)) {
         if (strlen($row['av'])>0) {
             $av=1;
         }
-        $resul=db_query("SELECT * FROM `inblog` WHERE blogid = %d   ",$row['id']);
+        $resul=db_query("SELECT * FROM `inblog` WHERE blogid = %d",$row['id']);
         while ( $rw = db_fetch_assoc($resul)) {
             $users[]=$rw['name'];
         }
