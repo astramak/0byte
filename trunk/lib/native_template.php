@@ -345,8 +345,10 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     $numb=0;
     while ($all_count>0 && $numb<10) {
         $current=0;
-
+        if ($k==1) echo 1;
+            
         if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
+           
             if ($current_num==($k-1)*$count) {
             //			echo "<span class='nmn'>$k</span> ";
                 $current=1;
@@ -355,7 +357,7 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
             $numb++;
             $url=$start."from/".(($k-1)*$count).$end;
             if ($k-1==0) {
-                $url=$start.$end;
+                $url=$start.'from/0'.$end;
             }
             $pages[]=array('current'=>$current,'number'=>$k,'url'=>$url);
 
@@ -387,7 +389,7 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     if ($current_num<($k-6)*$count) {
     //	if ($wtch==1) {echo "||";}
         $show_last=1;
-        $last_url=$start."from/".($k-2)*$count.$end;
+        $last_url=$start."from/".(($k-2)*$count).$end;
     //        echo "<a class='nomnm' href='".$inser."from/".($k-2)*$count.$fnd."'>Конец &#8614; </a>";
     }
     return render_template(TPL_FRAMES.'/paginator.tpl.php',array('prev'=>$prev,'prev_url'=>$prev_url,

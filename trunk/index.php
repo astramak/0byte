@@ -34,7 +34,7 @@ include("inc/top.php");
 if (isset($_GET['post'])) {
     include("inc/spost.php");
 } else {
-    include("inc/post.php");
+    include("inc/post.rewrited.php");
 }
 
 

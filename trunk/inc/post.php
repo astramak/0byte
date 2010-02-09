@@ -1,5 +1,7 @@
 <?php
 /*
+ * THIS FILE DEPRECATED AND IN FUTURE WILL BE REPLACED BY post.rewrited.php
+ * 
  *     This file is part of 0byte.
  *
  *  0byte is free software: you can redistribute it and/or modify
@@ -13,7 +15,7 @@
  *
  *  See <http://www.gnu.org/licenses/>.
  *
- */
+*/
 $inser='';
 if (request::get_get('pg',0)) {
     $inser.=request::get_get('pg',0)."/";
@@ -25,8 +27,8 @@ $blck="&& blck != 1";
 if ($usr->lvl>=$rlvl) {
     $blck="";
 } else if ($loged) {
-        $blck='&& (`blck` != 1 || `auth` = "'.$usr->login.'")';
-    }
+    $blck='&& (`blck` != 1 || `auth` = "'.$usr->login.'")';
+}
 if (request::get_get('count',0)) {
     $count=request::get_get('count',0);
 } else {
@@ -37,57 +39,57 @@ $pg=request::get_get('pg','');
 $draft=request::get_get('draft',0);
 $frm=request::get_get("frm",0,0);
 if (sizeof($_GET)==0 || ($frm>0 && strlen($pg)<2 && !request::get_get('like',0) && !$favourite && !$draft && !request::get_get('tag',0) 
-    && !request::get_get('auth',0) && !request::get_get('blog',0) && !request::get_get('fnd',0))) {
+                && !request::get_get('auth',0) && !request::get_get('blog',0) && !request::get_get('fnd',0))) {
     $sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY id DESC) ORDER BY `top` DESC , `id` DESC";
 
 
 }
 else 
-    if ($loged && $draft) {
-        $inser.='draft/';
-        $sql_get="SELECT * FROM `draft` WHERE auth = '".$usr->login."' ORDER BY  id DESC ";
-        echo render_template(TPL_POST_LIST.'/draft.tpl.php', null);
-    } else if ($loged && $favourite) {
-            $inser.='favourite/';
-            $sql_get="SELECT * FROM `favourite`,`post` WHERE `favourite`.`pid`=`post`.`id` && `favourite`.`who` = '".$usr->login."' ORDER BY  `post`.`id` DESC";
-            echo render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
-        } else if (request::get_get('like',0)>0) {
-                $tags=db_result(db_query('SELECT `tag` FROM `post` WHERE `id` = %d',request::get_get('like',0)));
-                $tags_arr=split(",", $tags);
-                $query="SELECT *, ";
-                $where=null;
-                foreach ($tags_arr as $tag) {
-                    $query.="IF(`tag` LIKE '%".mysql_escape_string(trim($tag))."%',1,0)+";
-                    $where.="`tag` LIKE '%".mysql_escape_string(trim($tag))."%' || ";
-                }
-                $query=substr($query, 0, strlen($query)-1);
-                $where=substr($where, 0, strlen($where)-4);
-                $query.=" AS `rel` FROM `post` WHERE ".$where." ORDER BY `rel` DESC";
-                $sql_get=$query;
-                $inser.='like/'.request::get_get('like',0);
-            }
-            else
-                if (request::get_get('tag',0)) {
-                    $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".mysql_escape_string(request::get_get('tag')).",%' ||
+if ($loged && $draft) {
+    $inser.='draft/';
+    $sql_get="SELECT * FROM `draft` WHERE auth = '".$usr->login."' ORDER BY  id DESC ";
+    echo render_template(TPL_POST_LIST.'/draft.tpl.php', null);
+} else if ($loged && $favourite) {
+    $inser.='favourite/';
+    $sql_get="SELECT * FROM `favourite`,`post` WHERE `favourite`.`pid`=`post`.`id` && `favourite`.`who` = '".$usr->login."' ORDER BY  `post`.`id` DESC";
+    echo render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
+} else if (request::get_get('like',0)>0) {
+    $tags=db_result(db_query('SELECT `tag` FROM `post` WHERE `id` = %d',request::get_get('like',0)));
+    $tags_arr=split(",", $tags);
+    $query="SELECT *, ";
+    $where=null;
+    foreach ($tags_arr as $tag) {
+        $query.="IF(`tag` LIKE '%".mysql_escape_string(trim($tag))."%',1,0)+";
+        $where.="`tag` LIKE '%".mysql_escape_string(trim($tag))."%' || ";
+    }
+    $query=substr($query, 0, strlen($query)-1);
+    $where=substr($where, 0, strlen($where)-4);
+    $query.=" AS `rel` FROM `post` WHERE ".$where." ORDER BY `rel` DESC";
+    $sql_get=$query;
+    $inser.='like/'.request::get_get('like',0);
+}
+else
+if (request::get_get('tag',0)) {
+    $sql_get="SELECT * FROM `post` WHERE tag LIKE '%".mysql_escape_string(request::get_get('tag')).",%' ||
  tag LIKE '%, ".mysql_escape_string(request::get_get('tag'))."%'
 || LOWER(tag) = LOWER('".mysql_escape_string(request::get_get('tag'))."')
 			|| tag = '".mysql_escape_string(request::get_get('tag'))."' || tag LIKE '%,".mysql_escape_string(request::get_get('tag'))."%'  $blck ORDER BY  id DESC";
-                    $inser.="tag/".htmlspecialchars(request::get_get('tag'))."/";
-                    echo render_template(TPL_POST_LIST.'/tag.tpl.php', array('text'=>htmlspecialchars(request::get_get('tag'))));
-                } else if (request::get_get('pg','null')==='pers') {
-                          $sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY  id DESC ";
-                    } else {
-                        if (request::get_get('auth',0)) {
-                            $sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string(request::get_get('auth'))."' $blck ORDER BY  id DESC ";
-                            $inser.="auth/".request::get_get('auth')."/";
-                            $au=1;
-                        } else if (request::get_get('blog',0)) {
-                                $sql_get="SELECT * FROM `post` WHERE blogid = '".intval(request::get_get('blog'))."' $blck ORDER BY  id DESC ";
-                                $bl=1;
-                            } else {
-                                $sql_get="SELECT * FROM `post` WHERE blog != 'own' $blck ORDER BY  id DESC ";
-                            }
-                    }
+    $inser.="tag/".htmlspecialchars(request::get_get('tag'))."/";
+    echo render_template(TPL_POST_LIST.'/tag.tpl.php', array('text'=>htmlspecialchars(request::get_get('tag'))));
+} else if (request::get_get('pg','null')==='pers') {
+    $sql_get="SELECT * FROM `post` WHERE blog = 'own' $blck && ( `lock` = 0 || ".get_special()." ) ORDER BY  id DESC ";
+} else {
+    if (request::get_get('auth',0)) {
+        $sql_get="SELECT * FROM `post` WHERE auth = '".mysql_escape_string(request::get_get('auth'))."' $blck ORDER BY  id DESC ";
+        $inser.="auth/".request::get_get('auth')."/";
+        $au=1;
+    } else if (request::get_get('blog',0)) {
+        $sql_get="SELECT * FROM `post` WHERE blogid = '".intval(request::get_get('blog'))."' $blck ORDER BY  id DESC ";
+        $bl=1;
+    } else {
+        $sql_get="SELECT * FROM `post` WHERE blog != 'own' $blck ORDER BY  id DESC ";
+    }
+}
 if (request::get_get('fnd',0)) {
 
     $fnd=trim(str_replace(" ", "%", request::get_get('fnd')));
@@ -98,7 +100,8 @@ if (request::get_get('pg',0)!=0 && request::get_get('pg',0)=='lenta' && $loged==
     $sql_get = 'SELECT * FROM `post` WHERE  `blck` = 0 && `auth` != "'.$usr->login.'" && '.get_special().' ORDER BY `id` DESC';
 }
 $result=db_query($sql_get);
-$i=0; $k=0;
+$i=0;
+$k=0;
 $cur=$_SERVER['REQUEST_URI'];
 $cur=str_replace("&","*amp",$cur);
 $cur=str_replace("?","*qw",$cur);
