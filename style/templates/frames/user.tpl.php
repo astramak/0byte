@@ -35,7 +35,7 @@ if ($jabber['set']) { ?>, <img src='style/n_img/jabber.png'/><a href='xmpp:<?php
 if ($usite['set']) {  ?>, <img src='style/n_img/world.gif'/> <noindex><a href='<?php echo $usite['text']; ?>' rel='nofollow'><?php echo $usite['text']; ?></a></noindex><?php }
 if ($me_on_count>0) {
     foreach ($me_on as $me_on_name => $me_on_url) {
-        ?>, <img src="<?php echo get_favicon_url($me_on_url);?>" alt="" /> <a rel="nofollow" href='<?php echo $me_on_url; ?>'><?php echo $me_on_name ?></a><?php
+        ?>, <nobr><a rel="nofollow" href='<?php echo $me_on_url; ?>'><img src="<?php echo get_favicon_url($me_on_url);?>" alt="" /> <?php echo $me_on_name ?></a></nobr><?php
     }
 }
 ?>
