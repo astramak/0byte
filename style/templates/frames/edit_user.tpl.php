@@ -104,7 +104,7 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Править!" /></form>
+    <input type="submit" class="tag_w6" value="Сохранить всё это" /></form>
 Аватар:<?php if ($av_use) {?>
 <img src="res.php?t=av&img=<?php echo $av; ?>" alt="" /><?php } ?>
 Изображение резрешением не больше, чем 70х70 пикселей. Максимальный объём 100кб.
