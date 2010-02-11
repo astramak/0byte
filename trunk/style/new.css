@@ -782,9 +782,10 @@ a.nomnm {
 /*  tag <user /> */
 .user_tag {
     text-decoration: none;
+	color: black !important;
 }
 .user_tag img {
-    height: 10px;
+    height: 11px;
 }
 .changer {
     position: absolute;
