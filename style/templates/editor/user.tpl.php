@@ -1,2 +1,2 @@
-<a class="user_tag" href='user/<?php echo $name; ?>/'><img src='<?php echo $avatar; ?>' />
+<a class="user_tag" href='user/<?php echo $name; ?>/'><img src='<?php echo $avatar; ?>' width="11px" height="11px"/>
 <?php if ($blocked) { echo '<del>';} echo $name; if ($blocked) { echo '</del>';} ?></a>
