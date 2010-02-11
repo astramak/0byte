@@ -250,7 +250,7 @@ function mk(id,fr) {
     " <option value='36' style='font-size: 36px;'>36</option>"+
     " </select><br />"+
     " <a class='tdx' href='javascript:code_d(\""+fr+"\",\"text\")'>code</a>" +
-    " <a class='tdx' href='javascript:quote(\""+fr+"\",\"text\")'>Цитировать</a>"+
+	" <a class='tdx' href='javascript:insert(\"<quote>\",\"</quote>\",\""+fr+"\",\"text\")'>Цитировать</a>"+
     " <a class='tdx' href='javascript:insert(\"<user>\",\"</user>\",\""+fr+"\",\"text\")'>Пользователь</a>"+
     " <a class='tdx' href='javascript:insert(\"<spoiler>\",\"</spoiler>\",\""+fr+"\",\"text\")'>Спойлер</a>";
 }
