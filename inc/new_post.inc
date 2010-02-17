@@ -4,7 +4,7 @@ $tz = new dtxt();
 $tz->cut(gtext($text));
 $tag = tags_add_list(request::get_post('tag'));
 switch ($tp) {
-    case 0: //if simple post
+    case SIMPLE_POST: //if simple post
         if(!$title || !$text || strlen($title) < 2) { //check required fields
             $post_writed=0;  //post not writed -> to draft
         } else {
@@ -15,7 +15,7 @@ switch ($tp) {
             $id=db_last_insert_id($query);
         }
         break;
-    case 1: //if post type - link
+    case LINK_POST: //if post type - link
         if (!$title || strlen($title) < 2 || !$lnk) { //check required fields
             $post_writed=0; //post not writed -> to draft
         } else {
@@ -27,7 +27,7 @@ switch ($tp) {
         }
         break;
 
-    case 2: //if post type - translat
+    case TRANSLATION_POST: //if post type - translat
         if (!$title || strlen($title) < 2 || !$org) { //check required fields
             $post_writed=0; //post not writed -> to draft
         }
@@ -38,7 +38,7 @@ switch ($tp) {
         $id=db_last_insert_id($query);
         break;
 
-    case 3: //if post type - answer
+    case ANSWER_POST: //if post type - answer
         if (!$title || strlen($title) < 2 || !$len || $len<2) { //check required fields
             $post_writed=0; //post not writed -> to draft
         }
