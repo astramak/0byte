@@ -96,29 +96,31 @@ if (document.getElementById("ced")) {
 var cd=document.getElementById("ced").innerHTML; } else {
 var cd=null;
 }';
-$e=0;
+define('NO_PANEL_ACTIVE',0);
+define('FIRST_PANEL_ACTIVE',1);
+define('SECOND_PANEL_ACTIVE',2);
+$e=NO_PANEL_ACTIVE;
 if (isset($_SESSION['tp1']) && strlen($_SESSION['tp1'])>2) {
     $scr.="g_plist('".$_SESSION['tp1']."'";
-    $e=1;
+    $e=FIRST_PANEL_ACTIVE;
 }
-
 if (isset($_SESSION['tp2'])) {
     if ($_SESSION['tp2']=='us') {
-        if ($e==1) {
+        if ($e==FIRST_PANEL_ACTIVE) {
             $scr.=",1,'top_user');";
-            $e=2;
+            $e=SECOND_PANEL_ACTIVE;
         } else {
             $scr.="g_plist('top_user');";
         }
     } elseif ($_SESSION['tp2']=='bl') {
-        if ($e==1) {
+        if ($e==FIRST_PANEL_ACTIVE) {
             $scr.=",1,'top_blog');";
-            $e=2;
+            $e=SECOND_PANEL_ACTIVE;
         } else {
             $scr.="g_plist('top_blog');";
         }
     }
 }
-if ($e==1) {$scr.=");";}
+if ($e==FIRST_PANEL_ACTIVE) {$scr.=");";}
 $script->add($scr);
 ?>

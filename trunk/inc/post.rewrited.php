@@ -6,19 +6,6 @@
 */
 //content of lib/post.inc:
 //define post-list types:
-define('BLOG', 1);
-define('LIKE', 2);
-define('TAG', 3);
-define('AUTH', 4);
-define('MAIN', 5);
-define('FIND', 6);
-define('FAVOURITE', 7);
-define('DRAFT', 8);
-
-define('POST_COUNT', 10);
-//define sort types:
-define('DATE','id');
-define('LAST_MODIFY','last');
 class post_list {
     var $type;
     var $head;
