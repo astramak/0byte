@@ -30,7 +30,7 @@
 		<a href='draft/<?php echo $id; ?>/' class='blog'><?php echo $title;?></a>
 		<?php
                 } else if ($type=='link') {?>
-		<a href='<?php echo $link; ?>' rel='nofollow' class='blog'><?php echo $title; ?></a>
+		<a href='<?php echo $link; ?>' rel='nofollow' class='blog_link'><?php echo $title; ?></a>
 		<?php } else { ?>
 		<a href='post/<?php echo $id; ?>/' class='blog'><?php echo $title;?></a>
 		<?php } ?>
