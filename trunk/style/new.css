@@ -818,3 +818,7 @@ a.nomnm {
 #select_all {
     display: none;
 }
+.blog_link {
+	text-decoration: none;
+	color: #2669A6;
+}
