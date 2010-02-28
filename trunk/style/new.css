@@ -819,6 +819,6 @@ a.nomnm {
     display: none;
 }
 .blog_link {
-	text-decoration: none;
-	color: #2669A6;
+	text-decoration: underline !important;
+	color: #666666 !important;
 }
