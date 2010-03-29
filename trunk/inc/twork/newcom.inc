@@ -5,6 +5,7 @@ if ($usr->rate()<$nc_rate) {
     redirect($dir.'error/not_allow');
 }
 if ($json != 1) {
+    ini_set('display_errors', 0);
     $lst = request::get_get('from');
     $lst=str_replace("*amp","&",$lst);
     $lst="/".str_replace("*qw","?",$lst);
@@ -46,7 +47,7 @@ $text=gtext($text);
 $date=time();
 db_query("INSERT INTO `comment` (`date` ,`text`,`who`, `cid` , `lvl` , `krnl`)
 VALUES ( %s , %s , %s ,%d , %d , %d)",$date,$text,$usr->login,$id,$lvl,$krnl);
-db_query("UPDATE `post` SET `last` =  %s WHERE `id` = %d",$date,$krnl);
+//db_query("UPDATE `post` SET `last` =  %s WHERE `id` = %d",$date,$krnl);
 //$result=mysql_query($sl,$sql);
 //$sql_get="SELECT * FROM `comment` WHERE `cid` = '".intval($id)."' && `date`= '".$date."'   ";
 //$result=mysql_query($sql_get,$sql);

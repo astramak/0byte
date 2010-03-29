@@ -99,7 +99,7 @@ if (request::get_get('noo',0)) {
             }
             $i++;
         } }
-} elseif (request::get_get('last_com_id',0) && request::get_get('pid',0)) {
+} elseif (request::get_get('last_com_id',-1)!=-1 && request::get_get('pid',0)) {
     $post11=request::get_get('pid');
     $result=db_query("SELECT * FROM `comment` WHERE `id`> %d && `krnl`= %d ORDER by `id`",request::get_get('last_com_id'),$post11);
     while ($row = db_fetch_assoc($result)) {

@@ -69,7 +69,7 @@ if ($pg) {
 } elseif ($auth) {
     $vars['rss'] = "rss/auth/" . htmlspecialchars($auth);
 } else {
-    $vars['rss'] = "rss";
+    $vars['rss'] = $default_rss;
 }
 $vars['base']="http://".$_SERVER['SERVER_NAME'].$dir;
 if (!$native_script) {

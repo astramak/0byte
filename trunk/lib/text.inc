@@ -14,6 +14,7 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
+
 function gtext($text) {
     global $native_presave,$presave_plugins;
     if ($native_presave) {

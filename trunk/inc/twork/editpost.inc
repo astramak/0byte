@@ -12,16 +12,20 @@ if ($blog_id) {
 }
 $lock = request::get_post('lock') == 'on' ? 1 : 0;
 if (request::get_post('draft', 0)) {
+   
     $tp= db_result(db_query('SELECT tp FROM draft WHERE id = %d && auth = %s', $post_id, $usr->login));
 //    if ($tp!=0) {
           
         if (request::get_post('write',0)) {
-            db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
+            
             $post_writed=1;
             $len=request::get_post('len');
             $return_draft=1;
             include 'inc/new_post.inc';
-            if ($post_writed) redirect("post/".db_last_insert_id('post'));
+            if ($post_writed) {
+               db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
+               redirect("post/".db_last_insert_id('post'));
+            }
         } else {
             if ($tp==3) {
                 $text=null;
