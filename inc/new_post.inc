@@ -7,6 +7,7 @@ switch ($tp) {
     case SIMPLE_POST: //if simple post
         if(!$title || !$text || strlen($title) < 2) { //check required fields
             $post_writed=0;  //post not writed -> to draft
+            break;
         } else {
             $query=db_query('INSERT INTO `post` SET `date` = %s, `title` = %s, `auth` = %s, `text` = %s,
                             `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d ',
@@ -18,6 +19,7 @@ switch ($tp) {
     case LINK_POST: //if post type - link
         if (!$title || strlen($title) < 2 || !$lnk) { //check required fields
             $post_writed=0; //post not writed -> to draft
+            break;
         } else {
             $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
                             `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s'.$draft,
@@ -28,8 +30,9 @@ switch ($tp) {
         break;
 
     case TRANSLATION_POST: //if post type - translat
-        if (!$title || strlen($title) < 2 || !$org) { //check required fields
+        if (!$title || strlen($title) < 2 || !$org || strlen($org)<2) { //check required fields
             $post_writed=0; //post not writed -> to draft
+            break;
         }
         $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
                             `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s'.$draft,
@@ -41,6 +44,7 @@ switch ($tp) {
     case ANSWER_POST: //if post type - answer
         if (!$title || strlen($title) < 2 || !$len || $len<2) { //check required fields
             $post_writed=0; //post not writed -> to draft
+            break;
         }
         $nm = request::get_post('mng') == 'on' ? 1 : 0;
         $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
@@ -56,5 +60,4 @@ switch ($tp) {
         }
         break;
 }
-
 ?>
