@@ -24,7 +24,8 @@ if (request::get_post('draft', 0)) {
             include 'inc/new_post.inc';
             if ($post_writed) {
                db_query(' DELETE FROM `draft` WHERE `id` = %d LIMIT 1',$post_id);
-               redirect("post/".db_last_insert_id('post'));
+           
+               redirect("post/".$id);
             }
         } else {
             if ($tp==3) {
@@ -34,7 +35,7 @@ if (request::get_post('draft', 0)) {
                 }
                 $lnk = request::get_post('mng') == 'on' ? 1 : 0;
             }
-            db_query('UPDATE draft SET title = %s, text = %s,  `lock` = %d, blog = %d, tag = %s, lnk = %s WHERE id = %d && auth = %s LIMIT 1',
+            db_query('UPDATE `draft` SET `title` = %s, `text` = %s,  `lock` = %d, `blog` = %d, `tag` = %s, `lnk` = %s WHERE `id` = %d && `auth` = %s LIMIT 1',
                 $title, $text, $lock, $blog,request::get_post('tag'), $lnk, $post_id, $usr->login);
             redirect("draft/" . $post_id);
         }
@@ -49,15 +50,16 @@ if (request::get_post('draft', 0)) {
         tags_remove_list($row['tag']);
 
         if ($row['tp'] == 3) {
-            db_query('UPDATE post SET `lock` = %d, tag = %s, blog = %s, blogid = %d, lnk = %s WHERE id = %d',
+            db_query('UPDATE `post` SET `lock` = %d, `tag` = %s, `blog` = %s, `blogid` = %d, `lnk` = %s WHERE `id` = %d',
                 $lock, $tag, $blog, $blog_id, $lnk, $post_id);
         } else {
             $tz = new dtxt();
             $tz->cut(gtext($text));
 
-            db_query('UPDATE post SET title = %s, text = %s, ftext = %s, `lock` = %d, blog = %s, blogid = %d, tag = %s, lnk = %s  WHERE id = %d',
+            db_query('UPDATE `post` SET `title` = %s, `text` = %s, `ftext` = %s, `lock` = %d, `blog` = %s, `blogid` = %d, `tag` = %s, `lnk` = %s  WHERE `id` = %d',
                 $title, $tz->short_text, $tz->full_text, $lock, $blog, $blog_id, $tag, $lnk, $post_id);
         }
+       
         redirect("post/" . $post_id);
     } else {
         redirect($dir.'error/not_allow');

@@ -345,7 +345,7 @@ function render_paginator($start,$count,$all_count,$current_num=0,$end=null) {
     $numb=0;
     while ($all_count>0 && $numb<10) {
         $current=0;
-        if ($k==1) echo 1;
+//        if ($k==1) echo 1;
             
         if (($k-1-$current_num/$count)<5 && ($k-1-$current_num/$count)>-5) {
            

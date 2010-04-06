@@ -16,8 +16,8 @@
             </td>
         </tr>
         <tr><td>Ответы:
-			<br /> <a id='adda' href='work/newpost/answ/<?php echo($len+1); ?>'>Добавить</a>
-			<br /> <a id='rma'  href='work/newpost/answ/<?php echo($len-1); ?>'>Убрать</a>
+			<br /> <a id='adda' href='javascript:adda()'>Добавить</a>
+			<br /> <a id='rma'  href='javascript:rma()'>Убрать</a>
 			</td><td id='nw'>
             <?php for ($x=0;$x<$len-1;$x++) {?>
                             <label id='an<?php echo $x; ?>'><input type='text' id='fst'  name='an<?php echo $x+1; ?>' value="<?php echo base64_decode($answers[$x]); ?>" /><br /></label>
