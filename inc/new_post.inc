@@ -48,16 +48,19 @@ switch ($tp) {
         }
         $nm = request::get_post('mng') == 'on' ? 1 : 0;
         $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
-                            `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s'.$draft,
+                            `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
             $time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
             $blog_id, $tag, $lock, $tp, $nm);
+
      $id=db_last_insert_id($query); 
+    
             for ($i = 0; $i < $len; $i++) {
                 $question = trim(request::get_post('an' . ($i+1)));
+
                 if ($question) {
                     db_query('INSERT INTO `answ` SET `title` = %s, `cid` = %d', $question, $id);
                 }
-        }
+        } 
         break;
 }
 ?>

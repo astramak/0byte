@@ -151,7 +151,7 @@ class post_list {
                 $this->sql_result=db_query("SELECT * FROM `post` WHERE auth = %s ".$this->blck." ORDER BY  ".$this->sort." DESC LIMIT %d, %d",$this->param,$this->current,$this->limit);
                 break;
             case FIND:
-                $sql_get=" FROM `post` WHERE ( title LIKE '%".mysql_escape_string($this->param)."%' || text LIKE '%".mysql_escape_string($fnd)."%' || ftext LIKE '%".mysql_escape_string($fnd)."%' || tag LIKE '%".mysql_escape_string($this->param)."%' )  ".$this->blck." ORDER BY  id DESC";
+                $sql_get=" FROM `post` WHERE ( title LIKE '%".mysql_escape_string($this->param)."%' || text LIKE '%".mysql_escape_string($this->param)."%' || ftext LIKE '%".mysql_escape_string($this->param)."%' || tag LIKE '%".mysql_escape_string($this->param)."%' )  ".$this->blck." ORDER BY  id DESC";
                 $this->count=db_result(db_query('SELECT COUNT(`id`)'.$sql_get));
                 $this->sql_result=db_query('SELECT *'.$sql_get.' LIMIT %d, %d',$this->current,$this->limit);
                 break;

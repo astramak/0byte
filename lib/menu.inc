@@ -44,16 +44,20 @@ class mel {
         $this->show = 1;
         switch ($this->url) {
             case '.':
-                $new = db_result(db_query('SELECT COUNT(id) FROM `post` WHERE `date` > %d && `ratep` - `ratem` >= %f && ( `lock` = 0 || '.get_special().' )', $dt, $to_main));
-                break;
+                $new = db_result(db_query('SELECT COUNT(id) FROM `post` WHERE `date` > %d && `ratep` - `ratem` >= %d && ( `lock` = 0 || '.get_special().' )', $dt, $to_main));
+echo $new;
+            break;
             case 'main':
+                
                 $new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid != 0 && ( `lock` = 0 || ".get_special()." )", $dt));
                 break;
             case 'pers':
+               
                 $new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid = 0 && ( `lock` = 0 || ".get_special()." )", $dt));
                 break;
             case 'lenta':
-                if ($loged==1) {
+               
+                    if ($loged==1) {
                     $frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
                     $where="1 = 0";
                     if ($frnd) {
@@ -62,6 +66,7 @@ class mel {
                         if ($arr) $where = '`lenta`.`who` IN (' . implode(',', $arr) . ')';
 
                     }
+                     
                     //                    $new=db_num_rows(db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
                     //    (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,
                     //    (SELECT `inblog`.`name`,`inblog`.`bname` FROM `inblog` WHERE `inblog`.`out` = 0 && `inblog`.`name` = %s ) as `_inblog`
@@ -73,6 +78,7 @@ class mel {
 `lenta`.`who`=%s && `lenta`.`type`= 0 ) as `l`, (SELECT COUNT(`id`) as `cn` FROM `post`
  WHERE `date` > %d && `blck` = 0 && `auth` != %s && ".get_special().") as `p`"
                             ,time()-12*60*60,$usr->login,time()-12*60*60,$usr->login));
+                    
                 } else {
 
                     $this->show = 0;
@@ -82,10 +88,12 @@ class mel {
             default:
                 $new = 0;
         }
-        if (strpos($this->url, 'blog')==0) {
-            $blogid=str_replace('blog/', '', $this->url);
-            $new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid = %d && ( `lock` = 0 || ".get_special()." )", $dt,$blogid));
-        }
+//        echo $new;
+//        if (strpos($this->url, 'blog')==0) {
+//            $blogid=str_replace('blog/', '', $this->url);
+//            $new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid = %d && ( `lock` = 0 || ".get_special()." )", $dt,$blogid));
+//        }
+       
         if ($this->show) {
             $this->new = $new ? ("+" . $new) : '';
         }

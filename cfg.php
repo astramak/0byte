@@ -47,7 +47,7 @@ define('DRAFT', 8);
 define('POST_COUNT', 10);
 define('DATE','id');
 define('LAST_MODIFY','last');
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 //lib load
 include("lib/blog.inc");
 include("lib/comment.inc");
