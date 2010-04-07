@@ -163,8 +163,18 @@ class post_list {
                 $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `draft` WHERE auth = %s ORDER BY  id DESC ",$usr->login));
                 $this->sql_result=db_query("SELECT COUNT(`id`) FROM `draft` WHERE auth = %s ORDER BY  id DESC LIMIT %d, %d",$usr->login,$this->current,$this->limit);
                 break;
+case PERSONAL:
+$sql_get="SELECT * FROM `post` WHERE blog = 'own' ".$this->blck." && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." ) ORDER BY  `".$this->sort."` DESC";
+ $this->count=db_num_rows(db_query($sql_get));
+                $this->sql_result=db_query($sql_get.' LIMIT %d, %d',$this->current,$this->limit);
+break;
+case INBLOG:
+$sql_get="SELECT * FROM `post` WHERE blog != 'own' ".$this->blck." && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." ) ORDER BY  `".$this->sort."` DESC";
+$this->count=db_num_rows(db_query($sql_get));
+                $this->sql_result=db_query($sql_get.' LIMIT %d, %d',$this->current,$this->limit);
+break;
             default:
-                $sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main ".$this->blck." && ( `lock` = 0 || ".get_special()." ) ORDER BY ".$this->sort." DESC) ORDER BY `top` DESC , `".$this->sort."` DESC";
+                $sql_get="(SELECT * FROM `post` WHERE `top`=1 ORDER BY `id` DESC) UNION (SELECT * FROM `post` WHERE ratep-ratem >= $to_main ".$this->blck." && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." ) ORDER BY ".$this->sort." DESC) ORDER BY `top` DESC , `".$this->sort."` DESC";
                 $this->count=db_num_rows(db_query($sql_get));
                 $this->sql_result=db_query($sql_get.' LIMIT %d, %d',$this->current,$this->limit);
         }
@@ -193,9 +203,13 @@ class post_list {
         $this->current=$current;
         $this->limit=$limit;
         $this->url_ins=null;
-        if (request::get_get('pg',0)) {
+        if (request::get_get('pg','0')!='0') {
             $this->make_url(request::get_get('pg',0)."/");
-            $this->type=MAIN;
+	    if (request::get_get('pg','0')=='main') {
+$this->type=INBLOG;
+} else if (request::get_get('pg','0')=='pers') {
+$this->type=PERSONAL;
+} else    $this->type=MAIN;
         } else if (request::get_get('blog',0)) {
             $this->make_list(BLOG,'blog');
         } else if (request::get_get('like',0)) {

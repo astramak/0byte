@@ -30,14 +30,14 @@ switch ($tp) {
         break;
 
     case TRANSLATION_POST: //if post type - translat
-        if (!$title || strlen($title) < 2 || !$org || strlen($org)<2) { //check required fields
+        if (!$title || strlen($title) < 2 || !$lnk || strlen($lnk)<2) { //check required fields
             $post_writed=0; //post not writed -> to draft
             break;
         }
         $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
                             `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s'.$draft,
             $time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
-            $blog_id, $tag, $lock, $tp, $org);
+            $blog_id, $tag, $lock, $tp, $lnk);
         $id=db_last_insert_id($query);
         break;
 

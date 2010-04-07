@@ -1,5 +1,7 @@
 RewriteEngine On
 ErrorDocument 404 /all.php?wt=error&err=not_found
+RewriteRule ^talks/ index.php?blog=174 [L]
+RewriteRule ^talks/from/([0-9]*) index.php?blog=174&frm=$1 [L]
 RewriteRule ^looz all.php?wt=looz [L]
 RewriteRule ^refer/([^\/]*) refer.php?who=$1 [L]
 RewriteRule ^all/([^\/]*) all.php?wt=$1 [L]

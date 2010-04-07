@@ -19,11 +19,11 @@ include("cfg.php");
 if (request::get_get('pg')) {
 	$pg = request::get_get('pg');
 	if ($pg == "main") {
-		$sql_get = "SELECT * FROM post WHERE blogid != 0 AND blck = 0 ORDER BY id DESC";
+		$sql_get = "SELECT * FROM post WHERE blogid != 0 && blck = 0 && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." )  ORDER BY id DESC";
 		$lnk = $site . "main";
 		$title = "Персональное на " . $ls_name;
 	} elseif ($pg == "pers") {
-		$sql_get = "SELECT * FROM post WHERE blogid = 0 AND blck = 0 ORDER BY id DESC";
+		$sql_get = "SELECT * FROM post WHERE blogid = 0 && blck = 0 && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." ) ORDER BY id DESC";
 		$title = "Коллективное на " . $ls_name;
 		$lnk = $site . "pers";
 	}
