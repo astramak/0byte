@@ -36,7 +36,7 @@ if ($name && $pwd && $pwd2 && $pwd == $pwd2 && $mail && $kap
 
     $name_exists = db_num_rows(db_query('SELECT id FROM users WHERE LOWER(name) = LOWER(%s)', $name));
     $mail_exists = db_num_rows(db_query('SELECT id FROM users WHERE LOWER(mail) = LOWER(%s)', $mail));
-    if (!($name_exists && $mail_exists)) {
+    if ($name_exists==0 && $mail_exists==0) {
         session_start();
         $a=md5(session_id());
         $a1=ord($a[2]);

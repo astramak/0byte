@@ -47,7 +47,9 @@ define('DRAFT', 8);
 define('POST_COUNT', 10);
 define('DATE','id');
 define('LAST_MODIFY','last');
-ini_set('display_errors', 1);
+define('INBLOG', 9);
+define('PERSONAL', 10);
+ini_set('display_errors', 0);
 //lib load
 include("lib/blog.inc");
 include("lib/comment.inc");

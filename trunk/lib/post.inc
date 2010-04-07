@@ -206,29 +206,54 @@ function answ_echo ($id) {
     }
     return(render_answer($ak,1));
 }
-function get_special() {
-    global $usr,$special_sql,$loged;
-    if (!$loged) {
-        $special_sql = '0';
-    }   else if (strlen($special_sql)<2 &&  $special_sql != '0') {
-            $where = array();
-            $result = db_query('SELECT `blogid` FROM `inblog` WHERE `name` = %s && `out` = 0 ORDER BY id DESC', $usr->login);
-            $ids = array();
-            while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
-            if ($ids) $where[] = '`post`.`blogid` IN (' . implode(',', $ids) . ')';
+$get_special_result=null;
+$get_special_blogs_result=null;
+function get_special_blogs() {
+	global $get_special_blogs_result, $special_blogs;
+    if ($get_special_blogs_result == null) {
+		$get_special_blogs_result = '';
+		foreach ($special_blogs as $sb) {
+			$get_special_blogs_result .= ('`post`.`blogid` != '.$sb);
+			if ($sb != end($special_blogs)) {
+				$get_special_blogs_result .= ' && ';
+		}
+		}
+	}
 
-            $frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
-            if ($frnd) {
-                $arr = explode(',', $frnd);
-                trim_array($arr, '_db_escape_string');
-                if ($arr) $where[] = '`post`.`auth` IN (' . implode(',', $arr) . ')';
-            }
-            if ($where) {
-                $special_sql='('.implode(' || ', $where).')';
-            } else {
-                $special_sql = '0';
-            }
-        }
-    return $special_sql;
+	return $get_special_blogs_result;
+}
+function get_special() {
+    global $usr,$special_sql,$loged,$special_blogs,$get_special_result;
+    if ($get_special_result == null) {
+	
+		if (!$loged) {
+			$special_sql = '0';
+		}   else if (strlen($special_sql)<2 &&  $special_sql != '0') {
+				$where = array();
+				$result = db_query('SELECT `blogid` FROM `inblog` WHERE `name` = %s && `out` = 0 ORDER BY id DESC', $usr->login);
+				$ids = array();
+				while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
+				if ($ids) $where[] = '`post`.`blogid` IN (' . implode(',', $ids) . ')';
+				
+				$frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
+				if ($frnd) {
+					$arr = explode(',', $frnd);
+					trim_array($arr, '_db_escape_string');
+					if ($arr) $where[] = '`post`.`auth` IN (' . implode(',', $arr) . ')';
+				}
+				if ($where) {
+					$special_sql='('.implode(' || ', $where).')';
+				} else {
+					$special_sql = '0';
+				}
+				
+			}
+		
+		$get_special_result = $special_sql;
+		#echo $special_sql;
+		return $special_sql;
+	} else {
+		return $get_special_result;
+	}
 }
 ?>
