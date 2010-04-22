@@ -214,9 +214,9 @@ function get_special_blogs() {
 		$get_special_blogs_result = '';
 		foreach ($special_blogs as $sb) {
 			$get_special_blogs_result .= ('`post`.`blogid` != '.$sb);
-			if ($sb != end($special_blogs)) {
-				$get_special_blogs_result .= ' && ';
-		}
+		#	if ($sb != end($special_blogs)) {
+	#			$get_special_blogs_result .= ' && ';
+	#	}
 		}
 	}
 
@@ -251,9 +251,8 @@ function get_special() {
 		
 		$get_special_result = $special_sql;
 		#echo $special_sql;
-		return $special_sql;
-	} else {
-		return $get_special_result;
-	}
+		
+	} 
+	return $get_special_result;
 }
 ?>

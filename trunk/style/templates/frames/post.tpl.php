@@ -1,4 +1,4 @@
-<div class='<?php echo $first ? 'fst_top' : 'top' ?>'>
+<div class={top_class}>
 	<?php if (!$draft) { ?><span class='date'><?php echo $date; ?></span>
 	<?php } if (!$not_in_blog) {?>
     <a class='auth' href='user/<?php echo $author; ?>/'><?php echo $author; ?></a>

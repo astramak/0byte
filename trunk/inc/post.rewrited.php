@@ -62,6 +62,7 @@ class post_list {
                     }
                     $in_blog=($ro['name']==$usr->login && $ro['out']==0 && $loged);
                     $owner=($blg->owner==$usr->login || $loged==0);
+                   
                     $this->head=render_template(TPL_POST_LIST.'/blog.tpl.php', array('id'=>$blg->id,'avatar'=>$avatar,
                             'avatar_url'=>$avatar_url,'name'=>$blg->name,'about'=>$blg->about,
                             'in_blog'=>$in_blog,'inblog_url'=>"twork.php?wt=mergeblog&amp;id=".$blg->id,
@@ -95,12 +96,13 @@ class post_list {
                 break;
             case FAVOURITE:
                 if ($loged) {
-                    $this->head=render_template(TPL_POST_LIST.'/draft.tpl.php', null);
+                    $this->head=render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
                 }
                 break;
             case DRAFT:
                 if ($loged) {
-                    $this->head=render_template(TPL_POST_LIST.'/favourite.tpl.php', null);
+                    
+			$this->head=render_template(TPL_POST_LIST.'/draft.tpl.php', null);
                 }
                 break;
             default:
@@ -156,12 +158,13 @@ class post_list {
                 $this->sql_result=db_query('SELECT *'.$sql_get.' LIMIT %d, %d',$this->current,$this->limit);
                 break;
             case FAVOURITE:
-                $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `favourite` WHERE `favourite`.`who` = %s ORDER BY  `post`.`id` DESC",$usr->login));
-                $this->sql_result=db_query("SELECT COUNT(`favourite`.`id`) FROM `favourite`,`post` WHERE `favourite`.`pid`=`post`.`id` && `favourite`.`who` = %s ORDER BY  `post`.`".$this->sort."` DESC LIMIT %d, %d",$usr->login,$this->current,$this->limit);
+                $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `favourite` WHERE `favourite`.`who` = %s ",$usr->login));
+
+                $this->sql_result=db_query("SELECT * FROM `favourite`,`post` WHERE `favourite`.`pid`=`post`.`id` && `favourite`.`who` = %s ORDER BY  `post`.`".$this->sort."` DESC LIMIT %d, %d",$usr->login,$this->current,$this->limit);
                 break;
             case DRAFT:
-                $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `draft` WHERE auth = %s ORDER BY  id DESC ",$usr->login));
-                $this->sql_result=db_query("SELECT COUNT(`id`) FROM `draft` WHERE auth = %s ORDER BY  id DESC LIMIT %d, %d",$usr->login,$this->current,$this->limit);
+                $this->count=db_result(db_query("SELECT  COUNT(`id`) FROM `draft` WHERE auth = %s ORDER BY  id DESC ",$usr->login)); 
+                $this->sql_result=db_query("SELECT * FROM `draft` WHERE auth = %s ORDER BY  id DESC LIMIT %d, %d",$usr->login,$this->current,$this->limit);
                 break;
 case PERSONAL:
 $sql_get="SELECT * FROM `post` WHERE blog = 'own' ".$this->blck." && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." ) ORDER BY  `".$this->sort."` DESC";
@@ -261,8 +264,14 @@ $cur=str_replace("?","*qw",$cur);
 $post_list=new post_list(request::get_get('frm',0),POST_COUNT);
 echo $post_list->make_head();
 $result=$post_list->make_sql_result();
+$first=0;
 if ($post_list->count>0) {
     while ($row = db_fetch_assoc($result)) {
+if ($post_list->type!=DRAFT) {
+$path = 'post_'.$row['id'].'.cache';
+	if(!($out = readCache($path, CACHE_TIME_LIMIT))) {
+	    ob_start();
+
         $post=post_echo($row,0,($post_list->type==DRAFT));
         if ($post->visible) {
             if ($post->tp==1 || ($post->tp!=3 && $post->havecut()==1)) {
@@ -270,15 +279,49 @@ if ($post_list->count>0) {
             } else {
                 $full=0;
             }
-            echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
-            'id'=>$post->id,'comments'=>klist($post->id),
+            
+        }
+echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
+            'id'=>$post->id,'comments'=> '-1',
             'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
             'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,
             'rate'=>$post->rate(),'draft'=>($post_list->type==DRAFT),'rate_num'=>($post->ratep+$post->ratem)%100));
+   $out=ob_get_clean();
+
+    writeCache($out,$path);
+}
+
+
+
+
+
+
+if ($first==0) $out = str_replace("<div class={top_class}>","<div class='fst_top'>", $out); 
+else $out = str_replace("<div class={top_class}>","<div class='top'>", $out);
+$out = str_replace("{comments}",klist($row['id']), $out);
+$first++;
+echo $out;   
+ } else {
+ $post=post_echo($row,0,($post_list->type==DRAFT));
+        if ($post->visible) {
+            if ($post->tp==1 || ($post->tp!=3 && $post->havecut()==1)) {
+                $full=1;
+            } else {
+                $full=0;
+            }
+            
         }
-    }
+echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
+            'id'=>$post->id,'comments'=> '-1',
+            'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
+            'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,
+            'rate'=>$post->rate(),'draft'=>($post_list->type==DRAFT),'rate_num'=>($post->ratep+$post->ratem)%100));
+
+}
+}
     echo render_paginator($post_list->url_ins, POST_COUNT, $post_list->count, $post_list->current, '/'.($post_list->type==FIND?$post_list->param:''));
 } else {
     echo $post_list->not_yet();
 }
+//там пиздец!
 ?>

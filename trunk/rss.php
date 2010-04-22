@@ -62,7 +62,7 @@ if (request::get_get('pg')) {
 	$sql_get .= ' ORDER BY id DESC';
 	$title = "Персональная лента " . $name;
 } else {
-	$sql_get = 'SELECT * FROM post WHERE ratep >= ratem && blck = 0 ORDER BY id DESC';
+	$sql_get = 'SELECT * FROM `post` WHERE `ratep` >= `ratem` && `blck` = 0  && '.get_special_blogs().'   ORDER BY `id` DESC';
 	$title = $s_name;
 	$lnk = $site;
 }

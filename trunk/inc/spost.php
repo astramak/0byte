@@ -38,7 +38,11 @@ if (!$row) {
             $v_date=$rw['date'];
         }
         ///spy
+ ob_start();
         $post=post_echo($row,1);
+ $out=ob_get_clean();
+$out = str_replace("<div class={top_class}>","<div class='fst_top'>", $out);
+echo $out;
         $allow_remove=0;
         $blck=$row['blck'];
         $allow_comment=($blck-$blck%100)/100;

@@ -2,7 +2,7 @@
     <?php if ($show_full && !$draft) { ?>
         <a class='full' href='post/<?php echo $id; ?>/'>Полностью...</a>
     <?php } ?>
-<?php if (!$draft) { ?><span class='rate'><?php echo $comments; ?>
+<?php if (!$draft) { ?><span class='rate'><?php if ($comments == '-1') echo '{comments}'; else echo $comments; ?>
 <noindex><a class='ratep' rel='nofollow' href='<?php echo $ratep_url; ?>'>+</a></noindex><span id='rp<?php echo $id; ?>'><?php if ($rate>0) {
             ?><span class='rp' title="Всего <?php echo $rate_num;?> <?php
             echo inducing($rate_num, array('голоса','голосов','голос'));
