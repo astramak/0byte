@@ -11,6 +11,7 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
         if ($arr) $where = '`_lenta`.`who` IN (' . implode(',', $arr) . ')';
 
     }
+
     $result=db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
     (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,
     (SELECT `inblog`.`name`,`inblog`.`bname` FROM `inblog` WHERE `inblog`.`out` = 0 && `inblog`.`name` = %s ) as `_inblog`
@@ -42,7 +43,9 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
         } else {
             $post=db_fetch_assoc(db_query("SELECT * FROM `post` WHERE `id`=%d",$row['uid']));
             if (strlen($post['auth'])>1) {
-                $post=post_echo($post,0);
+
+                
+$post=post_echo($post,0);
 
                 if ($post->tp==1 || ($post->tp!=3 && $post->havecut()==1)) {
                     $full=1;
@@ -54,7 +57,9 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
                 'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
                 'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,
                 'rate'=>$post->rate(),'draft'=>0,'rate_num'=>($post->ratep+$post->ratem)%100));
-            }
+            } 
+ 
+
         }
 
     }
@@ -68,5 +73,6 @@ if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT)
     $out=ob_get_clean();
     writeCache($out,'lenta_'.$usr->login.'_'.$frm.'.cache');
 }
+$out = str_replace("<div class={top_class}>","<div class='top'>", $out);
 echo $out;
 ?>

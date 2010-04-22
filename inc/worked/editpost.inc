@@ -23,17 +23,24 @@ if ($usr->login==$row['auth'] || $usr->lvl>$elvl) {
     if ($row['lnk']==1) {
         $mng='checked="checked"';
     }
-    $sql_get="SELECT * FROM `inblog` WHERE name = '".$usr->login."'  ";
-    $resul=mysql_query($sql_get,$sql);
-    if (!$resul) {
-        echo  mysql_error();
+    $blogs = array();
+      $blogs[]=array('value'=>'35','text'=>'Есть вопрос!');
+    $blogs[]=array('value'=>'152','text'=>'Есть проблема!');
+    $blogs[]=array('value'=>'own','text'=>'Персональный','active'=>$row['blogid']==0?'selected':'');
+
+    $res=db_query("SELECT `blogid` as `value`, `bname` as `text` FROM `inblog` WHERE `bname` != '' && `name` = %s && `blogid` != 35 && `blogid` != 125 && `blogid` != %d && ".blog::make_special_blogs('blogid','!='),$usr->login,$row['blogid']);
+	while ($raw = db_fetch_assoc($res)) {
+	
+         $blogs[]=array('value'=>$raw['value'],'text'=>$raw['text'],'active'=>0);
     }
-    $blogs[]=array('value'=>'own','text'=>'Персональный','active'=>null);
-    while ($rw = mysql_fetch_assoc($resul)) {
-        if ($rw['blogid']==$row['blogid']) {$fin='selected';} else {$fin="";}
-        $blogs[]=array('value'=>$rw['blogid'],'text'=>$rw['bname'],'active'=>$fin);
+        $res=db_query('SELECT `name` as `text`, `id` as `value` FROM `blogs` WHERE `id` = %d || '.blog::make_special_blogs('id','=',' || '),$row['blogid']);
+//    echo 'SELECT `name`, `id` FROM `blogs` WHERE '.blog::make_special_blogs();
+//    echo db_error();
+    while ($rw = db_fetch_assoc($res)) {
+		if ($rw['value']==$row['blogid']) {$fin='selected';} else {$fin="";}
+         $blogs[]=array('value'=>$rw['value'],'text'=>$rw['text'],'active'=>$fin);
     }
-    $type=null;
+     $type=null;
     if ($row['tp']==3) {
         $type='answer';
     } else if  ($row['tp']==2) {

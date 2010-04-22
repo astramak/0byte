@@ -59,7 +59,7 @@ if (request::get_post('draft', 0)) {
             db_query('UPDATE `post` SET `title` = %s, `text` = %s, `ftext` = %s, `lock` = %d, `blog` = %s, `blogid` = %d, `tag` = %s, `lnk` = %s  WHERE `id` = %d',
                 $title, $tz->short_text, $tz->full_text, $lock, $blog, $blog_id, $tag, $lnk, $post_id);
         }
-       
+        deleteCache('post_'.$post_id.'.cache'); 
         redirect("post/" . $post_id);
     } else {
         redirect($dir.'error/not_allow');
