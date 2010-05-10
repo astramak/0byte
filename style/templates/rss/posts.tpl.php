@@ -5,7 +5,13 @@
 		<link><?php print $link ?></link>
 		<description><?php print htmlspecialchars($title) ?>; rss канал</description>
 		<language>ru-ru</language>
+		<generator>0byte</generator>
 		<pubDate><?php print date('r', (isset($items[0]) ? $items[0]['date'] : time())) ?></pubDate>
+		<image>
+		<link>http://welinux.ru/</link>
+		<url>http://welinux.ru/style/img/source.png</url>
+		<title><?php print htmlspecialchars($title) ?></title>
+		</image>
 
 		<?php foreach ($items as $item): ?>
 		<item>
