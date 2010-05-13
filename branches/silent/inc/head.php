@@ -16,7 +16,7 @@
  */
 
 ob_start("ob_gzhandler");
-header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 10) . 'GMT');
+header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 10) . ' GMT');
 $loged=login();
 if ($loged) {
     // we don't need to update last activity time too frequently
