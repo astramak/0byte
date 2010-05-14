@@ -14,7 +14,7 @@ if (!preg_match('/^[a-z]+\.js$/i', $filename))
 
 // great, lets check it
 
-$filename = __DIR__ . '/' . $filename;
+$filename = dirname(__FILE__) . '/' . $filename;
 
 if (!file_exists($filename))
     die();
