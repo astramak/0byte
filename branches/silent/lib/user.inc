@@ -162,10 +162,8 @@ class user {
 }
 function unlogin() {
     if (request::get_post('un',0)) {
-        setcookie('login',0);
-		setcookie('pwd',0);
-        session_unregister("login");
-        session_unregister("pwd");
+        setcookie('login',0, time());
+		setcookie('pwd',0, time());
 		session_destroy();
 	}
 }
@@ -174,22 +172,24 @@ function login() {
 	
 	$login = request::get_cookie('login');
 	$pwd = request::get_cookie('pwd');
-        if (request::get_post('un',0)) return 0;
-//	if ($pwd && strlen($login) > 2 && !isset($_SESSION['login'])) {
-//		$_SESSION['login'] = $login;
-//		$_SESSION['pwd'] = $pwd;
-//	}
-        if (strlen(@$_SESSION['login'])>strlen($login) && strlen(@$_SESSION['pwd'])>strlen($pwd)) {
-            $login=$_SESSION['login'];
-            $pwd=$_SESSION['pwd'];
-        } else {
-		$_SESSION['login'] = $login;
-		$_SESSION['pwd'] = $pwd;
-        }
-	if (!isset($_SESSION['login'])) return 0;
+    
+    if (request::get_post('un',0)) 
+        return 0;
 
+	if (!isset($_SESSION['login'])) 
+	    return 0;
+
+    if (strlen(@$_SESSION['login'])>strlen($login) && strlen(@$_SESSION['pwd'])>strlen($pwd)) {
+        $login=$_SESSION['login'];
+        $pwd=$_SESSION['pwd'];
+    } else {
+        $_SESSION['login'] = $login;
+        $_SESSION['pwd'] = $pwd;
+    }
+    
 	$usr->login = $login;
 	$usr->pwd = md5($db_salt.base64_decode($pwd));
+	
 	if ($usr->check()) {
 		return(1);
 	} else {
