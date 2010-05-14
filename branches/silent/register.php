@@ -14,6 +14,9 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
+ 
+// @todo this page is megashit full of onkeypress ajax-requests. lets remake it
+ 
 $reg=1;
 $err=0;
 include("cfg.php");

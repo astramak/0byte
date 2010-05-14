@@ -86,7 +86,7 @@ if (!$alien->find($name) || $alien->lck>1) {
 		$lvl['set']=1;
 		$lvl['text']=$alien->lvl;
 	}
-	$result = db_query('SELECT * FROM inblog WHERE name = %s AND `out` = 0 ORDER BY id DESC', $alien->login);
+	$result = db_query('SELECT blogid, bname FROM inblog WHERE name = %s AND `out` = 0 ORDER BY id DESC', $alien->login);
 	while ($row = db_fetch_assoc($result)) {
 		$blogs[]=array('id'=>$row['blogid'],'name'=>$row['bname']);
 	}

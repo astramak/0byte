@@ -12,9 +12,6 @@
 <div class='menuel'><a href="all/friends">Друзья</a></div>
 
 </div>
-<?php echo $SCRIPT;
-$end_time = microtime(); 
-echo "<!-- time: " . round ($end_time - $start_time, 3) . "-->";
-?>
+<?php echo $SCRIPT; ?>
 </body>
 </html>

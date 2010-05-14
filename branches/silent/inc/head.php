@@ -15,8 +15,10 @@
  *
  */
 
-ob_start("ob_gzhandler");
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 10) . ' GMT');
+
+ob_start("ob_gzhandler");
+
 $loged=login();
 if ($loged) {
     $usr->updateOnline();    

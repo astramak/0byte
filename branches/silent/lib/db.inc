@@ -266,6 +266,23 @@ class DB {
         return self::getInstance()->_select($query, $args, $tty);
     }
     
+    public static function selectFirstVal($query = '', $args = array(), $tty = CACHE_NO) {
+    	$tmp = self::select($query, $args, $tty);
+    	
+    	if (
+    		$tmp
+    		&& count($tmp) > 0
+    	) {
+    		// first item
+    		$tmp = array_shift($tmp);
+    		
+				// first field
+				return array_shift($tmp);
+    	}
+    	
+    	return false;
+    }
+    
     /*
      * Simply execute query with no results
      * @param $query string
