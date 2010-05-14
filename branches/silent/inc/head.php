@@ -19,16 +19,7 @@ ob_start("ob_gzhandler");
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 10) . ' GMT');
 $loged=login();
 if ($loged) {
-    // we don't need to update last activity time too frequently
-    // just one update per minute is enough, though
-    if ( 
-        !isset( $_SESSION['last_online'] )
-        || ( time() - intval( $_SESSION['last_online'] ) ) > 60
-    ) {
-        db_query('UPDATE users SET online = %d WHERE name = %s', time(), $usr->login);
-        $_SESSION['last_online'] = time();
-    }
-    
+    $usr->updateOnline();    
     DEFINE('TZ',($usr->timezone-$server_time)*3600);
 } else {
     DEFINE('TZ',0);

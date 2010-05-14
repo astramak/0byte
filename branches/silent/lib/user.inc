@@ -141,13 +141,31 @@ class user {
 			return true;
 		}
 	}
+	
+	/*
+	 * Update last activity time
+	 * @return user
+	 */
+	public function updateOnline() {
+        // we don't need to update last activity time too frequently
+        // just one update per minute is enough, though
+        if ( 
+            !isset( $_SESSION['last_online'] )
+            || ( time() - intval( $_SESSION['last_online'] ) ) > 60
+        ) {
+            db_query('UPDATE users SET online = %d WHERE name = %s', time(), $this->login);
+            $_SESSION['last_online'] = time();
+        }
+        
+        return $this;
+	}
 }
 function unlogin() {
     if (request::get_post('un',0)) {
-                setcookie('login',0);
+        setcookie('login',0);
 		setcookie('pwd',0);
-                session_unregister("login");
-                session_unregister("pwd");
+        session_unregister("login");
+        session_unregister("pwd");
 		session_destroy();
 	}
 }
