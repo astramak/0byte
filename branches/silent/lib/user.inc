@@ -43,9 +43,12 @@ class user {
 	var $jtext;
 	var $jname;
 	var $city;
-        var $timezone;
-        var $block_cause;
-        var $other;
+    var $timezone;
+    var $block_cause;
+    var $other;
+    
+    private $friends;
+    
 	function rate() {
 		global $blog_r,$com_r,$post_r;
 		if ($this->uotr==0) {
@@ -143,6 +146,26 @@ class user {
 	}
 	
 	/*
+	 * Get friends array
+	 * @return array
+	 */
+	public function getFriends() {
+	    if (!is_array($this->friends)) {
+	        $friends = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $this->login));
+	        
+	        if ($friends) {
+	            $this->friends = explode(',', $friends);
+	            trim_array($this->friends, '_db_escape_string');
+	        } else {
+	            $this->friends = array();
+	        }
+	        
+	    }
+	    
+	    return $this->friends;
+	}
+	
+	/*
 	 * Update last activity time
 	 * @return user
 	 */
@@ -196,4 +219,3 @@ function login() {
 		return(0);
 	}
 }
-?>

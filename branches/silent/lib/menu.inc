@@ -54,14 +54,9 @@ class mel {
                 break;
             case 'lenta':
                 if ($loged==1) {
-                    $frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
-                    $where="1 = 0";
-                    if ($frnd) {
-                        $arr = explode(',', $frnd);
-                        trim_array($arr, '_db_escape_string');
-                        if ($arr) $where = '`lenta`.`who` IN (' . implode(',', $arr) . ')';
+                    $frnd = $usr->getFriends();
+                    $where = count($frnd) > 0 ? 'lenta.who in (' . implode(',', $frnd) . ')' : '1 = 0';
 
-                    }
                     $new=db_result(db_query("SELECT (`l`.`cn`+`p`.`cn`) as `cnt` FROM (SELECT COUNT(`id`) as `cn` FROM`lenta` WHERE `lenta`.`date` > %d &&
 `lenta`.`who`=%s && `lenta`.`type`= 0 ) as `l`, (SELECT COUNT(`id`) as `cn` FROM `post`
  WHERE `date` > %d && `blck` = 0 && `auth` != %s && ".get_special().") as `p`"

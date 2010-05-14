@@ -2,15 +2,10 @@
 if (!($out = readCache('lenta_'.$usr->login.'_'.$frm.'.cache', CACHE_TIME_LIMIT))) {
     ob_start();
 
-    $frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
-    $where="1 = 0";
-    $frm=request::get_get('frm',0);
-    if ($frnd) {
-        $arr = explode(',', $frnd);
-        trim_array($arr, '_db_escape_string');
-        if ($arr) $where = '`_lenta`.`who` IN (' . implode(',', $arr) . ')';
+    $frnd = $usr->getFriends();
+    $where = count($frnd) > 0 ? '_lenta.who in (' . implode(',', $frnd) . ')' : '1 = 0';
 
-    }
+    $frm=request::get_get('frm',0);
 
     $result=db_query('SELECT * FROM (SELECT * FROM `lenta` WHERE `lenta`.`date` > %d ) as `_lenta`,
     (SELECT `post`.`id`,`post`.`auth` FROM `post` WHERE `post`.`date` > %d && `post`.`auth` != %s) as `_post`,

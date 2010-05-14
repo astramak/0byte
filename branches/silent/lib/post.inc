@@ -235,12 +235,10 @@ function get_special() {
 				while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
 				if ($ids) $where[] = '`post`.`blogid` IN (' . implode(',', $ids) . ')';
 				
-				$frnd = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $usr->login));
-				if ($frnd) {
-					$arr = explode(',', $frnd);
-					trim_array($arr, '_db_escape_string');
-					if ($arr) $where[] = '`post`.`auth` IN (' . implode(',', $arr) . ')';
-				}
+				$frnd = $usr->getFriends();
+				if (count($frnd) > 0)
+				    $where[] = 'post.auth in (' . implode(',', $frnd) . ')';
+				
 				if ($where) {
 					$special_sql='('.implode(' || ', $where).')';
 				} else {
