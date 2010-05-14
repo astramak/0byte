@@ -15,7 +15,7 @@
  *
  */
 $index=1;
-include("cfg.php");
+include('cfg.php');
 $ajax = request::get_get('ajax');
 if ($ajax) {
     if (login()) {
@@ -24,19 +24,17 @@ if ($ajax) {
     } else {
         DEFINE('TZ',0);
     }
-    include("inc/ajax/" . sfin($ajax) . ".inc");
+    include('inc/ajax/' . sfin($ajax) . '.inc');
     die;
 }
 
-include("inc/head.php");
-include("inc/top.php");
+include('inc/head.php');
+include('inc/top.php');
 
 if (isset($_GET['post'])) {
-    include("inc/spost.php");
+    include('inc/spost.php');
 } else {
-    include("inc/post.rewrited.php");
+    include('inc/post.rewrited.php');
 }
 
-
-include("inc/foot.php");
-?>
+include('inc/foot.php');

@@ -94,15 +94,18 @@ class mn {
 }
 
 function cmenu($en) {
-    $result = db_query('SELECT * FROM menu ORDER BY id ASC');
-    $en->menu_c=0;
-    while ($row = db_fetch_assoc($result)) {
-        $en->menu[$en->menu_c]=new mel;
-        $en->menu[$en->menu_c]->name=$row['name'];
-        $en->menu[$en->menu_c]->url=$row['url'];
-        $en->menu[$en->menu_c]->chcur();
+    $en->menu_c = 0;
+
+    $result = DB::select('select name, url from menu order by id asc', array(), CACHE_BIG);
+    
+    foreach($result as $item) {
+        $en->menu[$en->menu_c] = new mel;
+        $en->menu[$en->menu_c]->name = $item['name'];
+        $en->menu[$en->menu_c]->url = $item['url'];
+        $en->menu[$en->menu_c]->chcur();    
+    
         $en->menu_c++;
     }
+
     return ($en);
 }
-?>

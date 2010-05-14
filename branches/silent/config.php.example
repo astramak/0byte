@@ -14,6 +14,17 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
+ 
+DEFINE('SQL_SERVER', 'localhost');
+DEFINE('SQL_LOGIN',  'test');
+DEFINE('SQL_PASS',   'test');
+DEFINE('SQL_DB',     'test');
+// cache path, comment to disable sql cache (not recommended)
+// DEFINE('SQL_CACHE_PATH', '/tmp/sql/');
+
+// uncomment to debug with firePHP
+// DEFINE('DEBUG');
+ 
 // sql settings
 $db_settings = 'mysql://test:test@localhost/test';
 
