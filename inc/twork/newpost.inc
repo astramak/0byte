@@ -22,6 +22,7 @@ if ($blog_id == 0) {
 $lock = request::get_post('lock') == 'on' ? 1 : 0;
 $post_writed=1;
 if (request::get_post('draft', '0')=='0' || request::get_post('nodraft','0')!='0') {
+	 $draft = '';
      include 'inc/new_post.inc';
 }
 if ($post_writed==0 || (request::get_post('draft', '0')!='0' || request::get_post('nodraft','0')=='0')) {

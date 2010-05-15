@@ -6,6 +6,7 @@
 */
 //content of lib/post.inc:
 //define post-list types:
+
 class post_list {
     var $type;
     var $head;
@@ -92,7 +93,7 @@ class post_list {
                         'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur));
                 break;
             case FIND:
-                $this->head=render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>$this->param));
+                $this->head=render_template(TPL_POST_LIST.'/find.tpl.php', array("text"=>htmlspecialchars($this->param)));
                 break;
             case FAVOURITE:
                 if ($loged) {
@@ -267,7 +268,7 @@ $result=$post_list->make_sql_result();
 $first=0;
 if ($post_list->count>0) {
     while ($row = db_fetch_assoc($result)) {
-if ($post_list->type!=DRAFT) {
+if ($post_list->type!=DRAFT && $row['tp']!=3) {
 $path = 'post_'.$row['id'].'.cache';
 	if(!($out = readCache($path, CACHE_TIME_LIMIT))) {
 	    ob_start();
@@ -280,12 +281,12 @@ $path = 'post_'.$row['id'].'.cache';
                 $full=0;
             }
             
-        }
+        
 echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
             'id'=>$post->id,'comments'=> '-1',
             'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
             'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,
-            'rate'=>$post->rate(),'draft'=>($post_list->type==DRAFT),'rate_num'=>($post->ratep+$post->ratem)%100));
+            'rate'=>$post->rate(),'draft'=>($post_list->type==DRAFT),'rate_num'=>($post->ratep+$post->ratem)%100)); }
    $out=ob_get_clean();
 
     writeCache($out,$path);
@@ -302,6 +303,7 @@ $out = str_replace("{comments}",klist($row['id']), $out);
 $first++;
 echo $out;   
  } else {
+  ob_start();
  $post=post_echo($row,0,($post_list->type==DRAFT));
         if ($post->visible) {
             if ($post->tp==1 || ($post->tp!=3 && $post->havecut()==1)) {
@@ -310,18 +312,22 @@ echo $out;
                 $full=0;
             }
             
-        }
+        
 echo render_template(TPL_POST_LIST.'/bottom.tpl.php', array('show_full'=>$full,
-            'id'=>$post->id,'comments'=> '-1',
+            'id'=>$post->id,'comments'=> klist($row['id']),
             'ratep_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=p&amp;from=".$cur,
             'ratem_url'=>"twork.php?wt=ratepost&amp;id=".$post->id."&amp;rate=m&amp;from=".$cur,
             'rate'=>$post->rate(),'draft'=>($post_list->type==DRAFT),'rate_num'=>($post->ratep+$post->ratem)%100));
-
+	    }
+$out=ob_get_clean();
+if ($first==0) $out = str_replace("<div class={top_class}>","<div class='fst_top'>", $out); 
+else $out = str_replace("<div class={top_class}>","<div class='top'>", $out);
+echo $out;
+$first++;
 }
 }
     echo render_paginator($post_list->url_ins, POST_COUNT, $post_list->count, $post_list->current, '/'.($post_list->type==FIND?$post_list->param:''));
 } else {
     echo $post_list->not_yet();
 }
-//там пиздец!
 ?>
