@@ -44,22 +44,22 @@ class mel {
         $this->show = 1;
         switch ($this->url) {
             case '.':
-                $new = db_result(db_query('SELECT COUNT(id) FROM `post` WHERE `date` > %d && `ratep` - `ratem` >= %d && '.get_special_blogs().' && ( `lock` = 0 || '.get_special().' )', $dt, $to_main));
+                $new = db_result(db_query('select count(id) FROM `post` WHERE `date` > %d && `ratep` - `ratem` >= %d '.get_special_blogs().' and ( `lock` = 0 or '.get_special().' )', $dt, $to_main));
                 break;
             case 'main':
-                $new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid != 0 && ".get_special_blogs()." &&  ( `lock` = 0 || ".get_special()." )", $dt));
+                $new = db_result(db_query("select count(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid != 0 ".get_special_blogs()." and  ( `lock` = 0 or ".get_special()." )", $dt));
                 break;
             case 'pers':
-                $new = db_result(db_query("SELECT COUNT(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid = 0 && ".get_special_blogs()." && ( `lock` = 0 || ".get_special()." )", $dt));
+                $new = db_result(db_query("select count(id) FROM `post` WHERE date > %d AND blck = 0 AND blogid = 0 ".get_special_blogs()." and ( `lock` = 0 or ".get_special()." )", $dt));
                 break;
             case 'lenta':
                 if ($loged==1) {
                     $frnd = $usr->getFriends();
                     $where = count($frnd) > 0 ? 'lenta.who in (' . implode(',', $frnd) . ')' : '1 = 0';
 
-                    $new=db_result(db_query("SELECT (`l`.`cn`+`p`.`cn`) as `cnt` FROM (SELECT COUNT(`id`) as `cn` FROM`lenta` WHERE `lenta`.`date` > %d &&
-`lenta`.`who`=%s && `lenta`.`type`= 0 ) as `l`, (SELECT COUNT(`id`) as `cn` FROM `post`
- WHERE `date` > %d && `blck` = 0 && `auth` != %s && ".get_special().") as `p`"
+                    $new=db_result(db_query("SELECT (`l`.`cn`+`p`.`cn`) as `cnt` FROM (SELECT COUNT(`id`) as `cn` FROM`lenta` WHERE `lenta`.`date` > %d and
+`lenta`.`who`=%s and `lenta`.`type`= 0 ) as `l`, (SELECT COUNT(`id`) as `cn` FROM `post`
+ WHERE `date` > %d and `blck` = 0 and `auth` != %s and ".get_special().") as `p`"
                             ,time()-12*60*60,$usr->login,time()-12*60*60,$usr->login));
                 } else {
 

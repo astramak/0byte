@@ -121,10 +121,10 @@ if (!$alien->find($name) || $alien->lck>1) {
         echo render_template(TPL_FRAMES.'/user.tpl.php', array('name'=>$alien->login,
 	'avatar'=>$avatar,'avatar_url'=>$avatar_url,'use_micro'=>$use_micro,
 	'blocked'=>$alien->lck,'lvl'=>$alien->lvl,'hide_mail'=>$alien->hml,
-	'mail'=>$alien->mail,'icq'=>$icq,'jabber'=>$jabber,'usite'=>$usite,'city'=>$city,
+	'mail'=>$alien->mail,'icq'=>$icq,'jabber'=>$jabber,'usite'=>isset($usite) ? $usite : '','city'=>$city,
 	'rate'=>$alien->rate(),'ratep_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=p&from=".$cur,
 	'ratem_url'=>"twork.php?wt=rateuser&name=".$alien->login."&rate=m&from=".$cur,
-	'about'=>$about,'blogs'=>$blogs,'friends'=>@$friends,'is_friend'=>@$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
+	'about'=>$about,'blogs'=>isset($blogs) ? $blogs : array(),'friends'=>@$friends,'is_friend'=>@$is_friend,'friend_url'=>"twork.php?wt=friend&who=".$name."&cur=".$cur,
 	'post_count'=>$post_count,'comment_count'=>$comment_count,'allow_block'=>$allow_block,'block_url'=>$block_url,
 	'owner'=>$own_profile,'micro_name'=>@$micro_name,'micro_url'=>@$micro_url,'micro_status'=>$alien->jtext,'block_cause'=>$alien->block_cause,'me_on'=>$me_on,'me_on_count'=>count($me_on)));
 }

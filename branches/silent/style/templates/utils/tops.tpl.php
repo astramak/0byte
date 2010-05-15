@@ -18,7 +18,7 @@
 
 	            	<?php if ($loged) {?>
                     
-					<?php if ($allow_blog) {?>
+					<?php if (isset($allow_blog) && $allow_blog) {?>
 					<ul id='glist'>
 					  <li><a href='work/newblog'>Новый блог</a></li>
                     </ul>

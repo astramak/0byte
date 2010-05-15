@@ -213,7 +213,7 @@ function get_special_blogs() {
     if ($get_special_blogs_result == null) {
 		$get_special_blogs_result = '';
 		foreach ($special_blogs as $sb) {
-			$get_special_blogs_result .= ('`post`.`blogid` != '.$sb);
+			$get_special_blogs_result .= (' and `post`.`blogid` <> '.$sb);
 		#	if ($sb != end($special_blogs)) {
 	#			$get_special_blogs_result .= ' && ';
 	#	}
@@ -230,17 +230,17 @@ function get_special() {
 			$special_sql = '0';
 		}   else if (strlen($special_sql)<2 &&  $special_sql != '0') {
 				$where = array();
-				$result = db_query('SELECT `blogid` FROM `inblog` WHERE `name` = %s && `out` = 0 ORDER BY id DESC', $usr->login);
+				$result = db_query('SELECT `blogid` FROM `inblog` WHERE `name` = %s and `out` = 0 ORDER BY id DESC', $usr->login);
 				$ids = array();
 				while ($row = db_fetch_object($result)) $ids[] = $row->blogid;
-				if ($ids) $where[] = '`post`.`blogid` IN (' . implode(',', $ids) . ')';
+				if ($ids) $where[] = '`post`.`blogid` in (' . implode(',', $ids) . ')';
 				
 				$frnd = $usr->getFriends();
 				if (count($frnd) > 0)
 				    $where[] = 'post.auth in (' . implode(',', $frnd) . ')';
 				
 				if ($where) {
-					$special_sql='('.implode(' || ', $where).')';
+					$special_sql='('.implode(' or ', $where).')';
 				} else {
 					$special_sql = '0';
 				}
