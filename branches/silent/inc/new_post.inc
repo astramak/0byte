@@ -21,8 +21,8 @@ switch ($tp) {
             $post_writed=0; //post not writed -> to draft
             break;
         } else {
-            $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
-                            `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s'.$draft,
+            $query=db_query('INSERT INTO `post` SET `date` = %s, `title` = %s, `auth` = %s, `text` = %s,
+                            `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
                 $time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
                 $blog_id, $tag, $lock, $tp, $lnk);
             $id=db_last_insert_id($query);
@@ -34,8 +34,8 @@ switch ($tp) {
             $post_writed=0; //post not writed -> to draft
             break;
         }
-        $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
-                            `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s'.$draft,
+        $query=db_query('INSERT INTO `post` SET `date` = %s, `title` = %s, `auth` = %s, `text` = %s,
+                            `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
             $time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
             $blog_id, $tag, $lock, $tp, $lnk);
         $id=db_last_insert_id($query);
@@ -47,7 +47,7 @@ switch ($tp) {
             break;
         }
         $nm = request::get_post('mng') == 'on' ? 1 : 0;
-        $query=db_query('INSERT INTO `post` SET `date` = %d, `title` = %s, `auth` = %s, `text` = %s,
+        $query=db_query('INSERT INTO `post` SET `date` = %s, `title` = %s, `auth` = %s, `text` = %s,
                             `ftext` = %s, `blog` = %s, `blogid` = %d, `tag` = %s, `lock` = %d, `tp` = %d, `lnk` = %s',
             $time, $title, $usr->login, $tz->short_text, $tz->full_text, $blog,
             $blog_id, $tag, $lock, $tp, $nm);
@@ -63,4 +63,5 @@ switch ($tp) {
         } 
         break;
 }
+
 ?>
