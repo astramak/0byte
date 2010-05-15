@@ -19,8 +19,9 @@ DEFINE('SQL_SERVER', 'localhost');
 DEFINE('SQL_LOGIN',  'test');
 DEFINE('SQL_PASS',   'test');
 DEFINE('SQL_DB',     'test');
-// cache path, comment to disable sql cache (not recommended)
-// DEFINE('SQL_CACHE_PATH', '/tmp/sql/');
+
+// cache path, comment to disable cache (not recommended)
+// DEFINE('CACHE_PATH', '/tmp/0byte/');
 
 // uncomment to debug with firePHP
 // DEFINE('DEBUG');
