@@ -16,11 +16,6 @@ class DB {
 	private $connection;
 
 	/*
-	 * Debug mode (config.php)
-	 */
-	private $debug = 0;
-
-	/*
 	 * Temporary arguments for prepare __query
 	 */
 	private $tmpargs;
@@ -29,9 +24,6 @@ class DB {
 	 * Constructor
 	 */
 	public function __construct() {
-		if (defined('DEBUG'))
-			$this->debug = true;
-
 		$this->connection = mysql_connect(
 			SQL_SERVER,
 			SQL_LOGIN,
@@ -109,7 +101,7 @@ class DB {
 	 * @return array
 	 */
 	private function _select($query, $args = array(), $tty = CACHE_NO) {
-		if ($this->debug) {
+		if (defined('DEBUG')) {
 			$log = $query;
 
 			if (count($args) > 0)            
@@ -131,7 +123,7 @@ class DB {
 		$res = $this->__query($query, $args);
 
 		if (!$res) {
-			if ($this->debug)
+			if (defined('DEBUG'))
 				FB::log(mysql_error($this->connection), FirePHP::ERROR);
 
 			return false;
@@ -186,20 +178,24 @@ class DB {
 	public static function select($query = '', $args = array(), $tty = CACHE_NO) {
 		return self::getInstance()->_select($query, $args, $tty);
 	}
-
-	public static function selectFirstVal($query = '', $args = array(), $tty = CACHE_NO) {
+	
+	public static function selectFirst($query = '', $args = array(), $tty = CACHE_NO) {
 		$tmp = self::select($query, $args, $tty);
-
+		
 		if (
 			$tmp
 			&& count($tmp) > 0
-		) {
-			// first item
-			$tmp = array_shift($tmp);
-
-			// first field
+		)
 			return array_shift($tmp);
-		}
+			
+		return false;
+	}
+
+	public static function selectFirstVal($query = '', $args = array(), $tty = CACHE_NO) {
+		$tmp = self::selectFirst($query, $args, $tty);
+
+		if (count($tmp) > 0)
+			return array_shift($tmp);
 
 		return false;
 	}

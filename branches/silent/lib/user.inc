@@ -59,22 +59,31 @@ class user {
 	}
 
 	function find($name,$what="*",$nolock=0) {
-      		$result = db_query('SELECT '.$what.' FROM `users` WHERE LOWER(name) = LOWER(%s)', $name);
-		$row = db_fetch_assoc($result);
-		if ($row) {
-                        if ($this->pr) $this->pr=$row['postre'];
-                        if ($this->cr) $this->cr=$row['comre'];
-                        if ($this->pmr) $this->pmr=$row['pmre'];
-			$this->uotr = 0;
-			$this->login = $name;
-			foreach ($row as $key => $val) {
-				$this->{$key} = $val;
-			}
-                        if ($nolock==0) { $this->check_lock(); }
-			return true;
+		$result = DB::selectFirst('select ' . $what . ' from users where lower(name) = lower(%s) limit 1', array($name), CACHE_MIN);
+		
+		if (!$result)
+			return false;
+			
+		if ($this->pr)
+			$this->pr = $result['postre'];
+			
+		if ($this->cr)
+			$this->cr = $result['compre'];
+			
+		if ($this->pmr)
+			$this->pmr = $result['pmre'];
+			
+		$this->uotr = 0;
+		$this->login = $name;
+		
+		foreach($result as $key => $val) {
+			$this->{$key} = $val;
 		}
-		return false;
-            
+		
+		if ($nolock = 0)
+			$this->check_lock();
+			
+		return true;
 	}
 
         function get_me_on() {
@@ -119,30 +128,33 @@ class user {
         }
 	function check() {
 		if ($this->cheked != 1) {
-			$result = db_query('SELECT *  FROM `users` WHERE `name` = %s ', $this->login);
-			$row = db_fetch_assoc($result);
-			if ($row && strcmp($row['pwd'], $this->pwd) == 0 && $row['activ'] == 1 && !$this->check_lock()) {
+			$result = DB::selectFirst('select * from users where lower(name) = lower(%s) limit 1', array($this->login), CACHE_MIN);
+		
+			if (
+				$result 
+				&& strcmp($result['pwd'], $this->pwd) == 0
+				&& $result['activ'] == 1
+				&& !$this->check_lock()
+			) {
 				$this->cheked = 1;
-				$this->ratep = $row['ratep'];
-				$this->ratem = $row['ratem'];
-				$this->crate = $row['crate'];
-				$this->brate = $row['brate'];
-				$this->prate = $row['prate'];
-				$this->lvl = $row['lvl'];
-                                $this->timezone=$row['timezone'];
-                                $this->lck=0;
+				
+				$this->ratep    = $result['ratep'];
+				$this->ratem    = $result['ratem'];
+				$this->crate    = $result['crate'];
+				$this->brate    = $result['brate'];
+				$this->prate    = $result['prate'];
+				$this->lvl      = $result['lvl'];
+				$this->timezone = $result['timezone'];
+				
+				$this->lck=0;
+				
 				return true;
-			} else {
-//                            if ($row['lck']==1) {
-//                                $this->lck=1;
-//                                $this->block_cause=db_result(db_query('SELECT `cause`  FROM `block_user` WHERE `user` = %s LIMIT 1 ', $this->login));
-//                            }
-				return false;
-
 			}
-		} else {
-			return true;
+			
+			return false;
 		}
+		
+		return false;
 	}
 	
 	/*

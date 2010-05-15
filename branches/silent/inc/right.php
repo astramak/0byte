@@ -56,7 +56,10 @@ for ($i = $siz; $i >= 0; $i--) {
 array_splice($tarr, 16);
 echo render_hands_free($tarr,$siz);
 echo render_search_panel();
-if (!($tops = readCache('tops.cache', CACHE_TIME_LIMIT*10))) {
+
+$tops = Cache::get('tops', CACHE_NORMAL);
+
+if (!$tops) {
     $tops = '';
 
     $result = db_query('SELECT * FROM `tags` WHERE `num` > 0 ORDER BY `num` DESC LIMIT %d',COUNT_TAG); //get tags from db
@@ -70,26 +73,28 @@ if (!($tops = readCache('tops.cache', CACHE_TIME_LIMIT*10))) {
         $blogs[] = $row;
     }
     $blogs_count = DB::selectFirstVal('select count(id) from blogs', array(), CACHE_VERY_BIG);
-    $blogs_num = db_result(db_query('SELECT COUNT(`id`) FROM `blogs`'));//get blogs count
     $result = db_query('SELECT *, (ratep - ratem + prate / %d + crate / %d + brate / %d) AS rate  FROM users WHERE lvl = 0 && lck = 0 ORDER BY rate DESC LIMIT %d', $post_r, $com_r, $blog_r,TOP_COUNT); //get top users from db
     $users = array();
     while ($row = db_fetch_assoc($result)) {
         $row['rate']=(float) $row['rate'];
         $users[] = $row;
     }
-    $tops .= render_tops($users, $blogs,$city_count,$users_num,$blogs_num);//render user and blog top
-    writeCache($tops,'tops.cache');
+    $tops .= render_tops($users, $blogs,$city_count,$users_num,$blogs_count);//render user and blog top
+    
+    Cache::set('tops', $tops);
 }
 echo $tops;
 
-$result = db_query('SELECT name FROM users WHERE online >= %d ORDER BY online DESC', time() - 300);
-while ($row = db_fetch_assoc($result)) {
-    $onlines[] = $row['name'];
+$result = DB::select('select name from users where online >= %d order by online desc', array(time() - 300), CACHE_MIN);
+
+foreach($result as $item) {
+	$onlines[] = $item['name'];
 }
 
-$result = db_query('SELECT name FROM users ORDER BY id DESC LIMIT 5');
-while ($row = db_fetch_assoc($result)) {
-    $news[] = $row['name'];
+$result = DB::select('select name from users order by id desc limit 5', array(), CACHE_NORMAL);
+
+foreach($result as $item) {
+	$news[] = $item['name'];
 }
 
 echo render_online_and_new($onlines, $news);

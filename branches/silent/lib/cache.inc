@@ -60,7 +60,7 @@ class Cache {
 			return false;
 	
 		$instance = self::getInstance($path);
-		
+
 		if (!$instance)
 			return false;
 			
@@ -99,7 +99,7 @@ class Cache {
 	}
 	
 	private function getCacheFileName($var) {
-		return $this->path . md5($var);
+		return $this->path . md5($var) . '.cache';
 	}
 	
 	private function _get($var, $tty) {
@@ -111,6 +111,10 @@ class Cache {
 		if (time() - filemtime($filename) > $tty) {
 			@unlink($filename);
 			return false;
+		}
+		
+		if (defined('DEBUG')) {
+			FB::log('hit on [' .$var . ']', 'Cache');
 		}
 		
 		return unserialize(file_get_contents($filename));
