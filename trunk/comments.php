@@ -23,7 +23,7 @@ if (!$who) {
     $result = db_query('SELECT * FROM comment WHERE who = %s ORDER BY id DESC LIMIT %d, %d', $who,$frm,$count);
     if (!$all_count) {
         echo render_template(TPL_FRAMES.'/comment_list.tpl.php',array(
-        'avatar'=>$avatar,'avatar_url'=>$avatar_url,'name'=>$name,'rate'=>$rate,'yes'=>0));
+        'avatar'=>$avatar_url,'avatar_url'=>$avatar_url,'name'=>$name,'rate'=>$rate,'yes'=>0));
     } else {
         while($row = db_fetch_assoc($result)) {
             $com = new comment($row);

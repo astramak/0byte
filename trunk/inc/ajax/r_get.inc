@@ -153,6 +153,15 @@ if (request::get_get('noo',0)) {
                     $i++;
                 }
             }
+else if (request::get_get('user',0)) {
+	$alien = new user();
+	if ($alien->find(request::get_get('user',0)) && $alien->lck<=1) {
+		$online = (db_result(db_query('SELECT `online` FROM `users` WHERE `name` = %s', $alien->login))<=time() - 300)?1:0;
+		$arr=array('name' => $alien->login, 'rate' => $alien->rate(),'online' => $online , 'av' => (strlen($alien->av)>2?"res.php?t=av&img=".$alien->av:NULL));
+$i++;
+	}
+}
+
 $out=new out;
 @$out->arr=$arr;
 $out->num=$i;
