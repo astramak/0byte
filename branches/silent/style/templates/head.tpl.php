@@ -9,11 +9,11 @@ $start_time = microtime();
 		<meta name="keywords" content="<?php echo $kwd ?>" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="shortcut icon" href="<?php echo $site ?>favicon.ico" type="image/x-icon" />
-<?
+<?php
 	if (defined('FORCED_GZIP')) {
-?><link rel="stylesheet" href="style/css.php?css=new.css" type="text/css" /><?
+?><link rel="stylesheet" href="style/css.php?css=new.css" type="text/css" /><?php
 	} else {
-?><link rel="stylesheet" href="style/new.css" type="text/css" /><?
+?><link rel="stylesheet" href="style/new.css" type="text/css" /><?php
 	}
 ?>
 
