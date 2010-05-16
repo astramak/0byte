@@ -27,7 +27,7 @@ header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $lastModified) . ' GMT');
 
 // lets get all headers to find "If-Modified-Since"
 
-$request = getallheaders();
+$request = (function_exists('getallheaders')) ? getallheaders() : array();
 
 $modifiedSince = 0;
 
@@ -48,6 +48,8 @@ if ($lastModified <= $modifiedSince) {
     die();
 } 
 
+require('../config.php');
+
 // additionally set the expiration date +1 hour
 
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 60 * 60) . ' GMT');
@@ -56,5 +58,8 @@ header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 60 * 60) . ' GMT');
 
 header("Content-type: text/javascript");
 
-ob_start( "ob_gzhandler" );
+if (defined('FORCED_GZIP')) {
+	ob_start( "ob_gzhandler" );
+}
+	
 include( $filename );

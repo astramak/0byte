@@ -17,7 +17,11 @@
 
 header('Expires: ' . gmdate('D, d M Y H:i:s', time() + 10) . ' GMT');
 
-ob_start("ob_gzhandler");
+if (defined('FORCED_GZIP')) {
+	ob_start("ob_gzhandler");
+} else {
+	ob_start();
+}
 
 $loged=login();
 if ($loged) {
