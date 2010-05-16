@@ -90,7 +90,15 @@ class DB {
 
 		$prepared = count($args) > 0 ? $this->prepareQuery($query, $args) : $query;
 
-		return mysql_query($prepared, $this->connection);
+		$result = mysql_query($prepared, $this->connection);
+		
+		if (
+			!$result
+			&& defined('DEBUG')
+		)
+			FB::log(mysql_error($this->connection), 'DB', FirePHP::ERROR);
+			
+		return $result;
 	}
 
 	/*
@@ -149,6 +157,15 @@ class DB {
 	 * @return resource
 	 */
 	private function _exec($query, $args = array()) {
+		if (defined('DEBUG')) {
+			$log = $query;
+
+			if (count($args) > 0)            
+				$log .= ' [' . implode(',', $args) . ']';
+
+			FB::log($log, 'DB', FirePHP::INFO);
+		}
+	
 		return $this->__query($query, $args);
 	}
 
@@ -198,6 +215,23 @@ class DB {
 			return array_shift($tmp);
 
 		return false;
+	}
+	
+	/**
+	 * Show tables array
+	 * @return array
+	 */
+	public static function tables() {
+		$tables = self::select('show tables');
+		
+		$result = array();
+		
+		foreach($tables as $key => $value) {
+			$vals = array_values($value);
+			$result[] = $vals[0];
+		}
+		
+		return $result;
 	}
 
 	/*
