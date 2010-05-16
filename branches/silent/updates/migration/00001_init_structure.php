@@ -262,6 +262,7 @@ CREATE TABLE `urate` (
   `type` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;'))
+		return false;
 		
 	if (!checkTable($tables, 'users', '
 CREATE TABLE `users` (
@@ -312,25 +313,3 @@ CREATE TABLE `wansw` (
 		
 	return true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
