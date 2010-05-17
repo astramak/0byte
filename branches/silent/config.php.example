@@ -14,7 +14,7 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
- 
+
 DEFINE('SQL_SERVER', 'localhost');
 DEFINE('SQL_LOGIN',  'test');
 DEFINE('SQL_PASS',   'test');
@@ -27,13 +27,13 @@ DEFINE('SQL_DB',     'test');
 // DEFINE('DEBUG');
 
 if (defined('DEBUG')) {
-    require('FirePHPCore/fb.php');
-    fb('debug mode turned on', FirePHP::INFO);
+	require('FirePHPCore/fb.php');
+	fb('debug mode turned on', FirePHP::INFO);
 }
 
 // use gzip in php (doesn't needed if you use nginx or apache with gzip)
 // DEFINE('FORCED_GZIP');
- 
+
 // sql settings
 $db_settings = 'mysql://test:test@localhost/test';
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  *     This file is part of 0byte.
  *
@@ -18,10 +18,10 @@ $e = 0;
 $tarr = array();
 
 $result = DB::select('
-	select * 
-	from post 
+	select *
+	from post
 	where blck = 0 and `lock` = 0 order by id desc limit 16', array(), CACHE_MIN);
-	
+
 $e += count($result);
 
 foreach($result as $row) {
@@ -64,7 +64,7 @@ if (!$tops) {
 
     $result = db_query('SELECT * FROM `tags` WHERE `num` > 0 ORDER BY `num` DESC LIMIT %d',COUNT_TAG); //get tags from db
     $tops .= render_tags(generate_tag_array($result,28,6)); //render tag-cloud
-    
+
     $city_count = DB::selectFirstVal('select count(distinct city) from users where city <> ""', array(), CACHE_VERY_BIG);
     $users_num  = DB::selectFirstVal('select count(id) from users', array(), CACHE_NORMAL);
     $result = db_query('SELECT *, (ratep - ratem) AS rate FROM blogs ORDER BY rate DESC LIMIT %d',TOP_COUNT);//get top blog
@@ -80,19 +80,19 @@ if (!$tops) {
         $users[] = $row;
     }
     $tops .= render_tops($users, $blogs,$city_count,$users_num,$blogs_count);//render user and blog top
-    
+
     Cache::set('tops', $tops);
 }
 echo $tops;
 
 $result = DB::select('select name from users where online >= %d order by online desc', array(time() - 300), CACHE_MIN);
-
+$onlines = array();
 foreach($result as $item) {
 	$onlines[] = $item['name'];
 }
 
 $result = DB::select('select name from users order by id desc limit 5', array(), CACHE_NORMAL);
-
+$news = array();
 foreach($result as $item) {
 	$news[] = $item['name'];
 }

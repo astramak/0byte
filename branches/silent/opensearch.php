@@ -15,10 +15,14 @@
  *
  */
 include("cfg.php");
-echo '<?xml version="1.0" encoding="UTF-8"?>';
-?>
+
+header('Content-type: application/opensearchdescription+xml');
+
+echo <<<EOF
+<?xml version="1.0" encoding="UTF-8"?>
   <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-   <ShortName><?php echo $sl_name;?></ShortName>
-   <Description><?php echo $s_name;?></Description>
-   <Url type="text/html" template="<?php echo $site; ?>?fnd={searchTerms}"/>
+   <ShortName>{$sl_name}</ShortName>
+   <Description>{$s_name}</Description>
+   <Url type="text/html" template="{$site}?fnd={searchTerms}"/>
  </OpenSearchDescription>
+EOF;

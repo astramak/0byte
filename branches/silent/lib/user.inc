@@ -59,7 +59,7 @@ class user {
 	}
 
 	function find($name,$what="*",$nolock=0) {
-		$result = DB::selectFirst('select ' . $what . ' from users where lower(name) = lower(%s) limit 1', array($name), CACHE_MIN);
+		$result = DB::selectFirst('select ' . $what . ' from users where name = %s limit 1', array($name), CACHE_MIN);
 		
 		if (!$result)
 			return false;
@@ -128,7 +128,7 @@ class user {
         }
 	function check() {
 		if ($this->cheked != 1) {
-			$result = DB::selectFirst('select * from users where lower(name) = lower(%s) limit 1', array($this->login), CACHE_MIN);
+			$result = DB::selectFirst('select * from users where name = %s limit 1', array($this->login), CACHE_MIN);
 		
 			if (
 				$result 
