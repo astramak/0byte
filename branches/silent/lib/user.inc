@@ -59,9 +59,7 @@ class user {
 	}
 
 	function find($name,$what="*",$nolock=0) {
-		$ds = DB::selectFirst('select ' . $what . ' from users where name = %s limit 1', array($name), CACHE_MIN);
-
-		$result = $db->fetchRow();
+		$result = DB::selectFirst('select ' . $what . ' from users where name = %s limit 1', array($name), CACHE_MIN);
 
 		if (!$result)
 			return false;
