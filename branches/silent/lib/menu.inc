@@ -70,12 +70,12 @@ class mel {
             default:
                 $new = 0;
         }
-      
+
         if ($this->show) {
             $this->new = $new ? ("+" . $new) : '';
         }
         $new=0;
-  
+
     }
 }
 
@@ -97,13 +97,13 @@ function cmenu($en) {
     $en->menu_c = 0;
 
     $result = DB::select('select name, url from menu order by id asc', array(), CACHE_BIG);
-    
-    foreach($result as $item) {
+
+    while($item = $result->fetchRow()) {
         $en->menu[$en->menu_c] = new mel;
         $en->menu[$en->menu_c]->name = $item['name'];
         $en->menu[$en->menu_c]->url = $item['url'];
-        $en->menu[$en->menu_c]->chcur();    
-    
+        $en->menu[$en->menu_c]->chcur();
+
         $en->menu_c++;
     }
 

@@ -11,13 +11,13 @@
 							<span class='scb'>(<span class='r<?php if ($blog['rate']>0) echo 'p'; else echo 'm';?>'><?php echo $blog['rate']; ?></span>)</span>
 								<?php }?>
 						</li>
-						<?php 
+						<?php
 						endforeach; ?>
 					</ul>
-    
+
 
 	            	<?php if ($loged) {?>
-                    
+
 					<?php if (isset($allow_blog) && $allow_blog) {?>
 					<ul id='glist'>
 					  <li><a href='work/newblog'>Новый блог</a></li>
@@ -36,10 +36,10 @@
 				</td>
 				<td class='rsdno'>
 					<div id='shall'>
-						<a class='bbls' href='javascript:g_plist("top_user")'>
+						<a class='bbls' href="javascript:stats('top_users');">
 							<img src='style/img/figure.gif' alt='Топ пользователей' title="Топ пользователей" />
 						</a>
-						<a class='bbls' href='javascript:g_plist("top_blog")'>
+						<a class='bbls' href="javascript:stats('top_blogs');">
 							<img src='style/img/documents.gif' alt='Топ блогов'  title="Топ блогов" />
 						</a>
 					</div>

@@ -14,17 +14,17 @@
  *  See <http://www.gnu.org/licenses/>.
  *
  */
- 
+
 $SCRIPT = '';
- 
+
 $basescript = defined('FORCED_GZIP') ? 'js/js.php?js=' : 'js/';
- 
-foreach(array('main', 'right', 'login', 've', 'pm') as $item) {
+
+foreach(array('jquery', 'main', 'right', 'login', 've', 'pm') as $item) {
 	$SCRIPT .= <<<EOF
 <script type="text/javascript" src="{$basescript}{$item}.js"></script>
 EOF;
 }
- 
+
 $native_script=1;
 $native_presave=1;
 $native_prerender=1;

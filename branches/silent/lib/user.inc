@@ -46,9 +46,9 @@ class user {
     var $timezone;
     var $block_cause;
     var $other;
-    
+
     private $friends;
-    
+
 	function rate() {
 		global $blog_r,$com_r,$post_r;
 		if ($this->uotr==0) {
@@ -59,36 +59,38 @@ class user {
 	}
 
 	function find($name,$what="*",$nolock=0) {
-		$result = DB::selectFirst('select ' . $what . ' from users where name = %s limit 1', array($name), CACHE_MIN);
-		
+		$ds = DB::selectFirst('select ' . $what . ' from users where name = %s limit 1', array($name), CACHE_MIN);
+
+		$result = $db->fetchRow();
+
 		if (!$result)
 			return false;
-			
+
 		if ($this->pr)
 			$this->pr = $result['postre'];
-			
+
 		if ($this->cr)
 			$this->cr = $result['compre'];
-			
+
 		if ($this->pmr)
 			$this->pmr = $result['pmre'];
-			
+
 		$this->uotr = 0;
 		$this->login = $name;
-		
+
 		foreach($result as $key => $val) {
 			$this->{$key} = $val;
 		}
-		
+
 		if ($nolock = 0)
 			$this->check_lock();
-			
+
 		return true;
 	}
 
-        function get_me_on() {
-            return(json_decode($this->other));
-        }
+	function get_me_on() {
+		return(json_decode($this->other));
+	}
 
 	function g_j() {
 		if ($this->juse != 0) {
@@ -129,15 +131,15 @@ class user {
 	function check() {
 		if ($this->cheked != 1) {
 			$result = DB::selectFirst('select * from users where name = %s limit 1', array($this->login), CACHE_MIN);
-		
+
 			if (
-				$result 
+				$result
 				&& strcmp($result['pwd'], $this->pwd) == 0
 				&& $result['activ'] == 1
 				&& !$this->check_lock()
 			) {
 				$this->cheked = 1;
-				
+
 				$this->ratep    = $result['ratep'];
 				$this->ratem    = $result['ratem'];
 				$this->crate    = $result['crate'];
@@ -145,18 +147,18 @@ class user {
 				$this->prate    = $result['prate'];
 				$this->lvl      = $result['lvl'];
 				$this->timezone = $result['timezone'];
-				
+
 				$this->lck=0;
-				
+
 				return true;
 			}
-			
+
 			return false;
 		}
-		
+
 		return false;
 	}
-	
+
 	/*
 	 * Get friends array
 	 * @return array
@@ -164,19 +166,19 @@ class user {
 	public function getFriends() {
 	    if (!is_array($this->friends)) {
 	        $friends = db_result(db_query('SELECT `frnd` FROM `users` WHERE `name` = %s', $this->login));
-	        
+
 	        if ($friends) {
 	            $this->friends = explode(',', $friends);
 	            trim_array($this->friends, '_db_escape_string');
 	        } else {
 	            $this->friends = array();
 	        }
-	        
+
 	    }
-	    
+
 	    return $this->friends;
 	}
-	
+
 	/*
 	 * Update last activity time
 	 * @return user
@@ -184,14 +186,14 @@ class user {
 	public function updateOnline() {
 		// we don't need to update last activity time too frequently
 		// just one update per minute is enough, though
-		if ( 
+		if (
 			!isset( $_SESSION['last_online'] )
 			|| ( time() - intval( $_SESSION['last_online'] ) ) > 60
 		) {
 			DB::exec('update users set online = %d where name = %s', array(time(), $this->login));
 			$_SESSION['last_online'] = time();
 		}
-        
+
 		return $this;
 	}
 }
@@ -205,14 +207,14 @@ function unlogin() {
 }
 function login() {
 	global $usr,$db_salt;
-	
+
 	$login = request::get_cookie('login');
 	$pwd = request::get_cookie('pwd');
-    
-    if (request::get_post('un',0)) 
+
+    if (request::get_post('un',0))
         return 0;
 
-	if (!isset($_SESSION['login'])) 
+	if (!isset($_SESSION['login']))
 	    return 0;
 
     if (strlen(@$_SESSION['login'])>strlen($login) && strlen(@$_SESSION['pwd'])>strlen($pwd)) {
@@ -222,10 +224,10 @@ function login() {
         $_SESSION['login'] = $login;
         $_SESSION['pwd'] = $pwd;
     }
-    
+
 	$usr->login = $login;
 	$usr->pwd = md5($db_salt.base64_decode($pwd));
-	
+
 	if ($usr->check()) {
 		return(1);
 	} else {

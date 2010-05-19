@@ -22,9 +22,9 @@ $result = DB::select('
 	from post
 	where blck = 0 and `lock` = 0 order by id desc limit 16', array(), CACHE_MIN);
 
-$e += count($result);
+$e += $result->count();
 
-foreach($result as $row) {
+while ($row = $result->fetchRow()) {
 	$row['type'] = 'post';
 	$row['rate'] = $row['ratep'] - $row['ratem'];
 	$tarr[] = $row;
@@ -85,16 +85,16 @@ if (!$tops) {
 }
 echo $tops;
 
-$result = DB::select('select name from users where online >= %d order by online desc', array(time() - 300), CACHE_MIN);
 $onlines = array();
-foreach($result as $item) {
-	$onlines[] = $item['name'];
+$result = DB::select('select name from users where online >= %d order by online desc', array(time() - 300), CACHE_MIN);
+while ($row = $result->fetchRow()) {
+	$onlines[] = $row['name'];
 }
 
-$result = DB::select('select name from users order by id desc limit 5', array(), CACHE_NORMAL);
 $news = array();
-foreach($result as $item) {
-	$news[] = $item['name'];
+$result = DB::select('select name from users order by id desc limit 5', array(), CACHE_NORMAL);
+while ($row = $result->fetchRow()) {
+	$news[] = $row['name'];
 }
 
 echo render_online_and_new($onlines, $news);
@@ -114,7 +114,7 @@ define('FIRST_PANEL_ACTIVE',1);
 define('SECOND_PANEL_ACTIVE',2);
 $e=NO_PANEL_ACTIVE;
 if (isset($_SESSION['tp1']) && strlen($_SESSION['tp1'])>2) {
-    $scr.="g_plist('".$_SESSION['tp1']."'";
+    $scr.="stats('".$_SESSION['tp1']."'";
     $e=FIRST_PANEL_ACTIVE;
 }
 if (isset($_SESSION['tp2'])) {
@@ -123,14 +123,14 @@ if (isset($_SESSION['tp2'])) {
             $scr.=",1,'top_user');";
             $e=SECOND_PANEL_ACTIVE;
         } else {
-            $scr.="g_plist('top_user');";
+            $scr.="stats('top_user');";
         }
     } elseif ($_SESSION['tp2']=='bl') {
         if ($e==FIRST_PANEL_ACTIVE) {
             $scr.=",1,'top_blog');";
             $e=SECOND_PANEL_ACTIVE;
         } else {
-            $scr.="g_plist('top_blog');";
+            $scr.="stats('top_blog');";
         }
     }
 }

@@ -1,5 +1,87 @@
 <?php
 
+/**
+ * Dataset private class
+ */
+class Dataset {
+
+	private $recNo = 0;
+	private $fields = array();
+	private $dataset = array();
+
+	public function count() {
+		return count($this->dataset);
+	}
+
+	public function __sleep() {
+		return array('fields', 'dataset');
+	}
+
+	public function __wakeup() {
+		$this->first();
+	}
+
+	private function getFromQuery( $query ) {
+		for($i = 0; $i < mysql_num_fields($query); ++$i) {
+			$field = mysql_fetch_field($query, $i);
+			$this->fields[$i] = strtolower($field->name);
+		}
+
+		while ($row = mysql_fetch_array($query, MYSQL_NUM)) {
+			$this->dataset[] = $row;
+		}
+
+		$this->first();
+	}
+
+	public function first() {
+		$this->recNo = 0;
+	}
+
+	public function fetchRow() {
+		if (count($this->dataset) <= $this->recNo)
+			return false;
+
+		$result = array();
+
+		foreach($this->dataset[$this->recNo] as $key => $value) {
+			$result[$this->fields[$key]] = $value;
+		}
+
+		$this->recNo++;
+
+		return $result;
+	}
+
+	public function fetchAll() {
+		$result = array();
+
+		while ($row = $this->fetchRow()) {
+			$result[] = $row;
+		}
+
+		return $result;
+	}
+
+	public static function createByCache( $object ) {
+		$new = new self();
+
+		if ( isset( $object['0'] ) && isset( $object['1'] ) ) {
+			$new->getFromCache( $object );
+		}
+
+		return $new;
+	}
+
+	public static function createByQuery( $query ) {
+		$new = new self();
+		$new->getFromQuery( $query );
+
+		return $new;
+	}
+
+}
+
 /*
 * Database superclass
 */
@@ -31,11 +113,11 @@ class DB {
 		) or die('Can\'t connect to database');
 
 		mysql_select_db(
-			SQL_DB, 
+			SQL_DB,
 			$this->connection
 		) or die('Can\'t select database');
 
-		$this->_exec('set names utf8') 
+		$this->_exec('set names utf8')
 			or die('Can\'t execute queries');
 	}
 
@@ -91,13 +173,13 @@ class DB {
 		$prepared = count($args) > 0 ? $this->prepareQuery($query, $args) : $query;
 
 		$result = mysql_query($prepared, $this->connection);
-		
+
 		if (
 			!$result
 			&& defined('DEBUG')
 		)
 			FB::log(mysql_error($this->connection), 'DB', FirePHP::ERROR);
-			
+
 		return $result;
 	}
 
@@ -112,7 +194,7 @@ class DB {
 		if (defined('DEBUG')) {
 			$log = $query;
 
-			if (count($args) > 0)            
+			if (count($args) > 0)
 				$log .= ' [' . implode(',', $args) . ']';
 
 			if ($tty > CACHE_NO)
@@ -124,7 +206,7 @@ class DB {
 		if ($tty > CACHE_NO	) {
 			$cached = Cache::get($query, $tty, CACHE_SQL);
 
-		if ($cached !== false) 
+		if ($cached !== false)
 			return $cached;
 		}
 
@@ -137,10 +219,7 @@ class DB {
 			return false;
 		}
 
-		$result = array();
-
-		while ($row = mysql_fetch_assoc($res))
-			$result[] = $row;
+		$result = Dataset::createByQuery($res);
 
 		mysql_free_result($res);
 
@@ -160,16 +239,16 @@ class DB {
 		if (defined('DEBUG')) {
 			$log = $query;
 
-			if (count($args) > 0)            
+			if (count($args) > 0)
 				$log .= ' [' . implode(',', $args) . ']';
 
 			FB::log($log, 'DB', FirePHP::INFO);
 		}
-	
+
 		return $this->__query($query, $args);
 	}
 
-	private function _insert($query, $args = array()) {        
+	private function _insert($query, $args = array()) {
 		return $this->__query($query, $args) ? mysql_insert_id($this->connection) : -1;
 	}
 
@@ -191,20 +270,20 @@ class DB {
 	 * @param $args array
 	 * @param $tty int
 	 * @return array
-	 */    
+	 */
 	public static function select($query = '', $args = array(), $tty = CACHE_NO) {
 		return self::getInstance()->_select($query, $args, $tty);
 	}
-	
+
 	public static function selectFirst($query = '', $args = array(), $tty = CACHE_NO) {
 		$tmp = self::select($query, $args, $tty);
-		
+
 		if (
 			$tmp
-			&& count($tmp) > 0
+			&& $tmp->count() > 0
 		)
-			return array_shift($tmp);
-			
+			return $tmp->fetchRow();
+
 		return false;
 	}
 
@@ -216,21 +295,21 @@ class DB {
 
 		return false;
 	}
-	
+
 	/**
 	 * Show tables array
 	 * @return array
 	 */
 	public static function tables() {
 		$tables = self::select('show tables');
-		
+
 		$result = array();
-		
-		foreach($tables as $key => $value) {
-			$vals = array_values($value);
+
+		while ($table = $tables->fetchRow()) {
+			$vals = array_values($table);
 			$result[] = $vals[0];
 		}
-		
+
 		return $result;
 	}
 
@@ -257,7 +336,7 @@ class DB {
 	 * !!! It is just for backward compatibility !!!
 	 */
 	public static function getConnection() {
-		return self::getInstance()->connection;   
+		return self::getInstance()->connection;
 	}
 }
 
@@ -271,7 +350,7 @@ function db_connect($settings = null) {
         global $db_settings;
         $settings = $db_settings;
     }
-    
+
     // ******* part for new DB class ****
     if (!isset($connections[$settings]))
         $connection[$settings] = DB::getConnection();
@@ -316,10 +395,10 @@ function db_query($query) {
     }
     _db_query_callback($args, TRUE);
     $query = preg_replace_callback(DB_QUERY_REGEXP, '_db_query_callback', $query);
-    
+
     if (defined('DEBUG'))
         FB::log($query, 'DBold', FirePHP::INFO);
-    
+
     return _db_query($query);
 }
 
