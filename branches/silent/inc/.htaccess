@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Some Name"
-AuthUserFile .htp
-require valid-user

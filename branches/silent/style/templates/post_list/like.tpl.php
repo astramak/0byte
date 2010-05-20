@@ -1,1 +1,0 @@
-<div id='btop'><div class='bbnm'><span class='bnm'>Похожие на <?php echo $name; ?></span></div></div>

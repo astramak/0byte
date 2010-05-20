@@ -1,1 +1,0 @@
-<h3>%username% love BDSM!</h3>

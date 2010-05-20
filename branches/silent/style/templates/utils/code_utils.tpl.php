@@ -1,1 +1,0 @@
-<div class="code" lang="<?php echo $lang ?>"><?php echo $code ?></div>

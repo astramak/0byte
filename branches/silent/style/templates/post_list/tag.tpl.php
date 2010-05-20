@@ -1,1 +1,0 @@
-<h3 class='elt'>С тегом &#171;<?php echo $text; ?>&#187;</h3>

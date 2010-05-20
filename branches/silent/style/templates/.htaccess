@@ -1,3 +1,0 @@
-# Do not allow direct access from client
-Order Deny,Allow
-Deny from all

@@ -1,1 +1,0 @@
-<span class='err'><?php echo $text; ?></span>
