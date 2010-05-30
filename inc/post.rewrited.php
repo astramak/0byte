@@ -159,15 +159,17 @@ class post_list {
 				$sql_where = array();
 				$sql_case = array();
 				foreach ($params as $param) {
-					$sql_where[] = "LOWER(`title`) LIKE '%".strtolower(mysql_escape_string($param))."%' ||
-                 LOWER(`text`) LIKE '%".strtolower(mysql_escape_string($param))."%' ||
-                  LOWER(`ftext`) LIKE '%".strtolower(mysql_escape_string($param))."%' ||
-                  LOWER(`tag`) LIKE '%".strtolower(mysql_escape_string($param))."%' ";
-                    $sql_case[] = "(CASE WHEN LOWER(`title`) LIKE '%".strtolower(mysql_escape_string($param))."%'
-                     THEN 3 ELSE 0 END) + (CASE WHEN LOWER(`text`) LIKE '%".strtolower(mysql_escape_string($param))."%'
-                     THEN 1 ELSE 0 END) + (CASE WHEN LOWER(`ftext`) LIKE '%".strtolower(mysql_escape_string($param))."%'
-                     THEN 1 ELSE 0 END) + (CASE WHEN LOWER(`tag`) LIKE '%".strtolower(mysql_escape_string($param))."%'
+					$sql_where[] = "LOWER(`title`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*' ||
+                 LOWER(`text`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*' ||
+                  LOWER(`ftext`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*' ||
+                  LOWER(`tag`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*' ";
+                    $sql_case[] = "(CASE WHEN LOWER(`title`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*'
+                     THEN 3 ELSE 0 END) + (CASE WHEN LOWER(`text`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*'
+                     THEN 1 ELSE 0 END) + (CASE WHEN LOWER(`ftext`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*'
+                     THEN 1 ELSE 0 END) + (CASE WHEN LOWER(`tag`) RLIKE '.*".mysql_escape_string(strtolower($param)).".*'
                      THEN 2 ELSE 0 END)";
+                     
+    
 				}
                 #$sql_get=" FROM `post` WHERE ( LOWER(`title`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' ||
                 # LOWER(`text`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' || LOWER(`ftext`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' ||
@@ -176,7 +178,7 @@ class post_list {
 
                 $this->count=db_result(db_query('SELECT COUNT(`id`)'.$sql_get));
                 $this->sql_result=db_query('SELECT *, ('.implode(' + ', $sql_case).') as `rel` '.$sql_get.' ORDER BY `rel` DESC LIMIT %d, %d',$this->current,$this->limit);
-      
+      echo '<!--- '.'SELECT COUNT(`id`)'.$sql_get.'--->';
                 break;
             case FAVOURITE:
                 $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `favourite` WHERE `favourite`.`who` = %s ",$usr->login));
