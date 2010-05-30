@@ -154,9 +154,29 @@ class post_list {
                 $this->sql_result=db_query("SELECT * FROM `post` WHERE auth = %s ".$this->blck." ORDER BY  ".$this->sort." DESC LIMIT %d, %d",$this->param,$this->current,$this->limit);
                 break;
             case FIND:
-                $sql_get=" FROM `post` WHERE ( title ILIKE '%".mysql_escape_string($this->param)."%' || text ILIKE '%".mysql_escape_string($this->param)."%' || ftext ILIKE '%".mysql_escape_string($this->param)."%' || tag ILIKE '%".mysql_escape_string($this->param)."%' )  ".$this->blck." ORDER BY  id DESC";
+				$sql_get = " FROM `post` WHERE (";
+				$params = explode(" ", $this->param);
+				$sql_where = array();
+				$sql_case = array();
+				foreach ($params as $param) {
+					$sql_where[] = "LOWER(`title`) LIKE '%".strtolower(mysql_escape_string($param))."%' ||
+                 LOWER(`text`) LIKE '%".strtolower(mysql_escape_string($param))."%' ||
+                  LOWER(`ftext`) LIKE '%".strtolower(mysql_escape_string($param))."%' ||
+                  LOWER(`tag`) LIKE '%".strtolower(mysql_escape_string($param))."%' ";
+                    $sql_case[] = "(CASE WHEN LOWER(`title`) LIKE '%".strtolower(mysql_escape_string($param))."%'
+                     THEN 3 ELSE 0 END) + (CASE WHEN LOWER(`text`) LIKE '%".strtolower(mysql_escape_string($param))."%'
+                     THEN 1 ELSE 0 END) + (CASE WHEN LOWER(`ftext`) LIKE '%".strtolower(mysql_escape_string($param))."%'
+                     THEN 1 ELSE 0 END) + (CASE WHEN LOWER(`tag`) LIKE '%".strtolower(mysql_escape_string($param))."%'
+                     THEN 2 ELSE 0 END)";
+				}
+                #$sql_get=" FROM `post` WHERE ( LOWER(`title`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' ||
+                # LOWER(`text`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' || LOWER(`ftext`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' ||
+                #  LOWER(`tag`) LIKE '%".strtolower(mysql_escape_string($this->param))."%' )  ".$this->blck." ORDER BY  `id` DESC";
+				$sql_get .= (implode(' || ', $sql_where).") ".$this->blck);
+
                 $this->count=db_result(db_query('SELECT COUNT(`id`)'.$sql_get));
-                $this->sql_result=db_query('SELECT *'.$sql_get.' LIMIT %d, %d',$this->current,$this->limit);
+                $this->sql_result=db_query('SELECT *, ('.implode(' + ', $sql_case).') as `rel` '.$sql_get.' ORDER BY `rel` DESC LIMIT %d, %d',$this->current,$this->limit);
+      
                 break;
             case FAVOURITE:
                 $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `favourite` WHERE `favourite`.`who` = %s ",$usr->login));
