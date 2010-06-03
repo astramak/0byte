@@ -5,7 +5,7 @@
     <?php }
     if ($allow_remove) { ?>
         <a href='<?php echo $block_url; ?>' class='om'><img src="style/n_img/symbol_no.gif"/>Блокировки</a> 
-        <a href='<?php echo $remove_url; ?>' class='om'><img src="style/n_img/trash.gif"/>Удалить</a> 
+         <form method='POST' action='<?php echo $remove_url; ?>'><label class='om'><input type='image' name='delete' value='1' src="style/n_img/trash_t.gif" />Удалить</label></form>
     <?php }
     if ($allow_hold) {
         ?><a href="work/hold/<?php echo $id; ?>" class='om'><img src="style/n_img/pound.gif"/><?php if (!$hold) echo 'За'; else echo 'От';?>крепить</a><?php

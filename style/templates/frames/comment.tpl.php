@@ -31,7 +31,7 @@
     {allow_edit}
 	<a href='work/editcom/<?php echo $comment->id;?>/' class='supragrey'><img src="style/n_img/pen_t.gif"/>Редактировать</a>
     {/allow_edit}{allow_delete}
-	<a href='work/rmcom/<?php echo $comment->id; ?>/' class='supragrey'><img src="style/n_img/trash_t.gif"/>Удалить</a>
+    <form method='POST' action='work/rmcom/'><label class='supragrey'><input type='image' name='id' value='<?php echo $comment->id; ?>' src="style/n_img/trash_t.gif" />Удалить</label></form>
     {/allow_delete}
 </div>
 {/loged}
