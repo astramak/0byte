@@ -21,6 +21,22 @@ $text = preg_replace(
 
 $config = HTMLPurifier_Config::createDefault();
 $config->set('Output.Newline','<br />');
+$config->set('HTML.Doctype', 'XHTML 1.0 Strict');
+$config->set('HTML.DefinitionRev', 1);
+$config->set('HTML.DefinitionID', 'enduser-customize.html');
+$def = $config->getHTMLDefinition(true);
+$form = $def->addElement(
+  'video',   // name of the element
+  'Inline',  // inline element, just as <img> or <a>
+  'Flow', // no children elements are allowed
+  'Common', // common attributes like style/class/id
+  array( // attributes
+    'src*' => 'URI',
+	'controls' => 'Enum#controls',
+	'height' => 'Pixels',
+	'width' => 'Pixels'
+  )
+); 
 $purifier = new HTMLPurifier($config);
 $text = $purifier->purify( $text );
 $text = preg_replace('/ xml\:lang\="([^"]*)"/is', "", $text);
