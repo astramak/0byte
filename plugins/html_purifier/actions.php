@@ -28,13 +28,23 @@ $def = $config->getHTMLDefinition(true);
 $form = $def->addElement(
   'video',   // name of the element
   'Inline',  // inline element, just as <img> or <a>
-  'Flow', // no children elements are allowed
+  'Flow', // children elements are allowed
   'Common', // common attributes like style/class/id
   array( // attributes
     'src*' => 'URI',
 	'controls' => 'Enum#controls',
 	'height' => 'Pixels',
 	'width' => 'Pixels'
+  )
+); 
+$form = $def->addElement(
+  'audio',   // name of the element
+  'Inline',  // inline element, just as <img> or <a>
+  'Flow', // children elements are allowed
+  'Common', // common attributes like style/class/id
+  array( // attributes
+    'src*' => 'URI',
+	'controls' => 'Enum#controls'
   )
 ); 
 $purifier = new HTMLPurifier($config);
