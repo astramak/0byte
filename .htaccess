@@ -86,8 +86,9 @@ RewriteRule ^draft/([0-9]*) worked.php?wt=editpost&post=$1&draft=1 [L]
 RewriteRule ^draft/from/([0-9]*) index.php?draft=1&from=$1 [L]
 RewriteRule ^draft index.php?draft=1 [L]
 
+RewriteRule ^favourite/from/([0-9]*) index.php?favourite=1&from=$1 [L]
 RewriteRule ^favourite index.php?favourite=1 [L]
-RewriteRule ^like/from/([0-9]*) index.php?like=1&from=$1 [L]
+RewriteRule ^like/from/([0-9]*) index.php?like=$1&from=$1 [L]
 RewriteRule ^like/([0-9]*) index.php?like=$1 [L]
 RewriteRule ^error/(.*) all.php?wt=error&err=$1 [L]
 
