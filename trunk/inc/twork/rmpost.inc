@@ -1,7 +1,7 @@
 <?php
 $id = request::get_get('id');
 
-if ($usr->lvl >= $elvl &&  request::get_post('delete', 0)) {
+if ($usr->lvl >= $elvl) {
 
 
 tags_remove_list(db_result(db_query('SELECT tag FROM post WHERE id = %d', $id)));

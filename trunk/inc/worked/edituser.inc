@@ -6,12 +6,12 @@ $cr=null;
 $pmr=null;
 $juick=null;
 $twitter=null;
-if ($usr->pr==1) {$pr="checked ";}
-if ($usr->cr==1) {$cr="checked ";}
-if ($usr->pmr==1) {$pmr="checked ";}
-if ($usr->hml==1) {$hml="checked ";}
-if ($usr->g_j()==1) {$juick="selected";}
-if ($usr->juse==2) {$twitter="selected";}
+if ($usr->pr==1) {$pr=" checked ";}
+if ($usr->cr==1) {$cr=" checked ";}
+if ($usr->pmr==1) {$pmr=" checked ";}
+if ($usr->hml==1) {$hml=" checked ";}
+if ($usr->g_j()==1) {$juick=" selected ";}
+if ($usr->juse==2) {$twitter=" selected ";}
 if (strlen($usr->av)>2) {
     $avatar=1;
 } else $avatar=0;

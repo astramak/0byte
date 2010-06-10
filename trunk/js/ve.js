@@ -50,6 +50,14 @@ function img_d(fr,el) {
     x_r('ajax/editor?type=image&fr='+fr+'&el='+el,'box');
 
 }
+function video_d(fr,el) {
+    cr();
+    x_r('ajax/editor?type=video&fr='+fr+'&el='+el,'box');
+}
+function audio_d(fr,el) {
+    cr();
+    x_r('ajax/editor?type=audio&fr='+fr+'&el='+el,'box');
+}
 
 function urla(i,fr,el) {
     a_cr();
@@ -67,13 +75,21 @@ function imga(i,fr,el) {
     }
     insert("<img alt='"+alt+"' src='"+i.url.value+"' />","",fr,el);
 }
+function videoa(i,fr,el) {
+    a_cr();
+    insert("<video src='"+i.url.value+"'>","</video>",fr,el);
+}
+function audioa(i,fr,el) {
+    a_cr();
+    insert("<audio src='"+i.url.value+"'>","</audio>",fr,el);
+}
 function quote(fr,el) {
     if (document.getSelection) {
         text = document.getSelection();
     } else if (document.selection && document.selection.createRange) {
         text = document.selection.createRange().text;
     }
-    insert("<quote>"+text+"</quote>","",fr,el);
+    insert("<quote>"+text,"</quote>",fr,el);
 }
 var last=null;
 var cmn=null;
@@ -250,9 +266,12 @@ function mk(id,fr) {
     " <option value='36' style='font-size: 36px;'>36</option>"+
     " </select><br />"+
     " <a class='tdx' href='javascript:code_d(\""+fr+"\",\"text\")'>code</a>" +
-	" <a class='tdx' href='javascript:insert(\"<quote>\",\"</quote>\",\""+fr+"\",\"text\")'>Цитировать</a>"+
+	" <a class='tdx' href='javascript:quote(\""+fr+"\",\"text\")'>Цитировать</a>"+
     " <a class='tdx' href='javascript:insert(\"<user>\",\"</user>\",\""+fr+"\",\"text\")'>Пользователь</a>"+
-    " <a class='tdx' href='javascript:insert(\"<spoiler>\",\"</spoiler>\",\""+fr+"\",\"text\")'>Спойлер</a>";
+    " <a class='tdx' href='javascript:insert(\"<spoiler>\",\"</spoiler>\",\""+fr+"\",\"text\")'>Спойлер</a>" +
+    " <a class='tdx' href='javascript:video_d(\""+fr+"\",\"text\")'>Видео</a>"+
+    " <a class='tdx' href='javascript:audio_d(\""+fr+"\",\"text\")'>Аудио</a>";
+    
 }
 
 function toHex(dec) {

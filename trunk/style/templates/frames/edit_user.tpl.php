@@ -73,7 +73,7 @@
         <tr>
             <td>Оповещение:</td>
             <td><label><input name="pr" type="checkbox"
-                              <?php echo $post_reply ?> />Об ответах на посты</label>
+                              <?php echo $post_reply; ?> />Об ответах на посты</label>
                 <label><input name="cr" type="checkbox"
                               <?php echo $comment_reply; ?> />Об ответах на
 		комментарии</label> <label><input name="pmr" type="checkbox"

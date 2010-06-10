@@ -8,7 +8,9 @@ $out['type']=$type;
 switch ($type) {
     case "link":
         $out['select']='ins_url';
-        $out['content']=render_template(TPL_EDITOR.'/link.tpl.php',$needle);
+        $needle['type'] = 'Ссылка';
+        $needle['action'] = 'urla';
+        $out['content']=render_template(TPL_EDITOR.'/media.tpl.php',$needle);
         break;
     case "code":
         $out['select']="codelang";
@@ -48,7 +50,19 @@ switch ($type) {
         $out['content']=$text;
         $out['js']=$js;
         $out['select']='pm_title';
-    break;
+        break;
+    case "video":
+        $out['select']='ins_url';
+        $needle['type'] = 'Видео';
+        $needle['action'] = 'videoa';
+        $out['content']=render_template(TPL_EDITOR.'/media.tpl.php',$needle);
+        break;
+    case "audio":
+        $out['select']='ins_url';
+        $needle['type'] = 'Аудио';
+        $needle['action'] = 'audioa';
+        $out['content']=render_template(TPL_EDITOR.'/media.tpl.php',$needle);
+        break;
 }
 echo json_encode($out);
 ?>

@@ -486,6 +486,8 @@ a.tdx, a.tdx:ACTIVE, a.tdx:VISITED, a.tdx:HOVER{
 .ln {
     text-align: right;
     color:#2669A6;
+    line-height: 14px !important;
+    font-size: 12px !important;
     padding-right: 8px;
 }
 .err {
@@ -700,6 +702,8 @@ div.required {
 }
 .code {
     font-family:DejaVu Sans Mono, Droid mono, monospace;
+    line-height: 14px !important;
+    font-size: 12px !important;
 }
 .grey {
     color: #999999;

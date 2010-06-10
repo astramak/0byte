@@ -12,9 +12,17 @@
 <div class='menuel'><a href="all/friends">Друзья</a></div>
 
 </div>
+
 <?php echo $SCRIPT;
 $end_time = microtime(); 
 echo "<!-- time: " . round ($end_time - $start_time, 3) . "-->";
+
+     if (!defined('_SAPE_USER')){
+        define('_SAPE_USER', '7575692a87c19a1cd7ac4684c77de79a');
+     }
+     require_once('sape.php');
+     $sape = new SAPE_client();
+     echo $sape->return_links(); 
 ?>
 </body>
 </html>
