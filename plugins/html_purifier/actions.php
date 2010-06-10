@@ -32,7 +32,6 @@ $form = $def->addElement(
   'Common', // common attributes like style/class/id
   array( // attributes
     'src*' => 'URI',
-	'controls' => 'Enum#controls',
 	'height' => 'Pixels',
 	'width' => 'Pixels'
   )
@@ -43,11 +42,12 @@ $form = $def->addElement(
   'Flow', // children elements are allowed
   'Common', // common attributes like style/class/id
   array( // attributes
-    'src*' => 'URI',
-	'controls' => 'Enum#controls'
+    'src*' => 'URI'
   )
 ); 
 $purifier = new HTMLPurifier($config);
 $text = $purifier->purify( $text );
 $text = preg_replace('/ xml\:lang\="([^"]*)"/is', "", $text);
+$text = str_replace('<video', '<video controls="controls"', $text);
+$text = str_replace('<audio', '<audio controls="controls"', $text);
 ?>

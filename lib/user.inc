@@ -58,10 +58,11 @@ class user {
 	function find($name,$what="*",$nolock=0) {
       		$result = db_query('SELECT '.$what.' FROM `users` WHERE LOWER(name) = LOWER(%s)', $name);
 		$row = db_fetch_assoc($result);
+
 		if ($row) {
-                        if ($this->pr) $this->pr=$row['postre'];
-                        if ($this->cr) $this->cr=$row['comre'];
-                        if ($this->pmr) $this->pmr=$row['pmre'];
+            $this->pr=@$row['postre'];
+            $this->cr=@$row['comre'];
+            $this->pmr=@$row['pmre'];
 			$this->uotr = 0;
 			$this->login = $name;
 			foreach ($row as $key => $val) {

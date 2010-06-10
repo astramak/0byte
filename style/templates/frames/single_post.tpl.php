@@ -5,7 +5,7 @@
     <?php }
     if ($allow_remove) { ?>
         <a href='<?php echo $block_url; ?>' class='om'><img src="style/n_img/symbol_no.gif"/>Блокировки</a> 
-         <form method='POST' action='<?php echo $remove_url; ?>'><label class='om'><input type='image' name='delete' value='1' src="style/n_img/trash_t.gif" />Удалить</label></form>
+         <form  style='display: inline;' method='POST' action='<?php echo $remove_url; ?>'><label class='om'><input type='image' name='delete' value='1' src="style/n_img/trash_t.gif" />Удалить</label></form>
     <?php }
     if ($allow_hold) {
         ?><a href="work/hold/<?php echo $id; ?>" class='om'><img src="style/n_img/pound.gif"/><?php if (!$hold) echo 'За'; else echo 'От';?>крепить</a><?php
@@ -19,7 +19,7 @@
         ?>тслеживать</a> 
     <?php } ?>
     <a id="favor" class='om' href="<?php echo $favourite_url; ?>"><img src="style/n_img/fav.gif"/><?php if (!$favourite) { ?>В избранное<?php } else { ?>Из избранного<?php } ?></a> <?php } ?>
-	<img src="style/n_img/base.gif"/><a href="like/<?php echo $id; ?>" class='om'>Похожие</a>
+	<img src="style/n_img/base.gif"/><a href="like/<?php echo $id; ?>/" class='om'>Похожие</a>
 <span class='rate'><a class='ratep' href='<?php echo $ratep_url; ?>'>+</a><span id='rp<?php echo $id; ?>'><?php
     if ($rate>0) {
         ?><span class='rp' title="Всего <?php echo $rate_num;?> <?php

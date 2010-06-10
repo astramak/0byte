@@ -128,18 +128,20 @@ class post_list {
             case LIKE:
                 $tags=db_result(db_query('SELECT `tag` FROM `post` WHERE `id` = %d',$this->param));
                 $tags_arr=split(",", $tags);
-                $where=null;
+                $where = "(";
+                $query = "(";
                 foreach ($tags_arr as $tag) {
-                    $query.="IF(`tag` LIKE '%".mysql_escape_string(trim($tag))."%',1,0)+";
-                    $where.="`tag` LIKE '%".mysql_escape_string(trim($tag))."%' || ";
+                    $query.=" IF(`tag` LIKE '%".mysql_escape_string(trim($tag))."%',1,0) +";
+                    $where.=" `tag` LIKE '%".mysql_escape_string(trim($tag))."%'  || ";
                 }
                 $query=substr($query, 0, strlen($query)-1);
                 $where=substr($where, 0, strlen($where)-4);
-                $where.=$this->blck;
-                $query.=" AS `rel` FROM `post` WHERE ".$where." ORDER BY `rel` DESC";
-                $count=db_fetch_assoc(db_query('SELECT COUNT(`id`) as `count`,'.$query));
+                $where.=") ".$this->blck;
+                $query.=") AS `rel` FROM `post` WHERE ".$where;
+                $count=db_fetch_assoc(db_query('SELECT COUNT(`id`) as `count`,'.$query.' GROUP BY `rel`'));
                 $this->count=$count['count'];
-                $this->sql_result=db_query('SELECT *,'.$query.' LIMIT %d, %d',$this->current,$this->limit);
+                $this->sql_result=db_query('SELECT *,'.$query.' ORDER BY `rel` DESC LIMIT %d, %d',$this->current,$this->limit);
+           
                 break;
             case TAG:
                 $sql_get=" FROM `post` WHERE tag LIKE '%".mysql_escape_string($this->param).",%' ||
@@ -178,7 +180,6 @@ class post_list {
 
                 $this->count=db_result(db_query('SELECT COUNT(`id`)'.$sql_get));
                 $this->sql_result=db_query('SELECT *, ('.implode(' + ', $sql_case).') as `rel` '.$sql_get.' ORDER BY `rel` DESC LIMIT %d, %d',$this->current,$this->limit);
-      echo '<!--- '.'SELECT COUNT(`id`)'.$sql_get.'--->';
                 break;
             case FAVOURITE:
                 $this->count=db_result(db_query("SELECT COUNT(`id`) FROM `favourite` WHERE `favourite`.`who` = %s ",$usr->login));
@@ -275,8 +276,11 @@ $this->type=PERSONAL;
             case FIND:
                 return render_error('Ничего не найденно!');
                 break;
+            case LIKE:
+                return render_error('Похожих постов не найдено!');
+                break;
             default:
-                redirect($dir.'error/not_found');
+                redirect($dir.'/error/not_found');
         }
     }
 }
